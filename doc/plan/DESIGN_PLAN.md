@@ -6,6 +6,7 @@
 ![Our splash screen](wireframe/SplashScreen.png)
 ![Our initial screen](wireframe/InitialScreen.png)
 ![Our help screen](wireframe/HelpWindow.png)
+![Our fd 50 screen](wireframe/FD50Case.png)
 
 ## Introduction
 
