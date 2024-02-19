@@ -6,7 +6,9 @@
 ![Our splash screen](images/SplashScreen.png)
 ![Our initial screen](images/InitialScreen.png)
 
-## Introductiongi
+## Introduction
+
+Our biggest priorities so far are frontloading API planning and design at the beginning, so implementation goes smoothly. In the process, we want to have a clean, self-documenting API. We want Main to pass control to the Controller, because we want to limit the size of Main. Controller will intermediate View and Model. Both will be highly abstracted, and View is particularly complex because of multiple panes.
 
 ## Configuration File Format
 
