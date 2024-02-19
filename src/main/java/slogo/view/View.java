@@ -3,11 +3,11 @@ package slogo.view;
 import javafx.stage.Stage;
 
 public class View {
-    
-    Stage mStage;
+
+    private Stage stage;
 
     public View(Stage stage) {
-        mStage = stage;
+        this.stage = stage;
     }
 
     public void run() {

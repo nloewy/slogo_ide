@@ -5,15 +5,15 @@ import slogo.view.View;
 
 public class Controller {
 
-    Stage mStage;
-    View mView;
+    private Stage stage;
+    private View view;
 
     public Controller(Stage stage) {
-        mStage = stage;
-        mView = new View(stage);
+        this.stage = stage;
+        view = new View(stage);
     }
 
     public void run() {
-        mView.run();
+        view.run();
     }
 }
