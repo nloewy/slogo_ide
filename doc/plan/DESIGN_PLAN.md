@@ -3,6 +3,8 @@
 
 ### TEAM 05
 
+![Our splash screen](images/SplashScreen.png) 
+
 ## Introduction
 
 
