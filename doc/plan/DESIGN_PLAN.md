@@ -174,10 +174,13 @@ view so the turtle can be updated.
 
 ### Noah's Use Cases
 
-1. x
-2. x
-3. x
-4. x
+1. User, having clicked English as starting language, clicks the button to exit splash screen and start simulation
+
+2. User executes chain of 3 commands, with second one invalid [fd 50 riggt 90 fd 50]
+
+3. User executes command MAKE CS 308 to create a variable, and it shows up on variable screen
+
+4. User clicks the “reset screen” button
 
 ### Yash's Use Cases
 
