@@ -1,6 +1,7 @@
 
 /*
  * SLOGO-71
+ * @author Bodhaandh Ravipati
  */
 public class ChangePenColor {
 
