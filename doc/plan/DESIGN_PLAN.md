@@ -3,10 +3,10 @@
 
 ### TEAM 05
 
-![Our splash screen](images/SplashScreen.png) 
+![Our splash screen](images/SplashScreen.png)
+![Our initial screen](images/InitialScreen.png)
 
-## Introduction
-
+## Introductiongi
 
 ## Configuration File Format
 
