@@ -206,10 +206,11 @@ view so the turtle can be updated.
 ## Team Responsibilities
 
 * Team Member #1: Noah Loewy
-    * Parser / Commands / Backend
+  * Model (Primary)
 * Team Member #2
-
+  * View (Primary)
 * Team Member #3
-
+  * Controller, Model (Secondary)
 * Team Member #4
+  * XML, Properties Files, View (Secondary)
 
