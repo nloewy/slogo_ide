@@ -5,6 +5,7 @@
 
 ![Our splash screen](wireframe/SplashScreen.png)
 ![Our initial screen](wireframe/InitialScreen.png)
+![Our help screen](wireframe/HelpWindow.png)
 
 ## Introduction
 
