@@ -1,31 +1,40 @@
 # SLogo Design Plan
+
 ### NAMES: Noah Loewy, Yash Gangavarapu, Abishek Chatuat, Bodhaansh Ravipati
 
 ### TEAM 05
 
 ![Our splash screen](wireframe/SplashScreen.png)
-- So far, our splash screen will only allow users to complete the core requirements. In the future, we may add different options like different logo languages if time permits.
-![Our initial screen](wireframe/InitialScreen.png)
-- Out initial screen is again barebones, with the core requirements being met. One challenge is that the three side panes have to be scrollable, allowing users to see all past commands and variables.
-![Our help screen](wireframe/HelpWindow.png)
-- Our help screen will be a basic documentation tool. When the user clicks a command, the documentation will completely load if the file has it.
-![Our fd 50 screen](wireframe/FD50Case.png)
-- This is the most basic turtle command. The user chose not to define this with any variables, so none are added to the side pane.
-![Our invalid command screen](wireframe/InvalidCommandError.png)
+
+- So far, our splash screen will only allow users to complete the core requirements. In the future,
+  we may add different options like different logo languages if time permits.
+  ![Our initial screen](wireframe/InitialScreen.png)
+- Out initial screen is again barebones, with the core requirements being met. One challenge is that
+  the three side panes have to be scrollable, allowing users to see all past commands and variables.
+  ![Our help screen](wireframe/HelpWindow.png)
+- Our help screen will be a basic documentation tool. When the user clicks a command, the
+  documentation will completely load if the file has it.
+  ![Our fd 50 screen](wireframe/FD50Case.png)
+- This is the most basic turtle command. The user chose not to define this with any variables, so
+  none are added to the side pane.
+  ![Our invalid command screen](wireframe/InvalidCommandError.png)
 - This is a rudimentary error message, but we will likely use the JavaFX popup API to handle this.
-![Our invalid file screen](wireframe/InvalidFileError.png)
+  ![Our invalid file screen](wireframe/InvalidFileError.png)
 - We will again use the JavaFX popup API to show this error.
 
 ## Introduction
 
-Our biggest priorities so far are frontloading API planning and design at the beginning, so implementation goes smoothly. In the process, we want to have a clean, self-documenting API. We want Main to pass control to the Controller, because we want to limit the size of Main. Controller will intermediate View and Model. Both will be highly abstracted, and View is particularly complex because of multiple panes.
+Our biggest priorities so far are frontloading API planning and design at the beginning, so
+implementation goes smoothly. In the process, we want to have a clean, self-documenting API. We want
+Main to pass control to the Controller, because we want to limit the size of Main. Controller will
+intermediate View and Model. Both will be highly abstracted, and View is particularly complex
+because of multiple panes.
 
 ## Configuration File Format
 
-
 ## Design Overview
 
-![Our design](images/DesignOverview.png) 
+![Our design](images/3DesignOverview.png)
 
 Our Design is essentially broken down into the following 3 main components as see in the diagram
 above:
@@ -34,12 +43,11 @@ above:
 The Model will consist of first the Parser which will take user input for commands either from the
 input area in the view or from an XML file. The Parser will then parse the input and include methods
 that parse the input or command string into something that the backend can understand and work with.
-There should also be a method that takes in the parsed input and then executes the CommandData
-object. The CommandData object will be a class that holds the parsed input and then depending on
-what the input is will return a new output that can be used by the view. For the Command Data, there
-will be different subclasses of the overarching Command class that willhandle different specific use
-cases. There will also be a Backend Turtle class in the model that can be updated and represented by
-CommandData.
+There should also be a method that takes in the parsed input and then creates all of the necessary
+Command objects, and then calls the object's `execute` function. Upon execution, Command objects may
+include calls to a listener, which updates the view. It's noteworthy that the model remains agnostic
+of this process, as it simply accepts an arbitrary listener. The responsibility of implementing the
+listener lies within the view.
 
 `View`:
 The View will consist of the GUI which will be the main way that the user interacts with the IDE.
@@ -51,8 +59,8 @@ queries.
 The Controller will be the Main middleman that will be in charge of running the program. It will
 load and initialize the starting things for user interface and parsers. Then while the program is
 running it can get strings and commands from the view or xml and send it to the model. It will also
-get the updated Command Data and Turtle which will then be sent to both the view and model again to
-update.
+create the view and model objects necessary, and also create event handlers for the buttons in the 
+view to use.
 
 ## Design Details
 
@@ -60,41 +68,73 @@ update.
 
 The primary classes of the `View` package include:
 
-`MainScreen`: This class represents the main screen of the SLogo Language application. It serves as the primary user interface where users interact with various components of the application. It is called and displayed by the Controller, and consists of a series of panels organized on a canvas/group.
+`MainScreen`: This class represents the main screen of the SLogo Language application. It serves as
+the primary user interface where users interact with various components of the application. It is
+called and displayed by the Controller, and consists of a series of panels organized on a
+canvas/group.
 
-`StartScreen`: The start screen is responsible for displaying the initial loading screen for the SLogo Language game. This screen provides users the options to choose their language specifications, as well as the overarching background theme of the application.
+`View`: Implements the `SlogoListener` and allows for commands to call certain methods in the view
+while maintaining encapsulation
 
-`IPanel`: This interface represents a singular collection of related widgets on a scene for the SLogo Language application. These will make up the main screen and allow for users to interact with the program directly.
+`StartScreen`: The start screen is responsible for displaying the initial loading screen for the
+SLogo Language game. This screen provides users the options to choose their language specifications,
+as well as the overarching background theme of the application.
 
-`FrontEndTurtle`: keeps track of all data that is needed to display the turtle. This includes, but is not limited to, the actual ImageView object the turtle is represented by, the coordinates of the turtle, the orientation of the turtle, and the pen color of the turtle.
+`IPanel`: This interface represents a singular collection of related widgets on a scene for the
+SLogo Language application. These will make up the main screen and allow for users to interact with
+the program directly.
 
-`LogoShellPanel`: this panel will allow users to write commands and declare variables by inputting text directly into the user interface.
+`FrontEndTurtle`: keeps track of all data that is needed to display the turtle. This includes, but
+is not limited to, the actual ImageView object the turtle is represented by, the coordinates of the
+turtle, the orientation of the turtle, and the pen color of the turtle.
+
+`LogoShellPanel`: this panel will allow users to write commands and declare variables by inputting
+text directly into the user interface.
 
 `HistoryPanel`: this panel will show users their previous commands
 
-`GraphicsPanel`: this panel will show users the current state of the turtle, as well as any drawing created by the turtle. 
+`GraphicsPanel`: this panel will show users the current state of the turtle, as well as any drawing
+created by the turtle.
 
-`VariablePanel`: this panel will show users all user-defined variables and commands, as well as their actual values.
+`VariablePanel`: this panel will show users all user-defined variables and commands, as well as
+their actual values.
 
 ### Model
 
 The primary classes of the `Model` package include:
 
-`Parser`: The role of the parser is to take a string that represents a command, and then use it to create an actual command object (or series of command objects) that can be executed. 
+`SlogoListener`: This class will provide a way for the model to communicate changes or updates to
+the view in a decoupled and flexible manner.
 
-`Variable`: This class stores all variables that are currently in scope for the SLogo program. This includes the name and value of the variable, so expressions including the variable can easily be evaluated
+`Parser`: The role of the parser is to take a string that represents a command, and then use it to
+create an actual command object (or series of command objects) that can be executed.
 
-`Command`: This is the superclass for all the command classes. This abstract class / interface will only contain 1 method, an execute method which will update the backend model's state, and create a CommandData object to send to the front end. This may be later separated into two methods.
+`Variable`: This class stores all variables that are currently in scope for the SLogo program. This
+includes the name and value of the variable, so expressions including the variable can easily be
+evaluated
 
-`CommandData`: This is the record that will be passed from the Model to the Controller. This will be immutable, and will allow for the Controller to see how the state of the turtle is updated following a command, without actually being able to update the BackEndTurtle itself.
+`Command`: This is the superclass for all the command classes. This interface will only contain 1
+method, an execute method which will update the backend model's state, and then call the proper
+function of the listener.
 
-`BackEndTurtle`: Like the FrontEndTurtle, this will store all the necessary data for the turtle. This includes its current location, orientation, and more. The frontend turtle will always be aligned with the back end turtle after each time step, and this will ensure the model is able to make calculations based off of the current status of the view.
+`ImmutableTurtle`: This is a record that will be passed from the Model to the View. This will be
+immutable, and will allow for front end to see how the state of the turtle is updated following a
+command, without actually being able to update the BackEndTurtle itself.
 
-`CommandHistory`: This class will store previous command objects that have been called, to allow for the reversal / replay of commands, and allow for easy extension. 
+`BackEndTurtle`: Like the FrontEndTurtle, this will store all the necessary data for the turtle.
+This includes its current location, orientation, and more. The frontend turtle will always be
+aligned with the back end turtle after each time step, and this will ensure the model is able to
+make calculations based off of the current status of the view.
+
+`CommandHistory`: This class will store previous command objects that have been called, to allow for
+the reversal / replay of commands, and allow for easy extension.
 
 ### Controller
 
-The `Controller` class will serve as the mediator between the view and model, using EventHandlers to interact with user input from the view, and send it to the model for parsing, and then back to the view so the turtle can be updated.
+The `Controller` class will serve as the mediator between the view and model, using EventHandlers to
+interact with user input from the view, and send it to the model for parsing, and then back to the
+view so the turtle can be updated.
+
 ## Design Considerations
 
 * One of our major discussions throughout the design process regarded the passing of information
@@ -107,7 +147,11 @@ The `Controller` class will serve as the mediator between the view and model, us
   because it would allow for the model to pass immutable data to the view, however may lead to some
   violations of "Don't Repeat Yourself". Another alternative is passing in Command objects that
   contain lambda functions on how to adjust the View, however this would be a violation of
-  Model-View-Separation.
+  Model-View-Separation. Finally, we decided on adopting the Listener/Observer design pattern. This
+  design pattern would enable us to minimize coupling between model and the view, making it easier
+  to extend or modify the codebase in the future. It also enables the model and view to evolve
+  independently, as changes made to one component do not necessarily impact the other.
+
 
 * A second major design debate that our team extensively discussed was how to handle multiple
   commands at once, or commands that occurred as a result of a nested command. One option is to
@@ -118,29 +162,39 @@ The `Controller` class will serve as the mediator between the view and model, us
   way you would in functional programming).
 
 ## Test Plan
+
 [//]: # (Use Cases, need 4, and then 4 more per person, so 20)
 
 ### General Use Cases
+
 1. x
 2. x
 3. x
 4. x
+
 ### Noah's Use Cases
+
 1. x
 2. x
 3. x
 4. x
+
 ### Yash's Use Cases
+
 1. x
 2. x
 3. x
 4. x
+
 ### Abishek's Use Cases
+
 1. x
 2. x
 3. x
 4. x
+
 ### Bodhaansh's Use Cases
+
 1. ChangeBackgroundColor.java
 2. ChangePenColor.java
 3. LightModeToDark.java
@@ -148,11 +202,11 @@ The `Controller` class will serve as the mediator between the view and model, us
 
 ## Team Responsibilities
 
- * Team Member #1: Noah Loewy
-   * Parser / Commands / Backend
- * Team Member #2
+* Team Member #1: Noah Loewy
+    * Parser / Commands / Backend
+* Team Member #2
 
- * Team Member #3
+* Team Member #3
 
- * Team Member #4
+* Team Member #4
 
