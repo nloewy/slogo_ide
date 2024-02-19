@@ -20,7 +20,8 @@ import javafx.stage.Stage;
 
 
 /**
- * An example class to show the basics of tokenizing a program file: identifying the purpose of individual words.
+ * An example class to show the basics of tokenizing a program file: identifying the purpose of
+ * individual words.
  *
  * Disclaimer: The code here is merely to demonstrate regular expressions to match input strings.
  *
@@ -40,7 +41,8 @@ public class RegexMatching extends Application {
 
 
     // token types and the regular expression patterns that recognize those types
-    // note, it is a list because order matters (some patterns may be more generic and so should be added last)
+    // note, it is a list because order matters (some patterns may be more generic and so should be
+    // added last)
     private List<Entry<String, Pattern>> myTokens = new ArrayList<>();
 
 
