@@ -11,34 +11,34 @@
 
 ## Design Overview
 
-![Our design](images/DesignOverview.png "An initial UI") 
+![Our design](images/DesignOverview.png) 
 
-Our Design is essentially broken down into the 
-following 3 main components as see in the diagram above:
+Our Design is essentially broken down into the following 3 main components as see in the diagram
+above:
 
 `Model`:
-The Model will consist of first the Parser which will take user input for commands either from the 
-input area in the view or from an XML file. The Parser will then parse the input and include
-methods that parse the input or command string into something that the backend can understand and
-work with. There should also be a method that takes in the parsed input and then executes the
-CommandData object. The CommandData object will be a class that holds the parsed input and then
-depending on what the input is will return a new output that can be used by the view.
-For the Command Data, there will be different subclasses of the overarching Command class that will  
-handle different specific use cases. There will also be a Backend Turtle class in the model that can 
-be updated and represented by CommandData.
+The Model will consist of first the Parser which will take user input for commands either from the
+input area in the view or from an XML file. The Parser will then parse the input and include methods
+that parse the input or command string into something that the backend can understand and work with.
+There should also be a method that takes in the parsed input and then executes the CommandData
+object. The CommandData object will be a class that holds the parsed input and then depending on
+what the input is will return a new output that can be used by the view. For the Command Data, there
+will be different subclasses of the overarching Command class that willhandle different specific use
+cases. There will also be a Backend Turtle class in the model that can be updated and represented by
+CommandData.
 
 `View`:
 The View will consist of the GUI which will be the main way that the user interacts with the IDE.
 The GUI will include a text area where the user can input commands, a display area where the user
-can see the output of commands with the turtle moving, lines being drawn, and answers to the 
-queries. 
+can see the output of commands with the turtle moving, lines being drawn, and answers to the
+queries.
 
 `Controller`:
-The Controller will be the Main middleman that will be in charge of running the program.
-It will load and initialize the starting things for user interface and parsers. Then while the
-program is running it can get strings and commands from the view or xml and send it to the model.
-It will also get the updated Command Data and Turtle which will then be sent to both the view 
-and model again to update.
+The Controller will be the Main middleman that will be in charge of running the program. It will
+load and initialize the starting things for user interface and parsers. Then while the program is
+running it can get strings and commands from the view or xml and send it to the model. It will also
+get the updated Command Data and Turtle which will then be sent to both the view and model again to
+update.
 
 ## Design Details
 
@@ -83,23 +83,25 @@ The primary classes of the `Model` package include:
 The `Controller` class will serve as the mediator between the view and model, using EventHandlers to interact with user input from the view, and send it to the model for parsing, and then back to the view so the turtle can be updated.
 ## Design Considerations
 
-Model-View Separation
-* One of our major discussions throughout the design process regarded the passing of information 
-from the model to the view. We knew that we wanted to implement some sort of Controller class to 
-serve as a mediator, but this still did not solve the problem of passing data from one package to 
-the other. One option was to pass Command objects to the view had discuss how and where we wanted to
-pass information from the model and view. A big part 
-we needed to consider was with the command. We went back and forth on how we should and whether we
-should have the commands be executed and understood in the model and then have the view just
-be updated and change the graphics or if we should parse the command in the model and then within
-the view have the command be executed. We ended up doing a variation of the first option, but by 
-creating a controller which would be the call the model and have it parsed and executed into a 
-data object which updates the turtle in the backend. Then the controller would take that and update
-it in the view.
+* One of our major discussions throughout the design process regarded the passing of information
+  from the model to the view. We knew that we wanted to implement some sort of Controller class to
+  serve as a mediator, but this still did not solve the problem of passing data from one package to
+  the other. One option was for the turtle updated in the model to be directly passed to the view.
+  However, this is extremely problematic because it violates the principles of Explicit
+  Immutability. An alternative option we explored is passing the immutable versions of each turtle
+  state, and having both a front end and back end turtle act in parallel. This is advantageous
+  because it would allow for the model to pass immutable data to the view, however may lead to some
+  violations of "Don't Repeat Yourself". Another alternative is passing in Command objects that
+  contain lambda functions on how to adjust the View, however this would be a violation of
+  Model-View-Separation.
 
-APIs
-* The biggest design consideration for this was what we wanted to include in each API. 
-
+* A second major design debate that our team extensively discussed was how to handle multiple
+  commands at once, or commands that occurred as a result of a nested command. One option is to
+  treat them all as a single command, but we realized that this could lead to long chains of
+  conditionals that would violate DESIGN-19. As an alternative, we considered using a tree-like data
+  structure to handle the flow of nested or consecutive command, and try to break down each
+  individual command into its most basic components: the argument and the function (kind of like the
+  way you would in functional programming).
 
 ## Test Plan
 [//]: # (Use Cases, need 4, and then 4 more per person, so 20)
@@ -132,8 +134,8 @@ APIs
 
 ## Team Responsibilities
 
- * Team Member #1
-
+ * Team Member #1: Noah Loewy
+   * Parser / Commands / Backend
  * Team Member #2
 
  * Team Member #3
