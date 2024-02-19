@@ -1,3 +1,8 @@
+
+/*
+ * SLOGO-73
+ * @author Bodhaandh Ravipati
+ */
 public class LightModeToDark {
 
     /*
@@ -8,7 +13,7 @@ public class LightModeToDark {
     public void switchTheme() {
 
         // Static method in main that does the following
-        Main.switchTheme();
+        Controller.switchTheme();
 
         // current theme is a variable handled in Main
         scene.getStylesheets().remove(currentTheme);

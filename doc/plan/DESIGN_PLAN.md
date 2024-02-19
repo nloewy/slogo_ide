@@ -141,10 +141,10 @@ The `Controller` class will serve as the mediator between the view and model, us
 3. x
 4. x
 ### Bodhaansh's Use Cases
-1. x
-2. x
-3. x
-4. x
+1. ChangeBackgroundColor.java
+2. ChangePenColor.java
+3. LightModeToDark.java
+4. InvalidCommand.java
 
 ## Team Responsibilities
 
