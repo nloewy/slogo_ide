@@ -4,11 +4,17 @@
 ### TEAM 05
 
 ![Our splash screen](wireframe/SplashScreen.png)
+- So far, our splash screen will only allow users to complete the core requirements. In the future, we may add different options like different logo languages if time permits.
 ![Our initial screen](wireframe/InitialScreen.png)
+- Out initial screen is again barebones, with the core requirements being met. One challenge is that the three side panes have to be scrollable, allowing users to see all past commands and variables.
 ![Our help screen](wireframe/HelpWindow.png)
+- Our help screen will be a basic documentation tool. When the user clicks a command, the documentation will completely load if the file has it.
 ![Our fd 50 screen](wireframe/FD50Case.png)
+- This is the most basic turtle command. The user chose not to define this with any variables, so none are added to the side pane.
 ![Our invalid command screen](wireframe/InvalidCommandError.png)
+- This is a rudimentary error message, but we will likely use the JavaFX popup API to handle this.
 ![Our invalid file screen](wireframe/InvalidFileError.png)
+- We will again use the JavaFX popup API to show this error.
 
 ## Introduction
 
