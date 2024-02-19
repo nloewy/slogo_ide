@@ -3,6 +3,7 @@ package slogo.view;
 import javafx.stage.Stage;
 
 public class View {
+    
     Stage mStage;
 
     public View(Stage stage) {
