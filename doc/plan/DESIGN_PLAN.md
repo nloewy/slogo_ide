@@ -7,6 +7,7 @@
 ![Our initial screen](wireframe/InitialScreen.png)
 ![Our help screen](wireframe/HelpWindow.png)
 ![Our fd 50 screen](wireframe/FD50Case.png)
+![Our invalid command screen](wireframe/InvalidCommandError.png)
 
 ## Introduction
 
