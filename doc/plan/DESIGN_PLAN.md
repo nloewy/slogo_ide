@@ -32,6 +32,40 @@ because of multiple panes.
 
 ## Configuration File Format
 
+```xml
+<commands>
+  <command>
+    <canonicalName>forward</canonicalName>
+    <description>Moves the turtle forward this many pixels.</description>
+    <example>fd 50</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="pixels" type="double">The number of pixels to move forward.</parameter>
+      </parameters>
+      <returnValue type="double">The distance moved.</returnValue>
+      <category>Movement</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.ForwardCommand</implementingClass>
+  </command>
+  <command>
+    <canonicalName>Right</canonicalName>
+    <description>Rotates the turtle clockwise by the specific degree.</description>
+    <example>rt 90</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="degrees" type="double">The number of degrees to turn right.</parameter>
+      </parameters>
+      <returnValue type="double">The new direction of the turtle in degrees.</returnValue>
+      <category>Rotation</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.RightCommand</implementingClass>
+  </command>
+</commands>
+
+```
+
 ## Design Overview
 
 ![Our design](images/3DesignOverview.png)
@@ -255,10 +289,33 @@ animationRunning = false; //this boolean is checked every step()
 
 ### Yash's Use Cases
 
-1. x
-2. x
-3. x
-4. x
+1. User can see and access a help menu to know each command
+```java
+helpButton.setOnAction(e -> {
+  showHelp();
+}
+```
+2. Moving the turtle forward up in view based on the command and setting new location
+```java
+public void forwardTurtle(double distance) {
+  // For loop allows for steps to be taken
+  for (pixel : distance) {
+    turtle.setPosY(currentPosY + pixel);
+  }
+}
+```
+3. After pausing, the user can step through the simulation one step at a time (SLOGO 75)
+```java
+stepButton.setOnAction(e -> {
+  turtle.step();
+}
+```
+4. The user can change the speed for how fast the turtle is moving or line is being made (SLOGO 78)
+```java
+speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+  model.setSpeed(newValue);
+}
+```
 
 ### Abhishek's Use Cases
 
