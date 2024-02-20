@@ -1,6 +1,6 @@
 # SLogo Design Plan
 
-### NAMES: Noah Loewy, Yash Gangavarapu, Abishek Chatuat, Bodhaansh Ravipati
+### NAMES: Noah Loewy, Yash Gangavarapu, Abhishek Chataut, Bodhaansh Ravipati
 
 ### TEAM 05
 
@@ -163,14 +163,57 @@ view so the turtle can be updated.
 
 ## Test Plan
 
-[//]: # (Use Cases, need 4, and then 4 more per person, so 20)
+* To write easily testable code, we will utilize custom exceptions and assertions to ensure that the
+  program is functioning as expected instead of relying on print statements or null checks.
+* We will also write smaller, more modular methods that can be tested individually, and then
+  combined to form larger, more complex methods.
+* Loading File Tests:
+  * Loads a SLogo file with history, checks that history is loaded same
+  * Loads an empty SLogo file, gets same as empty IDE
+  * Tries to load not a SLogo file, gets error message
+* Forward Command Tests:
+  * Forward 50, checks that turtle moves 50 pixels forward
+  * fd 50, checks that turtle moves 50 pixels forward
+  * fd fd 50, this should throw an error
+* Splash Screen:
+  * Select Spanish for language, checks that all UI is now in Spanish
+  * Select Dark Mode, checks that all UI is now in Dark Mode
+  * Try to select language that is not supported, gets error message
+* New IDE Session:
+  * Checks that the command history is empty
+  * Check that turtle is in the center of the screen
+  * Try to run a command that is not supported, gets error message
+* [//]: # (Use Cases, need 4, and then 4 more per person, so 20)
 
 ### General Use Cases
 
-1. x
-2. x
-3. x
-4. x
+1. The user types 'fd 50' in the command window, and sees the turtle move in the display window leaving a trail, and the command is added to the environment's history.
+```java
+try {
+  model.parse(commandString);
+  view.addCommandToHistory(commandString);
+}catch (InvalidCommandException e) {}
+```
+2. The user types '50 fd' in the command window and sees an error message that the command was not formatted correctly.
+```java
+try {
+  model.parse(commandString);
+  view.addCommandToHistory(commandString);
+}catch (InvalidCommandException e) {
+    showErrorMessage(e.getMessage());
+}
+```
+3. The user sets a variable's value and sees it updated in the UI's Variable view.
+```java
+variables.add(new Variable(varName, varValue));
+// UI has listener and will update automatically
+```
+4. The user sets the pen's color using the UI so subsequent lines drawn when the turtle moves use that color.
+```java
+colorDropDown.setOnAction(e -> {
+  model.setPenColor(dropDownMenu.getValue());
+});
+```
 
 ### Noah's Use Cases
 
@@ -217,13 +260,48 @@ animationRunning = false; //this boolean is checked every step()
 3. x
 4. x
 
-### Abishek's Use Cases
+### Abhishek's Use Cases
 
-1. x
-2. x
-3. x
-4. x
-
+1. Button to Save Program
+```java
+saveButton.setOnAction(e -> saveProgram(FILE_CHOOSER));
+```
+2. Button Load and Execute Program
+```java
+loadButton.setOnAction(e -> loadProgram(FILE_CHOOSER));
+public void loadProgram(FileChooser fileChooser) {
+  if (file != null) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        model.parse(line); //let the model handle the commands
+      }
+    } catch (IOException e) {
+      // Handle exception
+    }
+  }
+}
+```
+3. Loading Command XML for later use
+```java
+public static final string COMMANDS_XML = "commands.xml";
+CommandData[] allCommands = loadCommands(COMMANDS_XML);
+```
+4. Language Selection Properties
+```java
+    resources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
+    String forward = resources.getString("fd");
+```
+English
+```properties
+fd = Forward
+bk = Backward
+```
+Spanish
+```properties
+fd = Adelante
+bk = Atras
+```
 ### Bodhaansh's Use Cases
 
 1. ChangeBackgroundColor.java
@@ -239,6 +317,6 @@ animationRunning = false; //this boolean is checked every step()
   * View (Primary)
 * Team Member #3: Yash
   * Controller, View (Secondary)
-* Team Member #4 Abishek
+* Team Member #4 Abhishek
   * XML (Primary), Properties Files (Primary), Model (Secondary)
 
