@@ -174,13 +174,41 @@ view so the turtle can be updated.
 
 ### Noah's Use Cases
 
-1. User, having clicked English as starting language, clicks the button to exit splash screen and start simulation
+1. User uses an illegal command with two many arguments (PLUS 50 50 50)
+```java
+try {
+model.parse(commandString);
+} 
+catch (InvalidCommandException e) {
+showErrorMessage(e.getMessage()); //message would be along the lines of
+                                  // "INVALID NUMBER OF ARGUMENTS RECEIVED"
+}
+```
+2. Controller checks to see if recent command has been added to the shell (SLOGO 59 )
+```java
+//in controller
+if(hasCommandString()) {
+  String commandString = getCommandString();
+  model.parse(commandString);
+ }
+```
+3. After parsing the command MAKE CS 308 to create a variable, CS shows up on the variable screen (SLOGO 61)
+```java
+//in parse or a private helper method 
+execute(command); //type Command
+//in execute
+variables.add(new Variable(varName, varValue)); 
+listener.onUpdateVariable(varName, varValue);
+// in view implementation of SlogoListener
+variablePanel.addVariable(varName, varValue);
+```
 
-2. User executes chain of 3 commands, with second one invalid [fd 50 riggt 90 fd 50]
-
-3. User executes command MAKE CS 308 to create a variable, and it shows up on variable screen
-
-4. User clicks the “reset screen” button
+4. User clicks the “pause simulation” button (SLOGO 75)
+```java
+onPauseClicked(); //event handler is called
+// in onPauseClicked 
+animationRunning = false; //this boolean is checked every step()
+```
 
 ### Yash's Use Cases
 
@@ -207,10 +235,10 @@ view so the turtle can be updated.
 
 * Team Member #1: Noah Loewy
   * Model (Primary)
-* Team Member #2
+* Team Member #2: Bodhi Ravipati
   * View (Primary)
-* Team Member #3
-  * Controller, Model (Secondary)
-* Team Member #4
-  * XML, Properties Files, View (Secondary)
+* Team Member #3: Yash
+  * Controller, View (Secondary)
+* Team Member #4 Abishek
+  * XML (Primary), Properties Files (Primary), Model (Secondary)
 

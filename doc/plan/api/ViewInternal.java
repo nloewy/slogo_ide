@@ -69,4 +69,9 @@ public interface ViewInternal {
    * it as an panel.
    */
   public void displayHistoryPanel();
+
+  /**
+   * Resets all panels in the view
+   */
+  public void resetView();
 }
