@@ -12,17 +12,21 @@ public class View {
     private static final int height = 600;
     private static final int width = 1000;  
 
-    private Page page;
-    private Stage stage;
+    private static Page page;
+    private static Stage stage;
+    private static Scene scene;
 
     public View(Stage stage) {
-        this.stage = stage;
+        View.stage = stage;
     }
 
     public void run() throws FileNotFoundException {
         page = new SplashScreen(stage);
         page.setUp();
-        stage.setScene(new Scene(page.getGroup(), width, height));
+
+        scene = new Scene(page.getGroup(), width, height);
+        scene.getStylesheets().add(View.class.getResource("LightMode.css").toExternalForm());
+        stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
     }
