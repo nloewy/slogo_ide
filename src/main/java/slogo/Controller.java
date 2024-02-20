@@ -1,5 +1,7 @@
 package slogo;
 
+import java.io.FileNotFoundException;
+
 import javafx.stage.Stage;
 import slogo.view.View;
 
@@ -14,6 +16,10 @@ public class Controller {
     }
 
     public void run() {
-        view.run();
+        try {
+            view.run();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
