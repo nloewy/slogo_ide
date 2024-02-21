@@ -1,5 +1,7 @@
 package slogo.model;
 
+import slogo.model.api.TurtleRecord;
+
 public interface SlogoListener {
   /**
    * Called when a variable value is updated.
