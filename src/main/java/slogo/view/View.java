@@ -4,8 +4,6 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.print.attribute.HashDocAttributeSet;
-
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -13,7 +11,6 @@ import slogo.model.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.view.pages.MainScreen;
 import slogo.view.pages.Screen;
-import slogo.view.pages.StartScreen;
 
 public class View implements SlogoListener {
 
