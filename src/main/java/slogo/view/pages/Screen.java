@@ -15,14 +15,14 @@ public abstract class Screen {
 //     return result;
 //   }
 
-  /**
-   * Set up all the buttons, keyEvents and layouts by implementing the setup methods
-   */
-  public abstract void setUp();
+    /**
+     * Set up all the buttons, keyEvents and layouts by implementing the setup methods
+     */
+    public abstract void setUp();
 
-  /**
-   * return the group containing all the elements of the page
-   */
-  public abstract Group getGroup();
+    /**
+     * return the group containing all the elements of the page
+     */
+    public abstract Group getGroup();
 
 }

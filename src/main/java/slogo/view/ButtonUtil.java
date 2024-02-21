@@ -6,17 +6,14 @@ import javafx.scene.control.Button;
 
 public class ButtonUtil {
 
-  public static Button generateButton(String text,
-      int x,
-      int y,
-      EventHandler<ActionEvent> consumer) {
-    Button ret = new Button(text);
-    ret.setLayoutX(x);
-    ret.setLayoutY(y);
-    ret.setOnAction(consumer);
+    public static Button generateButton(String text, int x, int y, EventHandler<ActionEvent> consumer) {
+        Button ret = new Button(text);
+        ret.setLayoutX(x);
+        ret.setLayoutY(y);
+        ret.setOnAction(consumer);
 
-    ret.setId("test");
+        ret.setId("test");
 
-    return ret;
-  }
+        return ret;
+    }
 }

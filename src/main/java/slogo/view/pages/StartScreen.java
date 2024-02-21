@@ -40,10 +40,7 @@ public class StartScreen extends Screen {
         logo = new Image(new FileInputStream("src/main/resources/SlogoLOGO.png"));
         logoView = new ImageView(logo);
         root = new Group();
-        langOptions = FXCollections.observableArrayList(
-                "Option 1",
-                "Option 2",
-                "Option 3");
+        langOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
         langBox = new ComboBox<String>(langOptions);
         langPane = new TilePane(langBox);
 

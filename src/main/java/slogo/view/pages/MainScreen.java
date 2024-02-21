@@ -50,5 +50,5 @@ public class MainScreen extends Screen {
     public Group getGroup() {
         return root;
     }
-    
+
 }

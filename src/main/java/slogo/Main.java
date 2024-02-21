@@ -12,5 +12,5 @@ public class Main extends Application {
     public void start(Stage stage) {
         Controller controller = new Controller(stage);
         controller.run();
-    } 
+    }
 }

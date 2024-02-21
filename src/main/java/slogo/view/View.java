@@ -3,6 +3,7 @@ package slogo.view;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -15,13 +16,11 @@ import slogo.view.pages.Screen;
 public class View implements SlogoListener {
 
     private static final int height = 600;
-    private static final int width = 1000;  
+    private static final int width = 1000;
 
-    private static Screen page;
     private static Stage stage;
-    private static Scene scene;
 
-    private Map<String, Number> variables;
+    private final Map<String, Number> variables;
 
     private String lang;
     private static String commandString;
@@ -35,11 +34,11 @@ public class View implements SlogoListener {
     }
 
     public void run() throws FileNotFoundException {
-        page = new MainScreen(stage);
+        Screen page = new MainScreen(stage);
         page.setUp();
 
-        scene = new Scene(page.getGroup(), width, height);
-        scene.getStylesheets().add(View.class.getResource("LightMode.css").toExternalForm());
+        Scene scene = new Scene(page.getGroup(), width, height);
+        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
@@ -63,36 +62,36 @@ public class View implements SlogoListener {
     }
 
     /*
-   * Handles the user switching languages.
-   * //TODO
-   */
-  public void setLanguage(String lang) {
-    this.lang = lang;
-  }
-
-  /*
-   * Handles the user switching background color.
-   */ //TODO Test
-  public void setColor(Color color) {
-    View.stage.getScene().setFill(color);
-  }
-
-  public boolean hasCommandString() {
-    return commandString != "";
-  }
-
-  /*
-   * Returns the current text field body.
-   */
-  public String getCommandString() throws Exception{
-    if (hasCommandString()) {
-        String temp = commandString;
-        commandString = "";
-        return temp;
+     * Handles the user switching languages.
+     * //TODO
+     */
+    public void setLanguage(String lang) {
+        this.lang = lang;
     }
 
-    throw new Exception("No Command String Found!");
-  }
+    /*
+     * Handles the user switching background color.
+     */ //TODO Test
+    public void setColor(Color color) {
+        View.stage.getScene().setFill(color);
+    }
+
+    public boolean hasCommandString() {
+        return !commandString.isEmpty();
+    }
+
+    /*
+     * Returns the current text field body.
+     */
+    public String getCommandString() throws Exception {
+        if (hasCommandString()) {
+            String temp = commandString;
+            commandString = "";
+            return temp;
+        }
+
+        throw new Exception("No Command String Found!");
+    }
 
 //   /*
 //    * Gets the current exception, and shows
