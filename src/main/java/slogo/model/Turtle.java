@@ -20,6 +20,7 @@ public class Turtle {
     myHeading = 0.0;
   }
 
+
   public Turtle(int id, double x, double y, boolean pen, double heading) {
     myId = id;
     myX = x;
@@ -27,7 +28,8 @@ public class Turtle {
     myPen = pen;
     myHeading = heading;
   }
-
-
-
+  ;
+  public TurtleRecord getImmutableTurtle() {
+    return new TurtleRecord(myId, myX, myY, myPen, myHeading);
+  }
 }
