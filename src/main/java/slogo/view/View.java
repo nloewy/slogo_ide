@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import slogo.view.pages.Page;
 import slogo.view.pages.SplashScreen;
 
-public class View {
+public class View implements SlogoListener {
 
     private static final int height = 600;
     private static final int width = 1000;  
