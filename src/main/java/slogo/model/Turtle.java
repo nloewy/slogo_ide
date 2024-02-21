@@ -1,5 +1,7 @@
 package slogo.model;
 
+import slogo.model.api.TurtleRecord;
+
 /**
  * Represents the backend's model of a Turtle object
  * @author Noah Loewy
@@ -20,6 +22,7 @@ public class Turtle {
     myHeading = 0.0;
   }
 
+
   public Turtle(int id, double x, double y, boolean pen, double heading) {
     myId = id;
     myX = x;
@@ -27,7 +30,8 @@ public class Turtle {
     myPen = pen;
     myHeading = heading;
   }
-
-
-
+  ;
+  public TurtleRecord getImmutableTurtle() {
+    return new TurtleRecord(myId, myX, myY, myPen, myHeading);
+  }
 }
