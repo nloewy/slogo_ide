@@ -7,15 +7,22 @@ import java.util.List;
 public class Model {
 
   private List<Turtle> myTurtles;
+  private List<Variable> myVariables;
+
   private SlogoListener myListener;
   public Model(SlogoListener listener) {
     myTurtles = new ArrayList<>();
+    myVariables = new ArrayList<>();
     myTurtles.add(new Turtle(1));
     myListener = listener;
+
   }
 //TODO COMMENTS
 
-  public void parse(String commandStr){}
+  public void parse(String commandStr){
+
+
+  }
 
   /**
    * Opens a file dialog to load a new XML file.
