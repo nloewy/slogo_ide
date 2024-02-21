@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import slogo.view.ButtonUtil;
 import slogo.view.View;
 
-public class SplashScreen extends Page {
+public class StartScreen extends Screen {
 
     private final Group root;
 
@@ -33,7 +33,7 @@ public class SplashScreen extends Page {
     private final ObservableList<String> langOptions;
     private final TilePane langPane;
 
-    public SplashScreen(Stage stage) throws FileNotFoundException {
+    public StartScreen(Stage stage) throws FileNotFoundException {
         super();
         this.stage = stage;
 

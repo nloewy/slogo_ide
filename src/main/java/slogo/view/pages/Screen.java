@@ -2,7 +2,7 @@ package slogo.view.pages;
 
 import javafx.scene.Group;
 
-public abstract class Page {
+public abstract class Screen {
 
 //   public static final FileChooser FILE_CHOOSER = makeChooser(Main.DATA_FILE_EXTENSION);
 
