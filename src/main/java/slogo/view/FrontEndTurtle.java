@@ -11,8 +11,12 @@ public class FrontEndTurtle {
     Color penColor;
 
     double[] coords;
+    double heading = 0;
+    int myId;
+    boolean isPenDisplayed = false;
 
-    public FrontEndTurtle(Image image, Color color, double[] position) {
+    public FrontEndTurtle(int id, Image image, Color color, double[] position) {
+        myId = id;
         displayImage = image;
         display = new ImageView(displayImage);
         display.setPreserveRatio(true);
@@ -20,6 +24,26 @@ public class FrontEndTurtle {
 
         display.setLayoutX(position[0]);
         display.setLayoutY(position[1]);
+    }
+
+    public int getId() {
+        return myId;
+    }
+
+    public boolean isPenDisplayed() {
+        return isPenDisplayed;
+    }
+
+    public void setIsPenDisplayed(boolean state) {
+        isPenDisplayed = state;
+    }
+
+    public double getHeading() {
+        return heading;
+    }
+
+    public void setHeading(double newValue) {
+        heading = newValue;
     }
 
     public void replaceImage(Image newImage) {

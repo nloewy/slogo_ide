@@ -8,7 +8,6 @@ import slogo.model.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.view.pages.MainScreen;
 import slogo.view.pages.Screen;
-import slogo.view.pages.StartScreen;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,6 +20,7 @@ public class View implements SlogoListener {
 
     private static Stage stage;
     private static List<FrontEndTurtle> turtles;
+    private static List<String> commandList;
     private static String commandString;
     private final Map<String, Number> variables;
     private String lang;
@@ -33,10 +33,14 @@ public class View implements SlogoListener {
 
         variables = new HashMap<>();
         turtles = new ArrayList<>();
+        commandList = new ArrayList<>();
+    }
+
+    public static List<FrontEndTurtle> getTurtles() {
+        return turtles;
     }
 
     public void run() throws FileNotFoundException {
-        turtles.add(new FrontEndTurtle(new Image(new FileInputStream("src/main/resources/DefaultTurtle.png")), Color.BLACK, new double[]{0, 0}));
         Screen page = new MainScreen(stage);
         page.setUp();
 
@@ -46,10 +50,6 @@ public class View implements SlogoListener {
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
-    }
-
-    public static List<FrontEndTurtle> getTurtles() {
-        return turtles;
     }
 
     /*
@@ -78,6 +78,7 @@ public class View implements SlogoListener {
         if (hasCommandString()) {
             String temp = commandString;
             commandString = "";
+            commandList.add(temp);
             return temp;
         }
 
@@ -95,9 +96,21 @@ public class View implements SlogoListener {
         variables.put(variableName, newValue);
     }
 
+    //Backend should call this when adding a new turtle too. THis has to be called on initialization in the model.
     @Override
     public void onUpdateTurtleState(TurtleRecord turtleState) {
-
+        for (FrontEndTurtle turtle : turtles) {
+            if (turtle.getId() == turtleState.id()) {
+                turtle.setIsPenDisplayed(turtleState.pen());
+                turtle.setPosition(new double[]{turtleState.x(), turtleState.y()});
+                turtle.setHeading(turtleState.heading());
+            }
+        }
+        try {
+            turtles.add(new FrontEndTurtle(turtleState.id(), new Image(new FileInputStream("src/main/resources/DefaultTurtle.png")), Color.BLACK, new double[]{0, 0}));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
