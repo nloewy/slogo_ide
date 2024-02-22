@@ -17,6 +17,7 @@ public class SlogoModel implements Model {
     myListener = listener;
   }
   public void parse(String commandStr){
+
     //get List of Command objects using regex/inflection, lots of fun stuff
 
     //for each command object:
