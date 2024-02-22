@@ -1,24 +1,19 @@
 package slogo.view.pages;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import slogo.view.ButtonUtil;
-import slogo.view.View;
 
-public class SplashScreen extends Page {
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+public class StartScreen extends Screen {
 
     private final Group root;
 
@@ -33,17 +28,14 @@ public class SplashScreen extends Page {
     private final ObservableList<String> langOptions;
     private final TilePane langPane;
 
-    public SplashScreen(Stage stage) throws FileNotFoundException {
+    public StartScreen(Stage stage) throws FileNotFoundException {
         super();
         this.stage = stage;
 
         logo = new Image(new FileInputStream("src/main/resources/SlogoLOGO.png"));
         logoView = new ImageView(logo);
         root = new Group();
-        langOptions = FXCollections.observableArrayList(
-                "Option 1",
-                "Option 2",
-                "Option 3");
+        langOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
         langBox = new ComboBox<String>(langOptions);
         langPane = new TilePane(langBox);
 
@@ -82,3 +74,4 @@ public class SplashScreen extends Page {
         return root;
     }
 }
+
