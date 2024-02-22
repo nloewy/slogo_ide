@@ -1,30 +1,27 @@
-package slogo.model.command.query;
+package slogo.model.command.bool;
 
 import java.util.List;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class VisibleQueryCommand extends Command {
+public class GreaterThanCommand extends Command {
 
   private final Turtle myTurtle;
 
-  public VisibleQueryCommand(Turtle turtle) {
+  public GreaterThanCommand(Turtle turtle) {
     myTurtle = turtle;
   }
-
   public double execute(List<Double> arguments) {
-    if (myTurtle.getVisible()) {
-      return 1.0;
-    }
-    return 0.0;
+    return (arguments.get(0) > arguments.get(1)) ? 1 : 0;
 
   }
+  public int getNumberOfArgs() {
+    return 2;
+  }
 
-  @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
-    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
 
 }

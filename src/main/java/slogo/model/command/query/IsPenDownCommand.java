@@ -1,22 +1,24 @@
-package slogo.model.command.turtle;
+package slogo.model.command.query;
 
 import java.util.List;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class HideTurtleCommand extends Command {
+public class IsPenDownCommand extends Command {
 
   private final Turtle myTurtle;
 
-  public HideTurtleCommand(Turtle turtle) {
+  public IsPenDownCommand(Turtle turtle) {
     myTurtle = turtle;
   }
 
-  @Override
   public double execute(List<Double> arguments) {
-    myTurtle.setVisible(false);
+    if (myTurtle.getPen()) {
+      return 1.0;
+    }
     return 0.0;
+
   }
 
   public int getNumberOfArgs() {
@@ -27,6 +29,5 @@ public class HideTurtleCommand extends Command {
     super.notifyListener(listener, value);
     listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
-
 
 }

@@ -5,22 +5,22 @@ import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class PenDownQueryCommand extends Command {
+public class XcoordinateCommand extends Command {
 
   private final Turtle myTurtle;
 
-  public PenDownQueryCommand(Turtle turtle) {
+  public XcoordinateCommand(Turtle turtle) {
     myTurtle = turtle;
   }
 
   public double execute(List<Double> arguments) {
-    if (myTurtle.getPen()) {
-      return 1.0;
-    }
-    return 0.0;
+    return myTurtle.getX();
 
   }
 
+  public int getNumberOfArgs() {
+    return 0;
+  }
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

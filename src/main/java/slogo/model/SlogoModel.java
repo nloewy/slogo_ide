@@ -3,6 +3,8 @@ package slogo.model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,30 +12,52 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import slogo.model.api.Model;
+import slogo.model.command.Command;
 
 public class SlogoModel implements Model {
 
-  private List<Turtle> myTurtles;
-  private List<Variable> myVariables;
-  private SlogoListener myListener;
+  private final List<Turtle> myTurtles;
+  private final List<Variable> myVariables;
+  private final SlogoListener myListener;
   private Map<String,String> syntaxMap;
-
+  private Map<String,String> commandMap;
+  private List<Node> myNodes;
+  private Node currentNode;
   public SlogoModel(SlogoListener listener) {
     myTurtles = new ArrayList<>();
     myVariables = new ArrayList<>();
     myListener = listener;
     syntaxMap = getRegexMap();
+    commandMap = getCommandMap();
+    myNodes = new ArrayList<>();
+    currentNode = null;
   }
 
-  public void parse(String commandStr) {
-    List<String> tokens = Arrays.asList(commandStr.split("\\s+"));
+  public void parse(String commandStr) throws IllegalArgumentException {
+    String[] tokens = commandStr.split("\\s+");
     for(String token : tokens) {
       for(String key : syntaxMap.keySet()) {
         if(token.matches(key)) {
-          System.out.println(syntaxMap.get(key) + " " + token);
+          if(currentNode == null) {
+            if(!(syntaxMap.get(key).equals("Command"))) {
+              throw new IllegalArgumentException("Command Required");
+            }
+            else{
+              try {
+                String[] typeToken = commandMap.get(token).split(".");
+                Class<?> myInstance = Class.forName("command." + typeToken[0] +"." + typeToken[1] + "Command");
+                Constructor<?> construtor = myInstance.getConstructor(new Class[] {Turtle.class});
+                Command cmd = (Command) construtor.newInstance(myTurtles.get(0));
+                cmd.getNumberOf()
+              }
+              catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+              }
+            }
+          }
+
         }
       }
-
     }
   }
 
@@ -57,6 +81,29 @@ public class SlogoModel implements Model {
     return syntaxMap;
   }
 
+
+  private Map<String,String> getCommandMap() {
+    String syntaxNames = "src/main/resources/slogo/example/languages/English.properties";
+    Properties properties = new Properties();
+    commandMap = new HashMap<>();
+    try {
+      File filePath = new File(syntaxNames);
+      properties.load(new FileInputStream(filePath));
+      for (String commandName : properties.stringPropertyNames()) {
+        String[] aliases = properties.getProperty(commandName).split("|");
+        for(String alias: aliases) {
+          commandMap.put(alias, commandName);
+        }
+      }
+      System.out.println("Commands as Map:");
+      for (Map.Entry<String, String> entry : commandMap.entrySet()) {
+        System.out.println(entry.getKey() + " = " + entry.getValue());
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return commandMap;
+  }
 
   @Override
   public File loadXml(String path) {

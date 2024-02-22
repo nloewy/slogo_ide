@@ -5,11 +5,11 @@ import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class TowardsCommand extends Command {
+public class SetTowardsCommand extends Command {
 
   private final Turtle myTurtle;
 
-  public TowardsCommand(Turtle turtle) {
+  public SetTowardsCommand(Turtle turtle) {
     myTurtle = turtle;
   }
 
@@ -22,6 +22,9 @@ public class TowardsCommand extends Command {
     return (myTurtle.getHeading() - oldHeading + 360) % 360;
   }
 
+  public int getNumberOfArgs() {
+    return 2;
+  }
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

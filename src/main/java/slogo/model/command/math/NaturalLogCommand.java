@@ -2,11 +2,16 @@ package slogo.model.command.math;
 
 import java.util.List;
 import slogo.model.SlogoListener;
+import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class LogCommand extends Command {
+public class NaturalLogCommand extends Command {
 
+  private final Turtle myTurtle;
 
+  public NaturalLogCommand(Turtle turtle) {
+    myTurtle = turtle;
+  }
   public double execute(List<Double> arguments) {
     double val = arguments.get(0);
     if (val <= 0) {
@@ -15,6 +20,9 @@ public class LogCommand extends Command {
 
     }
     return Math.log(val);
+  }
+  public int getNumberOfArgs() {
+    return 1;
   }
 
   public void notifyListener(SlogoListener listener, double value) {

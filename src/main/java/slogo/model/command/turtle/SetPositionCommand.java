@@ -6,11 +6,11 @@ import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class SetXyCommand extends Command {
+public class SetPositionCommand extends Command {
 
   private final Turtle myTurtle;
 
-  public SetXyCommand(Turtle turtle) {
+  public SetPositionCommand(Turtle turtle) {
     myTurtle = turtle;
   }
 
@@ -21,6 +21,10 @@ public class SetXyCommand extends Command {
     myTurtle.setX(arguments.get(0));
     myTurtle.setY(arguments.get(1));
     return MathUtils.dist(myTurtle.getX(), myTurtle.getY(), currentX, currentY);
+  }
+
+  public int getNumberOfArgs() {
+    return 2;
   }
 
   @Override

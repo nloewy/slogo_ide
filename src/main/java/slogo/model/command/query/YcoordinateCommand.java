@@ -5,19 +5,22 @@ import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class XcorCommand extends Command {
+public class YcoordinateCommand extends Command {
 
   private final Turtle myTurtle;
 
-  public XcorCommand(Turtle turtle) {
+  public YcoordinateCommand(Turtle turtle) {
     myTurtle = turtle;
   }
 
   public double execute(List<Double> arguments) {
-    return myTurtle.getX();
+    return myTurtle.getY();
 
   }
 
+  public int getNumberOfArgs() {
+    return 0;
+  }
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

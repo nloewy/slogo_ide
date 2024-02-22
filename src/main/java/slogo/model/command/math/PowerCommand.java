@@ -2,15 +2,25 @@ package slogo.model.command.math;
 
 import java.util.List;
 import slogo.model.SlogoListener;
+import slogo.model.Turtle;
 import slogo.model.command.Command;
 
 public class PowerCommand extends Command {
+  private final Turtle myTurtle;
+
+  public PowerCommand(Turtle turtle) {
+    myTurtle = turtle;
+  }
 
   public double execute(List<Double> arguments) {
     double base = arguments.get(0);
     double exp = arguments.get(1);
     return Math.pow(base, exp);
 
+  }
+
+  public int getNumberOfArgs() {
+    return 2;
   }
 
   public void notifyListener(SlogoListener listener, double value) {
