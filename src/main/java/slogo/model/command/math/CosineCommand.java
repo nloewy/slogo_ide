@@ -12,6 +12,7 @@ public class CosineCommand extends Command {
     return Math.cos(MathUtils.toRadians(arguments.get(0)));
 
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

@@ -9,7 +9,7 @@ import slogo.model.command.Command;
 
 public class ClearScreenCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public ClearScreenCommand(Turtle turtle) {
     myTurtle = turtle;

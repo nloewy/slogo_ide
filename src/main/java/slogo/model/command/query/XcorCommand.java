@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 
 public class XcorCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public XcorCommand(Turtle turtle) {
     myTurtle = turtle;
@@ -17,6 +17,7 @@ public class XcorCommand extends Command {
     return myTurtle.getX();
 
   }
+
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

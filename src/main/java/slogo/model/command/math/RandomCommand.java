@@ -8,11 +8,11 @@ public class RandomCommand extends Command {
 
 
   public double execute(List<Double> arguments) {
-    double rand = Math.max(arguments.get(0),0);
+    double rand = Math.max(arguments.get(0), 0);
     //if (rand<0) {
     //    throw new IllegalArgumentException("Max must be positive");
     //  }
-    return Math.random()*rand;
+    return Math.random() * rand;
   }
 
   public void notifyListener(SlogoListener listener, double value) {

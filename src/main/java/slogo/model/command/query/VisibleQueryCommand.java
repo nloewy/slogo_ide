@@ -7,17 +7,20 @@ import slogo.model.command.Command;
 
 public class VisibleQueryCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public VisibleQueryCommand(Turtle turtle) {
     myTurtle = turtle;
   }
 
   public double execute(List<Double> arguments) {
-    if (myTurtle.getVisible()) {return 1.0;}
+    if (myTurtle.getVisible()) {
+      return 1.0;
+    }
     return 0.0;
 
   }
+
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

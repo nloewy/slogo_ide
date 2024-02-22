@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 
 public class SetHeadingCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public SetHeadingCommand(Turtle turtle) {
     myTurtle = turtle;
@@ -18,8 +18,9 @@ public class SetHeadingCommand extends Command {
     double heading = arguments.get(0);
     double oldHeading = myTurtle.getHeading();
     myTurtle.setHeading(heading % 360);
-    return (myTurtle.getHeading() - oldHeading + 360) % 360 ;
+    return (myTurtle.getHeading() - oldHeading + 360) % 360;
   }
+
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

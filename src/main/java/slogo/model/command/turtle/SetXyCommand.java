@@ -8,7 +8,7 @@ import slogo.model.command.Command;
 
 public class SetXyCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public SetXyCommand(Turtle turtle) {
     myTurtle = turtle;
@@ -22,6 +22,7 @@ public class SetXyCommand extends Command {
     myTurtle.setY(arguments.get(1));
     return MathUtils.dist(myTurtle.getX(), myTurtle.getY(), currentX, currentY);
   }
+
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

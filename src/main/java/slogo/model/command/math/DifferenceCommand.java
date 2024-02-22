@@ -11,6 +11,7 @@ public class DifferenceCommand extends Command {
     return arguments.get(0) - arguments.get(1);
 
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

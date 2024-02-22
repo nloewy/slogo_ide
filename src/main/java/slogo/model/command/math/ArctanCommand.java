@@ -9,8 +9,9 @@ public class ArctanCommand extends Command {
 
 
   public double execute(List<Double> arguments) {
-      return Math.atan(MathUtils.toRadians(arguments.get(0)));
+    return Math.atan(MathUtils.toRadians(arguments.get(0)));
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 
 public class TowardsCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public TowardsCommand(Turtle turtle) {
     myTurtle = turtle;
@@ -21,6 +21,7 @@ public class TowardsCommand extends Command {
     myTurtle.setHeading(Math.toDegrees(Math.atan2(dy, dx)) - 90);
     return (myTurtle.getHeading() - oldHeading + 360) % 360;
   }
+
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

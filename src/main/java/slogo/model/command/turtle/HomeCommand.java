@@ -8,7 +8,7 @@ import slogo.model.command.Command;
 
 public class HomeCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public HomeCommand(Turtle turtle) {
     myTurtle = turtle;

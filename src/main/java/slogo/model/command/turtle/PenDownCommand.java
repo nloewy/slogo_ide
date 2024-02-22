@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 
 public class PenDownCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public PenDownCommand(Turtle turtle) {
     myTurtle = turtle;

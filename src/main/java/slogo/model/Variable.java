@@ -2,8 +2,8 @@ package slogo.model;
 
 public class Variable {
 
-  private String myName;
-  private double myValue;
+  private final String myName;
+  private final double myValue;
 
   public Variable(String name) {
     this(name, 0.0);

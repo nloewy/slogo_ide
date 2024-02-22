@@ -21,6 +21,7 @@ public class TangentCommand extends Command {
     }
     return Math.tan(angle);
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

@@ -12,6 +12,7 @@ public class PowerCommand extends Command {
     return Math.pow(base, exp);
 
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

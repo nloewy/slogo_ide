@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 
 public class HideTurtleCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public HideTurtleCommand(Turtle turtle) {
     myTurtle = turtle;
@@ -18,6 +18,7 @@ public class HideTurtleCommand extends Command {
     myTurtle.setVisible(false);
     return 0.0;
   }
+
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

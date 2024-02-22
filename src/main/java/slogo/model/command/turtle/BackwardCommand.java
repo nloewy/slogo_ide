@@ -8,11 +8,12 @@ import slogo.model.command.Command;
 
 public class BackwardCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public BackwardCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Double> arguments) {
     double pixels = arguments.get(0);
     myTurtle.setX(myTurtle.getX() - pixels * Math.sin(MathUtils.toRadians(myTurtle.getHeading())));

@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 public class RandomRangeCommand extends Command {
 
   public double execute(List<Double> arguments) {
-    if(arguments.get(0) > arguments.get(1)) {
+    if (arguments.get(0) > arguments.get(1)) {
       return 0.0;
       //    throw new IllegalArgumentException("Min must be less than Max");
     }

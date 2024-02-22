@@ -12,6 +12,7 @@ public class SineCommand extends Command {
     return Math.sin(MathUtils.toRadians(arguments.get(0)));
 
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

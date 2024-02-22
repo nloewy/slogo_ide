@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 
 public class PenUpCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public PenUpCommand(Turtle turtle) {
     myTurtle = turtle;
@@ -18,6 +18,7 @@ public class PenUpCommand extends Command {
     myTurtle.setPen(false);
     return 0.0;
   }
+
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

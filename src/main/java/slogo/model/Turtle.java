@@ -4,14 +4,15 @@ import slogo.model.api.TurtleRecord;
 
 /**
  * Represents the backend's model of a Turtle object
+ *
  * @author Noah Loewy
  */
 public class Turtle {
 
-  private int myId;
+  private final int myId;
   private double myX;
   private double myY;
-  private boolean myPen;
+  private final boolean myPen;
   private boolean myVisible;
   private double myHeading; //range [0.0,360.0)
 
@@ -49,27 +50,29 @@ public class Turtle {
     this.myX = myX;
   }
 
-  public void setHeading(double myHeading) {
-    this.myHeading = myHeading;
-  }
   public double getHeading() {
     return myHeading;
+  }
+
+  public void setHeading(double myHeading) {
+    this.myHeading = myHeading;
   }
 
   public TurtleRecord getImmutableTurtle() {
     return new TurtleRecord(myId, myX, myY, myPen, myVisible, myHeading);
   }
 
-  public void setVisible(boolean b) {
+  public boolean getPen() {
+    return myPen;
   }
 
   public void setPen(boolean b) {
   }
 
-  public boolean getPen() {
-    return myPen;
-  }
   public boolean getVisible() {
     return myVisible;
+  }
+
+  public void setVisible(boolean b) {
   }
 }

@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 
 public class HeadingCommand extends Command {
 
-  private Turtle myTurtle;
+  private final Turtle myTurtle;
 
   public HeadingCommand(Turtle turtle) {
     myTurtle = turtle;
@@ -17,6 +17,7 @@ public class HeadingCommand extends Command {
     return myTurtle.getHeading();
 
   }
+
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
