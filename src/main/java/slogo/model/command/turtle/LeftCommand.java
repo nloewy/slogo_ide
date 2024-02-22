@@ -1,6 +1,7 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
+import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
@@ -18,4 +19,8 @@ public class LeftCommand extends Command {
     myTurtle.setHeading((myTurtle.getHeading() - degrees) % 360);
     return degrees;
   }
+  public void notifyListener(SlogoListener listener, double value) {
+    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle(), value);
+  }
+
 }

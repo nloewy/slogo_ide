@@ -1,6 +1,7 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
+import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
@@ -17,5 +18,9 @@ public class HideTurtleCommand extends Command {
     myTurtle.setVisible(false);
     return 0.0;
   }
+  public void notifyListener(SlogoListener listener, double value) {
+    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle(), value);
+  }
+
 
 }

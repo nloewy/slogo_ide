@@ -2,6 +2,7 @@ package slogo.model.command.turtle;
 
 import java.util.List;
 import slogo.mathutils.MathUtils;
+import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
@@ -18,4 +19,8 @@ public class ForwardCommand extends Command {
     myTurtle.setY(myTurtle.getY()+ pixels * Math.cos(MathUtils.toRadians(myTurtle.getHeading())));
     return pixels;
   }
+  public void notifyListener(SlogoListener listener, double value) {
+    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle(), value);
+  }
+
 }
