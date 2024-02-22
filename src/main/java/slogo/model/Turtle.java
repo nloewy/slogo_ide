@@ -12,6 +12,7 @@ public class Turtle {
   private double myX;
   private double myY;
   private boolean myPen;
+  private boolean myVisible;
   private double myHeading; //range [0.0,360.0)
 
 
@@ -23,11 +24,12 @@ public class Turtle {
     myHeading = 0.0;
   }
 
-  public Turtle(int id, double x, double y, boolean pen, double heading) {
+  public Turtle(int id, double x, double y, boolean pen, boolean visible, double heading) {
     myId = id;
     myX = x;
     myY = y;
     myPen = pen;
+    myVisible = visible;
     myHeading = heading;
   }
 
@@ -56,5 +58,11 @@ public class Turtle {
 
   public TurtleRecord getImmutableTurtle() {
     return new TurtleRecord(myId, myX, myY, myPen, myHeading);
+  }
+
+  public void setVisible(boolean b) {
+  }
+
+  public void setPen(boolean b) {
   }
 }
