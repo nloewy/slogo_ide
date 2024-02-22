@@ -19,10 +19,6 @@ public class YcoordinateCommand extends Command {
 
   }
 
-  public int getNumberOfArgs() {
-    return 0;
-  }
-
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

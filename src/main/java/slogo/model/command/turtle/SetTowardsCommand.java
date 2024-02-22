@@ -25,10 +25,6 @@ public class SetTowardsCommand extends Command {
     return (myTurtle.getHeading() - oldHeading + 360) % 360;
   }
 
-  public int getNumberOfArgs() {
-    return 2;
-  }
-
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

@@ -51,8 +51,10 @@ public class SlogoModel implements Model {
             } else {
               try {
                 String[] typeToken = commandMap.get(token).split("\\.");
-                Node node = new CommandNode(
-                    "command." + typeToken[0] + "." + typeToken[1] + "Command", myTurtles.get(0));
+                //create CommandNode or whatever node we should using reflection yay!!
+                //then we execute the root command (its like a list of trees)
+                //after each execution, tell listener, but dont give final value back to the view until we get the outermost command
+                Node node = new CommandNode("command." + typeToken[0] + "." + typeToken[1] + "Command", myTurtles.get(0));
               } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
                        InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);

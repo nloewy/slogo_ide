@@ -26,10 +26,6 @@ public class QuotientCommand extends Command {
     return arguments.get(0).getValue() / arguments.get(1).getValue();
   }
 
-  public int getNumberOfArgs() {
-    return 2;
-  }
-
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

@@ -24,10 +24,6 @@ public class SquareRootCommand extends Command {
     return Math.sqrt(val);
   }
 
-  public int getNumberOfArgs() {
-    return 1;
-  }
-
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

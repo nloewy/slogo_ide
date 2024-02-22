@@ -21,10 +21,6 @@ public class EqualCommand extends Command {
 
   }
 
-  public int getNumberOfArgs() {
-    return 2;
-  }
-
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

@@ -25,10 +25,6 @@ public class RandomRangeCommand extends Command {
         arguments.get(0).getValue()) * Math.random();
   }
 
-  public int getNumberOfArgs() {
-    return 2;
-  }
-
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

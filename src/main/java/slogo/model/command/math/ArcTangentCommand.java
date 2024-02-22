@@ -21,9 +21,6 @@ public class ArcTangentCommand extends Command {
     return Math.atan(MathUtils.toRadians(arguments.get(0).getValue()));
   }
 
-  public int getNumberOfArgs() {
-    return 1;
-  }
 
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

@@ -24,10 +24,6 @@ public class RandomCommand extends Command {
     return Math.random() * rand;
   }
 
-  public int getNumberOfArgs() {
-    return 1;
-  }
-
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

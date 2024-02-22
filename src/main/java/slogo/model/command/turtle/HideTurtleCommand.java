@@ -20,10 +20,6 @@ public class HideTurtleCommand extends Command {
     return 0.0;
   }
 
-  public int getNumberOfArgs() {
-    return 0;
-  }
-
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
