@@ -23,6 +23,7 @@ public class SlogoModel implements Model {
   private Map<String,String> commandMap;
   private List<Node> myNodes;
   private Node currentNode;
+  private int currentNodeInd;
   public SlogoModel(SlogoListener listener) {
     myTurtles = new ArrayList<>();
     myVariables = new ArrayList<>();
@@ -33,7 +34,13 @@ public class SlogoModel implements Model {
     currentNode = null;
   }
 
+  private void resetTrees() {
+    myNodes = new ArrayList<>();
+    currentNodeInd = 0;
+    currentNode = null;
+  }
   public void parse(String commandStr) throws IllegalArgumentException {
+    resetTrees();
     String[] tokens = commandStr.split("\\s+");
     for(String token : tokens) {
       for(String key : syntaxMap.keySet()) {
@@ -44,18 +51,16 @@ public class SlogoModel implements Model {
             }
             else{
               try {
-                String[] typeToken = commandMap.get(token).split(".");
+                String[] typeToken = commandMap.get(token).split("\\.");
                 Class<?> myInstance = Class.forName("command." + typeToken[0] +"." + typeToken[1] + "Command");
-                Constructor<?> construtor = myInstance.getConstructor(new Class[] {Turtle.class});
-                Command cmd = (Command) construtor.newInstance(myTurtles.get(0));
-                cmd.getNumberOf()
+                Constructor<?> constructor = myInstance.getConstructor(new Class[] {Turtle.class});
+                Command cmd = (Command) constructor.newInstance(myTurtles.get(0));
               }
               catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
               }
             }
           }
-
         }
       }
     }
@@ -90,7 +95,7 @@ public class SlogoModel implements Model {
       File filePath = new File(syntaxNames);
       properties.load(new FileInputStream(filePath));
       for (String commandName : properties.stringPropertyNames()) {
-        String[] aliases = properties.getProperty(commandName).split("|");
+        String[] aliases = properties.getProperty(commandName).split("\\|");
         for(String alias: aliases) {
           commandMap.put(alias, commandName);
         }
