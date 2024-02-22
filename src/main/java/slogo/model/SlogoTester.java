@@ -8,7 +8,7 @@ public class SlogoTester {
   public static void main(String[] args) {
     Model s = new SlogoModel(new SlogoListener() {
       @Override
-      public void onUpdateValue(String variableName) {
+      public void onUpdateValue(String variableName, Number newValue) {
 
       }
 

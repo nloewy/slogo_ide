@@ -9,7 +9,7 @@ public interface SlogoListener {
    *
    * @param variableName The name of the variable.
    */
-  void onUpdateValue(String variableName);
+  void onUpdateValue(String variableName, Number newValue);
 
   /**
    * Called by a command that involves updating the state of the turtle

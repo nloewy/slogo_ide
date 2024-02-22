@@ -80,8 +80,9 @@ public class View implements SlogoListener {
     }
 
     @Override
-    public void onUpdateValue(String variableName) {
-
+    public void onUpdateValue(String variableName, Number newValue) {
+        variables.remove(variableName);
+        variables.put(variableName, newValue);
     }
 
     @Override
