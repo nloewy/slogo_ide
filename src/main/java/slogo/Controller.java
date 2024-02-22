@@ -1,25 +1,35 @@
 package slogo;
 
-import java.io.FileNotFoundException;
-
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import slogo.view.View;
+import slogo.view.pages.MainScreen;
+import slogo.view.pages.Screen;
+
+import java.io.FileNotFoundException;
+import java.util.Objects;
 
 public class Controller {
 
-    private Stage stage;
-    private View view;
+    private static final int height = 600;
+    private static final int width = 1000;
+    private final Stage stage;
+    private final View view;
 
     public Controller(Stage stage) {
         this.stage = stage;
         view = new View(stage);
     }
 
-    public void run() {
-        try {
-            view.run();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public void run() throws FileNotFoundException {
+        Screen page = new MainScreen(stage);
+        page.setUp();
+
+        Scene scene = new Scene(page.getGroup(), width, height);
+        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
+
+        stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.show();
     }
 }

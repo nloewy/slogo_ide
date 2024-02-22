@@ -1,22 +1,19 @@
 package slogo.view;
 
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import slogo.model.SlogoListener;
 import slogo.model.api.TurtleRecord;
-import slogo.view.pages.MainScreen;
-import slogo.view.pages.Screen;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class View implements SlogoListener {
-
-    private static final int height = 600;
-    private static final int width = 1000;
 
     private static Stage stage;
     private static List<FrontEndTurtle> turtles;
@@ -44,18 +41,6 @@ public class View implements SlogoListener {
 
     public static List<FrontEndTurtle> getTurtles() {
         return turtles;
-    }
-
-    public void run() throws FileNotFoundException {
-        Screen page = new MainScreen(stage);
-        page.setUp();
-
-        Scene scene = new Scene(page.getGroup(), width, height);
-        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
-
-        stage.setScene(scene);
-        stage.setMaximized(true);
-        stage.show();
     }
 
     /*
@@ -103,6 +88,7 @@ public class View implements SlogoListener {
     }
 
     //Backend should call this when adding a new turtle too. THis has to be called on initialization in the model.
+    //Ready for multiple turtles
     @Override
     public void onUpdateTurtleState(TurtleRecord turtleState) {
         for (FrontEndTurtle turtle : turtles) {

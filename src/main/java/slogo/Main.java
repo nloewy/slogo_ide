@@ -3,6 +3,8 @@ package slogo;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+
 public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
@@ -11,6 +13,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         Controller controller = new Controller(stage);
-        controller.run();
+        try {
+            controller.run();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
