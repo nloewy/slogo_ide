@@ -15,8 +15,8 @@ public class TangentCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    double angle = MathUtils.toRadians(arguments.get(0));
-    if (Math.abs(arguments.get(0) % Math.PI) == Math.PI / 2) {
+    double angle = MathUtils.toRadians(arguments.get(0).getValue());
+    if (Math.abs(arguments.get(0).getValue() % Math.PI) == Math.PI / 2) {
       return 0.0;
       //throw new IllegalArgumentException("Illegal Value for Tangent Function");
       //if (arguments.get(0) % (2 * Math.PI) > Math.PI) {

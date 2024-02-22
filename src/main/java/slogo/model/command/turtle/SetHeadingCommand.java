@@ -16,7 +16,7 @@ public class SetHeadingCommand extends Command {
 
   @Override
   public double execute(List<Node> arguments) {
-    double heading = arguments.get(0);
+    double heading = arguments.get(0).getValue();
     double oldHeading = myTurtle.getHeading();
     myTurtle.setHeading(heading % 360);
     return (myTurtle.getHeading() - oldHeading + 360) % 360;

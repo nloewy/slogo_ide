@@ -14,7 +14,7 @@ public class OrCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    return (!(arguments.get(0) == 0) || !(arguments.get(1) == 0)) ? 1 : 0;
+    return (!(arguments.get(0).getValue() == 0) || !(arguments.get(1).getValue() == 0)) ? 1 : 0;
 
   }
 

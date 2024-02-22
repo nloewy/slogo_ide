@@ -14,7 +14,7 @@ public class SumCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    return arguments.get(0) + arguments.get(1);
+    return arguments.get(0).getValue() + arguments.get(1).getValue();
 
   }
 

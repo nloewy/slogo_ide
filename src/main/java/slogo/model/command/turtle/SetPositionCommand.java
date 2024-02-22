@@ -19,8 +19,8 @@ public class SetPositionCommand extends Command {
   public double execute(List<Node> arguments) {
     double currentX = myTurtle.getX();
     double currentY = myTurtle.getY();
-    myTurtle.setX(arguments.get(0));
-    myTurtle.setY(arguments.get(1));
+    myTurtle.setX(arguments.get(0).getValue());
+    myTurtle.setY(arguments.get(1).getValue());
     return MathUtils.dist(myTurtle.getX(), myTurtle.getY(), currentX, currentY);
   }
 

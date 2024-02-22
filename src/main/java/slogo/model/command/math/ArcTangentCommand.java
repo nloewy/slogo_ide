@@ -15,7 +15,7 @@ public class ArcTangentCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    return Math.atan(MathUtils.toRadians(arguments.get(0)));
+    return Math.atan(MathUtils.toRadians(arguments.get(0).getValue()));
   }
 
   public int getNumberOfArgs() {

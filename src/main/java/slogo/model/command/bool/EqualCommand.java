@@ -14,7 +14,7 @@ public class EqualCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    return (arguments.get(0).doubleValue() == arguments.get(1).doubleValue()) ? 1 : 0;
+    return (arguments.get(0).getValue() == arguments.get(1).getValue()) ? 1 : 0;
 
   }
   public int getNumberOfArgs() {

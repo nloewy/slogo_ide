@@ -14,7 +14,7 @@ public class NaturalLogCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    double val = arguments.get(0);
+    double val = arguments.get(0).getValue();
     if (val <= 0) {
       return 0.0;
       //    throw new IllegalArgumentException("expr must be non-negative");

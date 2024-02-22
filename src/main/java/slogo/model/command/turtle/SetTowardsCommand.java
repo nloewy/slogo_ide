@@ -16,8 +16,8 @@ public class SetTowardsCommand extends Command {
 
   @Override
   public double execute(List<Node> arguments) {
-    double dx = arguments.get(0) - myTurtle.getX();
-    double dy = arguments.get(1) - myTurtle.getY();
+    double dx = arguments.get(0).getValue() - myTurtle.getX();
+    double dy = arguments.get(1).getValue() - myTurtle.getY();
     double oldHeading = myTurtle.getHeading();
     myTurtle.setHeading(Math.toDegrees(Math.atan2(dy, dx)) - 90);
     return (myTurtle.getHeading() - oldHeading + 360) % 360;

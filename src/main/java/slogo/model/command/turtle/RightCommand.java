@@ -16,7 +16,7 @@ public class RightCommand extends Command {
 
   @Override
   public double execute(List<Node> arguments) {
-    double degrees = arguments.get(0);
+    double degrees = arguments.get(0).getValue();
     myTurtle.setHeading((myTurtle.getHeading() + degrees) % 360);
     return degrees;
   }

@@ -14,7 +14,7 @@ public class GreaterThanCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    return (arguments.get(0) > arguments.get(1)) ? 1 : 0;
+    return (arguments.get(0).getValue() > arguments.get(1).getValue()) ? 1 : 0;
 
   }
   public int getNumberOfArgs() {

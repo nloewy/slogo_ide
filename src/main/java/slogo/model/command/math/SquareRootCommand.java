@@ -15,7 +15,7 @@ public class SquareRootCommand extends Command {
   }
 
   public double execute(List<Node> arguments) {
-    double val = Math.max(arguments.get(0), 0);
+    double val = Math.max(arguments.get(0).getValue(), 0);
     //if (val<0) {
     //    throw new IllegalArgumentException("expr must be non-negative");
     //  }

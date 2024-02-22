@@ -14,7 +14,7 @@ public class RandomCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    double rand = Math.max(arguments.get(0), 0);
+    double rand = Math.max(arguments.get(0).getValue(), 0);
     //if (rand<0) {
     //    throw new IllegalArgumentException("Max must be positive");
     //  }

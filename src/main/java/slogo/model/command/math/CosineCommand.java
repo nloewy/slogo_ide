@@ -15,7 +15,7 @@ public class CosineCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    return Math.cos(MathUtils.toRadians(arguments.get(0)));
+    return Math.cos(MathUtils.toRadians(arguments.get(0).getValue()));
 
   }
 

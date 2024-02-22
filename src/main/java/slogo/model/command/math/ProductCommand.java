@@ -15,7 +15,7 @@ public class ProductCommand extends Command {
   }
 
   public double execute(List<Node> arguments) {
-    return arguments.get(0) * arguments.get(1);
+    return arguments.get(0).getValue() * arguments.get(1).getValue();
 
   }
   public int getNumberOfArgs() {

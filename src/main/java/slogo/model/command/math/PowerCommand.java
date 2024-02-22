@@ -14,8 +14,8 @@ public class PowerCommand extends Command {
   }
 
   public double execute(List<Node> arguments) {
-    double base = arguments.get(0);
-    double exp = arguments.get(1);
+    double base = arguments.get(0).getValue();
+    double exp = arguments.get(1).getValue();
     return Math.pow(base, exp);
 
   }

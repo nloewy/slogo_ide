@@ -15,7 +15,7 @@ public class SineCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    return Math.sin(MathUtils.toRadians(arguments.get(0)));
+    return Math.sin(MathUtils.toRadians(arguments.get(0).getValue()));
 
   }
 

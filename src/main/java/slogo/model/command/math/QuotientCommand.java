@@ -15,13 +15,13 @@ public class QuotientCommand extends Command {
   }
 
   public double execute(List<Node> arguments) {
-    if (arguments.get(1) == 0) {
+    if (arguments.get(1).getValue() == 0) {
       return 0;
       //  throw new ArithmeticException("Divisor must be non-zero");
       //  return 0.0
       //}
     }
-    return arguments.get(0) / arguments.get(1);
+    return arguments.get(0).getValue() / arguments.get(1).getValue();
   }
 
   public int getNumberOfArgs() {

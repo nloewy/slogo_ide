@@ -14,11 +14,12 @@ public class RandomRangeCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    if (arguments.get(0) > arguments.get(1)) {
+    if (arguments.get(0).getValue() > arguments.get(1).getValue()) {
       return 0.0;
       //    throw new IllegalArgumentException("Min must be less than Max");
     }
-    return arguments.get(0) + (arguments.get(1) - arguments.get(0)) * Math.random();
+    return arguments.get(0).getValue() + (arguments.get(1).getValue() -
+        arguments.get(0).getValue()) * Math.random();
   }
   public int getNumberOfArgs() {
     return 2;

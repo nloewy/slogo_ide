@@ -14,7 +14,7 @@ public class MinusCommand extends Command {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments) {
-    return -1 * arguments.get(0);
+    return -1 * arguments.get(0).getValue();
   }
 
   public int getNumberOfArgs() {
