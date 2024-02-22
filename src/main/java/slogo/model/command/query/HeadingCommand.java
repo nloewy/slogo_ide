@@ -1,6 +1,7 @@
 package slogo.model.command.query;
 
 import java.util.List;
+import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
@@ -13,9 +14,13 @@ public class HeadingCommand extends Command {
     myTurtle = turtle;
   }
 
-  public double execute(List<Double> arguments) {
+  public double execute(List<Node> arguments) {
     return myTurtle.getHeading();
 
+  }
+
+  public int getNumberOfArgs() {
+    return 0;
   }
 
   @Override

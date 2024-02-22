@@ -8,17 +8,16 @@ import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class SineCommand extends Command {
+public class ArcTangentCommand extends Command {
 
   private final Turtle myTurtle;
 
-  public SineCommand(Turtle turtle) {
+  public ArcTangentCommand(Turtle turtle) {
     myTurtle = turtle;
   }
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return Math.sin(MathUtils.toRadians(arguments.get(0).getValue()));
-
+    return Math.atan(MathUtils.toRadians(arguments.get(0).getValue()));
   }
 
   public int getNumberOfArgs() {
