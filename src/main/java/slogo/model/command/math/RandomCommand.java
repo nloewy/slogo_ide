@@ -7,9 +7,11 @@ import slogo.model.command.Command;
 public class RandomCommand extends Command {
 
 
-  public double execute(List<Double> arguments) {
-    double rand = arguments.get(0);
-    if (rand<0) {return 0.0;}
+  public double execute(List<Double> arguments) throws IllegalArgumentException {
+    double rand = Math.max(arguments.get(0),0);
+    //if (rand<0) {
+    //    throw new IllegalArgumentException("Max must be positive");
+    //  }
     return Math.random()*rand;
   }
 
