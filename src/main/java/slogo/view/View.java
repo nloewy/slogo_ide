@@ -99,7 +99,6 @@ public class View implements SlogoListener {
             }
         }
         turtles.add(new FrontEndTurtle(turtleState.id(), defaultImage, Color.BLACK, new double[]{0, 0}));
-
     }
 
     @Override

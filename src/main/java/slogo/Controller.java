@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import slogo.view.View;
 import slogo.view.pages.MainScreen;
 import slogo.view.pages.Screen;
+import slogo.view.pages.StartScreen;
 
 import java.io.FileNotFoundException;
 import java.util.Objects;
@@ -22,7 +23,7 @@ public class Controller {
     }
 
     public void run() throws FileNotFoundException {
-        Screen page = new MainScreen(stage);
+        Screen page = new StartScreen(stage);
         page.setUp();
 
         Scene scene = new Scene(page.getGroup(), width, height);

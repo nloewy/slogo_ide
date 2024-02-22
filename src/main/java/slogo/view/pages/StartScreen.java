@@ -34,12 +34,16 @@ public class StartScreen extends Screen {
 
         logo = new Image(new FileInputStream("src/main/resources/SlogoLOGO.png"));
         logoView = new ImageView(logo);
+        logoView.setPreserveRatio(true);
+        logoView.setFitWidth(400);
+
         root = new Group();
         langOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
         langBox = new ComboBox<String>(langOptions);
         langPane = new TilePane(langBox);
 
-        root.getChildren().add(ButtonUtil.generateButton("test", 100, 100, null));
+        root.getChildren().add(ButtonUtil.generateButton("Load New Session", 100, 100, null));
+        root.getChildren().add(ButtonUtil.generateButton("Load Old Session", 100, 170, null));
         root.getChildren().add(logoView);
         root.getChildren().add(langPane);
 

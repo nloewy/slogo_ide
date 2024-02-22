@@ -15,8 +15,6 @@ public class ButtonUtil {
         ret.setLayoutY(y);
         ret.setOnAction(consumer);
 
-        ret.setId("test");
-
         return ret;
     }
 }
