@@ -1,5 +1,6 @@
 package slogo.model.command.math;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
@@ -14,7 +15,8 @@ public class QuotientCommand extends Command {
     myTurtle = turtle;
   }
 
-  public double execute(List<Node> arguments) {
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
     if (arguments.get(1).getValue() == 0) {
       return 0;
       //  throw new ArithmeticException("Divisor must be non-zero");

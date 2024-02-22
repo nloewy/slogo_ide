@@ -1,5 +1,6 @@
 package slogo.model.command.math;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.mathutils.MathUtils;
 import slogo.model.Node;
@@ -14,7 +15,8 @@ public class TangentCommand extends Command {
   public TangentCommand(Turtle turtle) {
     myTurtle = turtle;
   }
-  public double execute(List<Node> arguments) {
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
     double angle = MathUtils.toRadians(arguments.get(0).getValue());
     if (Math.abs(arguments.get(0).getValue() % Math.PI) == Math.PI / 2) {
       return 0.0;

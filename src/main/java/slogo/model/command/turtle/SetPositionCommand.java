@@ -1,5 +1,6 @@
 package slogo.model.command.turtle;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.mathutils.MathUtils;
 import slogo.model.Node;
@@ -16,7 +17,8 @@ public class SetPositionCommand extends Command {
   }
 
   @Override
-  public double execute(List<Node> arguments) {
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
     double currentX = myTurtle.getX();
     double currentY = myTurtle.getY();
     myTurtle.setX(arguments.get(0).getValue());

@@ -1,5 +1,6 @@
 package slogo.model.command.math;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
@@ -14,7 +15,8 @@ public class ProductCommand extends Command {
     myTurtle = turtle;
   }
 
-  public double execute(List<Node> arguments) {
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
     return arguments.get(0).getValue() * arguments.get(1).getValue();
 
   }

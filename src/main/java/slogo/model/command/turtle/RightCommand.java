@@ -1,5 +1,6 @@
 package slogo.model.command.turtle;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
@@ -15,7 +16,8 @@ public class RightCommand extends Command {
   }
 
   @Override
-  public double execute(List<Node> arguments) {
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
     double degrees = arguments.get(0).getValue();
     myTurtle.setHeading((myTurtle.getHeading() + degrees) % 360);
     return degrees;

@@ -1,5 +1,6 @@
 package slogo.model.command.math;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
@@ -13,7 +14,8 @@ public class PowerCommand extends Command {
     myTurtle = turtle;
   }
 
-  public double execute(List<Node> arguments) {
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
     double base = arguments.get(0).getValue();
     double exp = arguments.get(1).getValue();
     return Math.pow(base, exp);

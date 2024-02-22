@@ -1,5 +1,6 @@
 package slogo.model.command.math;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
@@ -14,7 +15,8 @@ public class SquareRootCommand extends Command {
     myTurtle = turtle;
   }
 
-  public double execute(List<Node> arguments) {
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
     double val = Math.max(arguments.get(0).getValue(), 0);
     //if (val<0) {
     //    throw new IllegalArgumentException("expr must be non-negative");

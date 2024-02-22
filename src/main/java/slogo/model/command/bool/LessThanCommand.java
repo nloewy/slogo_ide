@@ -1,5 +1,6 @@
 package slogo.model.command.bool;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
@@ -13,7 +14,8 @@ public class LessThanCommand extends Command {
   public LessThanCommand(Turtle turtle) {
     myTurtle = turtle;
   }
-  public double execute(List<Node> arguments) {
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
     return (arguments.get(0).getValue() < arguments.get(1).getValue()) ? 1 : 0;
 
   }

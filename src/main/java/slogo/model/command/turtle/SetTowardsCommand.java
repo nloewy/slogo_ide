@@ -1,5 +1,6 @@
 package slogo.model.command.turtle;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
@@ -15,7 +16,8 @@ public class SetTowardsCommand extends Command {
   }
 
   @Override
-  public double execute(List<Node> arguments) {
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
     double dx = arguments.get(0).getValue() - myTurtle.getX();
     double dy = arguments.get(1).getValue() - myTurtle.getY();
     double oldHeading = myTurtle.getHeading();

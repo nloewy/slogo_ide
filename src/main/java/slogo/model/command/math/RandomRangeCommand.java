@@ -1,5 +1,6 @@
 package slogo.model.command.math;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
@@ -13,7 +14,8 @@ public class RandomRangeCommand extends Command {
   public RandomRangeCommand(Turtle turtle) {
     myTurtle = turtle;
   }
-  public double execute(List<Node> arguments) {
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
     if (arguments.get(0).getValue() > arguments.get(1).getValue()) {
       return 0.0;
       //    throw new IllegalArgumentException("Min must be less than Max");
