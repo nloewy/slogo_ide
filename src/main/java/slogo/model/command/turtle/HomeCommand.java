@@ -23,8 +23,10 @@ public class HomeCommand extends Command {
     return MathUtils.dist(0, 0, currentX, currentY);
   }
 
+  @Override
   public void notifyListener(SlogoListener listener, double value) {
-    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle(), value);
+    super.notifyListener(listener, value);
+    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
 
 }

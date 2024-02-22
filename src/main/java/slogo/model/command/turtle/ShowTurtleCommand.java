@@ -18,8 +18,10 @@ public class ShowTurtleCommand extends Command {
     myTurtle.setVisible(true);
     return 1.0;
   }
+  @Override
   public void notifyListener(SlogoListener listener, double value) {
-    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle(), value);
+    super.notifyListener(listener, value);
+    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
 
 

@@ -21,8 +21,10 @@ public class TowardsCommand extends Command {
     myTurtle.setHeading(Math.toDegrees(Math.atan2(dy, dx)) - 90);
     return (myTurtle.getHeading() - oldHeading + 360) % 360;
   }
+  @Override
   public void notifyListener(SlogoListener listener, double value) {
-    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle(), value);
+    super.notifyListener(listener, value);
+    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
 
 

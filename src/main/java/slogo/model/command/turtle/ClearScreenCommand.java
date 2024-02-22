@@ -24,9 +24,11 @@ public class ClearScreenCommand extends Command {
     return MathUtils.dist(0, 0, currentX, currentY);
   }
 
+  @Override
   public void notifyListener(SlogoListener listener, double value) {
+    super.notifyListener(listener, value);
     TurtleRecord turtleRecord = myTurtle.getImmutableTurtle();
-    listener.onUpdateTurtleState(turtleRecord, value);
+    listener.onUpdateTurtleState(turtleRecord);
     listener.onResetTurtle(turtleRecord.id());
   }
 

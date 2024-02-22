@@ -1,23 +1,23 @@
-package slogo.model.command.turtle;
+package slogo.model.command.query;
 
 import java.util.List;
+import slogo.mathutils.MathUtils;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class RightCommand extends Command {
+public class PenDownQueryCommand extends Command {
 
   private Turtle myTurtle;
 
-  public RightCommand(Turtle turtle) {
+  public PenDownQueryCommand(Turtle turtle) {
     myTurtle = turtle;
   }
 
-  @Override
   public double execute(List<Double> arguments) {
-    double degrees = arguments.get(0);
-    myTurtle.setHeading((myTurtle.getHeading() + degrees) % 360);
-    return degrees;
+    if (myTurtle.getPen()) {return 1.0;}
+    return 0.0;
+
   }
   @Override
   public void notifyListener(SlogoListener listener, double value) {

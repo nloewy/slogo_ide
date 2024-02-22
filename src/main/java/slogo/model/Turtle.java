@@ -57,12 +57,19 @@ public class Turtle {
   }
 
   public TurtleRecord getImmutableTurtle() {
-    return new TurtleRecord(myId, myX, myY, myPen, myHeading);
+    return new TurtleRecord(myId, myX, myY, myPen, myVisible, myHeading);
   }
 
   public void setVisible(boolean b) {
   }
 
   public void setPen(boolean b) {
+  }
+
+  public boolean getPen() {
+    return myPen;
+  }
+  public boolean getVisible() {
+    return myVisible;
   }
 }

@@ -19,8 +19,10 @@ public class ForwardCommand extends Command {
     myTurtle.setY(myTurtle.getY()+ pixels * Math.cos(MathUtils.toRadians(myTurtle.getHeading())));
     return pixels;
   }
+  @Override
   public void notifyListener(SlogoListener listener, double value) {
-    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle(), value);
+    super.notifyListener(listener, value);
+    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
 
 }

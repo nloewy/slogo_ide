@@ -1,23 +1,21 @@
-package slogo.model.command.turtle;
+package slogo.model.command.query;
 
 import java.util.List;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class RightCommand extends Command {
+public class HeadingCommand extends Command {
 
   private Turtle myTurtle;
 
-  public RightCommand(Turtle turtle) {
+  public HeadingCommand(Turtle turtle) {
     myTurtle = turtle;
   }
 
-  @Override
   public double execute(List<Double> arguments) {
-    double degrees = arguments.get(0);
-    myTurtle.setHeading((myTurtle.getHeading() + degrees) % 360);
-    return degrees;
+    return myTurtle.getHeading();
+
   }
   @Override
   public void notifyListener(SlogoListener listener, double value) {

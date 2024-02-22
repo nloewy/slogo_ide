@@ -6,7 +6,7 @@ import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
-public class BackwardCommand {
+public class BackwardCommand extends Command {
 
   private Turtle myTurtle;
 
@@ -19,8 +19,11 @@ public class BackwardCommand {
     myTurtle.setY(myTurtle.getY() - pixels * Math.cos(MathUtils.toRadians(myTurtle.getHeading())));
     return pixels;
   }
+
+  @Override
   public void notifyListener(SlogoListener listener, double value) {
-    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle(), value);
+    super.notifyListener(listener, value);
+    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
 
 }

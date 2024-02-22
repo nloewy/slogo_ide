@@ -20,8 +20,10 @@ public class SetHeadingCommand extends Command {
     myTurtle.setHeading(heading % 360);
     return (myTurtle.getHeading() - oldHeading + 360) % 360 ;
   }
+  @Override
   public void notifyListener(SlogoListener listener, double value) {
-    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle(), value);
+    super.notifyListener(listener, value);
+    listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
 
 
