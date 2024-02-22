@@ -1,8 +1,9 @@
-package slogo.model.command;
+package slogo.model.command.turtle;
 
 import java.util.List;
 import slogo.mathutils.MathUtils;
 import slogo.model.Turtle;
+import slogo.model.command.Command;
 
 public class ForwardCommand extends Command {
   private Turtle myTurtle;
