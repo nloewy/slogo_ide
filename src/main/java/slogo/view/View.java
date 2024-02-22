@@ -23,6 +23,7 @@ public class View implements SlogoListener {
     private static List<String> commandList;
     private static String commandString;
     private final Map<String, Number> variables;
+    private final Image defaultImage;
     private String lang;
 
     public View(Stage stage) {
@@ -34,6 +35,11 @@ public class View implements SlogoListener {
         variables = new HashMap<>();
         turtles = new ArrayList<>();
         commandList = new ArrayList<>();
+        try {
+            defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static List<FrontEndTurtle> getTurtles() {
@@ -106,16 +112,20 @@ public class View implements SlogoListener {
                 turtle.setHeading(turtleState.heading());
             }
         }
-        try {
-            turtles.add(new FrontEndTurtle(turtleState.id(), new Image(new FileInputStream("src/main/resources/DefaultTurtle.png")), Color.BLACK, new double[]{0, 0}));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        turtles.add(new FrontEndTurtle(turtleState.id(), defaultImage, Color.BLACK, new double[]{0, 0}));
+
     }
 
     @Override
     public void onResetTurtle(int id) {
-
+        for (FrontEndTurtle turtle : turtles) {
+            if (turtle.getId() == id) {
+                turtle.setIsPenDisplayed(false);
+                turtle.setPosition(new double[]{0, 0});
+                turtle.setHeading(0);
+                turtle.replaceImage(defaultImage);
+            }
+        }
     }
 
     @Override
