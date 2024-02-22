@@ -15,6 +15,8 @@ public class FrontEndTurtle {
     public FrontEndTurtle(Image image, Color color, double[] position) {
         displayImage = image;
         display = new ImageView(displayImage);
+        display.setPreserveRatio(true);
+        display.setFitWidth(50);
 
         display.setLayoutX(position[0]);
         display.setLayoutY(position[1]);
@@ -23,6 +25,8 @@ public class FrontEndTurtle {
     public void replaceImage(Image newImage) {
         displayImage = newImage;
         display = new ImageView(displayImage);
+        display.setPreserveRatio(true);
+        display.setFitWidth(50);
     }
 
     public double[] getPosition() {
