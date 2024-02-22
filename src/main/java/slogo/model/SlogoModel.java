@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -53,9 +54,7 @@ public class SlogoModel implements Model {
             else{
               try {
                 String[] typeToken = commandMap.get(token).split("\\.");
-                Class<?> myInstance = Class.forName("command." + typeToken[0] +"." + typeToken[1] + "Command");
-                Constructor<?> constructor = myInstance.getConstructor(new Class[] {Turtle.class});
-                Command cmd = (Command) constructor.newInstance(myTurtles.get(0));
+                Node node = new CommandNode("command." + typeToken[0] +"." + typeToken[1] + "Command", myTurtles.get(0));
               }
               catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
