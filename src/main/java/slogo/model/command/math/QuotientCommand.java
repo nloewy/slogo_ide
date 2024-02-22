@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 public class QuotientCommand extends Command {
 
 
-  public double execute(List<Double> arguments) throws ArithmeticException {
+  public double execute(List<Double> arguments) {
     if (arguments.get(1) == 0) {
       return 0;
       //  throw new ArithmeticException("Divisor must be non-zero");
