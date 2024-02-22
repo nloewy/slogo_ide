@@ -4,18 +4,15 @@ import java.util.List;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 
-public class QuotientCommand extends Command {
+public class RandomCommand extends Command {
 
 
-  public double execute(List<Double> arguments) throws ArithmeticException {
-    try {
-      return arguments.get(0) / arguments.get(1);
-    }
-    catch (ArithmeticException e)  {
-      return 0.0;
-    }
-
+  public double execute(List<Double> arguments) {
+    double rand = arguments.get(0);
+    if (rand<0) {return 0.0;}
+    return Math.random()*rand;
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

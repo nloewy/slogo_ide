@@ -4,18 +4,13 @@ import java.util.List;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 
-public class QuotientCommand extends Command {
+public class MinusCommand extends Command {
 
 
-  public double execute(List<Double> arguments) throws ArithmeticException {
-    try {
-      return arguments.get(0) / arguments.get(1);
-    }
-    catch (ArithmeticException e)  {
-      return 0.0;
-    }
-
+  public double execute(List<Double> arguments) {
+    return -1 * arguments.get(0);
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
