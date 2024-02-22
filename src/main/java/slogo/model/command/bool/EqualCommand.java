@@ -9,7 +9,7 @@ public class EqualCommand extends Command {
 
 
   public double execute(List<Double> arguments) {
-    return arguments.get(0).doubleValue() == arguments.get(1).doubleValue() ? 1 : 0;
+    return (arguments.get(0).doubleValue() == arguments.get(1).doubleValue()) ? 1 : 0;
 
   }
   public void notifyListener(SlogoListener listener, double value) {
