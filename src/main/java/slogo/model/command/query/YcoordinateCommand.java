@@ -1,6 +1,7 @@
 package slogo.model.command.query;
 
 import java.util.List;
+import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
@@ -13,7 +14,7 @@ public class YcoordinateCommand extends Command {
     myTurtle = turtle;
   }
 
-  public double execute(List<Double> arguments) {
+  public double execute(List<Node> arguments) {
     return myTurtle.getY();
 
   }

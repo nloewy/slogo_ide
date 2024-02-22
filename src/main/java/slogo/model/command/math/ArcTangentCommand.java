@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.util.List;
 import slogo.mathutils.MathUtils;
+import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
@@ -13,7 +14,7 @@ public class ArcTangentCommand extends Command {
   public ArcTangentCommand(Turtle turtle) {
     myTurtle = turtle;
   }
-  public double execute(List<Double> arguments) {
+  public double execute(List<Node> arguments) {
     return Math.atan(MathUtils.toRadians(arguments.get(0)));
   }
 

@@ -1,6 +1,7 @@
 package slogo.model.command.math;
 
 import java.util.List;
+import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
@@ -12,7 +13,7 @@ public class RandomRangeCommand extends Command {
   public RandomRangeCommand(Turtle turtle) {
     myTurtle = turtle;
   }
-  public double execute(List<Double> arguments) {
+  public double execute(List<Node> arguments) {
     if (arguments.get(0) > arguments.get(1)) {
       return 0.0;
       //    throw new IllegalArgumentException("Min must be less than Max");

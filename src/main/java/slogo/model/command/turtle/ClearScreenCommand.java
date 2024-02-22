@@ -2,6 +2,7 @@ package slogo.model.command.turtle;
 
 import java.util.List;
 import slogo.mathutils.MathUtils;
+import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.api.TurtleRecord;
@@ -16,7 +17,7 @@ public class ClearScreenCommand extends Command {
   }
 
   @Override
-  public double execute(List<Double> arguments) {
+  public double execute(List<Node> arguments) {
     double currentX = myTurtle.getX();
     double currentY = myTurtle.getY();
     myTurtle.setX(0);

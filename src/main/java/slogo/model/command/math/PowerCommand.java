@@ -1,6 +1,7 @@
 package slogo.model.command.math;
 
 import java.util.List;
+import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
@@ -12,7 +13,7 @@ public class PowerCommand extends Command {
     myTurtle = turtle;
   }
 
-  public double execute(List<Double> arguments) {
+  public double execute(List<Node> arguments) {
     double base = arguments.get(0);
     double exp = arguments.get(1);
     return Math.pow(base, exp);

@@ -41,6 +41,7 @@ public class SlogoModel implements Model {
   }
   public void parse(String commandStr) throws IllegalArgumentException {
     resetTrees();
+
     String[] tokens = commandStr.split("\\s+");
     for(String token : tokens) {
       for(String key : syntaxMap.keySet()) {

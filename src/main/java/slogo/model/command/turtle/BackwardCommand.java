@@ -2,6 +2,7 @@ package slogo.model.command.turtle;
 
 import java.util.List;
 import slogo.mathutils.MathUtils;
+import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
@@ -14,7 +15,7 @@ public class BackwardCommand extends Command {
     myTurtle = turtle;
   }
 
-  public double execute(List<Double> arguments) {
+  public double execute(List<Node> arguments) {
     double pixels = arguments.get(0);
     myTurtle.setX(myTurtle.getX() - pixels * Math.sin(MathUtils.toRadians(myTurtle.getHeading())));
     myTurtle.setY(myTurtle.getY() - pixels * Math.cos(MathUtils.toRadians(myTurtle.getHeading())));

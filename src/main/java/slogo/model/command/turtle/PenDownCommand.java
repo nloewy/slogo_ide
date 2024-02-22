@@ -1,6 +1,7 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
+import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
@@ -14,7 +15,7 @@ public class PenDownCommand extends Command {
   }
 
   @Override
-  public double execute(List<Double> arguments) {
+  public double execute(List<Node> arguments) {
     myTurtle.setPen(true);
     return 1.0;
   }

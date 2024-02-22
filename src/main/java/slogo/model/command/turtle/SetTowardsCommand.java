@@ -1,6 +1,7 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
+import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
@@ -14,7 +15,7 @@ public class SetTowardsCommand extends Command {
   }
 
   @Override
-  public double execute(List<Double> arguments) {
+  public double execute(List<Node> arguments) {
     double dx = arguments.get(0) - myTurtle.getX();
     double dy = arguments.get(1) - myTurtle.getY();
     double oldHeading = myTurtle.getHeading();

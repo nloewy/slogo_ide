@@ -1,6 +1,7 @@
 package slogo.model.command.query;
 
 import java.util.List;
+import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
@@ -13,9 +14,8 @@ public class XcoordinateCommand extends Command {
     myTurtle = turtle;
   }
 
-  public double execute(List<Double> arguments) {
+  public double execute(List<Node> arguments) {
     return myTurtle.getX();
-
   }
 
   public int getNumberOfArgs() {
@@ -26,5 +26,4 @@ public class XcoordinateCommand extends Command {
     super.notifyListener(listener, value);
     listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
-
 }
