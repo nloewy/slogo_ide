@@ -10,12 +10,14 @@ public class TangentCommand extends Command {
   public double execute(List<Double> arguments) {
     double angle = MathUtils.toRadians(arguments.get(0));
     if (Math.abs(arguments.get(0) % Math.PI) == Math.PI / 2) {
+      return 0.0;
       //throw new IllegalArgumentException("Illegal Value for Tangent Function");
-      if (arguments.get(0) % (2 * Math.PI) > Math.PI) {
-        return Double.MIN_VALUE;
-      } else {
-        return Double.MAX_VALUE;
-      }
+      //if (arguments.get(0) % (2 * Math.PI) > Math.PI) {
+      //  return Double.MIN_VALUE;
+      //} else {
+      //  return Double.MAX_VALUE;
+      //}
+      //}
     }
     return Math.tan(angle);
   }
