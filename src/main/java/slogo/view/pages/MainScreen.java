@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import slogo.view.ButtonUtil;
+import slogo.view.FrontEndTurtle;
 import slogo.view.View;
 
 import java.io.FileNotFoundException;
@@ -30,6 +31,10 @@ public class MainScreen extends Screen {
         root = new Group();
         root.getChildren().add(field);
         root.getChildren().add(submitField);
+
+        for (FrontEndTurtle turtle : View.getTurtles()) {
+            root.getChildren().add(turtle.getDisplay());
+        }
 
         // scene.getStylesheets().add("src/main/resources/slogo/css/LightMode.css");
     }
