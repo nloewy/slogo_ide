@@ -14,6 +14,7 @@ public class DifferenceCommand extends Command {
   public DifferenceCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     return arguments.get(0).getValue() - arguments.get(1).getValue();
@@ -23,6 +24,7 @@ public class DifferenceCommand extends Command {
   public int getNumberOfArgs() {
     return 2;
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

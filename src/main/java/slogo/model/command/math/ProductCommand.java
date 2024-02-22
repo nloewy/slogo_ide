@@ -20,6 +20,7 @@ public class ProductCommand extends Command {
     return arguments.get(0).getValue() * arguments.get(1).getValue();
 
   }
+
   public int getNumberOfArgs() {
     return 2;
   }

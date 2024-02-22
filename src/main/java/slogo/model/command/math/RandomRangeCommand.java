@@ -14,6 +14,7 @@ public class RandomRangeCommand extends Command {
   public RandomRangeCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     if (arguments.get(0).getValue() > arguments.get(1).getValue()) {
@@ -23,6 +24,7 @@ public class RandomRangeCommand extends Command {
     return arguments.get(0).getValue() + (arguments.get(1).getValue() -
         arguments.get(0).getValue()) * Math.random();
   }
+
   public int getNumberOfArgs() {
     return 2;
   }

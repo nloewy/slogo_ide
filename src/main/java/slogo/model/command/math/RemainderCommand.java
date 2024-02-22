@@ -8,6 +8,7 @@ import slogo.model.Turtle;
 import slogo.model.command.Command;
 
 public class RemainderCommand extends Command {
+
   private final Turtle myTurtle;
 
   public RemainderCommand(Turtle turtle) {

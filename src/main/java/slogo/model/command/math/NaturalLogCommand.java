@@ -14,6 +14,7 @@ public class NaturalLogCommand extends Command {
   public NaturalLogCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double val = arguments.get(0).getValue();
@@ -24,6 +25,7 @@ public class NaturalLogCommand extends Command {
     }
     return Math.log(val);
   }
+
   public int getNumberOfArgs() {
     return 1;
   }

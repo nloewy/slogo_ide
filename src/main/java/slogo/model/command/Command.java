@@ -11,6 +11,7 @@ public abstract class Command {
       throws InvocationTargetException, IllegalAccessException;
 
   public abstract int getNumberOfArgs();
+
   public void notifyListener(SlogoListener listener, double value) {
     listener.onReturn(value);
   }

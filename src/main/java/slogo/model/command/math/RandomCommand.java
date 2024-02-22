@@ -14,6 +14,7 @@ public class RandomCommand extends Command {
   public RandomCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double rand = Math.max(arguments.get(0).getValue(), 0);
@@ -26,6 +27,7 @@ public class RandomCommand extends Command {
   public int getNumberOfArgs() {
     return 1;
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

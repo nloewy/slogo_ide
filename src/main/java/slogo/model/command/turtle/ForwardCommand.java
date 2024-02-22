@@ -28,6 +28,7 @@ public class ForwardCommand extends Command {
   public int getNumberOfArgs() {
     return 1;
   }
+
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

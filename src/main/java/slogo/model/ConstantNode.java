@@ -4,7 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ConstantNode extends Node {
 
-  private double myConstant;
+  private final double myConstant;
+
   public ConstantNode(String token, Turtle turtle) {
     myConstant = Double.parseDouble(token);
   }

@@ -15,6 +15,7 @@ public class TangentCommand extends Command {
   public TangentCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double angle = MathUtils.toRadians(arguments.get(0).getValue());

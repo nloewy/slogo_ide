@@ -27,6 +27,7 @@ public class SquareRootCommand extends Command {
   public int getNumberOfArgs() {
     return 1;
   }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
