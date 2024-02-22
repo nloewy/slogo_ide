@@ -1,25 +1,78 @@
 package slogo.model;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import slogo.model.api.Model;
 
 public class SlogoModel implements Model {
 
-  private final List<Turtle> myTurtles;
-  private final List<Variable> myVariables;
-  private final SlogoListener myListener;
+  private List<Turtle> myTurtles;
+  private List<Variable> myVariables;
+  private SlogoListener myListener;
+  private Map<String,String> syntaxMap;
 
   public SlogoModel(SlogoListener listener) {
     myTurtles = new ArrayList<>();
     myVariables = new ArrayList<>();
     myListener = listener;
+    syntaxMap = getRegexMap();
   }
 
   public void parse(String commandStr) {
+    List<String> tokens = Arrays.asList(commandStr.split("\\s+"));
+    for(String token : tokens) {
+      for(String key : syntaxMap.keySet()) {
+        if(token.matches(key)) {
+          System.out.println(syntaxMap.get(key) + " " + token);
+        }
+      }
 
-    //get List of Command objects using regex/inflection, lots of fun stuff
+    }
+  }
+
+  private Map<String,String> getRegexMap() {
+    String syntaxNames = "src/main/resources/slogo/example/languages/Syntax.properties";
+    Properties properties = new Properties();
+    syntaxMap = new HashMap<>();
+    try {
+      File filePath = new File(syntaxNames);
+      properties.load(new FileInputStream(filePath));
+      for (String key : properties.stringPropertyNames()) {
+        syntaxMap.put(properties.getProperty(key), key);
+      }
+      System.out.println("Properties as Map:");
+      for (Map.Entry<String, String> entry : syntaxMap.entrySet()) {
+        System.out.println(entry.getKey() + " = " + entry.getValue());
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return syntaxMap;
+  }
+
+
+  @Override
+  public File loadXml(String path) {
+    return null;
+  }
+
+  @Override
+  public File saveXml(String path) {
+    return null;
+  }
+
+  @Override
+  public void resetModel() {
+  }
+
+  //get List of Command objects using regex/inflection, lots of fun stuff
 
     //for each command object:
     // execute()
@@ -39,32 +92,7 @@ public class SlogoModel implements Model {
     // if display something we determine what to display and inform listener
     // HOW TO DETERMINE WHAT TO DISPLAY?
     //Simple, just whatever the execute function returns, perhaps this should be told to listener
-  }
 
-  /**
-   * Opens a file dialog to load a new XML file.
-   *
-   * @param path: the path of the file to be loaded
-   */
-  public File loadXml(String path) {
-    return null;
-  }
-
-  /**
-   * Saves the current state of the model to an XML file. Saves the commands, variables, and turtle
-   * state.
-   *
-   * @param path
-   */
-  public File saveXml(String path) {
-    return null;
-  }
-
-  /**
-   * Resets the model to its initial state.
-   */
-  public void resetModel() {
-  }
 
 }
 
