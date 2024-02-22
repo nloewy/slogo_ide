@@ -19,7 +19,6 @@ public class TowardsCommand extends Command {
     double oldHeading = myTurtle.getHeading();
     myTurtle.setHeading(Math.toDegrees(Math.atan2(dy, dx)) - 90);
     return (myTurtle.getHeading() - oldHeading + 360) % 360;
-
   }
 
 }
