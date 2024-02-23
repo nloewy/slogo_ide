@@ -18,10 +18,13 @@ public class SetHeadingCommand extends Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double heading = arguments.get(0).getValue();
+    double newHeading = arguments.get(0).getValue();
     double oldHeading = myTurtle.getHeading();
-    myTurtle.setHeading(heading % 360);
-    return (myTurtle.getHeading() - oldHeading + 360) % 360;
+    myTurtle.setHeading(newHeading % 360);
+    double clockwiseTurn = (newHeading - oldHeading + 360) % 360;
+    double counterclockwiseTurn = (oldHeading - newHeading + 360) % 360;
+    return Math.min(clockwiseTurn, counterclockwiseTurn);
+
   }
 
   @Override

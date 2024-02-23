@@ -31,8 +31,8 @@ public class RightCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     String rot = "75";
     node.addChildren(new ConstantNode(rot, myTurtle));
-    assertEquals(node.getValue(), 75, DELTA);
-    assertEquals(myTurtle.getHeading(), 75, DELTA);
+    assertEquals(75, node.getValue(), DELTA);
+    assertEquals(75, myTurtle.getHeading(), DELTA);
 
   }
 
@@ -42,8 +42,8 @@ public class RightCommandTest {
     myTurtle.setHeading(60);
     String rot = "20";
     node.addChildren(new ConstantNode(rot, myTurtle));
-    assertEquals(node.getValue(), 20, DELTA);
-    assertEquals(myTurtle.getHeading(), 80, DELTA);
+    assertEquals(20, node.getValue(), DELTA);
+    assertEquals(80, myTurtle.getHeading(), DELTA);
   }
 
   @Test
@@ -52,8 +52,8 @@ public class RightCommandTest {
     String rot = "0";
     myTurtle.setHeading(500);
     node.addChildren(new ConstantNode(rot, myTurtle));
-    assertEquals(node.getValue(), 0, DELTA);
-    assertEquals(myTurtle.getHeading(), 140, DELTA);
+    assertEquals(0, node.getValue(), DELTA);
+    assertEquals(140, myTurtle.getHeading(), DELTA);
 
   }
 
@@ -62,8 +62,8 @@ public class RightCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     String rot = "-75";
     node.addChildren(new ConstantNode(rot, myTurtle));
-    assertEquals(node.getValue(), -75, DELTA);
-    assertEquals(myTurtle.getHeading(), 285, DELTA);
+    assertEquals(-75, node.getValue(), DELTA);
+    assertEquals(285, myTurtle.getHeading(), DELTA);
   }
 
   @Test
@@ -71,7 +71,7 @@ public class RightCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     String rot = "900";
     node.addChildren(new ConstantNode(rot, myTurtle));
-    assertEquals(node.getValue(), 900, DELTA);
-    assertEquals(myTurtle.getHeading(), 180, DELTA);
+    assertEquals(900, node.getValue(), DELTA);
+    assertEquals(180, myTurtle.getHeading(), DELTA);
   }
 }
