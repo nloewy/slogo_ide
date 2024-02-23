@@ -1,7 +1,6 @@
 package slogo;
 
 import javafx.stage.Stage;
-import slogo.model.api.TurtleRecord;
 import slogo.view.View;
 
 import java.io.FileNotFoundException;
