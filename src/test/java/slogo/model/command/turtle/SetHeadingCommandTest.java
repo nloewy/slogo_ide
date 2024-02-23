@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import slogo.model.CommandNode;
 import slogo.model.ConstantNode;
 import slogo.model.Node;
@@ -26,13 +28,18 @@ public class SetHeadingCommandTest {
 
   }
 
-  @Test
-  void testBasicHeading()
+  @ParameterizedTest
+  @CsvSource({
+      "45, 45, 45",
+      "90, 90, 90",
+      "180, 180, 180",
+      "181, 179, 181",
+      "0, 0, 0"
+  })  void testBasicHeading(String newHeading, String expectedValue, String expectedHeading)
       throws InvocationTargetException, IllegalAccessException {
-    String newHeading = "75";
     node.addChildren(new ConstantNode(newHeading, myTurtle));
-    assertEquals(75, node.getValue(), DELTA);
-    assertEquals(75, myTurtle.getHeading(), DELTA);
+    assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
+    assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
 
   }
 
