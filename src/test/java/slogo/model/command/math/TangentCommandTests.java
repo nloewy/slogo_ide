@@ -13,7 +13,7 @@ import slogo.model.ConstantNode;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
-public class TrigCommandTests {
+public class TangentCommandTests {
 
   public static final double DELTA = 0.001;
 
@@ -24,62 +24,6 @@ public class TrigCommandTests {
   void setUp() {
     myTurtle = null;
   }
-
-  @ParameterizedTest
-  @CsvSource({
-      "0, 0.0",
-      "30, 0.5",
-      "45, 0.70710678118",
-      "60, 0.86602540378",
-      "90, 1.0",
-      "180, 0.0",
-      "270, -1.0",
-      "360, 0.0",
-      "720, 0.0",
-      "-30, -0.5",
-      "-45, -0.70710678118",
-      "-60, -0.86602540378",
-      "-90, -1.0",
-      "-180, 0.0",
-      "-270, 1.0",
-      "-360, 0.0",
-      "1.5, 0.0261769483"
-  })
-  void testSineBasic(String op1, String result)
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.math.SineCommand", myTurtle);
-    node.addChildren(new ConstantNode(op1, myTurtle));
-    assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
-  }
-
-
-  @ParameterizedTest
-  @CsvSource({
-      "0, 1.0",
-      "30, 0.86602540378",
-      "45, 0.70710678118",
-      "60, 0.5",
-      "90, 0.0",
-      "180, -1.0",
-      "270, 0.0",
-      "360, 1.0",
-      "720, 1.0",
-      "-30, 0.86602540378",
-      "-45, 0.70710678118",
-      "-60, 0.5",
-      "-90, 0.0",
-      "-180, -1.0",
-      "-270, 0.0",
-      "-360, 1.0",
-      "88.5, 0.0261769483"
-  })
-  void testCosineBasic(String op1, String result)
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.math.CosineCommand", myTurtle);
-    node.addChildren(new ConstantNode(op1, myTurtle));
-    assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
-  }
-
   @ParameterizedTest
   @CsvSource({
       "0, 0.0",
