@@ -8,7 +8,7 @@ import slogo.model.CommandNode;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
-public class PenUpTest {
+public class PenDownCommandTest {
   public static final double DELTA = 0.001;
 
   private Turtle myTurtle;
@@ -18,23 +18,23 @@ public class PenUpTest {
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = new Turtle(1);
-    node = new CommandNode("slogo.model.command.turtle.PenUpCommand", myTurtle);
+    node = new CommandNode("slogo.model.command.turtle.PenDownCommand", myTurtle);
   }
 
   @Test
-  void testBasicUp()
+  void testBasicPenDown()
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setPen(false);
-    Assertions.assertEquals(0, node.getValue());
-    Assertions.assertFalse(myTurtle.getPen());
+    Assertions.assertEquals(1, node.getValue());
+    Assertions.assertTrue(myTurtle.getPen());
   }
 
   @Test
-  void testPenUpAlreadyUp()
+  void testPenDownAlreadyDown()
       throws InvocationTargetException, IllegalAccessException {
-    myTurtle.setPen(false);
-    Assertions.assertEquals(0, node.getValue());
-    Assertions.assertFalse(myTurtle.getPen());
+    myTurtle.setPen(true);
+    Assertions.assertEquals(1, node.getValue());
+    Assertions.assertTrue(myTurtle.getPen());
   }
 }
 
