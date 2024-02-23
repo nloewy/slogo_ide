@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import slogo.view.ButtonUtil;
 import slogo.view.View;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -47,11 +48,11 @@ public class StartScreen extends Screen {
         langPane = new TilePane(langBox);
 
         loadNewScreenButton = ButtonUtil.generateButton("Load New Session", 557, 232, (event) -> {
-            System.out.println("Load New Session");
+            handleLoadNewFile();
         });
 
         loadOldScreenButton = ButtonUtil.generateButton("Load Old Session", 557, 300, (event) -> {
-            System.out.println("Load Old Session");
+            handleLoadOldFile();
         });
 
         root = new Group();
@@ -64,16 +65,17 @@ public class StartScreen extends Screen {
 
     //This method will send the XMLFile to a View method
     //This will also initialize a MainScreen object
+    private void handleLoadOldFile() {
+        File dataFile = Screen.FILE_CHOOSER.showOpenDialog(stage);
 
-    // private void setLoadFileButtonAction() throws FileFieldException {
-    // File dataFile = Page.FILE_CHOOSER.showOpenDialog(stage);
-    // Simulation simulation = View.createSimulation(dataFile);
-    // if (simulation != null) {
-    // Main.setLanguage(simulation.getConfig().getLanguage());
-    // view.toSimulationPage(simulation,
-    // simulation.getConfig().getStateColor().getStateColorMap());
-    // }
-    // }
+        if (dataFile != null) {
+            System.out.println(dataFile.getAbsolutePath());
+        }
+    }
+
+    private void handleLoadNewFile() {
+        System.out.println("To Be Implemented!");
+    }
 
     @Override
     public void setUp() {
