@@ -8,7 +8,6 @@ import slogo.model.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.view.pages.MainScreen;
 import slogo.view.pages.Screen;
-import slogo.view.pages.StartScreen;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

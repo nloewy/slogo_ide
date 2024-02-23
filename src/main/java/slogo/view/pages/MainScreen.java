@@ -13,7 +13,8 @@ import slogo.view.FrontEndTurtle;
 import slogo.view.View;
 
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
 The View will already know the XMLFile data when
