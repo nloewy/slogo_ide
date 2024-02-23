@@ -13,7 +13,7 @@ import slogo.model.Turtle;
 
 public class MinusCommandTest {
 
-  public static final double DELTA = 000.1;
+  public static final double DELTA = 0.001;
 
   private Turtle myTurtle;
   private Node node;

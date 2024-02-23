@@ -1,9 +1,12 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import slogo.model.CommandNode;
@@ -40,11 +43,22 @@ public class QuotientCommandTest {
       "1.0001, 0.0001, 10001.0",
       "360, 10, 36.0"
   })
-  void testProductBasic(String op1, String op2, String result)
+  void testQuotientBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
     node.addChildren(new ConstantNode(op1, myTurtle));
     node.addChildren(new ConstantNode(op2, myTurtle));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
+  }
+
+  @Test
+  void testDivideByZero() throws InvocationTargetException, IllegalAccessException {
+    {
+      node.addChildren(new ConstantNode("50", myTurtle));
+      node.addChildren(new ConstantNode("0", myTurtle));
+      Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
+      assertTrue(e.getCause() instanceof ArithmeticException);
+    }
+
   }
 
 }
