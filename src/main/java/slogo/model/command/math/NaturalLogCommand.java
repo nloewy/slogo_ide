@@ -19,9 +19,7 @@ public class NaturalLogCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double val = arguments.get(0).getValue();
     if (val <= 0) {
-      return 0.0;
-      //    throw new IllegalArgumentException("expr must be non-negative");
-
+      throw new IllegalArgumentException("expr must be non-negative");
     }
     return Math.log(val);
   }
