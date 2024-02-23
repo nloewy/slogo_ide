@@ -20,10 +20,10 @@ public class SetHeadingCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double newHeading = arguments.get(0).getValue();
     double oldHeading = myTurtle.getHeading();
-    myTurtle.setHeading(newHeading % 360);
+    myTurtle.setHeading(newHeading);
     double clockwiseTurn = (newHeading - oldHeading + 360) % 360;
     double counterclockwiseTurn = (oldHeading - newHeading + 360) % 360;
-    return Math.min(clockwiseTurn, counterclockwiseTurn);
+    return Math.min(Math.abs(clockwiseTurn), Math.abs(counterclockwiseTurn));
 
   }
 
