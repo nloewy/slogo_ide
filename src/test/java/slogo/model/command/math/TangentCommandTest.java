@@ -14,7 +14,7 @@ import slogo.model.ConstantNode;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
-public class TangentCommandTests {
+public class TangentCommandTest {
 
   public static final double DELTA = 0.001;
 

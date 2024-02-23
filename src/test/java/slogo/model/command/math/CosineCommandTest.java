@@ -11,7 +11,7 @@ import slogo.model.ConstantNode;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
-public class CosineCommandTests {
+public class CosineCommandTest {
 
   public static final double DELTA = 0.001;
 
