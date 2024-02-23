@@ -3,6 +3,7 @@ package slogo.view.pages;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +28,8 @@ public class StartScreen extends Screen {
     private final ComboBox langBox;
     private final ObservableList<String> langOptions;
     private final TilePane langPane;
+    private final Button loadNewScreenButton;
+    private final Button loadOldScreenButton;
 
     public StartScreen(Stage stage) throws FileNotFoundException {
         super();
@@ -36,17 +39,31 @@ public class StartScreen extends Screen {
         logoView = new ImageView(logo);
         logoView.setPreserveRatio(true);
         logoView.setFitWidth(400);
+        logoView.setLayoutX(512);
+        logoView.setLayoutY(100);
 
-        root = new Group();
         langOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
         langBox = new ComboBox<String>(langOptions);
         langPane = new TilePane(langBox);
 
-        root.getChildren().add(ButtonUtil.generateButton("Load New Session", 100, 100, null));
-        root.getChildren().add(ButtonUtil.generateButton("Load Old Session", 100, 170, null));
+        loadNewScreenButton = ButtonUtil.generateButton("Load New Session", 100, 100, (event) -> {
+            System.out.println("Load New Session");
+        });
+        loadNewScreenButton.setLayoutX(557);
+        loadNewScreenButton.setLayoutY(232);
+
+        loadOldScreenButton = ButtonUtil.generateButton("Load Old Session", 100, 100, (event) -> {
+            System.out.println("Load Old Session");
+        });
+        loadOldScreenButton.setLayoutX(557);
+        loadOldScreenButton.setLayoutY(300);
+
+        root = new Group();
+
+        root.getChildren().add(loadNewScreenButton);
+        root.getChildren().add(loadOldScreenButton);
         root.getChildren().add(logoView);
         root.getChildren().add(langPane);
-
         // scene.getStylesheets().add("src/main/resources/slogo/css/LightMode.css");
     }
 
