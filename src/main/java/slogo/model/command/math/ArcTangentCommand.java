@@ -18,7 +18,7 @@ public class ArcTangentCommand extends Command {
 
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return Math.atan(MathUtils.toRadians(arguments.get(0).getValue()));
+    return MathUtils.toDegrees(Math.atan(MathUtils.toRadians(arguments.get(0).getValue())));
   }
 
 

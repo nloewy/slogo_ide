@@ -18,18 +18,11 @@ public class TangentCommand extends Command {
 
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double angle = MathUtils.toRadians(arguments.get(0).getValue());
-    if (Math.abs(arguments.get(0).getValue() % Math.PI) == Math.PI / 2) {
-      return 0.0;
-      //throw new IllegalArgumentException("Illegal Value for Tangent Function");
-      //if (arguments.get(0) % (2 * Math.PI) > Math.PI) {
-      //  return Double.MIN_VALUE;
-      //} else {
-      //  return Double.MAX_VALUE;
-      //}
-      //}
+    double angle = arguments.get(0).getValue();
+    if (Math.abs(angle % 180) == 90) {
+      throw new ArithmeticException("Illegal Value for Tangent Function");
     }
-    return Math.tan(angle);
+    return Math.tan(MathUtils.toRadians(angle));
   }
 
   public void notifyListener(SlogoListener listener, double value) {
