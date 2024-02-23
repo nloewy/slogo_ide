@@ -1,3 +1,5 @@
+/**
+ *
 package slogo.model.command.control;
 
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +19,8 @@ public class RepeatCommand extends Command {
 
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double x = 0;
+   // double x = 0;
+   // NEED TO MAKE THIS AN ASSIGNED VARIABLE CALLED REPCOUNTS
     for (int i = 0; i < arguments.get(0).getValue(); i++) {
       x = arguments.get(1).getValue();
     }
@@ -29,3 +32,5 @@ public class RepeatCommand extends Command {
   }
 
 }
+
+ */
