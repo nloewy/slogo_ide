@@ -1,6 +1,7 @@
 package slogo;
 
 import javafx.stage.Stage;
+import slogo.model.api.TurtleRecord;
 import slogo.view.View;
 
 import java.io.FileNotFoundException;
@@ -14,8 +15,12 @@ public class Controller {
         view = new View(stage);
     }
 
-    //Wil require an XMLFile object parameter
-    //This will initialize this window's view object as necessary.
+    /*
+     * Willrequire an XMLFile object parameter
+     * This will initialize this window's view object as necessary.
+     * TODO Backend has to interact with this view object
+     * to access the API for one IDE session
+     */
     public static void openNewSession() throws FileNotFoundException {
         Stage newStage = new Stage();
         View view = new View(newStage);
