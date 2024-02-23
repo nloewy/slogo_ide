@@ -15,16 +15,22 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+The View will already know the XMLFile data when
+this is initialized. This will periodically
+call View for updates and to schedule
+animation keyframes.
+ */
 public class MainScreen extends Screen {
 
     private static final double FRAME_RATE = 4.0;
     private final Timeline animation = new Timeline();
+    private final double speed = 0.75;
     Stage stage;
     Group root;
     TextField field;
     Button submitField;
     List<FrontEndTurtle> myTurtles = new ArrayList<>();
-    private final double speed = 0.75;
 
     //Add an XMLFile object to this when Model adds one
     //Controller calls this with an XML File

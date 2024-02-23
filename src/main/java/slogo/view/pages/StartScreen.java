@@ -15,12 +15,15 @@ import slogo.view.View;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/*
+The loadNewScreen and loadOldScreen buttons will
+open a file loader and call a method in View
+that will initialize appropriately with
+the XML File.
+ */
 public class StartScreen extends Screen {
 
     private final Group root;
-
-    // private final Button loadFileButton = new
-    // Button(Main.getInternationalText("loadText"));
     private final Stage stage;
 
     private final Image logo;
@@ -58,6 +61,9 @@ public class StartScreen extends Screen {
         root.getChildren().add(logoView);
         root.getChildren().add(langPane);
     }
+
+    //This method will send the XMLFile to a View method
+    //This will also initialize a MainScreen object
 
     // private void setLoadFileButtonAction() throws FileFieldException {
     // File dataFile = Page.FILE_CHOOSER.showOpenDialog(stage);
