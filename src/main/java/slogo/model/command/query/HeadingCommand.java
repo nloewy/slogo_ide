@@ -16,7 +16,6 @@ public class HeadingCommand extends Command {
 
   public double execute(List<Node> arguments) {
     return myTurtle.getHeading();
-
   }
 
   @Override
