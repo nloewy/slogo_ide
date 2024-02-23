@@ -19,7 +19,7 @@ public class LeftCommand extends Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double degrees = arguments.get(0).getValue();
-    myTurtle.setHeading((myTurtle.getHeading() - degrees) % 360);
+    myTurtle.setHeading(myTurtle.getHeading() - degrees);
     return degrees;
   }
 
