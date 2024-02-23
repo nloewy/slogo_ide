@@ -114,6 +114,7 @@ public class View implements SlogoListener {
                 turtle.setIsPenDisplayed(turtleState.pen());
                 turtle.setPosition(new double[]{turtleState.x(), turtleState.y()});
                 turtle.setHeading(turtleState.heading());
+                return;
             }
         }
         turtles.add(new FrontEndTurtle(turtleState.id(), defaultImage, Color.BLACK, new double[]{0, 0}));
@@ -126,7 +127,7 @@ public class View implements SlogoListener {
                 turtle.setIsPenDisplayed(false);
                 turtle.setPosition(new double[]{0, 0});
                 turtle.setHeading(0);
-                turtle.replaceImage(defaultImage);
+                turtle.setImage(defaultImage);
             }
         }
     }

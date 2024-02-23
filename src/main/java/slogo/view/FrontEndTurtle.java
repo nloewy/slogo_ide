@@ -46,7 +46,7 @@ public class FrontEndTurtle {
         heading = newValue;
     }
 
-    public void replaceImage(Image newImage) {
+    public void setImage(Image newImage) {
         displayImage = newImage;
         display = new ImageView(displayImage);
         display.setPreserveRatio(true);
