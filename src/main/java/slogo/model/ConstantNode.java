@@ -6,7 +6,7 @@ public class ConstantNode extends Node {
 
   private final double myConstant;
 
-  public ConstantNode(String token, Turtle turtle) {
+  public ConstantNode(String token, Turtle turtle) throws NumberFormatException {
     myConstant = Double.parseDouble(token);
   }
 
