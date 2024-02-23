@@ -1,11 +1,13 @@
 package slogo.model;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Node {
 
-  private List<Node> myChildren;
+  private List<Node> myChildren = new ArrayList<>();
+
 
   public abstract double getValue() throws InvocationTargetException, IllegalAccessException;
 
