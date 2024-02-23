@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import slogo.model.SlogoListener;
 import slogo.model.api.TurtleRecord;
+import slogo.view.pages.MainScreen;
 import slogo.view.pages.Screen;
 import slogo.view.pages.StartScreen;
 
@@ -14,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 /*
-Represents one session instance.
+Represents one IDE session.
 There should be one View per window open.
  */
 public class View implements SlogoListener {
@@ -37,18 +38,19 @@ public class View implements SlogoListener {
 
         variables = new HashMap<>();
         turtles = new ArrayList<>();
+        //This line is for testing, this should be filled in by the xml file
         commandList = new ArrayList<>();
         try {
             defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        turtles.add(new FrontEndTurtle(0, new Double[]{0.0, 0.0}, Color.BLACK, true, 0, defaultImage));
     }
 
     public void run() throws FileNotFoundException {
-        Screen page = new StartScreen(this, stage);
+        Screen page = new MainScreen(this, stage);
         page.setUp();
-
         Scene scene = new Scene(page.getGroup(), width, height);
         scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
 
@@ -112,12 +114,13 @@ public class View implements SlogoListener {
         for (FrontEndTurtle turtle : turtles) {
             if (turtle.getId() == turtleState.id()) {
                 turtle.setIsPenDisplayed(turtleState.pen());
-                turtle.setPosition(new double[]{turtleState.x(), turtleState.y()});
+                turtle.setPosition(new Double[]{turtleState.x(), turtleState.y()});
                 turtle.setHeading(turtleState.heading());
+                System.out.println("inside");
                 return;
             }
         }
-        turtles.add(new FrontEndTurtle(turtleState.id(), defaultImage, Color.BLACK, new double[]{0, 0}));
+        turtles.add(new FrontEndTurtle(turtleState.id(), new Double[]{0.0, 0.0}, Color.BLACK, true, 0, defaultImage));
     }
 
     @Override
@@ -125,7 +128,7 @@ public class View implements SlogoListener {
         for (FrontEndTurtle turtle : turtles) {
             if (turtle.getId() == id) {
                 turtle.setIsPenDisplayed(false);
-                turtle.setPosition(new double[]{0, 0});
+                turtle.setPosition(new Double[]{0.0, 0.0});
                 turtle.setHeading(0);
                 turtle.setImage(defaultImage);
             }
