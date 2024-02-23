@@ -11,6 +11,7 @@ import slogo.model.Node;
 import slogo.model.Turtle;
 
 public class HomeClearCommandTest {
+
   public static final double DELTA = 0.001;
 
   private Turtle myTurtle;
@@ -42,7 +43,6 @@ public class HomeClearCommandTest {
       "1000000.0, 1000000.0",
       "-1.0, -1.0"
   })
-
   void testBasicHome(String originalX, String originalY)
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     node = new CommandNode("slogo.model.command.turtle.HomeCommand", myTurtle);
@@ -75,7 +75,6 @@ public class HomeClearCommandTest {
       "1000000.0, 1000000.0",
       "-1.0, -1.0"
   })
-
   void testBasicClearScreen(String originalX, String originalY)
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     node = new CommandNode("slogo.model.command.turtle.ClearScreenCommand", myTurtle);

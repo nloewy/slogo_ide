@@ -13,19 +13,19 @@ import slogo.model.Turtle;
 
 public class XcoordinateCommandTest {
 
-    public static final double DELTA = 0.001;
+  public static final double DELTA = 0.001;
 
-    private Turtle myTurtle;
-    private Node node;
+  private Turtle myTurtle;
+  private Node node;
 
-    @BeforeEach
-    void setUp()
-        throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+  @BeforeEach
+  void setUp()
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
-      myTurtle = new Turtle(1);
-      node = new CommandNode("slogo.model.command.query.XcoordinateCommand", myTurtle);
+    myTurtle = new Turtle(1);
+    node = new CommandNode("slogo.model.command.query.XcoordinateCommand", myTurtle);
 
-    }
+  }
 
   @ParameterizedTest
   @CsvSource({
@@ -40,9 +40,9 @@ public class XcoordinateCommandTest {
       "1.0001"
   })
   void testXCorBasic(String x)
-        throws InvocationTargetException, IllegalAccessException {
-      node.addChildren(new ConstantNode(x, myTurtle));
-      assertEquals(myTurtle.getX(), node.getValue(), DELTA);
-    }
-
+      throws InvocationTargetException, IllegalAccessException {
+    node.addChildren(new ConstantNode(x, myTurtle));
+    assertEquals(myTurtle.getX(), node.getValue(), DELTA);
   }
+
+}

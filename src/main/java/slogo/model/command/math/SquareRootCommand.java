@@ -18,9 +18,9 @@ public class SquareRootCommand extends Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double val = arguments.get(0).getValue();
-    if (val<0) {
-        throw new IllegalArgumentException("expr must be non-negative");
-     }
+    if (val < 0) {
+      throw new IllegalArgumentException("expr must be non-negative");
+    }
     return Math.sqrt(val);
   }
 

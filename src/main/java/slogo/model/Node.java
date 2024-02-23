@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class Node {
 
-  private List<Node> myChildren = new ArrayList<>();
+  private final List<Node> myChildren = new ArrayList<>();
 
 
   public abstract double getValue() throws InvocationTargetException, IllegalAccessException;

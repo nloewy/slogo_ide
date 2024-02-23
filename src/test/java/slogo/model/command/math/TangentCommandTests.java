@@ -1,6 +1,7 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,6 +25,7 @@ public class TangentCommandTests {
   void setUp() {
     myTurtle = null;
   }
+
   @ParameterizedTest
   @CsvSource({
       "0, 0.0",
@@ -60,7 +62,9 @@ public class TangentCommandTests {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     node = new CommandNode("slogo.model.command.math.TangentCommand", myTurtle);
     node.addChildren(new ConstantNode(degrees, myTurtle));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
-    assertTrue(e.getCause() instanceof ArithmeticException);
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+      node.getValue();
+    });
+    assertInstanceOf(ArithmeticException.class, e.getCause());
   }
 }

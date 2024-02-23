@@ -9,7 +9,7 @@ import slogo.model.api.TurtleRecord;
  */
 public class Turtle {
 
-  private int myId;
+  private final int myId;
   private boolean myPen;
   private double myX;
   private double myY;
@@ -57,7 +57,6 @@ public class Turtle {
 
   public void setHeading(double myHeading) {
     this.myHeading = (myHeading % 360 + 360) % 360; // Ensures positive modulus
-    ;
   }
 
   public TurtleRecord getImmutableTurtle() {

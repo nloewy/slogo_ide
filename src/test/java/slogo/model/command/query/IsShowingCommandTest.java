@@ -9,6 +9,7 @@ import slogo.model.Node;
 import slogo.model.Turtle;
 
 public class IsShowingCommandTest {
+
   public static final double DELTA = 0.001;
 
   private Turtle myTurtle;

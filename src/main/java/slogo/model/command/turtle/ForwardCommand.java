@@ -17,7 +17,8 @@ public class ForwardCommand extends Command {
   }
 
   @Override
-  public double execute(List<Node> arguments) throws IllegalAccessException, InvocationTargetException {
+  public double execute(List<Node> arguments)
+      throws IllegalAccessException, InvocationTargetException {
     double pixels = arguments.get(0).getValue();
     myTurtle.setX(myTurtle.getX() + pixels * Math.sin(MathUtils.toRadians(myTurtle.getHeading())));
     myTurtle.setY(myTurtle.getY() + pixels * Math.cos(MathUtils.toRadians(myTurtle.getHeading())));

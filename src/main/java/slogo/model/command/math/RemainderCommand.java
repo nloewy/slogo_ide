@@ -17,7 +17,7 @@ public class RemainderCommand extends Command {
 
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    if(arguments.get(1).getValue()==0) {
+    if (arguments.get(1).getValue() == 0) {
       throw new ArithmeticException("Cannot divide by 0");
     }
     return arguments.get(0).getValue() % arguments.get(1).getValue();

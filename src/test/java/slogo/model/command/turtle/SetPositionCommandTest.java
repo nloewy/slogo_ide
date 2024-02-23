@@ -12,6 +12,7 @@ import slogo.model.Node;
 import slogo.model.Turtle;
 
 public class SetPositionCommandTest {
+
   public static final double DELTA = 0.001;
 
   private Turtle myTurtle;
@@ -46,14 +47,14 @@ public class SetPositionCommandTest {
       "0.0, 0.0, 3.0, 0.0", // Points on coordinate axes
       "1.0, 1.0, -1.0, -1.0"
   })
-
   void testBasicPosition(String originalX, String originalY, String newX, String newY)
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
     node.addChildren(new ConstantNode(newX, myTurtle));
     node.addChildren(new ConstantNode(newY, myTurtle));
-    double expectedVal = Math.hypot(Double.parseDouble(newX) -myTurtle.getX(), Double.parseDouble(newY) - myTurtle.getY());
+    double expectedVal = Math.hypot(Double.parseDouble(newX) - myTurtle.getX(),
+        Double.parseDouble(newY) - myTurtle.getY());
     assertEquals(expectedVal, node.getValue(), DELTA);
     assertEquals(Double.parseDouble(newX), myTurtle.getX(), DELTA);
     assertEquals(Double.parseDouble(newY), myTurtle.getY(), DELTA);

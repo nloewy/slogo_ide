@@ -18,9 +18,9 @@ public class RandomCommand extends Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double rand = arguments.get(0).getValue();
-    if (rand<0) {
-        throw new IllegalArgumentException("Max must be positive");
-     }
+    if (rand < 0) {
+      throw new IllegalArgumentException("Max must be positive");
+    }
     return Math.random() * rand;
   }
 

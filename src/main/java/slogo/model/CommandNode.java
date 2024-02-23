@@ -7,8 +7,8 @@ import slogo.model.command.Command;
 
 public class CommandNode extends Node {
 
-  private Command command;
-  private Method m;
+  private final Command command;
+  private final Method m;
 
 
   public CommandNode(String token, Turtle turtle)

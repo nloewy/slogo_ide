@@ -1,6 +1,7 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -72,7 +73,6 @@ public class LogCommandTest {
   }
 
 
-
   @ParameterizedTest
   @CsvSource({
       "0",
@@ -84,6 +84,9 @@ public class LogCommandTest {
   void testLogNonPositive(String op1)
       throws InvocationTargetException, IllegalAccessException {
     node.addChildren(new ConstantNode(op1, myTurtle));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
-    assertTrue(e.getCause() instanceof IllegalArgumentException);  }
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+      node.getValue();
+    });
+    assertInstanceOf(IllegalArgumentException.class, e.getCause());
+  }
 }

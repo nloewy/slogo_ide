@@ -1,11 +1,11 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -61,7 +61,9 @@ public class RandomRangeCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChildren(new ConstantNode("-90.00000", myTurtle));
     node.addChildren(new ConstantNode("-90.00100", myTurtle));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
-    assertTrue(e.getCause() instanceof IllegalArgumentException);
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+      node.getValue();
+    });
+    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

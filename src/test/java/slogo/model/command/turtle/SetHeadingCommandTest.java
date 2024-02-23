@@ -35,7 +35,8 @@ public class SetHeadingCommandTest {
       "180, 180, 180",
       "181, 179, 181",
       "0, 0, 0"
-  })  void testBasicHeading(String newHeading, String expectedValue, String expectedHeading)
+  })
+  void testBasicHeading(String newHeading, String expectedValue, String expectedHeading)
       throws InvocationTargetException, IllegalAccessException {
     node.addChildren(new ConstantNode(newHeading, myTurtle));
     assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
