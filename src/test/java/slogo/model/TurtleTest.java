@@ -6,10 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 public class TurtleTest {
+
   private Turtle myTurtle;
+
   @BeforeEach
-  void setup () {
+  void setup() {
     myTurtle = new Turtle(1);
   }
 
@@ -28,7 +31,7 @@ public class TurtleTest {
     assertEquals(myTurtle.getX(), myTurtle.getImmutableTurtle().x());
     assertEquals(myTurtle.getY(), myTurtle.getImmutableTurtle().y());
     assertEquals(myTurtle.getPen(), myTurtle.getImmutableTurtle().pen());
-    assertEquals(myTurtle.getVisible(),myTurtle.getImmutableTurtle().visible());
+    assertEquals(myTurtle.getVisible(), myTurtle.getImmutableTurtle().visible());
     assertEquals(myTurtle.getHeading(), myTurtle.getImmutableTurtle().heading());
   }
 

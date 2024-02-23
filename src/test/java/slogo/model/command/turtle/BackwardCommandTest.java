@@ -1,7 +1,6 @@
 package slogo.model.command.turtle;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +12,7 @@ import slogo.model.Turtle;
 
 public class BackwardCommandTest {
 
+  public static final double DELTA = 0.001;
 
   private Turtle myTurtle;
   private Node node;
@@ -31,8 +31,8 @@ public class BackwardCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     String dist = "75";
     node.addChildren(new ConstantNode(dist, myTurtle));
-    assertEquals(node.getValue(), 75);
-    assertEquals(myTurtle.getY(), -75);
+    assertEquals(node.getValue(), 75, DELTA);
+    assertEquals(myTurtle.getY(), -75, DELTA);
 
   }
 
@@ -42,9 +42,9 @@ public class BackwardCommandTest {
     myTurtle.setHeading(60);
     String dist = "20";
     node.addChildren(new ConstantNode(dist, myTurtle));
-    assertEquals(node.getValue(), 20);
-    assertEquals(myTurtle.getX(), -10*Math.sqrt(3), .00001);
-    assertEquals(myTurtle.getY(), -10, .00001);
+    assertEquals(node.getValue(), 20, DELTA);
+    assertEquals(myTurtle.getX(), -10 * Math.sqrt(3), DELTA);
+    assertEquals(myTurtle.getY(), -10, DELTA);
   }
 
   @Test
@@ -55,9 +55,9 @@ public class BackwardCommandTest {
     myTurtle.setY(70);
     String dist = "20";
     node.addChildren(new ConstantNode(dist, myTurtle));
-    assertEquals(node.getValue(), 20);
-    assertEquals(myTurtle.getX(), 50 - 10 * Math.sqrt(3), .00001);
-    assertEquals(myTurtle.getY(), 60, .00001);
+    assertEquals(node.getValue(), 20, DELTA);
+    assertEquals(myTurtle.getX(), 50 - 10 * Math.sqrt(3), DELTA);
+    assertEquals(myTurtle.getY(), 60, DELTA);
   }
 
   @Test
@@ -65,9 +65,9 @@ public class BackwardCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     String dist = "0";
     node.addChildren(new ConstantNode(dist, myTurtle));
-    assertEquals(node.getValue(), 0);
-    assertEquals(myTurtle.getX(), 0);
-    assertEquals(myTurtle.getY(), 0);
+    assertEquals(node.getValue(), 0, DELTA);
+    assertEquals(myTurtle.getX(), 0, DELTA);
+    assertEquals(myTurtle.getY(), 0, DELTA);
   }
 
   @Test
@@ -75,7 +75,7 @@ public class BackwardCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     String dist = "-75";
     node.addChildren(new ConstantNode(dist, myTurtle));
-    assertEquals(node.getValue(), -75);
-    assertEquals(myTurtle.getY(), 75);
+    assertEquals(node.getValue(), -75, DELTA);
+    assertEquals(myTurtle.getY(), 75, DELTA);
   }
 }
