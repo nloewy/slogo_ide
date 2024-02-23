@@ -1,30 +1,36 @@
 package slogo.view;
 
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import slogo.model.SlogoListener;
 import slogo.model.api.TurtleRecord;
+import slogo.view.pages.Screen;
+import slogo.view.pages.StartScreen;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+/*
+Represents one session instance.
+There should be one View per window open.
+ */
 public class View implements SlogoListener {
 
-    private static Stage stage;
-    private static List<FrontEndTurtle> turtles;
-    private static List<String> commandList;
-    private static String commandString;
+    private static final int height = 600;
+    private static final int width = 1000;
     private final Map<String, Number> variables;
     private final Image defaultImage;
+    private final Stage stage;
+    private final List<FrontEndTurtle> turtles;
+    private final List<String> commandList;
+    private String commandString;
     private String lang;
 
     public View(Stage stage) {
-        View.stage = stage;
+        this.stage = stage;
 
         lang = "EG";
         commandString = "";
@@ -39,7 +45,19 @@ public class View implements SlogoListener {
         }
     }
 
-    public static List<FrontEndTurtle> getTurtles() {
+    public void run() throws FileNotFoundException {
+        Screen page = new StartScreen(this, stage);
+        page.setUp();
+
+        Scene scene = new Scene(page.getGroup(), width, height);
+        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
+
+        stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.show();
+    }
+
+    public List<FrontEndTurtle> getTurtles() {
         return turtles;
     }
 
@@ -55,7 +73,7 @@ public class View implements SlogoListener {
      * Handles the user switching background color.
      */ //TODO Test
     public void setColor(Color color) {
-        View.stage.getScene().setFill(color);
+        stage.getScene().setFill(color);
     }
 
     public boolean hasCommandString() {
@@ -76,7 +94,7 @@ public class View implements SlogoListener {
         throw new Exception("No Command String Found!");
     }
 
-    public static void setCommandString(String s) {
+    public void setCommandString(String s) {
         commandString = s;
         System.out.println(commandString);
     }

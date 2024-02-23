@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import slogo.view.ButtonUtil;
+import slogo.view.View;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,32 +32,24 @@ public class StartScreen extends Screen {
     private final Button loadNewScreenButton;
     private final Button loadOldScreenButton;
 
-    public StartScreen(Stage stage) throws FileNotFoundException {
+    public StartScreen(View view, Stage stage) throws FileNotFoundException {
         super();
         this.stage = stage;
 
         logo = new Image(new FileInputStream("src/main/resources/SlogoLOGO.png"));
         logoView = new ImageView(logo);
-        logoView.setPreserveRatio(true);
-        logoView.setFitWidth(400);
-        logoView.setLayoutX(512);
-        logoView.setLayoutY(100);
 
         langOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
         langBox = new ComboBox<String>(langOptions);
         langPane = new TilePane(langBox);
 
-        loadNewScreenButton = ButtonUtil.generateButton("Load New Session", 100, 100, (event) -> {
+        loadNewScreenButton = ButtonUtil.generateButton("Load New Session", 557, 232, (event) -> {
             System.out.println("Load New Session");
         });
-        loadNewScreenButton.setLayoutX(557);
-        loadNewScreenButton.setLayoutY(232);
 
-        loadOldScreenButton = ButtonUtil.generateButton("Load Old Session", 100, 100, (event) -> {
+        loadOldScreenButton = ButtonUtil.generateButton("Load Old Session", 557, 300, (event) -> {
             System.out.println("Load Old Session");
         });
-        loadOldScreenButton.setLayoutX(557);
-        loadOldScreenButton.setLayoutY(300);
 
         root = new Group();
 
@@ -64,7 +57,6 @@ public class StartScreen extends Screen {
         root.getChildren().add(loadOldScreenButton);
         root.getChildren().add(logoView);
         root.getChildren().add(langPane);
-        // scene.getStylesheets().add("src/main/resources/slogo/css/LightMode.css");
     }
 
     // private void setLoadFileButtonAction() throws FileFieldException {
@@ -79,15 +71,10 @@ public class StartScreen extends Screen {
 
     @Override
     public void setUp() {
-        // loadFileButton.setLayoutX(500);
-        // loadFileButton.setLayoutY(300);
-        // loadFileButton.setOnAction(event -> {
-        // try {
-        // setLoadFileButtonAction();
-        // } catch (FileFieldException e) {
-        // e.printStackTrace();
-        // }
-        // });
+        logoView.setPreserveRatio(true);
+        logoView.setFitWidth(400);
+        logoView.setLayoutX(512);
+        logoView.setLayoutY(100);
     }
 
     @Override

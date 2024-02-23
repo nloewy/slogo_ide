@@ -12,9 +12,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        Controller controller = new Controller(stage);
         try {
-            controller.run();
+            Controller.openNewSession();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
