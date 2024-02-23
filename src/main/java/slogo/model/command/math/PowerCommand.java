@@ -8,6 +8,7 @@ import slogo.model.Turtle;
 import slogo.model.command.Command;
 
 public class PowerCommand extends Command {
+
   private final Turtle myTurtle;
 
   public PowerCommand(Turtle turtle) {
@@ -18,12 +19,12 @@ public class PowerCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double base = arguments.get(0).getValue();
     double exp = arguments.get(1).getValue();
-    return Math.pow(base, exp);
-
-  }
-
-  public int getNumberOfArgs() {
-    return 2;
+    double result = Math.pow(base, exp);
+    if (Double.isNaN(result) || result == Double.NEGATIVE_INFINITY ||
+        result == Double.POSITIVE_INFINITY) {
+      throw new IllegalArgumentException("Result is operation is undefined");
+    }
+    return result;
   }
 
   public void notifyListener(SlogoListener listener, double value) {

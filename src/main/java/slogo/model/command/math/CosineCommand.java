@@ -15,15 +15,13 @@ public class CosineCommand extends Command {
   public CosineCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     return Math.cos(MathUtils.toRadians(arguments.get(0).getValue()));
 
   }
 
-  public int getNumberOfArgs() {
-    return 1;
-  }
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

@@ -8,6 +8,7 @@ import slogo.model.Turtle;
 import slogo.model.command.Command;
 
 public class RemainderCommand extends Command {
+
   private final Turtle myTurtle;
 
   public RemainderCommand(Turtle turtle) {
@@ -16,12 +17,11 @@ public class RemainderCommand extends Command {
 
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
+    if (arguments.get(1).getValue() == 0) {
+      throw new ArithmeticException("Cannot divide by 0");
+    }
     return arguments.get(0).getValue() % arguments.get(1).getValue();
 
-  }
-
-  public int getNumberOfArgs() {
-    return 2;
   }
 
   public void notifyListener(SlogoListener listener, double value) {

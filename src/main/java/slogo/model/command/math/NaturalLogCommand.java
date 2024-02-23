@@ -14,18 +14,14 @@ public class NaturalLogCommand extends Command {
   public NaturalLogCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double val = arguments.get(0).getValue();
     if (val <= 0) {
-      return 0.0;
-      //    throw new IllegalArgumentException("expr must be non-negative");
-
+      throw new IllegalArgumentException("expr must be non-negative");
     }
     return Math.log(val);
-  }
-  public int getNumberOfArgs() {
-    return 1;
   }
 
   public void notifyListener(SlogoListener listener, double value) {

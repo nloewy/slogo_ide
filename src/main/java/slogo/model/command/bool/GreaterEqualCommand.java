@@ -14,13 +14,11 @@ public class GreaterEqualCommand extends Command {
   public GreaterEqualCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     return (arguments.get(0).getValue() >= arguments.get(1).getValue()) ? 1 : 0;
 
-  }
-  public int getNumberOfArgs() {
-    return 2;
   }
 
   public void notifyListener(SlogoListener listener, double value) {

@@ -26,10 +26,6 @@ public class SetPositionCommand extends Command {
     return MathUtils.dist(myTurtle.getX(), myTurtle.getY(), currentX, currentY);
   }
 
-  public int getNumberOfArgs() {
-    return 2;
-  }
-
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

@@ -14,18 +14,16 @@ public class RandomCommand extends Command {
   public RandomCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double rand = Math.max(arguments.get(0).getValue(), 0);
-    //if (rand<0) {
-    //    throw new IllegalArgumentException("Max must be positive");
-    //  }
+    double rand = arguments.get(0).getValue();
+    if (rand < 0) {
+      throw new IllegalArgumentException("Max must be positive");
+    }
     return Math.random() * rand;
   }
 
-  public int getNumberOfArgs() {
-    return 1;
-  }
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

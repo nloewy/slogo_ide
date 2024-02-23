@@ -18,17 +18,11 @@ public class QuotientCommand extends Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     if (arguments.get(1).getValue() == 0) {
-      return 0;
-      //  throw new ArithmeticException("Divisor must be non-zero");
-      //  return 0.0
-      //}
+      throw new ArithmeticException("Divisor must be non-zero");
     }
     return arguments.get(0).getValue() / arguments.get(1).getValue();
   }
 
-  public int getNumberOfArgs() {
-    return 2;
-  }
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

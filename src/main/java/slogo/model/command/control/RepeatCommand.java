@@ -17,14 +17,11 @@ public class RepeatCommand extends Command {
 
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    for(int i = 0; i < arguments.get(0).getValue(); i++) {
+    for (int i = 0; i < arguments.get(0).getValue(); i++) {
       //arguments.get(1).getValue();
 
     }
     return 0;
-  }
-  public int getNumberOfArgs() {
-    return 2;
   }
 
   public void notifyListener(SlogoListener listener, double value) {

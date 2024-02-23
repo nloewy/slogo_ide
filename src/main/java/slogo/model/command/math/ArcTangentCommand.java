@@ -15,14 +15,14 @@ public class ArcTangentCommand extends Command {
   public ArcTangentCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return Math.atan(MathUtils.toRadians(arguments.get(0).getValue()));
+    System.out.println(arguments.get(0).getValue());
+    return MathUtils.toDegrees(Math.atan(arguments.get(0).getValue()));
   }
 
-  public int getNumberOfArgs() {
-    return 1;
-  }
+
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

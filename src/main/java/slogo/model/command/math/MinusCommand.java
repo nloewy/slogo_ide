@@ -14,14 +14,12 @@ public class MinusCommand extends Command {
   public MinusCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     return -1 * arguments.get(0).getValue();
   }
 
-  public int getNumberOfArgs() {
-    return 2;
-  }
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

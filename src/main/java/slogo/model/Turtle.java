@@ -10,9 +10,9 @@ import slogo.model.api.TurtleRecord;
 public class Turtle {
 
   private final int myId;
+  private boolean myPen;
   private double myX;
   private double myY;
-  private final boolean myPen;
   private boolean myVisible;
   private double myHeading; //range [0.0,360.0)
 
@@ -22,6 +22,7 @@ public class Turtle {
     myX = 0.0;
     myY = 0.0;
     myPen = true;
+    myVisible = true;
     myHeading = 0.0;
   }
 
@@ -55,7 +56,7 @@ public class Turtle {
   }
 
   public void setHeading(double myHeading) {
-    this.myHeading = myHeading;
+    this.myHeading = (myHeading % 360 + 360) % 360; // Ensures positive modulus
   }
 
   public TurtleRecord getImmutableTurtle() {
@@ -67,6 +68,7 @@ public class Turtle {
   }
 
   public void setPen(boolean b) {
+    myPen = b;
   }
 
   public boolean getVisible() {
@@ -74,5 +76,6 @@ public class Turtle {
   }
 
   public void setVisible(boolean b) {
+    myVisible = b;
   }
 }

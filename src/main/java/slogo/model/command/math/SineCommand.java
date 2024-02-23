@@ -15,15 +15,13 @@ public class SineCommand extends Command {
   public SineCommand(Turtle turtle) {
     myTurtle = turtle;
   }
+
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     return Math.sin(MathUtils.toRadians(arguments.get(0).getValue()));
 
   }
 
-  public int getNumberOfArgs() {
-    return 1;
-  }
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }

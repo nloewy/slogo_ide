@@ -20,9 +20,6 @@ public class PenDownCommand extends Command {
     return 1.0;
   }
 
-  public int getNumberOfArgs() {
-    return 0;
-  }
   @Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
