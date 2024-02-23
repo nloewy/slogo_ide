@@ -11,7 +11,7 @@ import slogo.model.ConstantNode;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
-public class ForwardCommandTest {
+public class BackwardCommandTest {
 
 
   private Turtle myTurtle;
@@ -22,33 +22,33 @@ public class ForwardCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
     myTurtle = new Turtle(1);
-    node = new CommandNode("slogo.model.command.turtle.ForwardCommand", myTurtle);
+    node = new CommandNode("slogo.model.command.turtle.BackwardCommand", myTurtle);
 
   }
 
   @Test
-  void testBasicForward()
+  void testBasicBackward()
       throws InvocationTargetException, IllegalAccessException {
     String dist = "75";
     node.addChildren(new ConstantNode(dist, myTurtle));
     assertEquals(node.getValue(), 75);
-    assertEquals(myTurtle.getY(), 75);
+    assertEquals(myTurtle.getY(), -75);
 
   }
 
   @Test
-  void testForwardWithHeading()
+  void testBackwardWithHeading()
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setHeading(60);
     String dist = "20";
     node.addChildren(new ConstantNode(dist, myTurtle));
     assertEquals(node.getValue(), 20);
-    assertEquals(myTurtle.getX(), 10*Math.sqrt(3), .00001);
-    assertEquals(myTurtle.getY(), 10, .00001);
+    assertEquals(myTurtle.getX(), -10*Math.sqrt(3), .00001);
+    assertEquals(myTurtle.getY(), -10, .00001);
   }
 
   @Test
-  void testForwardWithNonZeroOrigin()
+  void testBackwardWithNonZeroOrigin()
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setHeading(60);
     myTurtle.setX(50);
@@ -56,12 +56,12 @@ public class ForwardCommandTest {
     String dist = "20";
     node.addChildren(new ConstantNode(dist, myTurtle));
     assertEquals(node.getValue(), 20);
-    assertEquals(myTurtle.getX(), 50 + 10 * Math.sqrt(3), .00001);
-    assertEquals(myTurtle.getY(), 80, .00001);
+    assertEquals(myTurtle.getX(), 50 - 10 * Math.sqrt(3), .00001);
+    assertEquals(myTurtle.getY(), 60, .00001);
   }
 
   @Test
-  void testForwardWithZeroDistance()
+  void testBackwardWithZeroDistance()
       throws InvocationTargetException, IllegalAccessException {
     String dist = "0";
     node.addChildren(new ConstantNode(dist, myTurtle));
@@ -71,11 +71,11 @@ public class ForwardCommandTest {
   }
 
   @Test
-  void testForwardNegativeDistance()
+  void testBackwardNegativeDistance()
       throws InvocationTargetException, IllegalAccessException {
     String dist = "-75";
     node.addChildren(new ConstantNode(dist, myTurtle));
     assertEquals(node.getValue(), -75);
-    assertEquals(myTurtle.getY(), -75);
+    assertEquals(myTurtle.getY(), 75);
   }
-  }
+}
