@@ -23,10 +23,10 @@ public class HeadingCommand extends Command {
     return myTurtle.getHeading();
   }
 
-  @Override
+  /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
     listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
-
+*/
 }

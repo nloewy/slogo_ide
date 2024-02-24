@@ -31,11 +31,11 @@ public class SetPositionCommand extends Command {
     return MathUtils.dist(myTurtle.getX(), myTurtle.getY(), currentX, currentY);
   }
 
-  @Override
+  /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
     listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
-
+*/
 
 }

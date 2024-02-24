@@ -25,11 +25,11 @@ public class ShowTurtleCommand extends Command {
     return 1.0;
   }
 
-  @Override
+  /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
     listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
-
+*/
 
 }
