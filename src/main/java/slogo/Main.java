@@ -12,11 +12,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+
+        stage.setTitle("SLogo");
+
         Controller controller = new Controller(stage);
-        try {
-            controller.run();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            controller.run();
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 }

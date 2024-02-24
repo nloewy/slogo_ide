@@ -1,36 +1,57 @@
 package slogo;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import slogo.view.View;
 import slogo.view.pages.MainScreen;
-import slogo.view.pages.Screen;
 import slogo.view.pages.StartScreen;
 
-import java.io.FileNotFoundException;
-import java.util.Objects;
-
 public class Controller {
-
-    private static final int height = 600;
-    private static final int width = 1000;
-    private final Stage stage;
-    private final View view;
+    private Stage stage;
+    private View view;
+    private String currentLanguage = "English";
 
     public Controller(Stage stage) {
         this.stage = stage;
-        view = new View(stage);
+        this.view = new View(stage, this);
+        openStartScreen();
     }
 
-    public void run() throws FileNotFoundException {
-        Screen page = new StartScreen(stage);
-        page.setUp();
+    public void openStartScreen() {
+        StartScreen startScreen = null;
+        try {
+            startScreen = new StartScreen(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        switchToScene(startScreen);
+    }
 
-        Scene scene = new Scene(page.getGroup(), width, height);
-        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
+    public void openNewSession() {
+        MainScreen mainScreen = new MainScreen(this, view);
+        switchToScene(mainScreen);
+    }
 
-        stage.setScene(scene);
-        stage.setMaximized(true);
+    public void loadSession() {
+
+    }
+
+    public void switchToScene(slogo.view.Scene scene) {
+        scene.initScene();
+        stage.setScene(scene.getScene());
         stage.show();
     }
+
+    public void handleCommand(String command) {
+
+    }
+
+    public void setCurrentLanguage(String language) {
+        this.currentLanguage = language;
+        view.setLanguage(currentLanguage);
+    }
+
+    public String getCurrentLanguage() {
+        return currentLanguage;
+    }
+
 }

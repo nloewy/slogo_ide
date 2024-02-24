@@ -7,75 +7,56 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
-import javafx.stage.Stage;
+import slogo.Controller;
 import slogo.view.ButtonUtil;
+import slogo.view.Scene;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class StartScreen extends Screen {
+public class StartScreen implements Scene {
+    private javafx.scene.Scene scene;
+    private Group root = new Group();
+    private Controller controller;
 
-    private final Group root;
+    public StartScreen(Controller controller) throws FileNotFoundException {
+        this.controller = controller;
 
-    // private final Button loadFileButton = new
-    // Button(Main.getInternationalText("loadText"));
-    private final Stage stage;
-
-    private final Image logo;
-    private final ImageView logoView;
-
-    private final ComboBox langBox;
-    private final ObservableList<String> langOptions;
-    private final TilePane langPane;
-
-    public StartScreen(Stage stage) throws FileNotFoundException {
-        super();
-        this.stage = stage;
-
-        logo = new Image(new FileInputStream("src/main/resources/SlogoLOGO.png"));
-        logoView = new ImageView(logo);
+        Image logo = new Image(new FileInputStream("src/main/resources/SlogoLOGO.png"));
+        ImageView logoView = new ImageView(logo);
         logoView.setPreserveRatio(true);
         logoView.setFitWidth(400);
+        logoView.setLayoutX(100);
+        logoView.setLayoutY(50);
 
-        root = new Group();
-        langOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
-        langBox = new ComboBox<String>(langOptions);
-        langPane = new TilePane(langBox);
+        ObservableList<String> langOptions = FXCollections.observableArrayList("English", "Spanish", "French");
+        ComboBox<String> langBox = new ComboBox<>(langOptions);
+        langBox.setLayoutX(100);
+        langBox.setLayoutY(200);
 
-        root.getChildren().add(ButtonUtil.generateButton("Load New Session", 100, 100, null));
-        root.getChildren().add(ButtonUtil.generateButton("Load Old Session", 100, 170, null));
-        root.getChildren().add(logoView);
-        root.getChildren().add(langPane);
+        // Controller gets language
+        langBox.setOnAction(e -> {
+            String selectedLanguage = langBox.getValue();
+            controller.setCurrentLanguage(selectedLanguage);
+        });
 
-        // scene.getStylesheets().add("src/main/resources/slogo/css/LightMode.css");
-    }
+        root.getChildren().addAll(
+            ButtonUtil.generateButton("Load New XML Session", 100, 300, e -> controller.openNewSession()),
+            ButtonUtil.generateButton("Load New General Session", 100, 330, e -> controller.openNewSession()),
+            ButtonUtil.generateButton("Load Old Session", 100, 360, e -> controller.loadSession()), // Uncomment or modify based on your implementation
+            logoView,
+            langBox
+        );
 
-    // private void setLoadFileButtonAction() throws FileFieldException {
-    // File dataFile = Page.FILE_CHOOSER.showOpenDialog(stage);
-    // Simulation simulation = View.createSimulation(dataFile);
-    // if (simulation != null) {
-    // Main.setLanguage(simulation.getConfig().getLanguage());
-    // view.toSimulationPage(simulation,
-    // simulation.getConfig().getStateColor().getStateColorMap());
-    // }
-    // }
-
-    @Override
-    public void setUp() {
-        // loadFileButton.setLayoutX(500);
-        // loadFileButton.setLayoutY(300);
-        // loadFileButton.setOnAction(event -> {
-        // try {
-        // setLoadFileButtonAction();
-        // } catch (FileFieldException e) {
-        // e.printStackTrace();
-        // }
-        // });
+        scene = new javafx.scene.Scene(root, 600, 400);
     }
 
     @Override
-    public Group getGroup() {
-        return root;
+    public void initScene() {
+    }
+
+    @Override
+    public javafx.scene.Scene getScene() {
+        return scene;
     }
 }
-
