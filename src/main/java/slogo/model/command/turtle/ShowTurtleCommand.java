@@ -1,5 +1,6 @@
 package slogo.model.command.turtle;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -11,20 +12,15 @@ import slogo.model.command.Command;
 
 public class ShowTurtleCommand extends Command {
 
-  private final Turtle myTurtle;
-  private final Map<String, Double> myVariables;
-
-  public ShowTurtleCommand(Turtle turtle, Map<String, Double> variables) {
-    myTurtle = turtle;
-    myVariables = variables;
-  }
-
   @Override
-  public Function<ModelState, Double> execute(List<Node> arguments) {
-    myTurtle.setVisible(true);
-    return 1.0;
+  public Function<ModelState, Double> execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
+    return modelState -> {
+      Turtle turtle = modelState.getTurtles().get(0);
+      turtle.setVisible(true);
+      return 1.0;
+    };
   }
-
   /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);

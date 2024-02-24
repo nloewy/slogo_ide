@@ -12,23 +12,20 @@ import slogo.model.Turtle;
 import slogo.model.command.Command;
 
 public class SetPositionCommand extends Command {
-
-  private final Turtle myTurtle;
-  private final Map<String, Double> myVariables;
-
-  public SetPositionCommand(Turtle turtle, Map<String, Double> variables) {
-    myTurtle = turtle;
-    myVariables = variables;
-  }
-
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double currentX = myTurtle.getX();
-    double currentY = myTurtle.getY();
-    myTurtle.setX(arguments.get(0).getValue());
-    myTurtle.setY(arguments.get(1).getValue());
-    return MathUtils.dist(myTurtle.getX(), myTurtle.getY(), currentX, currentY);
+    double newX = arguments.get(0).getValue();
+    double newY = arguments.get(1).getValue();
+
+    return modelState -> {
+      Turtle turtle = modelState.getTurtles().get(0);
+      double currentX = turtle.getX();
+      double currentY = turtle.getY();
+      turtle.setX(newX);
+      turtle.setY(newY);
+      return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
+    };
   }
 
   /**@Override

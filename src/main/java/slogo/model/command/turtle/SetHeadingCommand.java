@@ -12,24 +12,19 @@ import slogo.model.command.Command;
 
 public class SetHeadingCommand extends Command {
 
-  private final Turtle myTurtle;
-  private final Map<String, Double> myVariables;
-
-  public SetHeadingCommand(Turtle turtle, Map<String, Double> variables) {
-    myTurtle = turtle;
-    myVariables = variables;
-  }
-
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double newHeading = arguments.get(0).getValue();
-    double oldHeading = myTurtle.getHeading();
-    myTurtle.setHeading(newHeading);
-    double clockwiseTurn = (newHeading - oldHeading + 360) % 360;
-    double counterclockwiseTurn = (oldHeading - newHeading + 360) % 360;
-    return Math.min(Math.abs(clockwiseTurn), Math.abs(counterclockwiseTurn));
 
+    return modelState -> {
+      Turtle turtle = modelState.getTurtles().get(0);
+      double oldHeading = turtle.getHeading();
+      turtle.setHeading(newHeading);
+      double clockwiseTurn = (newHeading - oldHeading + 360) % 360;
+      double counterclockwiseTurn = (oldHeading - newHeading + 360) % 360;
+      return Math.min(Math.abs(clockwiseTurn), Math.abs(counterclockwiseTurn));
+    };
   }
 
   /**@Override
