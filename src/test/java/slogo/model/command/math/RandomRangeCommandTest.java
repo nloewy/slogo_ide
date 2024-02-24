@@ -63,9 +63,8 @@ public class RandomRangeCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChildren(new ConstantNode("-90.00000", myTurtle));
     node.addChildren(new ConstantNode("-90.00100", myTurtle));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+    Throwable e = assertThrows(IllegalArgumentException.class, () -> {
       node.getValue();
     });
-    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

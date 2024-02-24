@@ -60,9 +60,8 @@ public class RandomCommandTest {
   void testRandomNegative()
       throws InvocationTargetException, IllegalAccessException {
     node.addChildren(new ConstantNode("-90.00000", myTurtle));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+    Throwable e = assertThrows(IllegalArgumentException.class, () -> {
       node.getValue();
     });
-    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

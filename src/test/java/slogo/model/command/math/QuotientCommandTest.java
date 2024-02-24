@@ -58,10 +58,9 @@ public class QuotientCommandTest {
     {
       node.addChildren(new ConstantNode("50", myTurtle));
       node.addChildren(new ConstantNode("0", myTurtle));
-      Throwable e = assertThrows(InvocationTargetException.class, () -> {
+      Throwable e = assertThrows(ArithmeticException.class, () -> {
         node.getValue();
       });
-      assertInstanceOf(ArithmeticException.class, e.getCause());
     }
 
   }

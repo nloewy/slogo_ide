@@ -13,18 +13,13 @@ import slogo.model.command.Command;
 
 public class SineCommand extends Command {
 
-  private final Turtle myTurtle;
-  private final Map<String, Double> myVariables;
-
-  public SineCommand(Turtle turtle, Map<String, Double> variables) {
-    myTurtle = turtle;
-    myVariables = variables;
-  }
-
+  @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return Math.sin(MathUtils.toRadians(arguments.get(0).getValue()));
-
+    double arg1 = arguments.get(0).getValue();
+    return modelState -> {
+      return Math.sin(MathUtils.toRadians(arg1));
+    };
   }
 
     /**@Override

@@ -13,21 +13,16 @@ import slogo.model.command.Command;
 
 public class TangentCommand extends Command {
 
-  private final Turtle myTurtle;
-  private final Map<String, Double> myVariables;
-
-  public TangentCommand(Turtle turtle, Map<String, Double> variables) {
-    myTurtle = turtle;
-    myVariables = variables;
-  }
-
+  @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double angle = arguments.get(0).getValue();
-    if (Math.abs(angle % 180) == 90) {
-      throw new ArithmeticException("Illegal Value for Tangent Function");
-    }
-    return Math.tan(MathUtils.toRadians(angle));
+    double arg1 = arguments.get(0).getValue();
+    return modelState -> {
+      if (Math.abs(arg1 % 180) == 90) {
+        throw new ArithmeticException("Illegal Value for Tangent Function");
+      }
+      return Math.tan(MathUtils.toRadians(arg1));
+    };
   }
 
     /**@Override

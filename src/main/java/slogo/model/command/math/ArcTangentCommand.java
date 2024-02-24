@@ -13,18 +13,14 @@ import slogo.model.command.Command;
 
 public class ArcTangentCommand extends Command {
 
-  private final Turtle myTurtle;
-  private final Map<String, Double> myVariables;
 
-  public ArcTangentCommand(Turtle turtle, Map<String, Double> variables) {
-    myTurtle = turtle;
-    myVariables = variables;
-  }
-
+  @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    System.out.println(arguments.get(0).getValue());
-    return MathUtils.toDegrees(Math.atan(arguments.get(0).getValue()));
+    double arg1 = arguments.get(0).getValue();
+    return modelState -> {
+      return MathUtils.toDegrees(Math.atan(arg1));
+    };
   }
 
 

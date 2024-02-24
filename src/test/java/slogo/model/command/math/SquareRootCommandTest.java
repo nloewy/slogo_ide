@@ -88,9 +88,8 @@ public class SquareRootCommandTest {
   void testSquareRootNegatives(String op1)
       throws InvocationTargetException, IllegalAccessException {
     node.addChildren(new ConstantNode(op1, myTurtle));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+    Throwable e = assertThrows(IllegalArgumentException.class, () -> {
       node.getValue();
     });
-    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

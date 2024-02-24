@@ -64,9 +64,6 @@ public class TangentCommandTest {
   void testTangentInvalid(String degrees)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     node.addChildren(new ConstantNode(degrees, myTurtle));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {
-      node.getValue();
-    });
-    assertInstanceOf(ArithmeticException.class, e.getCause());
+    Throwable e = assertThrows(ArithmeticException.class, () -> {node.getValue();});
   }
 }
