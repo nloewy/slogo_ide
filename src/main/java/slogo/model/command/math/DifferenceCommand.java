@@ -13,13 +13,14 @@ import slogo.model.command.Command;
 public class DifferenceCommand extends Command {
 
   @Override
-  public Function<ModelState, Double> execute(List<Node> arguments)
+    public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     double arg2 = arguments.get(1).getValue();
     return modelState -> {
-      return arg1-arg2;
+      return arg1 - arg2;
     };
+  }
 
     /**@Override
   public void notifyListener(SlogoListener listener, double value) {

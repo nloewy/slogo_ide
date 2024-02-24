@@ -20,6 +20,7 @@ public class MinusCommand extends Command {
     return modelState -> {
       return -arg1;
     };
+  }
 
     /**@Override
   public void notifyListener(SlogoListener listener, double value) {

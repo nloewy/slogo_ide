@@ -20,12 +20,15 @@ public class QuotientCommand extends Command {
     myVariables = variables;
   }
 
+  @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    if (arguments.get(1).getValue() == 0) {
-      throw new ArithmeticException("Divisor must be non-zero");
-    }
-    return arguments.get(0).getValue() / arguments.get(1).getValue();
+    double arg1 = arguments.get(0).getValue();
+    double arg2 = arguments.get(1).getValue();
+    return modelState -> {
+      if(arg2 == 0)  {throw new ArithmeticException("Divisor must be non-zero");}
+      return arg1/arg2;
+    };
   }
 
     /**@Override

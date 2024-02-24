@@ -12,25 +12,19 @@ import slogo.model.command.Command;
 
 public class PowerCommand extends Command {
 
-  private final Turtle myTurtle;
-  private final Map<String, Double> myVariables;
-
-  public PowerCommand(Turtle turtle, Map<String, Double> variables) {
-    myTurtle = turtle;
-    myVariables = variables;
-  }
-
+  @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double base = arguments.get(0).getValue();
-    double exp = arguments.get(1).getValue();
-    double result = Math.pow(base, exp);
-    if (Double.isNaN(result) || result == Double.NEGATIVE_INFINITY ||
-        result == Double.POSITIVE_INFINITY) {
-      throw new IllegalArgumentException("Result is operation is undefined");
-    }
-    return result;
-  }
+    double arg1 = arguments.get(0).getValue();
+    double arg2 = arguments.get(1).getValue();
+    return modelState -> {
+      double result = Math.pow(arg1, arg2);
+      if (Double.isNaN(result) || result == Double.NEGATIVE_INFINITY ||
+          result == Double.POSITIVE_INFINITY) {
+        throw new IllegalArgumentException("Result is operation is undefined");
+      }
+      return result;
+    };
 
     /**@Override
   public void notifyListener(SlogoListener listener, double value) {

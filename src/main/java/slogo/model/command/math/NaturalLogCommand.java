@@ -17,11 +17,12 @@ public class NaturalLogCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     return modelState -> {
-       if (arg1 <= 0) {
+      if (arg1 <= 0) {
         throw new IllegalArgumentException("expr must be non-negative");
       }
       return Math.log(arg1);
     };
+  }
 
     /**@Override
   public void notifyListener(SlogoListener listener, double value) {
