@@ -13,7 +13,7 @@ import slogo.model.command.Command;
 public class HomeCommand extends Command {
 
 
-
+@Override
   public Function<ModelState, Double> execute(List<Node> arguments) {
     return modelState -> {
       Turtle turtle = modelState.getTurtles().get(0);
