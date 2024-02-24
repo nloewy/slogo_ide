@@ -41,8 +41,14 @@ public class StartScreen implements Scene {
         });
 
         root.getChildren().addAll(
-            ButtonUtil.generateButton("Load New XML Session", 100, 300, e -> controller.openNewSession()),
-            ButtonUtil.generateButton("Load New General Session", 100, 330, e -> controller.openNewSession()),
+            ButtonUtil.generateButton("Load New XML Session", 100, 300, e -> {
+              try {
+                controller.openNewSession();
+              } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+              }
+            }),
+//            ButtonUtil.generateButton("Load New General Session", 100, 330, e -> controller.openNewSession()),
             ButtonUtil.generateButton("Load Old Session", 100, 360, e -> controller.loadSession()), // Uncomment or modify based on your implementation
             logoView,
             langBox

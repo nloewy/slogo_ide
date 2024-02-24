@@ -2,107 +2,90 @@ package slogo.view;
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import slogo.Controller;
 import slogo.model.SlogoListener;
 import slogo.model.api.TurtleRecord;
+import slogo.view.pages.MainScreen;
+import slogo.view.pages.Screen;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+/*
+Represents one IDE session.
+There should be one View per window open.
+ */
 public class View implements SlogoListener {
-    private static final int HEIGHT = 600;
-    private static final int WIDTH = 1000;
-    private Stage stage;
+
+    private static final int height = 600;
+    private static final int width = 1000;
+    private final Map<String, Number> variables;
+    private final Image defaultImage;
+    private final Stage stage;
+    private final List<FrontEndTurtle> turtles;
+    private final List<String> commandList;
+    private String commandString;
+    private String lang;
     private Controller controller;
-    private Pane drawingPane;
-    private Map<Integer, FrontEndTurtle> turtles;
-    private Image defaultImage;
-    private Map<String, Number> variables = new HashMap<>();
-    private List<String> commandList = new ArrayList<>();
-    private String commandString = "";
-    private String lang = "EG";
 
     public View(Stage stage, Controller controller) {
         this.stage = stage;
-        this.controller = controller;
-        this.turtles = new HashMap<>();
-        this.defaultImage = loadDefaultImage();
-        initializeUI();
-    }
+        this. controller = controller;
+        lang = "EG";
+        commandString = "";
 
-    private Image loadDefaultImage() {
+        variables = new HashMap<>();
+        turtles = new ArrayList<>();
+        //This line is for testing, this should be filled in by the xml file
+        commandList = new ArrayList<>();
         try {
-            return new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
+            defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("Default turtle image file not found", e);
+            throw new RuntimeException(e);
         }
+        turtles.add(new FrontEndTurtle(0, new Double[]{0.0, 0.0}, Color.BLACK, true, 0, defaultImage));
     }
 
-    private void initializeUI() {
-        drawingPane = new Pane();
-        drawingPane.setPrefSize(WIDTH, HEIGHT);
-        Scene scene = new Scene(drawingPane, WIDTH, HEIGHT);
+    public void run() throws FileNotFoundException {
+        MainScreen page = new MainScreen(this, stage);
+        page.setUp();
+        Scene scene = new Scene(page.getGroup(), width, height);
+        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
+
         stage.setScene(scene);
-        stage.setTitle("SLogo Interpreter");
+        stage.setMaximized(true);
+        stage.show();
     }
 
-    @Override
-    public void onUpdateValue(String variableName, Number newValue) {
-        variables.put(variableName, newValue);
+    public List<FrontEndTurtle> getTurtles() {
+        return turtles;
     }
 
-    @Override
-    public void onUpdateTurtleState(TurtleRecord turtleState) {
-        FrontEndTurtle turtle = turtles.computeIfAbsent(turtleState.id(), id -> createTurtle(id, turtleState));
-        turtle.setPosition(new double[]{turtleState.x(), turtleState.y()});
-        turtle.setHeading(turtleState.heading());
-        turtle.setIsPenDisplayed(turtleState.pen());
-        // Update the drawing pane or scene as needed
-    }
-
-    private FrontEndTurtle createTurtle(int id, TurtleRecord turtleState) {
-        // Initial position could be center or based on TurtleRecord state
-        double[] startPosition = {turtleState.x(), turtleState.y()};
-        FrontEndTurtle turtle = new FrontEndTurtle(id, defaultImage, Color.BLACK, startPosition);
-        drawingPane.getChildren().add(turtle.getDisplay());
-        return turtle;
-    }
-
-    @Override
-    public void onResetTurtle(int id) {
-        FrontEndTurtle turtle = turtles.get(id);
-        if (turtle != null) {
-            turtle.setPosition(new double[]{0.0, 0.0});
-            turtle.setHeading(0);
-            turtle.setIsPenDisplayed(false);
-        }
-    }
-
+    /*
+     * Handles the user switching languages.
+     * //TODO
+     */
     public void setLanguage(String lang) {
         this.lang = lang;
     }
 
+    /*
+     * Handles the user switching background color.
+     */ //TODO Test
     public void setColor(Color color) {
-        drawingPane.setBackground(new javafx.scene.layout.Background(
-            new javafx.scene.layout.BackgroundFill(color, null, null)));
-    }
-
-    public void setCommandString(String command) {
-        this.commandString = command;
-        controller.handleCommand(command);
+        stage.getScene().setFill(color);
     }
 
     public boolean hasCommandString() {
         return !commandString.isEmpty();
     }
 
+    /*
+     * Returns the current text field body.
+     */
     public String getCommandString() throws Exception {
         if (hasCommandString()) {
             String temp = commandString;
@@ -110,11 +93,63 @@ public class View implements SlogoListener {
             commandList.add(temp);
             return temp;
         }
+
         throw new Exception("No Command String Found!");
+    }
+
+    public void setCommandString(String s) {
+        commandString = s;
+        System.out.println(commandString);
+    }
+
+    @Override
+    public void onUpdateValue(String variableName, Number newValue) {
+        variables.remove(variableName);
+        variables.put(variableName, newValue);
+    }
+
+    //Backend should call this when adding a new turtle too. THis has to be called on initialization in the model.
+    //Ready for multiple turtles
+    @Override
+    public void onUpdateTurtleState(TurtleRecord turtleState) {
+        for (FrontEndTurtle turtle : turtles) {
+            if (turtle.getId() == turtleState.id()) {
+                turtle.setIsPenDisplayed(turtleState.pen());
+                turtle.setPosition(new Double[]{turtleState.x(), turtleState.y()});
+                turtle.setHeading(turtleState.heading());
+                System.out.println("inside");
+                return;
+            }
+        }
+        turtles.add(new FrontEndTurtle(turtleState.id(), new Double[]{0.0, 0.0}, Color.BLACK, true, 0, defaultImage));
+    }
+
+    @Override
+    public void onResetTurtle(int id) {
+        for (FrontEndTurtle turtle : turtles) {
+            if (turtle.getId() == id) {
+                turtle.setIsPenDisplayed(false);
+                turtle.setPosition(new Double[]{0.0, 0.0});
+                turtle.setHeading(0);
+                turtle.setImage(defaultImage);
+            }
+        }
     }
 
     @Override
     public void onReturn(double value) {
 
     }
+
+//   /*
+//    * Gets the current exception, and shows
+//    * it as an alert.
+//    */
+//   public void displayErrorMessage();
+
+//   /**
+//    * Resets all panels in the view
+//    */
+//   public void resetView();
 }
+
