@@ -2,6 +2,8 @@ package slogo.model.command.query;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import slogo.model.ModelState;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
@@ -17,7 +19,7 @@ public class IsPenDownCommand extends Command {
     myVariables = variables;
   }
 
-  public double execute(List<Node> arguments) {
+  public Function<ModelState, Double> execute(List<Node> arguments) {
     if (myTurtle.getPen()) {
       return 1.0;
     }

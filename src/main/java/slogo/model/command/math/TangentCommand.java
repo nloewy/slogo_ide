@@ -3,7 +3,9 @@ package slogo.model.command.math;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import slogo.mathutils.MathUtils;
+import slogo.model.ModelState;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
@@ -19,7 +21,7 @@ public class TangentCommand extends Command {
     myVariables = variables;
   }
 
-  public double execute(List<Node> arguments)
+  public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double angle = arguments.get(0).getValue();
     if (Math.abs(angle % 180) == 90) {

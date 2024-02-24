@@ -3,7 +3,9 @@ package slogo.model.command.turtle;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import slogo.mathutils.MathUtils;
+import slogo.model.ModelState;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
@@ -20,7 +22,7 @@ public class SetTowardsCommand extends Command {
   }
 
   @Override
-  public double execute(List<Node> arguments)
+  public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double dx = arguments.get(0).getValue() - myTurtle.getX();
     double dy = arguments.get(1).getValue() - myTurtle.getY();
