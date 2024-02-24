@@ -12,6 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import slogo.model.CommandNode;
 import slogo.model.ConstantNode;
+import slogo.model.ModelState;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
@@ -26,7 +27,8 @@ public class RandomCommandTest {
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
-    node = new CommandNode("slogo.model.command.math.RandomCommand", myTurtle);
+    ModelState model = new ModelState();
+    node = new CommandNode("slogo.model.command.math.RandomCommand", model);
 
   }
 

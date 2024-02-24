@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import slogo.model.CommandNode;
 import slogo.model.ConstantNode;
+import slogo.model.ModelState;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
@@ -22,8 +23,11 @@ public class TangentCommandTest {
   private Node node;
 
   @BeforeEach
-  void setUp() {
+  void setUp()
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
+    ModelState model = new ModelState();
+    node = new CommandNode("slogo.model.command.math.TangentCommand", model);
   }
 
   @ParameterizedTest
@@ -43,8 +47,7 @@ public class TangentCommandTest {
       "55.55, 1.457732628"
   })
   void testTangentBasic(String op1, String result)
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.math.TangentCommand", myTurtle);
+      throws InvocationTargetException, IllegalAccessException {
     node.addChildren(new ConstantNode(op1, myTurtle));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
@@ -60,7 +63,6 @@ public class TangentCommandTest {
   })
   void testTangentInvalid(String degrees)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    node = new CommandNode("slogo.model.command.math.TangentCommand", myTurtle);
     node.addChildren(new ConstantNode(degrees, myTurtle));
     Throwable e = assertThrows(InvocationTargetException.class, () -> {
       node.getValue();

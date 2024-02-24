@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Test;
 import slogo.model.CommandNode;
+import slogo.model.ModelState;
 
 public class PiCommandTest {
 
@@ -12,8 +13,10 @@ public class PiCommandTest {
 
   @Test
   void testPi()
+
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    assertEquals(Math.PI, new CommandNode("slogo.model.command.math.PiCommand", null).getValue(),
+    ModelState model = new ModelState();
+    assertEquals(Math.PI, new CommandNode("slogo.model.command.math.PiCommand", model).getValue(),
         DELTA);
   }
 }

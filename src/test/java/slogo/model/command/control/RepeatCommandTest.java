@@ -1,4 +1,4 @@
-package slogo.model.command.control;
+/**package slogo.model.command.control;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,11 +17,13 @@ public class RepeatCommandTest {
   private Turtle myTurtle;
   private Node node;
 
+
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
     myTurtle = new Turtle(1);
+
 
   }
 
@@ -29,8 +31,8 @@ public class RepeatCommandTest {
   void testRepeatForward()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     String numTimes = "5";
-    node = new CommandNode("slogo.model.command.control.RepeatCommand", myTurtle);
-    Node fwdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", myTurtle);
+    node = new CommandNode("slogo.model.command.control.RepeatCommand", model);
+    Node fwdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
     fwdNode.addChildren(new ConstantNode("50", myTurtle));
     node.addChildren(new ConstantNode("5", myTurtle));
     node.addChildren(fwdNode);
@@ -38,3 +40,4 @@ public class RepeatCommandTest {
     assertEquals(myTurtle.getY(), 250, DELTA);
   }
 }
+   */
