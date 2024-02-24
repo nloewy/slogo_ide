@@ -1,14 +1,11 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
 import slogo.model.Node;
-import slogo.model.SlogoListener;
 import slogo.model.Turtle;
-import slogo.model.api.TurtleRecord;
 import slogo.model.command.Command;
 
 public class ClearScreenCommand extends Command {
@@ -27,15 +24,14 @@ public class ClearScreenCommand extends Command {
   }
 
   /**
-   @Override
-   public void notifyListener(SlogoListener listener, double value) {
+   @Override public void notifyListener(SlogoListener listener, double value) {
    super.notifyListener(listener, value);
    TurtleRecord turtleRecord = myTurtle.getImmutableTurtle();
    listener.onUpdateTurtleState(turtleRecord);
    listener.onResetTurtle(turtleRecord.id());
    }
    */
-  }
+}
 
 
 
