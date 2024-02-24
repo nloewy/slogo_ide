@@ -62,9 +62,8 @@ public class PowerCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChildren(new ConstantNode(op1, myTurtle));
     node.addChildren(new ConstantNode(op2, myTurtle));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+    Throwable e = assertThrows(IllegalArgumentException.class, () -> {
       node.getValue();
     });
-    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }
