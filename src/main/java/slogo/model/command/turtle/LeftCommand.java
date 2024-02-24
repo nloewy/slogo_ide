@@ -24,8 +24,10 @@ public class LeftCommand extends Command {
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double degrees = arguments.get(0).getValue();
-    myTurtle.setHeading(myTurtle.getHeading() - degrees);
-    return degrees;
+    return modelState -> {
+      myTurtle.setHeading(myTurtle.getHeading() - degrees);
+      return degrees;
+    };
   }
 
   /**@Override
