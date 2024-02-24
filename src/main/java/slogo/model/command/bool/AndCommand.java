@@ -12,18 +12,14 @@ import slogo.model.command.Command;
 
 public class AndCommand extends Command {
 
-  private final Turtle myTurtle;
-  private final Map<String, Double> myVariables;
-
-  public AndCommand(Turtle turtle, Map<String, Double> variables) {
-    myTurtle = turtle;
-    myVariables = variables;
-  }
-
+  @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return (!(arguments.get(0).getValue() == 0) &&
-        !(arguments.get(1).getValue() == 0)) ? 1 : 0;
+    double arg1 = arguments.get(0).getValue();
+    double arg2 = arguments.get(1).getValue();
+    return modelState -> {
+      return (!(arg1 == 0) && !(arg2 == 0)) ? 1.0 : 0.0;
+    };
   }
 
     /**@Override
