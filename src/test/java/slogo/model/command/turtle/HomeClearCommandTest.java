@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import slogo.model.CommandNode;
+import slogo.model.ModelState;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
@@ -45,7 +46,10 @@ public class HomeClearCommandTest {
   })
   void testBasicHome(String originalX, String originalY)
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.turtle.HomeCommand", myTurtle);
+    ModelState model = new ModelState();
+    model.getTurtles().add(new Turtle(1));
+    myTurtle = model.getTurtles().get(0);
+    node = new CommandNode("slogo.model.command.turtle.HomeCommand", model);
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
     double expectedVal = Math.hypot(Double.parseDouble(originalX), Double.parseDouble(originalY));
@@ -77,7 +81,10 @@ public class HomeClearCommandTest {
   })
   void testBasicClearScreen(String originalX, String originalY)
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.turtle.ClearScreenCommand", myTurtle);
+    ModelState model = new ModelState();
+    model.getTurtles().add(new Turtle(1));
+    myTurtle = model.getTurtles().get(0);
+    node = new CommandNode("slogo.model.command.turtle.ClearScreenCommand", model);
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
     double expectedVal = Math.hypot(Double.parseDouble(originalX), Double.parseDouble(originalY));

@@ -1,7 +1,6 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import slogo.model.CommandNode;
 import slogo.model.ConstantNode;
+import slogo.model.ModelState;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
@@ -26,7 +26,8 @@ public class RandomCommandTest {
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
-    node = new CommandNode("slogo.model.command.math.RandomCommand", myTurtle);
+    ModelState model = new ModelState();
+    node = new CommandNode("slogo.model.command.math.RandomCommand", model);
 
   }
 
@@ -58,9 +59,8 @@ public class RandomCommandTest {
   void testRandomNegative()
       throws InvocationTargetException, IllegalAccessException {
     node.addChildren(new ConstantNode("-90.00000", myTurtle));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+    Throwable e = assertThrows(IllegalArgumentException.class, () -> {
       node.getValue();
     });
-    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

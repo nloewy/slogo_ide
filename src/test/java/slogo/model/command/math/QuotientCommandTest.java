@@ -1,9 +1,7 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import slogo.model.CommandNode;
 import slogo.model.ConstantNode;
+import slogo.model.ModelState;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
@@ -27,7 +26,8 @@ public class QuotientCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
     myTurtle = null;
-    node = new CommandNode("slogo.model.command.math.QuotientCommand", myTurtle);
+    ModelState model = new ModelState();
+    node = new CommandNode("slogo.model.command.math.QuotientCommand", model);
 
   }
 
@@ -56,10 +56,9 @@ public class QuotientCommandTest {
     {
       node.addChildren(new ConstantNode("50", myTurtle));
       node.addChildren(new ConstantNode("0", myTurtle));
-      Throwable e = assertThrows(InvocationTargetException.class, () -> {
+      Throwable e = assertThrows(ArithmeticException.class, () -> {
         node.getValue();
       });
-      assertInstanceOf(ArithmeticException.class, e.getCause());
     }
 
   }
