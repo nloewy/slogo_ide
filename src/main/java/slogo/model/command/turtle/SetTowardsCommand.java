@@ -13,19 +13,11 @@ import slogo.model.command.Command;
 
 public class SetTowardsCommand extends Command {
 
-  private final Turtle myTurtle;
-  private final Map<String, Double> myVariables;
-
-  public SetTowardsCommand(Turtle turtle, Map<String, Double> variables) {
-    myTurtle = turtle;
-    myVariables = variables;
-  }
-
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double xPt= arguments.get(0).getValue();
-    double yPt = arguments.get(0).getValue();
+    double xPt = arguments.get(0).getValue();
+    double yPt = arguments.get(1).getValue();
     return modelState -> {
       Turtle turtle = modelState.getTurtles().get(0);
       double dx = xPt - turtle.getX();

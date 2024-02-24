@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.CommandNode;
 import slogo.model.ConstantNode;
+import slogo.model.ModelState;
 import slogo.model.Node;
 import slogo.model.Turtle;
 
@@ -21,8 +22,10 @@ public class RightCommandTest {
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
-    myTurtle = new Turtle(1);
-    node = new CommandNode("slogo.model.command.turtle.RightCommand", myTurtle);
+    ModelState model = new ModelState();
+    model.getTurtles().add(new Turtle(1));
+    myTurtle = model.getTurtles().get(0);
+    node = new CommandNode("slogo.model.command.turtle.RightCommand", model);
 
   }
 

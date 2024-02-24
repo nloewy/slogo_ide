@@ -29,6 +29,6 @@ public class BackwardCommand extends Command {
     super.notifyListener(listener, value);
     listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
   }
-*/*/
+*/
 
 }
