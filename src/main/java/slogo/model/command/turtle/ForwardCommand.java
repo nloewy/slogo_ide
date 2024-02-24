@@ -2,6 +2,7 @@ package slogo.model.command.turtle;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 import slogo.mathutils.MathUtils;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
@@ -11,9 +12,11 @@ import slogo.model.command.Command;
 public class ForwardCommand extends Command {
 
   private final Turtle myTurtle;
+  private final Map<String, Double> myVariables;
 
-  public ForwardCommand(Turtle turtle) {
+  public ForwardCommand(Turtle turtle, Map<String, Double> variables) {
     myTurtle = turtle;
+    myVariables = variables;
   }
 
   @Override

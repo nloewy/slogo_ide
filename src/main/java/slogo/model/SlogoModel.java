@@ -14,7 +14,7 @@ import slogo.model.api.Model;
 public class SlogoModel implements Model {
 
   private final List<Turtle> myTurtles;
-  private final List<Variable> myVariables;
+  private final Map<String, Double> myVariables;
   private final SlogoListener myListener;
   private Map<String, String> syntaxMap;
   private Map<String, String> commandMap;
@@ -24,11 +24,11 @@ public class SlogoModel implements Model {
 
   public SlogoModel(SlogoListener listener) {
     myTurtles = new ArrayList<>();
-    myVariables = new ArrayList<>();
-    myListener = listener;
+    myVariables = new HashMap<>();
     syntaxMap = getRegexMap();
     commandMap = getCommandMap();
     myNodes = new ArrayList<>();
+    myListener = listener;
     currentNode = null;
   }
 

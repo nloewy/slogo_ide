@@ -1,6 +1,7 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
+import java.util.Map;
 import slogo.mathutils.MathUtils;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
@@ -10,9 +11,11 @@ import slogo.model.command.Command;
 public class HomeCommand extends Command {
 
   private final Turtle myTurtle;
+  private final Map<String, Double> myVariables;
 
-  public HomeCommand(Turtle turtle) {
+  public HomeCommand(Turtle turtle, Map<String, Double> variables) {
     myTurtle = turtle;
+    myVariables = variables;
   }
 
   @Override
