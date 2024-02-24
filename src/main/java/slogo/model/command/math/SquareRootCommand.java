@@ -29,8 +29,10 @@ public class SquareRootCommand extends Command {
     return Math.sqrt(val);
   }
 
+    /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
+*/
 
 }

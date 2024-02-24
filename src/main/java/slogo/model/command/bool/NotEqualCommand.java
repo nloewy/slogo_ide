@@ -26,8 +26,10 @@ public class NotEqualCommand extends Command {
 
   }
 
+    /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
+*/
 
 }

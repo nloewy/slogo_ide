@@ -32,8 +32,10 @@ public class PowerCommand extends Command {
     return result;
   }
 
+    /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
+*/
 
 }

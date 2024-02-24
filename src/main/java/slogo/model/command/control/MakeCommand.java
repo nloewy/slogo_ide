@@ -25,8 +25,9 @@ public Function<ModelState, Double> execute(List<Node> arguments)
   return 0;
 }
 
+/**
 public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
 }
-
+*/
 }

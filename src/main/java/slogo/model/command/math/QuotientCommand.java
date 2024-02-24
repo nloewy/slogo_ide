@@ -28,8 +28,10 @@ public class QuotientCommand extends Command {
     return arguments.get(0).getValue() / arguments.get(1).getValue();
   }
 
+    /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
+*/
 
 }

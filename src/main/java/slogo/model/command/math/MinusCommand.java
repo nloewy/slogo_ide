@@ -25,8 +25,10 @@ public class MinusCommand extends Command {
     return -1 * arguments.get(0).getValue();
   }
 
+    /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
+*/
 
 }

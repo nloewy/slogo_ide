@@ -29,8 +29,10 @@ public class RandomCommand extends Command {
     return Math.random() * rand;
   }
 
+    /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
+*/
 
 }

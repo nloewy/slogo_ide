@@ -29,8 +29,10 @@ public class RandomRangeCommand extends Command {
         arguments.get(0).getValue()) * Math.random();
   }
 
+    /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
+*/
 
 }

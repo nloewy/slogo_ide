@@ -30,8 +30,10 @@ public class TangentCommand extends Command {
     return Math.tan(MathUtils.toRadians(angle));
   }
 
+    /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
+*/
 
 }

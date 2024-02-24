@@ -26,8 +26,10 @@ public class AndCommand extends Command {
         !(arguments.get(1).getValue() == 0)) ? 1 : 0;
   }
 
+    /**@Override
   public void notifyListener(SlogoListener listener, double value) {
     super.notifyListener(listener, value);
   }
+*/
 
 }
