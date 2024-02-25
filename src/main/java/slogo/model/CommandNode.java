@@ -32,7 +32,4 @@ public class CommandNode extends Node {
     return myModelState.applyCommandToModelState(action);
   }
 
-  public String getToken() {
-    return myToken;
-  }
 }

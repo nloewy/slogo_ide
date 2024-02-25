@@ -14,7 +14,7 @@ public class VariableNode extends Node {
 
   @Override
   public double getValue() throws InvocationTargetException, IllegalAccessException {
-    return myModelState.getVariables().get(myToken);
+    return myModelState.getVariables().getOrDefault(myToken, 0.0);
   }
 
   @Override

@@ -19,7 +19,7 @@ public abstract class Node {
     myChildren.add(node);
   }
 
-  public abstract String getToken();
+  public String getToken() {return null;}
 
 }
 

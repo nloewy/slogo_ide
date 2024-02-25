@@ -31,7 +31,6 @@ public class ForCommand extends Command {
       }
       return res;
     };
-
   }
 
 

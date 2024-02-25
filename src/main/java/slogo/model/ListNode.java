@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ListNode extends Node {
 
+
   public ListNode(String token, ModelState model) {
   }
 
@@ -16,8 +17,5 @@ public class ListNode extends Node {
     return ret;
   }
 
-  @Override
-  public String getToken() {
-    return null;
-  }
+
 }

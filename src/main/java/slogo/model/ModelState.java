@@ -9,12 +9,13 @@ import slogo.model.api.ModelListener;
 
 public class ModelState implements ModelListener {
 
-  private final List<Turtle> myTurtles;
-  private final Map<String, Double> myVariables;
-
+  private List<Turtle> myTurtles;
+  private Map<String, Double> myVariables;
+  private Map<String, List<Node>> myUserDefinedCommands;
   public ModelState() {
     myTurtles = new ArrayList<>();
     myVariables = new HashMap<>();
+    myUserDefinedCommands = new HashMap<>();
   }
 
   public List<Turtle> getTurtles() {
@@ -23,6 +24,10 @@ public class ModelState implements ModelListener {
 
   public Map<String, Double> getVariables() {
     return myVariables;
+  }
+
+  public Map<String, List<Node>> getUserDefinedCommands() {
+    return myUserDefinedCommands;
   }
 
   @Override
