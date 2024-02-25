@@ -82,9 +82,19 @@ public class MainScreen implements ViewInternal {
       view.onUpdateTurtleState(new TurtleRecord(1, 300, 200, true, true, 90));
     });
 
+    Button testButtonB = ButtonUtil.generateButton("testB", 300, 100, event -> {
+      view.onUpdateTurtleState(new TurtleRecord(0, 200, 500, true, true, 90));
+      view.onUpdateTurtleState(new TurtleRecord(1, 700, 800, true, true, 90));
+    });
+
+    Button testButtonC = ButtonUtil.generateButton("testC", 300, 100, event -> {
+      view.onUpdateTurtleState(new TurtleRecord(0, 0, 0, true, true, 90));
+      view.onUpdateTurtleState(new TurtleRecord(1, 200, 0, true, true, 90));
+    });
+
     HBox hbox = new HBox();
     hbox.setSpacing(10);
-    hbox.getChildren().addAll(field, submitField, testButton);
+    hbox.getChildren().addAll(field, submitField, testButton, testButtonB, testButtonC);
     root = new Group();
     hbox.setAlignment(javafx.geometry.Pos.CENTER);
     hbox.setLayoutX(100);

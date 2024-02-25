@@ -107,7 +107,6 @@ public class View implements SlogoListener {
     //this parse method should handle starting the backend too
     public void pushCommand(String s) {
         commandString = s;
-        System.out.println(commandString);
     }
 
     @Override
@@ -125,7 +124,6 @@ public class View implements SlogoListener {
                 turtle.setIsPenDisplayed(turtleState.pen());
                 turtle.setPosition(new Double[]{turtleState.x(), turtleState.y()});
                 turtle.setHeading(turtleState.heading());
-                System.out.println("inside");
                 return;
             }
         }
