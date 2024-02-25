@@ -15,7 +15,7 @@ public class IfCommand extends Command {
     double arg1 = arguments.get(0).getValue();
     Node toExecute = arguments.get(1);
     return modelState -> {
-      if(arg1 != 0) {
+      if (arg1 != 0) {
         try {
           return toExecute.getValue();
         } catch (InvocationTargetException e) {

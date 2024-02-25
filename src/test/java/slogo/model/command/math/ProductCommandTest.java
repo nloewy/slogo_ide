@@ -25,7 +25,7 @@ public class ProductCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.math.ProductCommand", model);
+    node = new CommandNode("math.ProductCommand", model);
 
   }
 

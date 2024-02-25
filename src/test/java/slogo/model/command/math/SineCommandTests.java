@@ -24,7 +24,7 @@ public class SineCommandTests {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.math.SineCommand", model);
+    node = new CommandNode("math.SineCommand", model);
   }
 
   @ParameterizedTest

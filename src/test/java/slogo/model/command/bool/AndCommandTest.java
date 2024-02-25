@@ -25,7 +25,7 @@ public class AndCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     model = new ModelState();
-    node = new CommandNode("slogo.model.command.bool.AndCommand", model);
+    node = new CommandNode("bool.AndCommand", model);
 
   }
 

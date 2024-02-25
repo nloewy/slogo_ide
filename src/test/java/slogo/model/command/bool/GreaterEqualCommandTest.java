@@ -23,7 +23,7 @@ public class GreaterEqualCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.bool.GreaterEqualCommand", model);
+    node = new CommandNode("bool.GreaterEqualCommand", model);
   }
 
   @ParameterizedTest

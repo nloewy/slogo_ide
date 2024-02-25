@@ -23,7 +23,7 @@ public class EqualCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.bool.EqualCommand", model);
+    node = new CommandNode("bool.EqualCommand", model);
   }
 
   @ParameterizedTest

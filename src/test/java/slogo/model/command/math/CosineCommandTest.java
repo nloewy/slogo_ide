@@ -24,7 +24,7 @@ public class CosineCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.math.CosineCommand", model);
+    node = new CommandNode("math.CosineCommand", model);
   }
 
   @ParameterizedTest

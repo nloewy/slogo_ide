@@ -28,7 +28,7 @@ public class RandomRangeCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.math.RandomRangeCommand", model);
+    node = new CommandNode("math.RandomRangeCommand", model);
 
   }
 

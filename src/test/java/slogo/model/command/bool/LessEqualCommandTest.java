@@ -23,7 +23,7 @@ public class LessEqualCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.bool.LessEqualCommand", model);
+    node = new CommandNode("bool.LessEqualCommand", model);
   }
 
   @ParameterizedTest

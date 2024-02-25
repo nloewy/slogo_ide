@@ -8,17 +8,16 @@ import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 
-public class RepeatCommand extends Command {
+public class DoTimesCommand extends Command {
 
 
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    String variableName = "repcount";
-    double end = arguments.get(0).getValue();
+    String variableName = arguments.get(0).getChildren().get(0).getToken();
+    double end = arguments.get(0).getChildren().get(1).getValue();
     Node commands = arguments.get(1);
     return modelState -> {
-      double holder = modelState.getVariables().getOrDefault("repcount",Double.MAX_VALUE);
       double res = 0.0;
       for (double i = 1; i <= end; i += 1) {
         modelState.getVariables().put(variableName, i);
@@ -28,8 +27,6 @@ public class RepeatCommand extends Command {
           throw new RuntimeException(e);
         }
       }
-      if(holder == Double.MAX_VALUE) { holder = end; }
-      modelState.getVariables().put("repcount", holder);
       return res;
     };
 

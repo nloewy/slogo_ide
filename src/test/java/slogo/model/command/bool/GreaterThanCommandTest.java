@@ -23,7 +23,7 @@ public class GreaterThanCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.bool.GreaterThanCommand", model);
+    node = new CommandNode("bool.GreaterThanCommand", model);
   }
 
   @ParameterizedTest

@@ -49,7 +49,7 @@ public class HomeCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("slogo.model.command.turtle.HomeCommand", model);
+    node = new CommandNode("turtle.HomeCommand", model);
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
     double expectedVal = Math.hypot(Double.parseDouble(originalX), Double.parseDouble(originalY));

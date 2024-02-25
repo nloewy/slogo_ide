@@ -5,28 +5,28 @@ import java.util.List;
 import java.util.function.Function;
 import slogo.model.ModelState;
 import slogo.model.Node;
+import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 
-public class MakeCommand extends Command {
+public class UserCommand extends Command {
+
 
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    String token = arguments.get(0).getToken();
-    double arg1 = arguments.get(1).getValue();
+    Node listNode = arguments.get(1);
     return modelState -> {
-      modelState.getVariables().put(token, arg1);
       try {
-        return arguments.get(0).getValue();
+        return listNode.getValue();
       } catch (InvocationTargetException | IllegalAccessException e) {
         throw new RuntimeException(e);
       }
     };
   }
+
+
+  public void notifyListener(SlogoListener listener, double value) {
+
+    //super.notifyListener(listener, value);
+  }
 }
-/**
- * public void notifyListener(SlogoListener listener, double value) { super.notifyListener(listener,
- * value); }
- * <p>
- * }
- */

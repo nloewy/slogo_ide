@@ -23,7 +23,7 @@ public class LessThanCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.bool.LessThanCommand", model);
+    node = new CommandNode("bool.LessThanCommand", model);
   }
 
   @ParameterizedTest

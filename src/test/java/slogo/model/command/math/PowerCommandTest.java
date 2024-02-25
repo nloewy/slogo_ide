@@ -26,7 +26,7 @@ public class PowerCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.math.PowerCommand", model);
+    node = new CommandNode("math.PowerCommand", model);
 
   }
 

@@ -18,8 +18,8 @@ public class CommandNode extends Node {
       throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
       InstantiationException, IllegalAccessException {
     super();
-    myToken = token;
-    Class<?> clazz = Class.forName(token);
+    myToken = "slogo.model.command." + token;
+    Class<?> clazz = Class.forName(myToken);
     command = (Command) clazz.getDeclaredConstructor().newInstance();
     m = clazz.getDeclaredMethod("execute", List.class);
     myModelState = modelState;
@@ -32,7 +32,4 @@ public class CommandNode extends Node {
     return myModelState.applyCommandToModelState(action);
   }
 
-  public String getToken() {
-    return myToken;
-  }
 }
