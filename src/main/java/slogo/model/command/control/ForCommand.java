@@ -34,6 +34,12 @@ public class ForCommand extends Command {
   }
 
 
+  @Override
+  public int getNumArgs() {
+    return 2;
+  }
+
+
   //IN NOTIFY LISTENER MAKE SURE TO UPDATE THE FOR VARIABLE
   public void notifyListener(SlogoListener listener, double value) {
 

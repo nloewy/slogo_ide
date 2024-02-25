@@ -23,6 +23,11 @@ public class HomeCommand extends Command {
     };
   }
 
+  @Override
+  public int getNumArgs() {
+    return 0;
+  }
+
   /**
    /**@Override
    public void notifyListener(SlogoListener listener, double value) {

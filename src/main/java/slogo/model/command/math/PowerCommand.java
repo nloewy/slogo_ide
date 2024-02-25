@@ -24,6 +24,11 @@ public class PowerCommand extends Command {
     };
   }
 
+  @Override
+  public int getNumArgs() {
+    return 2;
+  }
+
   /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   }

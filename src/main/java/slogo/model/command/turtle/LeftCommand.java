@@ -21,6 +21,12 @@ public class LeftCommand extends Command {
     };
   }
 
+
+  @Override
+  public int getNumArgs() {
+    return 1;
+  }
+
   /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());

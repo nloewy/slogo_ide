@@ -12,6 +12,8 @@ public abstract class Command {
   public abstract Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException;
 
+  public abstract int getNumArgs();
+
   public void notifyListener(SlogoListener listener, double value) {
     listener.onReturn(value);
   }

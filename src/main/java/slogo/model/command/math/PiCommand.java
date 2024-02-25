@@ -18,6 +18,11 @@ public class PiCommand extends Command {
     };
   }
 
+  @Override
+  public int getNumArgs() {
+    return 0;
+  }
+
   /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   }

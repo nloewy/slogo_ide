@@ -19,6 +19,10 @@ public class HideTurtleCommand extends Command {
       return 0.0;
     };
   }
+  @Override
+  public int getNumArgs() {
+    return 0;
+  }
 }
 
 /**

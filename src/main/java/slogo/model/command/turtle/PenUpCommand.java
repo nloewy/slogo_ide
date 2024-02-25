@@ -19,6 +19,12 @@ public class PenUpCommand extends Command {
       return 0.0;
     };
   }
+
+  @Override
+  public int getNumArgs() {
+    return 0;
+  }
+
   /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());

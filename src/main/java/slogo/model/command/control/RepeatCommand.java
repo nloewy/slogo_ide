@@ -35,6 +35,10 @@ public class RepeatCommand extends Command {
 
   }
 
+  @Override
+  public int getNumArgs() {
+    return 2;
+  }
 
   public void notifyListener(SlogoListener listener, double value) {
 

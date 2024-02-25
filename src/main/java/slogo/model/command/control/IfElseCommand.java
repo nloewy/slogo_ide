@@ -31,6 +31,12 @@ public class IfElseCommand extends Command {
       }
     };
   }
+
+  @Override
+  public int getNumArgs() {
+    return 3;
+  }
+
 }
 /**
  * public void notifyListener(SlogoListener listener, double value) { super.notifyListener(listener,
