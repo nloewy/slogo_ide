@@ -49,7 +49,7 @@ public class ForCommandTest {
     node = new CommandNode("slogo.model.command.control.ForCommand", model);
     Node fwdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
     Node varNode = new VariableNode("i", model);
-    fwdNode.addChild(varNode);
+    fwdNode.addChild(new VariableNode("i", model));
     node.addChild(varNode);
     node.addChild(new ConstantNode("1",model));
     node.addChild(new ConstantNode("5",model));
