@@ -23,7 +23,7 @@ public class OrCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.bool.OrCommand", model);
+    node = new CommandNode("bool.OrCommand", model);
   }
 
   @ParameterizedTest

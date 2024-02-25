@@ -27,8 +27,8 @@ public class IfElseCommandTest {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
-    node = new CommandNode("slogo.model.command.control.IfElseCommand", model);
-    Node nodeTwo = new CommandNode("slogo.model.command.math.SumCommand", model);
+    node = new CommandNode("control.IfElseCommand", model);
+    Node nodeTwo = new CommandNode("math.SumCommand", model);
     Node nodeThree = new ConstantNode("-5", model);
     Node nodeFour = new ConstantNode("7", model);
     node.addChild(nodeTwo);
@@ -37,14 +37,14 @@ public class IfElseCommandTest {
 
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node nodeSix = new CommandNode("turtle.ForwardCommand", model);
     nodeSix.addChild(new ConstantNode("60", model));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node nodeSeven = new CommandNode("turtle.ForwardCommand", model);
     nodeSeven.addChild(new ConstantNode("30", model));
     nodeFive.addChild(nodeSeven);
     Node nodeEight = new ListNode("", model);
-    Node nodeNine = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node nodeNine = new CommandNode("turtle.ForwardCommand", model);
     nodeNine.addChild(new ConstantNode("100", model));
     nodeEight.addChild(nodeNine);
 
@@ -59,8 +59,8 @@ public class IfElseCommandTest {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
-    node = new CommandNode("slogo.model.command.control.IfElseCommand", model);
-    Node nodeTwo = new CommandNode("slogo.model.command.math.SumCommand", model);
+    node = new CommandNode("control.IfElseCommand", model);
+    Node nodeTwo = new CommandNode("math.SumCommand", model);
     Node nodeThree = new ConstantNode("-5", model);
     Node nodeFour = new ConstantNode("5", model);
     node.addChild(nodeTwo);
@@ -69,14 +69,14 @@ public class IfElseCommandTest {
 
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node nodeSix = new CommandNode("turtle.ForwardCommand", model);
     nodeSix.addChild(new ConstantNode("60", model));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node nodeSeven = new CommandNode("turtle.ForwardCommand", model);
     nodeSeven.addChild(new ConstantNode("30", model));
     nodeFive.addChild(nodeSeven);
     Node nodeEight = new ListNode("", model);
-    Node nodeNine = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node nodeNine = new CommandNode("turtle.ForwardCommand", model);
     nodeEight.addChild(nodeNine);
     nodeNine.addChild(new ConstantNode("100", model));
     node.addChild(nodeEight);

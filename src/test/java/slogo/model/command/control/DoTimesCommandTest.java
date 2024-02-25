@@ -32,8 +32,8 @@ public class DoTimesCommandTest {
   @Test
   void testDoTimesForwardVariableNotUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.control.DoTimesCommand", model);
-    Node fwdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    node = new CommandNode("control.DoTimesCommand", model);
+    Node fwdNode = new CommandNode("turtle.ForwardCommand", model);
     Node varNode = new VariableNode("i", model);
     Node listNode = new ListNode("", model);
     Node commandListNode = new ListNode("", model);
@@ -50,16 +50,16 @@ public class DoTimesCommandTest {
   @Test
   void testDoTimesForwardVariableUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.control.DoTimesCommand", model);
+    node = new CommandNode("control.DoTimesCommand", model);
     Node listNode = new ListNode("", model);
     Node commandListNode = new ListNode("", model);
-    Node cmdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node cmdNode = new CommandNode("turtle.ForwardCommand", model);
     commandListNode.addChild(cmdNode);
     Node varNode = new VariableNode("i", model);
     cmdNode.addChild(new VariableNode("i", model));
     listNode.addChild(varNode);
     listNode.addChild(new ConstantNode("5", model));
-    Node cmdNode2 = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node cmdNode2 = new CommandNode("turtle.ForwardCommand", model);
     cmdNode2.addChild(new VariableNode("i", model));
     commandListNode.addChild(cmdNode2);
     node.addChild(listNode);

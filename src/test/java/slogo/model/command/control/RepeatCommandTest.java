@@ -32,15 +32,15 @@ public class RepeatCommandTest {
   @Test
   void testRepeatNoVariable()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.control.RepeatCommand", model);
-    Node cmd = new CommandNode("slogo.model.command.math.SquareRootCommand", model);
+    node = new CommandNode("control.RepeatCommand", model);
+    Node cmd = new CommandNode("math.SquareRootCommand", model);
     node.addChild(cmd);
     cmd.addChild(new ConstantNode("9", model));
     Node commandListNode = new ListNode("", model);
-    Node fwdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node fwdNode = new CommandNode("turtle.ForwardCommand", model);
     fwdNode.addChild(new ConstantNode("2", model));
     commandListNode.addChild(fwdNode);
-    Node fwdNode2 = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node fwdNode2 = new CommandNode("turtle.ForwardCommand", model);
     fwdNode2.addChild(new ConstantNode("5", model));
     commandListNode.addChild(fwdNode2);
     node.addChild(commandListNode);
@@ -51,13 +51,13 @@ public class RepeatCommandTest {
   @Test
   void testRepeatVariableUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.control.RepeatCommand", model);
-    Node cmd = new CommandNode("slogo.model.command.math.SquareRootCommand", model);
+    node = new CommandNode("control.RepeatCommand", model);
+    Node cmd = new CommandNode("math.SquareRootCommand", model);
     node.addChild(cmd);
     cmd.addChild(new ConstantNode("9", model));
 
     Node commandListNode = new ListNode("", model);
-    Node cmdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node cmdNode = new CommandNode("turtle.ForwardCommand", model);
     commandListNode.addChild(cmdNode);
     Node varNode = new VariableNode("repcount", model);
     cmdNode.addChild(varNode);

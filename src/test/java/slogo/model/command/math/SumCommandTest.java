@@ -26,7 +26,7 @@ public class SumCommandTest {
 
     myTurtle = null;
     model = new ModelState();
-    node = new CommandNode("slogo.model.command.math.SumCommand", model);
+    node = new CommandNode("math.SumCommand", model);
 
   }
 

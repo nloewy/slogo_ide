@@ -26,7 +26,7 @@ public class HeadingCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("slogo.model.command.query.HeadingCommand", model);
+    node = new CommandNode("query.HeadingCommand", model);
 
   }
 

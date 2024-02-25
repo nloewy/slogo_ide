@@ -27,8 +27,8 @@ public class IfCommandTest {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
-    node = new CommandNode("slogo.model.command.control.IfCommand", model);
-    Node nodeTwo = new CommandNode("slogo.model.command.math.SumCommand", model);
+    node = new CommandNode("control.IfCommand", model);
+    Node nodeTwo = new CommandNode("math.SumCommand", model);
     Node nodeThree = new ConstantNode("-5", model);
     Node nodeFour = new ConstantNode("7", model);
     node.addChild(nodeTwo);
@@ -36,10 +36,10 @@ public class IfCommandTest {
     nodeTwo.addChild(nodeFour);
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node nodeSix = new CommandNode("turtle.ForwardCommand", model);
     nodeSix.addChild(new ConstantNode("60", model));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node nodeSeven = new CommandNode("turtle.ForwardCommand", model);
     nodeSeven.addChild(new ConstantNode("30", model));
     nodeFive.addChild(nodeSeven);
     Assertions.assertEquals(30.0, node.getValue(), DELTA);
@@ -52,8 +52,8 @@ public class IfCommandTest {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
-    node = new CommandNode("slogo.model.command.control.IfCommand", model);
-    Node nodeTwo = new CommandNode("slogo.model.command.math.SumCommand", model);
+    node = new CommandNode("control.IfCommand", model);
+    Node nodeTwo = new CommandNode("math.SumCommand", model);
     Node nodeThree = new ConstantNode("-5", model);
     Node nodeFour = new ConstantNode("5", model);
     node.addChild(nodeTwo);
@@ -61,10 +61,10 @@ public class IfCommandTest {
     nodeTwo.addChild(nodeFour);
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node nodeSix = new CommandNode("turtle.ForwardCommand", model);
     nodeSix.addChild(new ConstantNode("60", model));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    Node nodeSeven = new CommandNode("turtle.ForwardCommand", model);
     nodeSeven.addChild(new ConstantNode("30", model));
     node.addChild(nodeFive);
     Assertions.assertEquals(0.0, node.getValue(), DELTA);

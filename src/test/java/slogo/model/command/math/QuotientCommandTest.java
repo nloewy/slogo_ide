@@ -27,7 +27,7 @@ public class QuotientCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.math.QuotientCommand", model);
+    node = new CommandNode("math.QuotientCommand", model);
 
   }
 

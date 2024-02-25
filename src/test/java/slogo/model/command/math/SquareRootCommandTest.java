@@ -24,7 +24,7 @@ public class SquareRootCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("slogo.model.command.math.SquareRootCommand", model);
+    node = new CommandNode("math.SquareRootCommand", model);
   }
 
   @ParameterizedTest
