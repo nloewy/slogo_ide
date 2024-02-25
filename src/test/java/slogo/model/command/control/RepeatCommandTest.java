@@ -13,7 +13,7 @@ import slogo.model.Node;
 import slogo.model.Turtle;
 import slogo.model.VariableNode;
 
-public class DoTimesCommandTest {
+public class RepeatCommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -30,41 +30,40 @@ public class DoTimesCommandTest {
   }
 
   @Test
-  void testDoTimesForwardVariableNotUsed()
+  void testRepeatNoVariable()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.control.DoTimesCommand", model);
-    Node fwdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
-    Node varNode = new VariableNode("i", model);
-    Node listNode = new ListNode("", model);
+    node = new CommandNode("slogo.model.command.control.RepeatCommand", model);
+    Node cmd = new CommandNode("slogo.model.command.math.SquareRootCommand", model);
+    node.addChild(cmd);
+    cmd.addChild(new ConstantNode("9", model));
     Node commandListNode = new ListNode("", model);
-    commandListNode.addChild(fwdNode);
+    Node fwdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
     fwdNode.addChild(new ConstantNode("2", model));
-    listNode.addChild(varNode);
-    listNode.addChild(new ConstantNode("5", model));
-    node.addChild(listNode);
+    commandListNode.addChild(fwdNode);
+    Node fwdNode2 = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
+    fwdNode2.addChild(new ConstantNode("5", model));
+    commandListNode.addChild(fwdNode2);
     node.addChild(commandListNode);
-    assertEquals(node.getValue(), 2, DELTA);
-    assertEquals(myTurtle.getY(), 10, DELTA);
+    assertEquals(node.getValue(), 5, DELTA);
+    assertEquals(myTurtle.getY(), 21, DELTA);
   }
 
   @Test
-  void testDoTimesForwardVariableUsed()
+  void testRepeatVariableUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.control.DoTimesCommand", model);
-    Node listNode = new ListNode("", model);
+    node = new CommandNode("slogo.model.command.control.RepeatCommand", model);
+    Node cmd = new CommandNode("slogo.model.command.math.SquareRootCommand", model);
+    node.addChild(cmd);
+    cmd.addChild(new ConstantNode("9", model));
+
     Node commandListNode = new ListNode("", model);
     Node cmdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
     commandListNode.addChild(cmdNode);
-    Node varNode = new VariableNode("i", model);
-    cmdNode.addChild(new VariableNode("i", model));
-    listNode.addChild(varNode);
-    listNode.addChild(new ConstantNode("5", model));
-    Node cmdNode2 = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
-    cmdNode2.addChild(new VariableNode("i", model));
-    commandListNode.addChild(cmdNode2);
-    node.addChild(listNode);
+    Node varNode = new VariableNode("repcount", model);
+    cmdNode.addChild(varNode);
     node.addChild(commandListNode);
-    assertEquals(node.getValue(), 5, DELTA);
-    assertEquals(myTurtle.getY(), 30, DELTA);
+
+    assertEquals(node.getValue(), 3, DELTA);
+    assertEquals(myTurtle.getY(), 6, DELTA);
   }
 }
