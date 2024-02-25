@@ -304,6 +304,7 @@ animationRunning = false; //this boolean is checked every step()
 2. ChangePenColor.java
 3. LightModeToDark.java
 4. InvalidCommand.java
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 
 1. User can see and access a help menu to know each command
@@ -377,6 +378,10 @@ fd = Adelante
 bk = Atras
 ```
 ### Bodhaansh's Use Cases
+=======
+
+## Team Responsibilities
+>>>>>>> Stashed changes
 
 1. ChangeBackgroundColor.java
 2. ChangePenColor.java
