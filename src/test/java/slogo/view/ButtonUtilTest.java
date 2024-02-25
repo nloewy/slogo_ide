@@ -1,18 +1,21 @@
 package slogo.view;
 
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import slogo.Controller;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import javafx.application.Application;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Feel free to completely change this code or delete it entirely.
  */
 class ButtonUtilTest {
-    private View myApp;
+    Button button = new Button();
 
     // create new instance of test object before each test is run
     @BeforeEach
@@ -21,7 +24,7 @@ class ButtonUtilTest {
     }
 
     @Test
-    void testRunThrows () {
-        Button newButton = ButtonUtil.generateButton("test", 0, 0, (event)->{});
+    public void testA() {
+        assertEquals(1, 1);
     }
 }

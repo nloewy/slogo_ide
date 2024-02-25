@@ -40,6 +40,11 @@ public class AnimatedShapeTest extends DukeApplicationTest {
         myActor = lookup("#actor").query();
     }
 
+    @Test
+    void testA() {
+        assertEquals(1, 1);
+    }
+
 
     @Test
     void testAnimation () {

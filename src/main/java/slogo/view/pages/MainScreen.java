@@ -14,6 +14,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
@@ -111,8 +112,8 @@ public class MainScreen implements ViewInternal {
     variablesBox.setAlignment(javafx.geometry.Pos.CENTER);
     variablesBox.setLayoutX(300);
     variablesBox.setLayoutY(500);
-    variablesBox.getChildren().add(new Label("VARIABLES"));
-    
+    variablesBox.setId("vbox");
+
     root.getChildren().add(variablesBox);
 
     initializeTurtleDisplays();
