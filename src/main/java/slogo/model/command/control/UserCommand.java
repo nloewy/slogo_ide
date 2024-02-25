@@ -10,7 +10,6 @@ import slogo.model.command.Command;
 
 public class UserCommand extends Command {
 
-
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {

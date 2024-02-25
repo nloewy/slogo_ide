@@ -18,7 +18,6 @@ public class UserCommandNode extends Node {
     super();
     myToken = token;
     myModelState = modelState;
-
   }
 
   public double getValue() throws InvocationTargetException, IllegalAccessException {

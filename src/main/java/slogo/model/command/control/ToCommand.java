@@ -17,6 +17,7 @@ public class ToCommand extends Command {
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     Node userDefinedNode = arguments.get(0);
+
     return modelState -> {
       modelState.getUserDefinedCommands().put(userDefinedNode.getToken(), arguments);
       return 1.0;

@@ -3,7 +3,6 @@ package slogo.model.command.control;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.CommandNode;
@@ -37,10 +36,14 @@ public class ToCommandTest {
   void testToCommandNoVariables()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     node = new CommandNode("control.ToCommand", model);
-    Node nodeTwo = new UserCommandNode("HalfSquare", model);
+    Node nodeTwo = new UserCommandNode("HalfSquare",  model);
     node.addChild(nodeTwo);
+    Node nodeThree = new VariableNode("var1", model);
+    Node nodeFour = new VariableNode("var2", model);
+    nodeTwo.addChild(nodeThree);
+    nodeTwo.addChild(nodeFour);
 
-    nodeTwo.addChild(new ListNode("", model));
+
 
     Node fwdNode = new CommandNode("turtle.ForwardCommand", model);
     fwdNode.addChild(new ConstantNode("2", model));
@@ -48,16 +51,13 @@ public class ToCommandTest {
     Node rightNode = new CommandNode("turtle.RightCommand", model);
     rightNode.addChild(new ConstantNode("90", model));
 
-
     Node commandList = new ListNode("", model);
     commandList.addChild(fwdNode);
     commandList.addChild(rightNode);
     commandList.addChild(fwdNode);
     node.addChild(commandList);
 
-
     assertEquals(1.0, node.getValue(), DELTA);
-
 
     Command c = new UserCommand();
 
@@ -73,7 +73,6 @@ public class ToCommandTest {
     Node nodeTwo = new UserCommandNode("HalfSquare", model);
     node.addChild(nodeTwo);
 
-    nodeTwo.addChild(new ListNode("", model));
 
     Node fwdNode = new CommandNode("turtle.ForwardCommand", model);
     fwdNode.addChild(new ConstantNode("2", model));
@@ -100,7 +99,7 @@ public class ToCommandTest {
 
     Command c = new UserCommand();
 
-    assertEquals(2,  model.applyCommandToModelState(c.execute(model.getUserDefinedCommands().get("HalfSquare"))));
+    assertEquals(2.0,  model.applyCommandToModelState(c.execute(model.getUserDefinedCommands().get("HalfSquare"))));
     assertEquals(2.0, myTurtle.getY(), DELTA);
     assertEquals(2.0, myTurtle.getX(), DELTA);
   }
