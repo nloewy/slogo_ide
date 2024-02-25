@@ -51,7 +51,7 @@ public class View implements SlogoListener {
         //This line is for testing, this should be filled in by the xml file
         //All turtles should be sent from the parser
         turtles.add(new FrontEndTurtle(0, new Double[]{0.0, 0.0}, Color.BLACK, true, 0, defaultImage));
-        turtles.add(new FrontEndTurtle(1, new Double[]{200.0, 0.0}, Color.BLACK, true, 0, defaultImage));
+        turtles.add(new FrontEndTurtle(1, new Double[]{200.0, 0.0}, Color.BLUE, true, 0, defaultImage));
     }
 
     public void run() throws FileNotFoundException {

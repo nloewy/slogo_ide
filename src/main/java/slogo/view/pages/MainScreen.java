@@ -1,3 +1,5 @@
+
+
 package slogo.view.pages;
 
 import java.io.FileNotFoundException;
@@ -8,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import slogo.Controller;
 import slogo.model.api.TurtleRecord;
 import slogo.view.ButtonUtil;
@@ -58,7 +61,6 @@ public class MainScreen implements ViewInternal {
         initResources();
         initScene();
 
-
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames()
             .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> update()));
@@ -73,8 +75,11 @@ public class MainScreen implements ViewInternal {
       sendCommandStringToView();
     });
 
+
+    //I'm not using the pen boolean i dont know what it is
     testButton = ButtonUtil.generateButton("test", 300, 100, event -> {
       view.onUpdateTurtleState(new TurtleRecord(0, 100, 100, true, true, 90));
+      view.onUpdateTurtleState(new TurtleRecord(1, 300, 200, true, true, 90));
     });
 
     HBox hbox = new HBox();
@@ -88,12 +93,12 @@ public class MainScreen implements ViewInternal {
 
     initializeTurtleDisplays();
 
-
     System.out.println("Testing");
   }
+
   public void initializeTurtleDisplays() {
     for (FrontEndTurtle turtle : view.getTurtles()) {
-      myTurtlePositions.put(turtle, turtle.getPosition());
+      // myTurtlePositions.put(turtle, turtle.getPosition());
       root.getChildren().add(turtle.getDisplay());
     }
   }
@@ -110,26 +115,37 @@ public class MainScreen implements ViewInternal {
   }
 
   public void update() {
-    System.out.println(view.getTurtles());
-    Map<FrontEndTurtle, Double[]> deltaPositions = new HashMap<>();
+    // Map<FrontEndTurtle, Double[]> deltaPositions = new HashMap<>();
 
     for (FrontEndTurtle turtle : view.getTurtles()) {
+        Line line = new Line(
+                turtle.getDisplay().getLayoutX(),
+                turtle.getDisplay().getLayoutY(),
+                turtle.getPosition()[0],
+                turtle.getPosition()[1]);
+        line.setStroke(turtle.getPenColor());
 
-      // this is here for testing, this should be replaced with animation
-      turtle.getDisplay().setLayoutX(turtle.getPosition()[0]);
-      turtle.getDisplay().setLayoutY(turtle.getPosition()[0]);
+        // this is here for testing, this should be replaced with animation
+        turtle.getDisplay().setLayoutX(turtle.getPosition()[0]);
+        turtle.getDisplay().setLayoutY(turtle.getPosition()[1]);
+        //TODO rotation needs troubleshooting
+        turtle.getDisplay().setRotate(turtle.getHeading());
 
-      // if (!myTurtlePositions.containsKey(turtle)) {
-      // System.out
-      // myTurtlePositions.put(turtle, turtle.getPosition());
-      // }
+        if (turtle.isPenDisplayed()) {
+            root.getChildren().add(line);
+        }
 
-      // deltaPositions.put(
-      // turtle,
-      // new Double[] {
-      // turtle.getPosition()[0] - myTurtlePositions.get(turtle)[0],
-      // turtle.getPosition()[1] - myTurtlePositions.get(turtle)[1]
-      // });
+        // if (!myTurtlePositions.containsKey(turtle)) {
+        // System.out
+        // myTurtlePositions.put(turtle, turtle.getPosition());
+        // }
+
+        // deltaPositions.put(
+        // turtle,
+        // new Double[] {
+        // turtle.getPosition()[0] - myTurtlePositions.get(turtle)[0],
+        // turtle.getPosition()[1] - myTurtlePositions.get(turtle)[1]
+        // });
     }
     // handleTurtleAnimation(deltaPositions);
     // syncTurtlesWithView();

@@ -32,6 +32,14 @@ public class FrontEndTurtle {
         return myId;
     }
 
+    public Color getPenColor() {
+        return penColor;
+    }
+
+    public void setPenColor(Color newColor) {
+        penColor = newColor;
+    }
+
     public boolean isPenDisplayed() {
         return isPenDisplayed;
     }
