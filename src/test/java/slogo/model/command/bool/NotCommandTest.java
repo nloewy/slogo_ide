@@ -39,7 +39,7 @@ public class NotCommandTest {
   })
   void testNot(String op1, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op1, myTurtle));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(result, node.getValue(), DELTA);
   }
 }

@@ -44,7 +44,7 @@ public class XcoordinateCommandTest {
   })
   void testXCorBasic(String x)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(x, myTurtle));
+    node.addChild(new ConstantNode(x, null));
     assertEquals(myTurtle.getX(), node.getValue(), DELTA);
   }
 

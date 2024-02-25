@@ -45,8 +45,8 @@ public class EqualCommandTest {
   })
   void testEqual(String op1, String op2, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op1, myTurtle));
-    node.addChildren(new ConstantNode(op2, myTurtle));
+    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op2, null));
     assertEquals(result, node.getValue(), DELTA);
   }
 }

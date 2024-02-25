@@ -18,13 +18,14 @@ public class SumCommandTest {
 
   private Turtle myTurtle;
   private Node node;
+  private ModelState model;
 
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
     myTurtle = null;
-    ModelState model = new ModelState();
+    model = new ModelState();
     node = new CommandNode("slogo.model.command.math.SumCommand", model);
 
   }
@@ -44,8 +45,8 @@ public class SumCommandTest {
   })
   void testSumBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op1, myTurtle));
-    node.addChildren(new ConstantNode(op2, myTurtle));
+    node.addChild(new ConstantNode(op1, model));
+    node.addChild(new ConstantNode(op2, model));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 

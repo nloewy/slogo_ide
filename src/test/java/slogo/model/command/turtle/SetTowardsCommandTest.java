@@ -18,12 +18,13 @@ public class SetTowardsCommandTest {
 
   private Turtle myTurtle;
   private Node node;
+  private ModelState model;
+
 
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-
-    ModelState model = new ModelState();
+    model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
     node = new CommandNode("slogo.model.command.turtle.SetTowardsCommand", model);
@@ -60,8 +61,8 @@ public class SetTowardsCommandTest {
   })
   void testBasicToward(String x, String y, String expectedValue, String expectedHeading)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(x, myTurtle));
-    node.addChildren(new ConstantNode(y, myTurtle));
+    node.addChild(new ConstantNode(x, model));
+    node.addChild(new ConstantNode(y, model));
     assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
   }
@@ -82,8 +83,8 @@ public class SetTowardsCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setX(50);
     myTurtle.setY(-50);
-    node.addChildren(new ConstantNode(x, myTurtle));
-    node.addChildren(new ConstantNode(y, myTurtle));
+    node.addChild(new ConstantNode(x, model));
+    node.addChild(new ConstantNode(y, model));
     assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
   }

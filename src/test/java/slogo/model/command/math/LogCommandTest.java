@@ -34,14 +34,14 @@ public class LogCommandTest {
   @Test
   void testLogBasicE()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(Double.toString(Math.E), myTurtle));
+    node.addChild(new ConstantNode(Double.toString(Math.E), null));
     assertEquals(1, node.getValue(), DELTA);
   }
 
   @Test
   void testLogBasicOne()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode("1", myTurtle));
+    node.addChild(new ConstantNode("1", null));
     assertEquals(0, node.getValue(), DELTA);
   }
 
@@ -68,7 +68,7 @@ public class LogCommandTest {
   })
   void testLogFloats(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op1, myTurtle));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -83,7 +83,7 @@ public class LogCommandTest {
   })
   void testLogNonPositive(String op1)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op1, myTurtle));
+    node.addChild(new ConstantNode(op1, null));
     Throwable e = assertThrows(IllegalArgumentException.class, () -> {
       node.getValue();
     });

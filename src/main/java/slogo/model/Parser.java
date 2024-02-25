@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class Parser {
 
-  private Map<String, String> syntaxMap;
+  private final Map<String, String> syntaxMap;
   private Map<String, String> commandMap;
 
 
@@ -65,43 +65,43 @@ public class Parser {
 
   public List<Node> parse(String commandStr) throws IllegalArgumentException {
     /**
-    resetTrees();
+     resetTrees();
 
-    String[] tokens = commandStr.split("\\s+");
-    for (String token : tokens) {
-      for (String key : syntaxMap.keySet()) {
-        if (token.matches(key)) {
-          if (currentNode == null) {
-            if (!(syntaxMap.get(key).equals("Command"))) {
-              throw new IllegalArgumentException("Command Required");
-            } else {
-              try {
-                String[] typeToken = commandMap.get(token).split("\\.");
-                //create CommandNode or whatever node we should using reflection yay!!
-                //then we execute the root command (its like a list of trees)
-                //after each execution, tell listener, but dont give final value back to the view until we get the outermost command
-                Node node = new CommandNode(
-                    "command." + typeToken[0] + "." + typeToken[1] + "Command", myTurtles.get(0));
-              } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
-                       InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+     String[] tokens = commandStr.split("\\s+");
+     for (String token : tokens) {
+     for (String key : syntaxMap.keySet()) {
+     if (token.matches(key)) {
+     if (currentNode == null) {
+     if (!(syntaxMap.get(key).equals("Command"))) {
+     throw new IllegalArgumentException("Command Required");
+     } else {
+     try {
+     String[] typeToken = commandMap.get(token).split("\\.");
+     //create CommandNode or whatever node we should using reflection yay!!
+     //then we execute the root command (its like a list of trees)
+     //after each execution, tell listener, but dont give final value back to the view until we get the outermost command
+     Node node = new CommandNode(
+     "command." + typeToken[0] + "." + typeToken[1] + "Command", myTurtles.get(0));
+     } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
+     InstantiationException | IllegalAccessException e) {
+     throw new RuntimeException(e);
+     }
+     }
+     }
+     }
+     }
+     }
+     }
 
-*/
+     */
     return null;
   }
 
   private void resetTrees() {
     /**
-    myNodes = new ArrayList<>();
-    currentNodeInd = 0;
-    currentNode = null;
+     myNodes = new ArrayList<>();
+     currentNodeInd = 0;
+     currentNode = null;
      */
   }
 

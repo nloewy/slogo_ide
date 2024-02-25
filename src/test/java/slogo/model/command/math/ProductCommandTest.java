@@ -41,8 +41,8 @@ public class ProductCommandTest {
   })
   void testProductBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op1, myTurtle));
-    node.addChildren(new ConstantNode(op2, myTurtle));
+    node.addChild(new ConstantNode(op1, new ModelState()));
+    node.addChild(new ConstantNode(op2, new ModelState()));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 

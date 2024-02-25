@@ -9,8 +9,9 @@ import slogo.model.api.ModelListener;
 
 public class ModelState implements ModelListener {
 
-  private List<Turtle> myTurtles;
-  private Map<String,Double> myVariables;
+  private final List<Turtle> myTurtles;
+  private final Map<String, Double> myVariables;
+
   public ModelState() {
     myTurtles = new ArrayList<>();
     myVariables = new HashMap<>();
@@ -25,6 +26,8 @@ public class ModelState implements ModelListener {
   }
 
   @Override
-  public double execute(Function<ModelState, Double> action) {
-    return action.apply(this);  }
+  public double applyCommandToModelState(Function<ModelState, Double> action) {
+    return action.apply(this);
+  }
+
 }

@@ -17,13 +17,16 @@ public class AndCommandTest {
   public static final double DELTA = 0.001;
   private Turtle myTurtle;
   private Node node;
+  private ModelState model;
+
 
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
-    ModelState model = new ModelState();
+    model = new ModelState();
     node = new CommandNode("slogo.model.command.bool.AndCommand", model);
+
   }
 
   @ParameterizedTest
@@ -50,8 +53,8 @@ public class AndCommandTest {
   })
   void testAnd(String op1, String op2, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op1, myTurtle));
-    node.addChildren(new ConstantNode(op2, myTurtle));
+    node.addChild(new ConstantNode(op1, model));
+    node.addChild(new ConstantNode(op2, model));
     assertEquals(result, node.getValue(), DELTA);
   }
 }

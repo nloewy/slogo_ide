@@ -41,7 +41,7 @@ public class RandomCommandTest {
   })
   void testBasicRandom(String positiveValue)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(positiveValue, myTurtle));
+    node.addChild(new ConstantNode(positiveValue, null));
     double val = node.getValue();
     assertTrue(0 <= val);
     assertTrue(Double.parseDouble(positiveValue) > val);
@@ -51,14 +51,14 @@ public class RandomCommandTest {
   @Test
   void testRandomZero()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode("0.00000", myTurtle));
+    node.addChild(new ConstantNode("0.00000", null));
     assertEquals(0, node.getValue(), DELTA);
   }
 
   @Test
   void testRandomNegative()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode("-90.00000", myTurtle));
+    node.addChild(new ConstantNode("-90.00000", null));
     Throwable e = assertThrows(IllegalArgumentException.class, () -> {
       node.getValue();
     });

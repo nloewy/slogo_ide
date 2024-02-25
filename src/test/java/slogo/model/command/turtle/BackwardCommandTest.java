@@ -32,7 +32,7 @@ public class BackwardCommandTest {
   void testBasicBackward()
       throws InvocationTargetException, IllegalAccessException {
     String dist = "75";
-    node.addChildren(new ConstantNode(dist, myTurtle));
+    node.addChild(new ConstantNode(dist, null));
     assertEquals(node.getValue(), 75, DELTA);
     assertEquals(myTurtle.getY(), -75, DELTA);
 
@@ -43,7 +43,7 @@ public class BackwardCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setHeading(60);
     String dist = "20";
-    node.addChildren(new ConstantNode(dist, myTurtle));
+    node.addChild(new ConstantNode(dist, null));
     assertEquals(20, node.getValue(), DELTA);
     assertEquals(-10 * Math.sqrt(3), myTurtle.getX(), DELTA);
     assertEquals(-10, myTurtle.getY(), DELTA);
@@ -56,7 +56,7 @@ public class BackwardCommandTest {
     myTurtle.setX(50);
     myTurtle.setY(70);
     String dist = "20";
-    node.addChildren(new ConstantNode(dist, myTurtle));
+    node.addChild(new ConstantNode(dist, null));
     assertEquals(20, node.getValue(), DELTA);
     assertEquals(50 - 10 * Math.sqrt(3), myTurtle.getX(), DELTA);
     assertEquals(60, myTurtle.getY(), DELTA);
@@ -66,7 +66,7 @@ public class BackwardCommandTest {
   void testBackwardWithZeroDistance()
       throws InvocationTargetException, IllegalAccessException {
     String dist = "0";
-    node.addChildren(new ConstantNode(dist, myTurtle));
+    node.addChild(new ConstantNode(dist, null));
     assertEquals(0, node.getValue(), DELTA);
     assertEquals(0, myTurtle.getX(), DELTA);
     assertEquals(0, myTurtle.getY(), DELTA);
@@ -76,7 +76,7 @@ public class BackwardCommandTest {
   void testBackwardNegativeDistance()
       throws InvocationTargetException, IllegalAccessException {
     String dist = "-75";
-    node.addChildren(new ConstantNode(dist, myTurtle));
+    node.addChild(new ConstantNode(dist, null));
     assertEquals(-75, node.getValue(), DELTA);
     assertEquals(75, myTurtle.getY(), DELTA);
   }

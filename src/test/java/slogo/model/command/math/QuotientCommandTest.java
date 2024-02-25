@@ -46,16 +46,16 @@ public class QuotientCommandTest {
   })
   void testQuotientBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op1, myTurtle));
-    node.addChildren(new ConstantNode(op2, myTurtle));
+    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op2, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
   @Test
   void testDivideByZero() throws InvocationTargetException, IllegalAccessException {
     {
-      node.addChildren(new ConstantNode("50", myTurtle));
-      node.addChildren(new ConstantNode("0", myTurtle));
+      node.addChild(new ConstantNode("50", null));
+      node.addChild(new ConstantNode("0", null));
       Throwable e = assertThrows(ArithmeticException.class, () -> {
         node.getValue();
       });

@@ -54,8 +54,8 @@ public class SetPositionCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
-    node.addChildren(new ConstantNode(newX, myTurtle));
-    node.addChildren(new ConstantNode(newY, myTurtle));
+    node.addChild(new ConstantNode(newX, null));
+    node.addChild(new ConstantNode(newY, null));
     double expectedVal = Math.hypot(Double.parseDouble(newX) - myTurtle.getX(),
         Double.parseDouble(newY) - myTurtle.getY());
     assertEquals(expectedVal, node.getValue(), DELTA);

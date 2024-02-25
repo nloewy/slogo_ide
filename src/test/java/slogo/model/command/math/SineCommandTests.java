@@ -49,7 +49,7 @@ public class SineCommandTests {
   })
   void testSineBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op1, myTurtle));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 }
