@@ -46,7 +46,7 @@ public class TangentCommandTest {
   })
   void testTangentBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op1, myTurtle));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -61,7 +61,7 @@ public class TangentCommandTest {
   })
   void testTangentInvalid(String degrees)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    node.addChildren(new ConstantNode(degrees, myTurtle));
+    node.addChild(new ConstantNode(degrees, null));
     Throwable e = assertThrows(ArithmeticException.class, () -> {
       node.getValue();
     });

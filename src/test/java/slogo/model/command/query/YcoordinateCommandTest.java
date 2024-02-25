@@ -44,7 +44,7 @@ public class YcoordinateCommandTest {
   })
   void testYCorrBasic(String y)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(y, myTurtle));
+    node.addChild(new ConstantNode(y, null));
     assertEquals(myTurtle.getY(), node.getValue(), DELTA);
   }
 

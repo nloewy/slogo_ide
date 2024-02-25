@@ -6,6 +6,7 @@ import slogo.view.View;
 import java.io.FileNotFoundException;
 
 public class Controller {
+
     private static Stage stage;
     private final View view;
 
@@ -23,6 +24,10 @@ public class Controller {
     public static void openNewSession() throws FileNotFoundException {
         Stage newStage = new Stage();
         View view = new View(newStage);
+    }
+
+    public void run() throws FileNotFoundException {
         view.run();
     }
 }
+

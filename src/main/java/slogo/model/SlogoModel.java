@@ -9,13 +9,13 @@ import slogo.model.api.Model;
 
 public class SlogoModel implements Model {
 
- // private ModelState modelState;
-  private Parser parser;
+  // private ModelState modelState;
+  private final Parser parser;
 
-  private SlogoListener myListener;
-  private List<Turtle> myTurtles;
-  private Map<String, Double> myVariables;
-  private ModelState modelstate;
+  private final SlogoListener myListener;
+  private final List<Turtle> myTurtles;
+  private final Map<String, Double> myVariables;
+  private final ModelState modelstate;
 
   public SlogoModel(SlogoListener listener) {
     modelstate = new ModelState();
@@ -28,10 +28,11 @@ public class SlogoModel implements Model {
 
   public void parse(String commandStr) {
     List<Node> nodes = parser.parse(commandStr);
-    for(Node node : nodes) {
+    for (Node node : nodes) {
       //execute, send to listener
     }
   }
+
   @Override
   public File loadXml(String path) {
     return null;
@@ -45,9 +46,6 @@ public class SlogoModel implements Model {
   @Override
   public void resetModel() {
   }
-
-
-
 
 
 }

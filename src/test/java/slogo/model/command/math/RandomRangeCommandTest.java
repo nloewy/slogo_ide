@@ -41,8 +41,8 @@ public class RandomRangeCommandTest {
   })
   void testBasicRandomRange(String min, String max)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(min, myTurtle));
-    node.addChildren(new ConstantNode(max, myTurtle));
+    node.addChild(new ConstantNode(min, null));
+    node.addChild(new ConstantNode(max, null));
     double val = node.getValue();
     assertTrue(Double.parseDouble(min) <= val);
     assertTrue(Double.parseDouble(max) >= val);
@@ -52,16 +52,16 @@ public class RandomRangeCommandTest {
   @Test
   void testRandomRangeSameVal()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode("0.00000", myTurtle));
-    node.addChildren(new ConstantNode("0", myTurtle));
+    node.addChild(new ConstantNode("0.00000", null));
+    node.addChild(new ConstantNode("0", null));
     assertEquals(0, node.getValue(), DELTA);
   }
 
   @Test
   void testRandomRangeIllegal()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode("-90.00000", myTurtle));
-    node.addChildren(new ConstantNode("-90.00100", myTurtle));
+    node.addChild(new ConstantNode("-90.00000", null));
+    node.addChild(new ConstantNode("-90.00100", null));
     Throwable e = assertThrows(IllegalArgumentException.class, () -> {
       node.getValue();
     });

@@ -14,6 +14,7 @@ public class Main extends Application {
     // default language for application
     public static final String DEFAULT_LANGUAGE = "English";
 
+
     public static void main(String[] args) {
         launch(args);
     }

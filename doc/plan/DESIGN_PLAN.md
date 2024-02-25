@@ -288,6 +288,24 @@ animationRunning = false; //this boolean is checked every step()
 ```
 
 ### Yash's Use Cases
+<<<<<<< Updated upstream
+=======
+1. x
+2. x
+3. x
+4. x
+### Abishek's Use Cases
+1. x
+2. x
+3. x
+4. x
+### Bodhaansh's Use Cases
+1. ChangeBackgroundColor.java
+2. ChangePenColor.java
+3. LightModeToDark.java
+4. InvalidCommand.java
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 
 1. User can see and access a help menu to know each command
 ```java
@@ -360,6 +378,10 @@ fd = Adelante
 bk = Atras
 ```
 ### Bodhaansh's Use Cases
+=======
+
+## Team Responsibilities
+>>>>>>> Stashed changes
 
 1. ChangeBackgroundColor.java
 2. ChangePenColor.java

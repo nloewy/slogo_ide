@@ -39,7 +39,7 @@ public class ArcTanCommandTest {
   })
   void testArctanBasic(String op, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChildren(new ConstantNode(op, myTurtle));
+    node.addChild(new ConstantNode(op, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 

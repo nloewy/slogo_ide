@@ -46,7 +46,7 @@ public class HeadingCommandTest {
   void testHeadingBasic(String heading)
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setHeading(-393993);
-    node.addChildren(new ConstantNode(heading, myTurtle));
+    node.addChild(new ConstantNode(heading, null));
     assertEquals(myTurtle.getHeading(), node.getValue(), DELTA);
   }
 

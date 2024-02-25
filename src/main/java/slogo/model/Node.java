@@ -15,9 +15,11 @@ public abstract class Node {
     return myChildren;
   }
 
-  public void addChildren(Node node) {
+  public void addChild(Node node) {
     myChildren.add(node);
   }
+
+  public abstract String getToken();
 
 }
 
