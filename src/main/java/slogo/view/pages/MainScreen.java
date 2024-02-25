@@ -44,13 +44,15 @@ public class MainScreen extends Screen {
         myView = view;
 
         field = new TextField();
+        field.setId("field");
+
         submitField = ButtonUtil.generateButton("submit", 251, 100, event -> {
             view.setCommandString(field.getText());
             field.clear();
         });
 
         // testing
-        testButton = ButtonUtil.generateButton("test", 300, 100, event -> {
+        testButton = ButtonUtil.generateButton("test", 400, 100, event -> {
             myView.onUpdateTurtleState(new TurtleRecord(0, 100, 100, true, true, 90));
         });
 
