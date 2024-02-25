@@ -1,7 +1,9 @@
 package slogo.view;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import slogo.Controller;
@@ -109,9 +111,12 @@ public class View implements SlogoListener {
         commandString = s;
     }
 
+    public Map<String, Number> getVariables() {
+        return variables;
+    }
+
     @Override
     public void onUpdateValue(String variableName, Number newValue) {
-        variables.remove(variableName);
         variables.put(variableName, newValue);
     }
 
@@ -127,7 +132,13 @@ public class View implements SlogoListener {
                 return;
             }
         }
-        turtles.add(new FrontEndTurtle(turtleState.id(), new Double[]{turtleState.x(), turtleState.y()}, Color.BLACK, true, turtleState.heading(), defaultImage));
+        turtles.add(new FrontEndTurtle(
+            turtleState.id(), 
+            new Double[]{turtleState.x(), turtleState.y()}, 
+            Color.BLACK, 
+            true, 
+            turtleState.heading(), 
+            defaultImage));
     }
 
     @Override

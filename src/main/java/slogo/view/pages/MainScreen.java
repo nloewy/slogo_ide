@@ -5,23 +5,26 @@ package slogo.view.pages;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import slogo.Controller;
 import slogo.model.api.TurtleRecord;
 import slogo.view.ButtonUtil;
 import slogo.view.FrontEndTurtle;
-import slogo.view.ViewInternal;
 import slogo.view.View;
-import javafx.stage.Stage;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-import java.util.ResourceBundle;
+import slogo.view.ViewInternal;
 
 /*
 The View will already know the XMLFile data when
@@ -48,6 +51,7 @@ public class MainScreen implements ViewInternal {
     private final Timeline animation = new Timeline();
     private final double speed = 0.75;
     Button submitField;
+    private VBox variablesBox;
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
@@ -72,9 +76,10 @@ public class MainScreen implements ViewInternal {
     field = new TextField();
 
     submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
+      view.onUpdateValue(field.getText(), field.getLength());
       sendCommandStringToView();
+      //test for adding variables
     });
-
 
     //I'm not using the pen boolean i dont know what it is
     testButton = ButtonUtil.generateButton("test", 300, 100, event -> {
@@ -100,6 +105,15 @@ public class MainScreen implements ViewInternal {
     hbox.setLayoutX(100);
     hbox.setLayoutY(100);
     root.getChildren().add(hbox);
+
+    //TODO Add variables from XML file here maybe
+    variablesBox = new VBox();
+    variablesBox.setAlignment(javafx.geometry.Pos.CENTER);
+    variablesBox.setLayoutX(300);
+    variablesBox.setLayoutY(500);
+    variablesBox.getChildren().add(new Label("VARIABLES"));
+    
+    root.getChildren().add(variablesBox);
 
     initializeTurtleDisplays();
 
@@ -145,6 +159,8 @@ public class MainScreen implements ViewInternal {
             root.getChildren().add(line);
         }
 
+        updateVariables();
+
         // if (!myTurtlePositions.containsKey(turtle)) {
         // System.out
         // myTurtlePositions.put(turtle, turtle.getPosition());
@@ -159,6 +175,14 @@ public class MainScreen implements ViewInternal {
     }
     // handleTurtleAnimation(deltaPositions);
     // syncTurtlesWithView();
+  }
+
+  private void updateVariables() {
+    variablesBox.getChildren().clear();
+    
+    for (String key : view.getVariables().keySet()) {
+      variablesBox.getChildren().add(new Label(key + view.getVariables().get(key)));
+    }
   }
 
   public void handleTurtleAnimation(Map<FrontEndTurtle, Double[]> deltas) {
