@@ -31,9 +31,11 @@ public class View implements SlogoListener {
     private String lang;
     private Controller controller;
 
+
     public View(Stage stage, Controller controller) {
         this.stage = stage;
         this. controller = controller;
+
         lang = "EG";
         commandString = "";
 
@@ -51,6 +53,7 @@ public class View implements SlogoListener {
 
     public void run() throws FileNotFoundException {
         MainScreen page = new MainScreen(this, stage, controller);
+
         page.setUp();
         Scene scene = new Scene(page.getGroup(), width, height);
         scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());

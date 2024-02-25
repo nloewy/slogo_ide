@@ -53,5 +53,12 @@ public class Controller {
     }
 
     public void loadSession() {
+        System.out.println("To Be Implemented! Need to figure out how to move "
+            + "file choosing from screen to controller");
     }
+
+    public void openNewXMLSession() {
+        System.out.println("To Be Implemented!");
+    }
+
 }

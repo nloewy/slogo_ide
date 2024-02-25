@@ -1,6 +1,7 @@
 package slogo.mathutils;
 
 public class MathUtils {
+
   public static double toDegrees(double radians) {
     return radians * 180 / Math.PI;
   }
@@ -10,7 +11,7 @@ public class MathUtils {
   }
 
   public static double dist(double x, double y, double currentX, double currentY) {
-    return Math.sqrt(Math.pow((x-currentX),2) + Math.pow((y-currentY),2));
+    return Math.sqrt(Math.pow((x - currentX), 2) + Math.pow((y - currentY), 2));
   }
 
 }

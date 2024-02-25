@@ -43,18 +43,14 @@ public class StartScreen implements Scene {
 
         root.getChildren().addAll(
             ButtonUtil.generateButton("Load New XML Session", 100, 300, e -> {
-              try {
-                controller.openNewSession();
-              } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-              }
+              controller.openNewXMLSession();
             }),
             ButtonUtil.generateButton("Load New General Session", 100, 330, e -> {
-              try {
-                controller.openNewSession();
-              } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-              }
+                try {
+                    controller.openNewSession();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }),
             ButtonUtil.generateButton("Load Old Session", 100, 360,
                 e -> controller.loadSession()),
@@ -84,3 +80,15 @@ public class StartScreen implements Scene {
     }
 
 }
+
+//private void handleLoadOldFile() {
+//    File dataFile = Screen.FILE_CHOOSER.showOpenDialog(stage);
+//
+//    if (dataFile != null) {
+//        System.out.println(dataFile.getAbsolutePath());
+//    }
+//}
+//
+//private void handleLoadNewFile() {
+//    System.out.println("To Be Implemented!");
+//}

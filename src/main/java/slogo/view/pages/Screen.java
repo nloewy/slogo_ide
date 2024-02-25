@@ -1,19 +1,23 @@
 package slogo.view.pages;
 
 import javafx.scene.Group;
+import javafx.stage.FileChooser;
+import slogo.Main;
+
+import java.io.File;
 
 public abstract class Screen {
 
-//   public static final FileChooser FILE_CHOOSER = makeChooser(Main.DATA_FILE_EXTENSION);
+    public static final FileChooser FILE_CHOOSER = makeChooser(Main.DATA_FILE_EXTENSION);
 
-//   private static FileChooser makeChooser(String extensionAccepted) {
-//     FileChooser result = new FileChooser();
-//     result.setTitle(Main.getInternationalText("fileChooserTitle"));
-//     result.setInitialDirectory(new File(Main.DATA_FILE_FOLDER));
-//     result.getExtensionFilters()
-//         .setAll(new FileChooser.ExtensionFilter("Files", extensionAccepted));
-//     return result;
-//   }
+    private static FileChooser makeChooser(String extensionAccepted) {
+        FileChooser result = new FileChooser();
+        result.setTitle("fileChooserTitle");
+        result.setInitialDirectory(new File(Main.DATA_FILE_FOLDER));
+        result.getExtensionFilters()
+                .setAll(new FileChooser.ExtensionFilter("Files", extensionAccepted));
+        return result;
+    }
 
     /**
      * Set up all the buttons, keyEvents and layouts by implementing the setup methods

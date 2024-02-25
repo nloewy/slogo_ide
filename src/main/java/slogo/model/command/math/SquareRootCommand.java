@@ -1,22 +1,29 @@
 package slogo.model.command.math;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import slogo.model.SlogoListener;
+import java.util.function.Function;
+import slogo.model.ModelState;
+import slogo.model.Node;
 import slogo.model.command.Command;
 
 public class SquareRootCommand extends Command {
 
-
-  public double execute(List<Double> arguments) {
-    double val = Math.max(arguments.get(0), 0);
-    //if (val<0) {
-    //    throw new IllegalArgumentException("expr must be non-negative");
-    //  }
-    return Math.sqrt(val);
+  @Override
+  public Function<ModelState, Double> execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
+    double arg1 = arguments.get(0).getValue();
+    return modelState -> {
+      if (arg1 < 0) {
+        throw new IllegalArgumentException("Operand must be non-negative");
+      }
+      return Math.sqrt(arg1);
+    };
   }
 
-  public void notifyListener(SlogoListener listener, double value) {
-    super.notifyListener(listener, value);
+  /**@Override public void notifyListener(SlogoListener listener, double value) {
+  super.notifyListener(listener, value);
   }
+   */
 
 }

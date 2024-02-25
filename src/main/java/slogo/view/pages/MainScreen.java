@@ -19,9 +19,14 @@ import javafx.stage.Stage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-
-
 import java.util.ResourceBundle;
+
+/*
+The View will already know the XMLFile data when
+this is initialized. This will periodically
+call View for updates and to schedule
+animation keyframes.
+ */
 
 public class MainScreen implements Scene {
 
@@ -42,9 +47,8 @@ public class MainScreen implements Scene {
     private final double speed = 0.75;
     Button submitField;
 
-
-
-
+  // Add an XMLFile object to this when Model adds one
+  // Controller calls this with an XML File
     public MainScreen(View view, Stage stage, Controller controller) throws FileNotFoundException {
         super();
         this.stage = stage;
@@ -59,112 +63,113 @@ public class MainScreen implements Scene {
             .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> update()));
     }
 
-    @Override
-    public void initScene() {
-        field = new TextField();
+  @Override
+  public void initScene() {
+    field = new TextField();
 
 
-        submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
-            view.setCommandString(field.getText());
-            field.clear();
-        });
+    submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
+      view.setCommandString(field.getText());
+      field.clear();
+    });
 
-        testButton = ButtonUtil.generateButton("test", 300, 100, event -> {
-            view.onUpdateTurtleState(new TurtleRecord(0, 100, 100, true, true, 90));
-        });
+    testButton = ButtonUtil.generateButton("test", 300, 100, event -> {
+      view.onUpdateTurtleState(new TurtleRecord(0, 100, 100, true, true, 90));
+    });
 
-        HBox hbox = new HBox();
-        hbox.setSpacing(10);
-        hbox.getChildren().addAll(field, submitField, testButton);
-        root = new Group();
-        hbox.setAlignment(javafx.geometry.Pos.CENTER);
-        hbox.setLayoutX(100);
-        hbox.setLayoutY(100);
-        root.getChildren().add(hbox);
+    HBox hbox = new HBox();
+    hbox.setSpacing(10);
+    hbox.getChildren().addAll(field, submitField, testButton);
+    root = new Group();
+    hbox.setAlignment(javafx.geometry.Pos.CENTER);
+    hbox.setLayoutX(100);
+    hbox.setLayoutY(100);
+    root.getChildren().add(hbox);
 
-        for (FrontEndTurtle turtle : view.getTurtles()) {
-            myTurtlePositions.put(turtle, turtle.getPosition());
-            root.getChildren().add(turtle.getDisplay());
-        }
-
-        System.out.println("Testing");
+    for (FrontEndTurtle turtle : view.getTurtles()) {
+      myTurtlePositions.put(turtle, turtle.getPosition());
+      root.getChildren().add(turtle.getDisplay());
     }
 
-    private void initResources() {
-        // Initialize resource bundle based on the current language from the controller
-        String currentLanguage = controller.getCurrentLanguage();
-        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + currentLanguage);
+    System.out.println("Testing");
+  }
+
+  private void initResources() {
+    // Initialize resource bundle based on the current language from the controller
+    String currentLanguage = controller.getCurrentLanguage();
+    myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + currentLanguage);
+  }
+
+  public void update() {
+    System.out.println(view.getTurtles());
+    Map<FrontEndTurtle, Double[]> deltaPositions = new HashMap<>();
+
+    for (FrontEndTurtle turtle : view.getTurtles()) {
+
+      // this is here for testing, this should be replaced with animation
+      turtle.getDisplay().setLayoutX(turtle.getPosition()[0]);
+      turtle.getDisplay().setLayoutY(turtle.getPosition()[0]);
+
+      // if (!myTurtlePositions.containsKey(turtle)) {
+      // System.out
+      // myTurtlePositions.put(turtle, turtle.getPosition());
+      // }
+
+      // deltaPositions.put(
+      // turtle,
+      // new Double[] {
+      // turtle.getPosition()[0] - myTurtlePositions.get(turtle)[0],
+      // turtle.getPosition()[1] - myTurtlePositions.get(turtle)[1]
+      // });
     }
+    // handleTurtleAnimation(deltaPositions);
+    // syncTurtlesWithView();
+  }
 
-    public void update() {
-        System.out.println(view.getTurtles());
-        Map<FrontEndTurtle, Double[]> deltaPositions = new HashMap<>();
+  public void handleTurtleAnimation(Map<FrontEndTurtle, Double[]> deltas) {
+    animation.stop();
 
-        for (FrontEndTurtle turtle : view.getTurtles()) {
+    Timeline localAnimation = new Timeline();
+    localAnimation.setCycleCount(5);
+    localAnimation.getKeyFrames()
+        .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> animateMovement(deltas)));
 
-            // this is here for testing, this should be replaced with animation
-            turtle.getDisplay().setLayoutX(turtle.getPosition()[0]);
-            turtle.getDisplay().setLayoutY(turtle.getPosition()[0]);
+    animation.play();
+  }
 
-            // if (!myTurtlePositions.containsKey(turtle)) {
-            // System.out
-            // myTurtlePositions.put(turtle, turtle.getPosition());
-            // }
+  public void animateMovement(Map<FrontEndTurtle, Double[]> deltas) {
+    for (FrontEndTurtle turtle : deltas.keySet()) {
+      double xStep = deltas.get(turtle)[0] / 5;
+      double yStep = deltas.get(turtle)[1] / 5;
 
-            // deltaPositions.put(
-            // turtle,
-            // new Double[] {
-            // turtle.getPosition()[0] - myTurtlePositions.get(turtle)[0],
-            // turtle.getPosition()[1] - myTurtlePositions.get(turtle)[1]
-            // });
-        }
-        // handleTurtleAnimation(deltaPositions);
-        // syncTurtlesWithView();
+      turtle.getDisplay().setLayoutX(turtle.getPosition()[0] + xStep);
+      turtle.getDisplay().setLayoutY(turtle.getPosition()[1] + yStep);
     }
+  }
 
-    public void handleTurtleAnimation(Map<FrontEndTurtle, Double[]> deltas) {
-        animation.stop();
-
-        Timeline localAnimation = new Timeline();
-        localAnimation.setCycleCount(5);
-        localAnimation.getKeyFrames()
-            .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> animateMovement(deltas)));
-
-        animation.play();
+  public void syncTurtlesWithView() {
+    for (FrontEndTurtle turtle : view.getTurtles()) {
+      myTurtlePositions.remove(turtle);
+      myTurtlePositions.put(turtle, turtle.getPosition());
     }
+  }
 
-    public void animateMovement(Map<FrontEndTurtle, Double[]> deltas) {
-        for (FrontEndTurtle turtle : deltas.keySet()) {
-            double xStep = deltas.get(turtle)[0] / 5;
-            double yStep = deltas.get(turtle)[1] / 5;
+  @Override
+  public void setUp() {
+    field.setLayoutX(100);
+    field.setLayoutY(100);
+    animation.play();
+  }
 
-            turtle.getDisplay().setLayoutX(turtle.getPosition()[0] + xStep);
-            turtle.getDisplay().setLayoutY(turtle.getPosition()[1] + yStep);
-        }
-    }
+  @Override
+  public javafx.scene.Scene getScene() {
+    return scene;
+  }
 
-    public void syncTurtlesWithView() {
-        for (FrontEndTurtle turtle : view.getTurtles()) {
-            myTurtlePositions.remove(turtle);
-            myTurtlePositions.put(turtle, turtle.getPosition());
-        }
-    }
-
-    @Override
-    public void setUp() {
-        field.setLayoutX(100);
-        field.setLayoutY(100);
-        animation.play();
-    }
-
-    @Override
-    public javafx.scene.Scene getScene() {
-        return scene;
-    }
-
-    @Override
-    public Group getGroup() {
-        return root;
-    }
+  @Override
+  public Group getGroup() {
+    return root;
+  }
 
 }
+
