@@ -11,6 +11,7 @@ public class ButtonUtil {
                                         int y,
                                         EventHandler<ActionEvent> consumer) {
         Button ret = new Button(text);
+        ret.setId(text);
         ret.setLayoutX(x);
         ret.setLayoutY(y);
         ret.setOnAction(consumer);
