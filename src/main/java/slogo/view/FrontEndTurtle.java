@@ -19,6 +19,7 @@ public class FrontEndTurtle {
         myId = id;
         displayImage = image;
         display = new ImageView(displayImage);
+        display.setId("turtle"); // doing this for testing, did not work because it keeps making new FrontEndTurtle objects
         display.setPreserveRatio(true);
         display.setFitWidth(50);
         myPosition = position;
