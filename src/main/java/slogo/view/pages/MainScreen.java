@@ -8,12 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.Pane;
 import slogo.Controller;
 import slogo.model.api.TurtleRecord;
 import slogo.view.ButtonUtil;
 import slogo.view.FrontEndTurtle;
-import slogo.view.Scene;
+import slogo.view.ViewInternal;
 import slogo.view.View;
 import javafx.stage.Stage;
 import javafx.animation.KeyFrame;
@@ -28,7 +27,7 @@ call View for updates and to schedule
 animation keyframes.
  */
 
-public class MainScreen implements Scene {
+public class MainScreen implements ViewInternal {
 
     private final Controller controller;
     private javafx.scene.Scene scene;
@@ -52,25 +51,26 @@ public class MainScreen implements Scene {
     public MainScreen(View view, Stage stage, Controller controller) throws FileNotFoundException {
         super();
         this.stage = stage;
+
         this.view = view;
         this.controller = controller;
 
         initResources();
         initScene();
 
+
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames()
             .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> update()));
     }
 
+
   @Override
   public void initScene() {
     field = new TextField();
 
-
     submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
-      view.setCommandString(field.getText());
-      field.clear();
+      sendCommandStringToView();
     });
 
     testButton = ButtonUtil.generateButton("test", 300, 100, event -> {
@@ -86,12 +86,21 @@ public class MainScreen implements Scene {
     hbox.setLayoutY(100);
     root.getChildren().add(hbox);
 
+    initializeTurtleDisplays();
+
+
+    System.out.println("Testing");
+  }
+  public void initializeTurtleDisplays() {
     for (FrontEndTurtle turtle : view.getTurtles()) {
       myTurtlePositions.put(turtle, turtle.getPosition());
       root.getChildren().add(turtle.getDisplay());
     }
+  }
 
-    System.out.println("Testing");
+  public void sendCommandStringToView() {
+    view.pushCommand(field.getText());
+    field.clear();
   }
 
   private void initResources() {

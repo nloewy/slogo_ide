@@ -8,8 +8,6 @@ import slogo.Controller;
 import slogo.model.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.view.pages.MainScreen;
-import slogo.view.pages.Screen;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -33,6 +31,7 @@ public class View implements SlogoListener {
 
 
     public View(Stage stage, Controller controller) {
+
         this.stage = stage;
         this. controller = controller;
 
@@ -41,14 +40,18 @@ public class View implements SlogoListener {
 
         variables = new HashMap<>();
         turtles = new ArrayList<>();
-        //This line is for testing, this should be filled in by the xml file
         commandList = new ArrayList<>();
+
         try {
             defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        //This line is for testing, this should be filled in by the xml file
+        //All turtles should be sent from the parser
         turtles.add(new FrontEndTurtle(0, new Double[]{0.0, 0.0}, Color.BLACK, true, 0, defaultImage));
+        turtles.add(new FrontEndTurtle(1, new Double[]{200.0, 0.0}, Color.BLACK, true, 0, defaultImage));
     }
 
     public void run() throws FileNotFoundException {
@@ -100,7 +103,9 @@ public class View implements SlogoListener {
         throw new Exception("No Command String Found!");
     }
 
-    public void setCommandString(String s) {
+    //TODO call the parse method here
+    //this parse method should handle starting the backend too
+    public void pushCommand(String s) {
         commandString = s;
         System.out.println(commandString);
     }
@@ -124,7 +129,7 @@ public class View implements SlogoListener {
                 return;
             }
         }
-        turtles.add(new FrontEndTurtle(turtleState.id(), new Double[]{0.0, 0.0}, Color.BLACK, true, 0, defaultImage));
+        turtles.add(new FrontEndTurtle(turtleState.id(), new Double[]{turtleState.x(), turtleState.y()}, Color.BLACK, true, turtleState.heading(), defaultImage));
     }
 
     @Override

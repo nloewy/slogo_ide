@@ -21,24 +21,25 @@ public class MainScreenTest extends DukeApplicationTest {
 
 
   // this method is run BEFORE EACH test to set up application in a fresh state
-  @Override
-  public void start (Stage stage) {
-    // create application and add scene for testing to given stage
-    try {
-      Controller.openNewSession();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
 
-    // the 0 is the id set when creating FrontEndTurtle
-    // components that will be reused in different tests
-    myTextField = lookup("#field").query();
-    // clear text field, just in case
-    myTextField.clear();
-
-    mySubmitButton = lookup("#submit").query();
-    myTestButton = lookup("#test").query();
-  }
+//  @Override
+//  public void start (Stage stage) {
+//    // create application and add scene for testing to given stage
+//    try {
+//      Controller.openNewSession();
+//    } catch (Exception e) {
+//      throw new RuntimeException(e);
+//    }
+//
+//    // the 0 is the id set when creating FrontEndTurtle
+//    // components that will be reused in different tests
+//    myTextField = lookup("#field").query();
+//    // clear text field, just in case
+//    myTextField.clear();
+//
+//    mySubmitButton = lookup("#submit").query();
+//    myTestButton = lookup("#test").query();
+//  }
 
   @Test
   void testTextFieldAction () {

@@ -3,7 +3,7 @@ package slogo;
 import java.io.FileNotFoundException;
 import javafx.stage.Stage;
 import slogo.view.View;
-import slogo.view.pages.MainScreen;
+import slogo.view.ViewInternal;
 import slogo.view.pages.StartScreen;
 
 public class Controller {
@@ -22,9 +22,9 @@ public class Controller {
         switchToScene(startScreen);
     }
 
-    private void switchToScene(slogo.view.Scene scene) {
-        scene.initScene();
-        stage.setScene(scene.getScene());
+    private void switchToScene(ViewInternal viewInternal) {
+        viewInternal.initScene();
+        stage.setScene(viewInternal.getScene());
         stage.show();
     }
 

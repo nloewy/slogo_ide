@@ -176,7 +176,7 @@ public class DukeApplicationTest extends ApplicationTest {
     }
 
     /**
-     * Run given view method as a JFX action, allowing you to add/remove components from the Scene or Stage.
+     * Run given view method as a JFX action, allowing you to add/remove components from the ViewInternal or Stage.
      */
     protected void runAsJFXAction (Runnable action) {
         // fire event using given action on the given node

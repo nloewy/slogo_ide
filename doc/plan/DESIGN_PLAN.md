@@ -114,7 +114,7 @@ while maintaining encapsulation
 SLogo Language game. This screen provides users the options to choose their language specifications,
 as well as the overarching background theme of the application.
 
-`IPanel`: This interface represents a singular collection of related widgets on a scene for the
+`IPanel`: This interface represents a singular collection of related widgets on a viewInternal for the
 SLogo Language application. These will make up the main screen and allow for users to interact with
 the program directly.
 

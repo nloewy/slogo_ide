@@ -6,15 +6,14 @@ import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.TilePane;
 import slogo.Controller;
 import slogo.view.ButtonUtil;
-import slogo.view.Scene;
+import slogo.view.ViewInternal;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class StartScreen implements Scene {
+public class StartScreen implements ViewInternal {
     private javafx.scene.Scene scene;
     private Group root = new Group();
     private final Controller controller;
