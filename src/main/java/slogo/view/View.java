@@ -50,7 +50,7 @@ public class View implements SlogoListener {
     }
 
     public void run() throws FileNotFoundException {
-        MainScreen page = new MainScreen(this, stage);
+        MainScreen page = new MainScreen(this, stage, controller);
         page.setUp();
         Scene scene = new Scene(page.getGroup(), width, height);
         scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());

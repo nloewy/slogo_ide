@@ -6,6 +6,7 @@ import java.util.Map;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
 import slogo.Controller;
@@ -23,10 +24,12 @@ import javafx.util.Duration;
 import java.util.ResourceBundle;
 
 public class MainScreen implements Scene {
+
+    private final Controller controller;
     private javafx.scene.Scene scene;
     private VBox layout = new VBox(10);
 //    private Controller controller;
-    private View view; // Use View for direct UI updates, like moving the turtle
+    private View view;
     public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
     private ResourceBundle myResources;
     Group root;
@@ -42,12 +45,13 @@ public class MainScreen implements Scene {
 
 
 
-    public MainScreen(View view, Stage stage) throws FileNotFoundException {
+    public MainScreen(View view, Stage stage, Controller controller) throws FileNotFoundException {
         super();
         this.stage = stage;
-
         this.view = view;
+        this.controller = controller;
 
+        initResources();
         initScene();
 
         animation.setCycleCount(Timeline.INDEFINITE);
@@ -58,20 +62,25 @@ public class MainScreen implements Scene {
     @Override
     public void initScene() {
         field = new TextField();
-        submitField = ButtonUtil.generateButton("submit", 251, 100, event -> {
+
+
+        submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
             view.setCommandString(field.getText());
             field.clear();
         });
 
-        // testing
         testButton = ButtonUtil.generateButton("test", 300, 100, event -> {
             view.onUpdateTurtleState(new TurtleRecord(0, 100, 100, true, true, 90));
         });
 
+        HBox hbox = new HBox();
+        hbox.setSpacing(10);
+        hbox.getChildren().addAll(field, submitField, testButton);
         root = new Group();
-        root.getChildren().add(field);
-        root.getChildren().add(submitField);
-        root.getChildren().add(testButton);
+        hbox.setAlignment(javafx.geometry.Pos.CENTER);
+        hbox.setLayoutX(100);
+        hbox.setLayoutY(100);
+        root.getChildren().add(hbox);
 
         for (FrontEndTurtle turtle : view.getTurtles()) {
             myTurtlePositions.put(turtle, turtle.getPosition());
@@ -79,6 +88,12 @@ public class MainScreen implements Scene {
         }
 
         System.out.println("Testing");
+    }
+
+    private void initResources() {
+        // Initialize resource bundle based on the current language from the controller
+        String currentLanguage = controller.getCurrentLanguage();
+        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + currentLanguage);
     }
 
     public void update() {
@@ -135,6 +150,7 @@ public class MainScreen implements Scene {
         }
     }
 
+    @Override
     public void setUp() {
         field.setLayoutX(100);
         field.setLayoutY(100);
@@ -145,6 +161,8 @@ public class MainScreen implements Scene {
     public javafx.scene.Scene getScene() {
         return scene;
     }
+
+    @Override
     public Group getGroup() {
         return root;
     }

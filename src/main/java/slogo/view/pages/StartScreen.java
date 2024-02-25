@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
 public class StartScreen implements Scene {
     private javafx.scene.Scene scene;
     private Group root = new Group();
-    private Controller controller;
+    private final Controller controller;
 
     public StartScreen(Controller controller) throws FileNotFoundException {
         this.controller = controller;
@@ -29,7 +29,8 @@ public class StartScreen implements Scene {
         logoView.setLayoutX(100);
         logoView.setLayoutY(50);
 
-        ObservableList<String> langOptions = FXCollections.observableArrayList("English", "Spanish", "French");
+        ObservableList<String> langOptions = FXCollections.observableArrayList("English",
+            "Spanish", "French");
         ComboBox<String> langBox = new ComboBox<>(langOptions);
         langBox.setLayoutX(100);
         langBox.setLayoutY(200);
@@ -48,8 +49,15 @@ public class StartScreen implements Scene {
                 throw new RuntimeException(ex);
               }
             }),
-//            ButtonUtil.generateButton("Load New General Session", 100, 330, e -> controller.openNewSession()),
-            ButtonUtil.generateButton("Load Old Session", 100, 360, e -> controller.loadSession()), // Uncomment or modify based on your implementation
+            ButtonUtil.generateButton("Load New General Session", 100, 330, e -> {
+              try {
+                controller.openNewSession();
+              } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+              }
+            }),
+            ButtonUtil.generateButton("Load Old Session", 100, 360,
+                e -> controller.loadSession()),
             logoView,
             langBox
         );
@@ -65,4 +73,14 @@ public class StartScreen implements Scene {
     public javafx.scene.Scene getScene() {
         return scene;
     }
+
+    @Override
+    public Group getGroup() {
+        return root;
+    }
+
+    @Override
+    public void setUp() {
+    }
+
 }
