@@ -12,9 +12,15 @@ public class MakeCommand extends Command {
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double arg1 = arguments.get(0).getValue();
+    String token = arguments.get(0).getToken();
+    double arg1 = arguments.get(1).getValue();
     return modelState -> {
-      return arg1;
+      modelState.getVariables().put(token, arg1);
+      try {
+        return arguments.get(0).getValue();
+      } catch (InvocationTargetException | IllegalAccessException e) {
+        throw new RuntimeException(e);
+      }
     };
   }
 }

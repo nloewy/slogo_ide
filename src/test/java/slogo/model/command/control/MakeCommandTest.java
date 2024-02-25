@@ -20,16 +20,29 @@ public class MakeCommandTest {
   private Node node;
   private ModelState model;
 
-
   @Test
-  public void testUpdateVariableCommand()
+  public void testMakeCommand()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
-    node = new VariableNode("Skeeyee", model);
+    node = new CommandNode("slogo.model.command.control.MakeCommand", model);
+    Node variableNode = new VariableNode("Skeeyee", model);
+    node.addChild(variableNode);
+    node.addChild(new ConstantNode("5", model));
+    Assertions.assertEquals(5, node.getValue());
+    Assertions.assertEquals(5.0, model.getVariables().get("Skeeyee"));
+  }
+  @Test
+  public void testMakeCommandWithExpression()
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    model = new ModelState();
+    model.getTurtles().add(new Turtle(1));
+    node = new CommandNode("slogo.model.command.control.MakeCommand", model);
+    Node variableNode = new VariableNode("Skeeyee", model);
     Node nodeTwo = new CommandNode("slogo.model.command.math.SumCommand", model);
     Node nodeThree = new ConstantNode("5", model);
     Node nodeFour = new ConstantNode("7", model);
+    node.addChild(variableNode);
     node.addChild(nodeTwo);
     nodeTwo.addChild(nodeThree);
     nodeTwo.addChild(nodeFour);
