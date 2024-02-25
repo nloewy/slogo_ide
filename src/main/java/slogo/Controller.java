@@ -1,6 +1,8 @@
 package slogo;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import slogo.view.View;
 import slogo.view.ViewInternal;
@@ -34,6 +36,30 @@ public class Controller {
         view.run();
     }
 
+
+    public void loadSession() {
+        // This opens a file chooser. Once the file is chosen, it opens a new session
+        // The file is not currently used for anything
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open XML File");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        if (selectedFile != null) {
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            try {
+                openNewSession();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void openNewXMLSession() {
+        // For now, it does same thing as loadSession()
+        loadSession();
+    }
+
     public void handleCommand(String command) {
 //         Here, implement command handling logic
 //        if ("MOVE UP".equalsIgnoreCase(command)) {
@@ -50,15 +76,6 @@ public class Controller {
 
     public String getCurrentLanguage() {
         return currentLanguage;
-    }
-
-    public void loadSession() {
-        System.out.println("To Be Implemented! Need to figure out how to move "
-            + "file choosing from screen to controller");
-    }
-
-    public void openNewXMLSession() {
-        System.out.println("To Be Implemented!");
     }
 
 }
