@@ -17,16 +17,13 @@ public class Controller {
 
     /*
      * Willrequire an XMLFile object parameter
-     * This will initialize this window's view object as necessary.
+     * This will initialize this window's view object as necessary in the view constructor
      * TODO Backend has to interact with this view object
      * to access the API for one IDE session
      */
     public static void openNewSession() throws FileNotFoundException {
         Stage newStage = new Stage();
         View view = new View(newStage);
-    }
-
-    public void run() throws FileNotFoundException {
         view.run();
     }
 }

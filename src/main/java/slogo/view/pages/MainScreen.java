@@ -40,39 +40,46 @@ public class MainScreen extends Screen {
     public MainScreen(View view, Stage stage) throws FileNotFoundException {
         super();
         this.stage = stage;
-
         myView = view;
-
         field = new TextField();
         field.setId("field");
 
         submitField = ButtonUtil.generateButton("submit", 251, 100, event -> {
-            view.setCommandString(field.getText());
-            field.clear();
+            sendCommandStringToView();
         });
 
         // testing
         testButton = ButtonUtil.generateButton("test", 400, 100, event -> {
             myView.onUpdateTurtleState(new TurtleRecord(0, 100, 100, true, true, 90));
+            myView.onUpdateTurtleState(new TurtleRecord(1, 300, 100, true, true, 90));
         });
+
 
         root = new Group();
         root.getChildren().add(field);
         root.getChildren().add(submitField);
         root.getChildren().add(testButton);
-
-        for (FrontEndTurtle turtle : myView.getTurtles()) {
-            myTurtlePositions.put(turtle, turtle.getPosition());
-            root.getChildren().add(turtle.getDisplay());
-        }
-
-        System.out.println("Testing");
+        initializeTurtleDisplays();
 
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames()
                 .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> update()));
     }
 
+    public void initializeTurtleDisplays() {
+        for (FrontEndTurtle turtle : myView.getTurtles()) {
+            myTurtlePositions.put(turtle, turtle.getPosition());
+            root.getChildren().add(turtle.getDisplay());
+        }
+    }
+
+    public void sendCommandStringToView() {
+        myView.pushCommand(field.getText());
+        field.clear();
+    }
+
+    //Queries view object for current turtle state
+    //Will animate in the future, but now just sets each turtle to the new position.
     public void update() {
         System.out.println(myView.getTurtles());
         Map<FrontEndTurtle, Double[]> deltaPositions = new HashMap<>();
