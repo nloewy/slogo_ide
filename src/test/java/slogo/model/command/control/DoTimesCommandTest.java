@@ -13,7 +13,7 @@ import slogo.model.Node;
 import slogo.model.Turtle;
 import slogo.model.VariableNode;
 
-public class ForCommandTest {
+public class DoTimesCommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -30,7 +30,7 @@ public class ForCommandTest {
 
   @Test
   void testForForwardVariableNotUsed() throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.control.ForCommand", model);
+    node = new CommandNode("slogo.model.command.control.DoTimesCommand", model);
     Node fwdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
     Node varNode = new VariableNode("i", model);
     Node listNode = new ListNode("",model);
@@ -38,9 +38,7 @@ public class ForCommandTest {
     commandListNode.addChild(fwdNode);
     fwdNode.addChild(new ConstantNode("2", model));
     listNode.addChild(varNode);
-    listNode.addChild(new ConstantNode("1",model));
     listNode.addChild(new ConstantNode("5",model));
-    listNode.addChild(new ConstantNode("1",model));
     node.addChild(listNode);
     node.addChild(commandListNode);
     assertEquals(node.getValue(), 2, DELTA);
@@ -49,7 +47,7 @@ public class ForCommandTest {
 
   @Test
   void testForForwardVariableUsed() throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("slogo.model.command.control.ForCommand", model);
+    node = new CommandNode("slogo.model.command.control.DoTimesCommand", model);
     Node listNode = new ListNode("",model);
     Node commandListNode = new ListNode("", model);
     Node cmdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
@@ -58,14 +56,12 @@ public class ForCommandTest {
     cmdNode.addChild(new VariableNode("i", model));
     listNode.addChild(varNode);
     listNode.addChild(new ConstantNode("5",model));
-    listNode.addChild(new ConstantNode("10",model));
-    listNode.addChild(new ConstantNode("1",model));
     Node cmdNode2 = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
     cmdNode2.addChild(new VariableNode("i", model));
     commandListNode.addChild(cmdNode2);
     node.addChild(listNode);
     node.addChild(commandListNode);
-    assertEquals(node.getValue(), 10, DELTA);
-    assertEquals(myTurtle.getY(), 90, DELTA);
+    assertEquals(node.getValue(), 5, DELTA);
+    assertEquals(myTurtle.getY(), 30, DELTA);
   }
 }

@@ -8,20 +8,19 @@ import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 
-public class ForCommand extends Command {
+public class DoTimesCommand extends Command {
 
 
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
+    Node listNode = arguments.get(0);
     String variableName = arguments.get(0).getChildren().get(0).getToken();
-    double start = arguments.get(0).getChildren().get(1).getValue();
-    double end = arguments.get(0).getChildren().get(2).getValue();
-    double increment = arguments.get(0).getChildren().get(3).getValue();
+    double end = arguments.get(0).getChildren().get(1).getValue();
     Node commands = arguments.get(1);
     return modelState -> {
       double res = 0.0;
-      for (double i = start; i <= end; i += increment) {
+      for (double i = 1; i <= end; i += 1) {
         modelState.getVariables().put(variableName, i);
         try {
           res = commands.getValue();
