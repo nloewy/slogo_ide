@@ -63,9 +63,23 @@ public class MainScreen implements Scene {
             .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> update()));
     }
 
-  @Override
-  public void initScene() {
-    field = new TextField();
+    public void initializeTurtleDisplays() {
+        for (FrontEndTurtle turtle : myView.getTurtles()) {
+            myTurtlePositions.put(turtle, turtle.getPosition());
+            root.getChildren().add(turtle.getDisplay());
+        }
+    }
+
+    public void sendCommandStringToView() {
+        myView.pushCommand(field.getText());
+        field.clear();
+    }
+
+    //Queries view object for current turtle state
+    //Will animate in the future, but now just sets each turtle to the new position.
+    public void update() {
+        System.out.println(myView.getTurtles());
+        Map<FrontEndTurtle, Double[]> deltaPositions = new HashMap<>();
 
 
     submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
