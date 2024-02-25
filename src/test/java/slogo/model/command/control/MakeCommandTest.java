@@ -32,6 +32,7 @@ public class MakeCommandTest {
     Assertions.assertEquals(5, node.getValue());
     Assertions.assertEquals(5.0, model.getVariables().get("MyVar"));
   }
+
   @Test
   public void testMakeCommandWithExpression()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {

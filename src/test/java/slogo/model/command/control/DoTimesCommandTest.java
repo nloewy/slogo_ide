@@ -22,23 +22,25 @@ public class DoTimesCommandTest {
   private ModelState model;
 
   @BeforeEach
-  void setUp() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+  void setUp()
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
   }
 
   @Test
-  void testForForwardVariableNotUsed() throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+  void testForForwardVariableNotUsed()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     node = new CommandNode("slogo.model.command.control.DoTimesCommand", model);
     Node fwdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
     Node varNode = new VariableNode("i", model);
-    Node listNode = new ListNode("",model);
+    Node listNode = new ListNode("", model);
     Node commandListNode = new ListNode("", model);
     commandListNode.addChild(fwdNode);
     fwdNode.addChild(new ConstantNode("2", model));
     listNode.addChild(varNode);
-    listNode.addChild(new ConstantNode("5",model));
+    listNode.addChild(new ConstantNode("5", model));
     node.addChild(listNode);
     node.addChild(commandListNode);
     assertEquals(node.getValue(), 2, DELTA);
@@ -46,16 +48,17 @@ public class DoTimesCommandTest {
   }
 
   @Test
-  void testForForwardVariableUsed() throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+  void testForForwardVariableUsed()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     node = new CommandNode("slogo.model.command.control.DoTimesCommand", model);
-    Node listNode = new ListNode("",model);
+    Node listNode = new ListNode("", model);
     Node commandListNode = new ListNode("", model);
     Node cmdNode = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
     commandListNode.addChild(cmdNode);
     Node varNode = new VariableNode("i", model);
     cmdNode.addChild(new VariableNode("i", model));
     listNode.addChild(varNode);
-    listNode.addChild(new ConstantNode("5",model));
+    listNode.addChild(new ConstantNode("5", model));
     Node cmdNode2 = new CommandNode("slogo.model.command.turtle.ForwardCommand", model);
     cmdNode2.addChild(new VariableNode("i", model));
     commandListNode.addChild(cmdNode2);

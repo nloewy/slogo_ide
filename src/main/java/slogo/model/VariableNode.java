@@ -1,10 +1,6 @@
 package slogo.model;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.function.Function;
-import slogo.model.command.Command;
-import slogo.model.command.control.MakeCommand;
 
 public class VariableNode extends Node {
 

@@ -14,7 +14,6 @@ public class DoTimesCommand extends Command {
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    Node listNode = arguments.get(0);
     String variableName = arguments.get(0).getChildren().get(0).getToken();
     double end = arguments.get(0).getChildren().get(1).getValue();
     Node commands = arguments.get(1);
@@ -34,7 +33,6 @@ public class DoTimesCommand extends Command {
   }
 
 
-  //IN NOTIFY LISTENER MAKE SURE TO UPDATE THE FOR VARIABLE
   public void notifyListener(SlogoListener listener, double value) {
 
     //super.notifyListener(listener, value);

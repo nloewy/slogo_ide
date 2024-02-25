@@ -16,21 +16,16 @@ public class IfElseCommand extends Command {
     Node toExecuteIfTrue = arguments.get(1);
     Node toExecuteIfFalse = arguments.get(2);
     return modelState -> {
-      if(arg1 != 0.0) {
+      if (arg1 != 0.0) {
         try {
           return toExecuteIfTrue.getValue();
-        } catch (InvocationTargetException e) {
-          throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
           throw new RuntimeException(e);
         }
-      }
-      else {
+      } else {
         try {
           return toExecuteIfFalse.getValue();
-        } catch (InvocationTargetException e) {
-          throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
           throw new RuntimeException(e);
         }
       }
