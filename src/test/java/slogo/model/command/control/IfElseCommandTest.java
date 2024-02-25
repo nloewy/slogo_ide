@@ -26,7 +26,7 @@ public class IfElseCommandTest {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
-    node = new CommandNode("slogo.model.command.control.IfCommand", model);
+    node = new CommandNode("slogo.model.command.control.IfElseCommand", model);
     Node nodeTwo = new CommandNode("slogo.model.command.math.SumCommand", model);
     Node nodeThree = new ConstantNode("-5", model);
     Node nodeFour = new ConstantNode("7", model);
@@ -49,10 +49,10 @@ public class IfElseCommandTest {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
-    node = new CommandNode("slogo.model.command.control.IfCommand", model);
+    node = new CommandNode("slogo.model.command.control.IfElseCommand", model);
     Node nodeTwo = new CommandNode("slogo.model.command.math.SumCommand", model);
     Node nodeThree = new ConstantNode("-5", model);
-    Node nodeFour = new ConstantNode("7", model);
+    Node nodeFour = new ConstantNode("5", model);
     node.addChild(nodeTwo);
     nodeTwo.addChild(nodeThree);
     nodeTwo.addChild(nodeFour);
@@ -60,9 +60,9 @@ public class IfElseCommandTest {
     nodeFive.addChild(new ConstantNode("60", model));
     node.addChild(nodeFive);
     Node nodeSix = new CommandNode("slogo.model.command.turtle.BackwardCommand", model);
-    nodeFive.addChild(new ConstantNode("30", model));
-    node.addChild(nodeFive);
-    Assertions.assertEquals(-30.0, node.getValue(), DELTA);
+    nodeSix.addChild(new ConstantNode("30", model));
+    node.addChild(nodeSix);
+    Assertions.assertEquals(30.0, node.getValue(), DELTA);
     Assertions.assertEquals(-30.0, myTurtle.getY(), DELTA);
   }
 
