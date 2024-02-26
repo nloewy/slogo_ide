@@ -22,11 +22,4 @@ public class HeadingCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     return modelState.getTurtles().get(0).getHeading();
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
 }

@@ -24,11 +24,4 @@ public class XcoordinateCommand extends Command {
     return modelState.getTurtles().get(0).getX();
 
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
 }
