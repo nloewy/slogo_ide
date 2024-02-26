@@ -24,7 +24,6 @@ public class SetTowardsCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double xPt = arguments.get(0).getValue();
     double yPt = arguments.get(1).getValue();
-    return modelState -> {
       Turtle turtle = modelState.getTurtles().get(0);
       double dx = xPt - turtle.getX();
       double dy = yPt - turtle.getY();
@@ -35,7 +34,6 @@ public class SetTowardsCommand extends Command {
       double minTurn = Math.min(clockwiseTurn, counterclockwiseTurn);
       turtle.setHeading(targetHeading);
       return minTurn;
-    };
   }
 
   @Override

@@ -20,9 +20,7 @@ public class YcoordinateCommand extends Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return modelState -> {
       return modelState.getTurtles().get(0).getY();
-    };
   }
 
   @Override

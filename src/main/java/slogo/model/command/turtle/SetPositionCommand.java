@@ -25,14 +25,12 @@ public class SetPositionCommand extends Command {
     double newX = arguments.get(0).getValue();
     double newY = arguments.get(1).getValue();
 
-    return modelState -> {
       Turtle turtle = modelState.getTurtles().get(0);
       double currentX = turtle.getX();
       double currentY = turtle.getY();
       turtle.setX(newX);
       turtle.setY(newY);
       return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
-    };
   }
 
   @Override
