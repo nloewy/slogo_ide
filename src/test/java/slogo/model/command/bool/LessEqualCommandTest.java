@@ -1,6 +1,8 @@
 package slogo.model.command.bool;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +14,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
-public class LessEqualCommandTest {
+public class LessEqualCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
   private Turtle myTurtle;
@@ -23,7 +25,7 @@ public class LessEqualCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("bool.LessEqual", model);
+    node = new CommandNode("bool.LessEqual", model, myListener);
   }
 
   @ParameterizedTest
@@ -48,8 +50,8 @@ public class LessEqualCommandTest {
   })
   void testLessEqual(String op1, String op2, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
-    node.addChild(new ConstantNode(op2, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op2, null, myListener));
     assertEquals(result, node.getValue(), DELTA);
   }
 }

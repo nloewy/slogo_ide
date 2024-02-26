@@ -1,6 +1,8 @@
 package slogo.model.command.control;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import slogo.model.node.Node;
 import slogo.model.node.UserCommandNode;
 import slogo.model.node.VariableNode;
 
-public class ToCommandTest {
+public class ToCommandTest extends CommandTest {
 
 
   public static final double DELTA = 0.001;
@@ -36,23 +38,23 @@ public class ToCommandTest {
   @Test
   void testToCommandYesVariables()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.To", model);
-    Node nodeTwo = new UserCommandNode("HalfSquare", model);
-    nodeTwo.addChild(new VariableNode("var1", model));
-    nodeTwo.addChild(new VariableNode("var2", model));
-    nodeTwo.addChild(new VariableNode("var3", model));
+    node = new CommandNode("control.To", model, myListener);
+    Node nodeTwo = new UserCommandNode("HalfSquare", model, myListener);
+    nodeTwo.addChild(new VariableNode("var1", model, myListener));
+    nodeTwo.addChild(new VariableNode("var2", model, myListener));
+    nodeTwo.addChild(new VariableNode("var3", model, myListener));
     node.addChild(nodeTwo);
 
-    Node fwdNode = new CommandNode("turtle.Forward", model);
-    fwdNode.addChild(new VariableNode("var1", model));
+    Node fwdNode = new CommandNode("turtle.Forward", model, myListener);
+    fwdNode.addChild(new VariableNode("var1", model, myListener));
 
-    Node rightNode = new CommandNode("turtle.Right", model);
-    rightNode.addChild(new VariableNode("var2", model));
+    Node rightNode = new CommandNode("turtle.Right", model, myListener);
+    rightNode.addChild(new VariableNode("var2", model, myListener));
 
-    Node fwdNodeSecond = new CommandNode("turtle.Forward", model);
-    fwdNodeSecond.addChild(new VariableNode("var3", model));
+    Node fwdNodeSecond = new CommandNode("turtle.Forward", model, myListener);
+    fwdNodeSecond.addChild(new VariableNode("var3", model, myListener));
 
-    Node commandList = new ListNode("", model);
+    Node commandList = new ListNode("", model, myListener);
     commandList.addChild(fwdNode);
     commandList.addChild(rightNode);
     commandList.addChild(fwdNodeSecond);
@@ -61,9 +63,9 @@ public class ToCommandTest {
     assertEquals(1.0, node.getValue(), DELTA);
 
     List<Node> newNodes = new ArrayList<>(); //nodeTwo.getChildren.size() nodes
-    newNodes.add(new ConstantNode("2", model));
-    newNodes.add(new ConstantNode("90", model));
-    newNodes.add(new ConstantNode("3", model));
+    newNodes.add(new ConstantNode("2", model, myListener));
+    newNodes.add(new ConstantNode("90", model, myListener));
+    newNodes.add(new ConstantNode("3", model, myListener));
 
     for (int i = 0;
         i < model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().size(); i++) {
@@ -79,20 +81,20 @@ public class ToCommandTest {
   @Test
   void testToCommandNoVariables()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.To", model);
-    Node nodeTwo = new UserCommandNode("HalfSquare", model);
+    node = new CommandNode("control.To", model, myListener);
+    Node nodeTwo = new UserCommandNode("HalfSquare", model, myListener);
     node.addChild(nodeTwo);
 
-    Node fwdNode = new CommandNode("turtle.Forward", model);
-    fwdNode.addChild(new ConstantNode("2", model));
+    Node fwdNode = new CommandNode("turtle.Forward", model, myListener);
+    fwdNode.addChild(new ConstantNode("2", model, myListener));
 
-    Node rightNode = new CommandNode("turtle.Right", model);
-    rightNode.addChild(new ConstantNode("90", model));
+    Node rightNode = new CommandNode("turtle.Right", model, myListener);
+    rightNode.addChild(new ConstantNode("90", model, myListener));
 
-    Node fwdNodeSecond = new CommandNode("turtle.Forward", model);
-    fwdNodeSecond.addChild(new ConstantNode("3", model));
+    Node fwdNodeSecond = new CommandNode("turtle.Forward", model, myListener);
+    fwdNodeSecond.addChild(new ConstantNode("3", model, myListener));
 
-    Node commandList = new ListNode("", model);
+    Node commandList = new ListNode("", model, myListener);
     commandList.addChild(fwdNode);
     commandList.addChild(rightNode);
     commandList.addChild(fwdNodeSecond);

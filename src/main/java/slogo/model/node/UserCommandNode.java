@@ -2,12 +2,13 @@ package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
 import slogo.model.ModelState;
+import slogo.model.SlogoListener;
 
 public class UserCommandNode extends Node {
 
   private final String myToken;
 
-  public UserCommandNode(String token, ModelState modelState) {
+  public UserCommandNode(String token, ModelState modelState, SlogoListener listener) {
     super();
     myToken = token;
   }

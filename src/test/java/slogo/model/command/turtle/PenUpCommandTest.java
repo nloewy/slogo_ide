@@ -6,10 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
 import slogo.model.node.CommandNode;
 import slogo.model.node.Node;
 
-public class PenUpCommandTest {
+public class PenUpCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -22,7 +23,7 @@ public class PenUpCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.PenUp", model);
+    node = new CommandNode("turtle.PenUp", model, myListener);
   }
 
   @Test

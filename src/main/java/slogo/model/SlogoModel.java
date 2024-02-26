@@ -37,14 +37,14 @@ public class SlogoModel implements Model {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     List<String> tokens = Arrays.asList(input.split("\\s+"));
     Stack<Node> nodeStack = new Stack<>();
-    Node rootNode = new ListNode("[", modelstate); // Create a root node
+    Node rootNode = new ListNode("[", modelstate, myListener); // Create a root node
     nodeStack.push(rootNode);
     for (String token : tokens) {
       if (token.isEmpty() || token.startsWith("#")) {
         continue;
       }
       if (token.equals("[")) {
-        nodeStack.push(new ListNode("", modelstate));
+        nodeStack.push(new ListNode("", modelstate,myListener));
       } else if (token.equals("]")) {
         while (!nodeStack.peek().equals(rootNode)) {
           nodeStack.peek().getToken();
@@ -116,13 +116,13 @@ public class SlogoModel implements Model {
   private void createNode(String token)
       throws ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     if (token.matches("-?[0-9]+\\.?[0-9]*")) {
-      currentNode = new ConstantNode(token, modelstate);
+      currentNode = new ConstantNode(token, modelstate,myListener);
     } else if (token.matches(":[a-zA-Z]+")) {
       currentNode = new VariableNode(token.substring(1),
-          modelstate); // Removing ":" from the variable name
+          modelstate,myListener); // Removing ":" from the variable name
     } else if (token.matches("[a-zA-Z_]+(\\?)?")) {
       token = token.toLowerCase();
-      currentNode = new CommandNode(commandMap.get(token), modelstate);
+      currentNode = new CommandNode(commandMap.get(token), modelstate,myListener);
     } else {
       throw new IllegalArgumentException("Invalid token: " + token);
     }

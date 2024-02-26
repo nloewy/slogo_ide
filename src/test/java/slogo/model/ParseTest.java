@@ -119,7 +119,7 @@ public class ParseTest {
     slogo.parse("rt 270 mAke :random sum 1 random 100 fd sum 1 :random");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertEquals(0.0, myTurtle.getY(), DELTA);
-    assertTrue(myTurtle.getX() < -1 && myTurtle.getX() > -101);
+    assertTrue(myTurtle.getX() <= -1 && myTurtle.getX() >= -101);
     assertEquals(270.0, myTurtle.getHeading(), DELTA);
   }
   @Test

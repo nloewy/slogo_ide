@@ -1,6 +1,8 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +16,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
-public class RemainderCommandTest {
+public class RemainderCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -27,7 +29,7 @@ public class RemainderCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.Remainder", model);
+    node = new CommandNode("math.Remainder", model, myListener);
 
   }
 
@@ -46,16 +48,16 @@ public class RemainderCommandTest {
   })
   void testRemainderBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
-    node.addChild(new ConstantNode(op2, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op2, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
   @Test
   void testRemainderDivideByZero() throws InvocationTargetException, IllegalAccessException {
     {
-      node.addChild(new ConstantNode("50", null));
-      node.addChild(new ConstantNode("0", null));
+      node.addChild(new ConstantNode("50", null, myListener));
+      node.addChild(new ConstantNode("0", null, myListener));
       Throwable e = assertThrows(ArithmeticException.class, () -> {
         node.getValue();
       });

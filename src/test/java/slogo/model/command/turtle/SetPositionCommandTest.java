@@ -1,6 +1,8 @@
 package slogo.model.command.turtle;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +14,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
-public class SetPositionCommandTest {
+public class SetPositionCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -25,7 +27,7 @@ public class SetPositionCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.SetPosition", model);
+    node = new CommandNode("turtle.SetPosition", model, myListener);
   }
 
   @ParameterizedTest
@@ -54,8 +56,8 @@ public class SetPositionCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
-    node.addChild(new ConstantNode(newX, null));
-    node.addChild(new ConstantNode(newY, null));
+    node.addChild(new ConstantNode(newX, null, myListener));
+    node.addChild(new ConstantNode(newY, null, myListener));
     double expectedVal = Math.hypot(Double.parseDouble(newX) - myTurtle.getX(),
         Double.parseDouble(newY) - myTurtle.getY());
     assertEquals(expectedVal, node.getValue(), DELTA);

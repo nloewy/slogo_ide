@@ -1,6 +1,8 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +14,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
-public class SumCommandTest {
+public class SumCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -26,7 +28,7 @@ public class SumCommandTest {
 
     myTurtle = null;
     model = new ModelState();
-    node = new CommandNode("math.Sum", model);
+    node = new CommandNode("math.Sum", model, myListener);
 
   }
 
@@ -45,8 +47,8 @@ public class SumCommandTest {
   })
   void testSumBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, model));
-    node.addChild(new ConstantNode(op2, model));
+    node.addChild(new ConstantNode(op1, model, myListener));
+    node.addChild(new ConstantNode(op2, model, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 

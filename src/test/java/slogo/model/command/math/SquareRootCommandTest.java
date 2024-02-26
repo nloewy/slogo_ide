@@ -1,6 +1,8 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +15,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
-public class SquareRootCommandTest {
+public class SquareRootCommandTest extends CommandTest {
 
   public static final double DELTA = 0.1;
   private Turtle myTurtle;
@@ -24,7 +26,7 @@ public class SquareRootCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.SquareRoot", model);
+    node = new CommandNode("math.SquareRoot", model, myListener);
   }
 
   @ParameterizedTest
@@ -37,7 +39,7 @@ public class SquareRootCommandTest {
   })
   void testSquareRootPerfectSquares(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -53,7 +55,7 @@ public class SquareRootCommandTest {
   })
   void testSquareRootNonPerfectSquares(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -72,7 +74,7 @@ public class SquareRootCommandTest {
   })
   void testSquareRootFloats(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -85,7 +87,7 @@ public class SquareRootCommandTest {
   })
   void testSquareRootNegatives(String op1)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
     Throwable e = assertThrows(IllegalArgumentException.class, () -> {
       node.getValue();
     });

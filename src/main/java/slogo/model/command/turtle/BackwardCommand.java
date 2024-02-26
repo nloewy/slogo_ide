@@ -4,11 +4,20 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 import slogo.model.ModelState;
+import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class BackwardCommand extends Command {
+
+  private final ModelState modelState;
+  private final SlogoListener listener;
+
+  public BackwardCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
+    this.listener = listener;
+  }
 
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
@@ -28,12 +37,10 @@ public class BackwardCommand extends Command {
     return 1;
   }
 
-
-   /**@Override
-   public void notifyListener(SlogoListener listener, double value) {
-   super.notifyListener(listener, value);
-   listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-   }
+  /**@Override public void notifyListener(SlogoListener listener, double value) {
+  super.notifyListener(listener, value);
+  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
+  }
    */
 
 }

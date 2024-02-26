@@ -1,6 +1,8 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +16,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
-public class LogCommandTest {
+public class LogCommandTest extends CommandTest {
 
   public static final double DELTA = 0.1;
 
@@ -27,21 +29,21 @@ public class LogCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.NaturalLog", model);
+    node = new CommandNode("math.NaturalLog", model, myListener);
 
   }
 
   @Test
   void testLogBasicE()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(Double.toString(Math.E), null));
+    node.addChild(new ConstantNode(Double.toString(Math.E), null, myListener));
     assertEquals(1, node.getValue(), DELTA);
   }
 
   @Test
   void testLogBasicOne()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("1", null));
+    node.addChild(new ConstantNode("1", null, myListener));
     assertEquals(0, node.getValue(), DELTA);
   }
 
@@ -68,7 +70,7 @@ public class LogCommandTest {
   })
   void testLogFloats(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -83,7 +85,7 @@ public class LogCommandTest {
   })
   void testLogNonPositive(String op1)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
     Throwable e = assertThrows(IllegalArgumentException.class, () -> {
       node.getValue();
     });

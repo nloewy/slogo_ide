@@ -10,6 +10,13 @@ import slogo.model.node.Node;
 
 public class UserCommand extends Command {
 
+  private final ModelState modelState;
+  private final SlogoListener listener;
+
+  public UserCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
+    this.listener = listener;
+  }
 
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)

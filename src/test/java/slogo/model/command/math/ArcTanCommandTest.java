@@ -1,6 +1,8 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +14,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
-public class ArcTanCommandTest {
+public class ArcTanCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
   private Turtle myTurtle;
@@ -23,7 +25,7 @@ public class ArcTanCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.ArcTangent", model);
+    node = new CommandNode("math.ArcTangent", model, myListener);
   }
 
   @ParameterizedTest
@@ -39,7 +41,7 @@ public class ArcTanCommandTest {
   })
   void testArctanBasic(String op, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op, null));
+    node.addChild(new ConstantNode(op, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 

@@ -6,12 +6,13 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.ListNode;
 import slogo.model.node.Node;
 
-public class IfCommandTest {
+public class IfCommandTest extends CommandTest {
 
 
   public static final double DELTA = 0.001;
@@ -27,20 +28,20 @@ public class IfCommandTest {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
-    node = new CommandNode("control.If", model);
-    Node nodeTwo = new CommandNode("math.Sum", model);
-    Node nodeThree = new ConstantNode("-5", model);
-    Node nodeFour = new ConstantNode("7", model);
+    node = new CommandNode("control.If", model, myListener);
+    Node nodeTwo = new CommandNode("math.Sum", model, myListener);
+    Node nodeThree = new ConstantNode("-5", model, myListener);
+    Node nodeFour = new ConstantNode("7", model, myListener);
     node.addChild(nodeTwo);
     nodeTwo.addChild(nodeThree);
     nodeTwo.addChild(nodeFour);
-    Node nodeFive = new ListNode("", model);
+    Node nodeFive = new ListNode("", model, myListener);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("turtle.Forward", model);
-    nodeSix.addChild(new ConstantNode("60", model));
+    Node nodeSix = new CommandNode("turtle.Forward", model, myListener);
+    nodeSix.addChild(new ConstantNode("60", model, myListener));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("turtle.Forward", model);
-    nodeSeven.addChild(new ConstantNode("30", model));
+    Node nodeSeven = new CommandNode("turtle.Forward", model, myListener);
+    nodeSeven.addChild(new ConstantNode("30", model, myListener));
     nodeFive.addChild(nodeSeven);
     Assertions.assertEquals(30.0, node.getValue(), DELTA);
     Assertions.assertEquals(90.0, myTurtle.getY(), DELTA);
@@ -52,20 +53,20 @@ public class IfCommandTest {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
-    node = new CommandNode("control.If", model);
-    Node nodeTwo = new CommandNode("math.Sum", model);
-    Node nodeThree = new ConstantNode("-5", model);
-    Node nodeFour = new ConstantNode("5", model);
+    node = new CommandNode("control.If", model, myListener);
+    Node nodeTwo = new CommandNode("math.Sum", model, myListener);
+    Node nodeThree = new ConstantNode("-5", model, myListener);
+    Node nodeFour = new ConstantNode("5", model, myListener);
     node.addChild(nodeTwo);
     nodeTwo.addChild(nodeThree);
     nodeTwo.addChild(nodeFour);
-    Node nodeFive = new ListNode("", model);
+    Node nodeFive = new ListNode("", model, myListener);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("turtle.Forward", model);
-    nodeSix.addChild(new ConstantNode("60", model));
+    Node nodeSix = new CommandNode("turtle.Forward", model, myListener);
+    nodeSix.addChild(new ConstantNode("60", model, myListener));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("turtle.Forward", model);
-    nodeSeven.addChild(new ConstantNode("30", model));
+    Node nodeSeven = new CommandNode("turtle.Forward", model, myListener);
+    nodeSeven.addChild(new ConstantNode("30", model, myListener));
     node.addChild(nodeFive);
     Assertions.assertEquals(0.0, node.getValue(), DELTA);
     Assertions.assertEquals(0.0, myTurtle.getY(), DELTA);

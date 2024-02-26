@@ -1,4 +1,4 @@
-package slogo.model.command.turtle;
+/*package slogo.model.command.turtle;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -7,8 +7,13 @@ import slogo.model.ModelState;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public abstract class Command0 extends Command {
-
+public abstract class Command0 extends Command { 
+  private ModelState modelState;
+  private SlogoListener listener;
+  public GreaterEqualCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
+    this.listener = listener;
+  } 
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
@@ -22,4 +27,4 @@ public abstract class Command0 extends Command {
     return 0;
   }
 
-}
+}*/
