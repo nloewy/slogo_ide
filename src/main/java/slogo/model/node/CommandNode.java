@@ -21,14 +21,13 @@ public class CommandNode extends Node {
     super();
 
     myToken = "slogo.model.command." + token + "Command";
-    System.out.println(myToken);
     Class<?> clazz = Class.forName(myToken);
     command = (Command) clazz.getDeclaredConstructor().newInstance();
     m = clazz.getDeclaredMethod("execute", List.class);
     myModelState = modelState;
   }
 
-
+@Override
   public double getValue() throws InvocationTargetException, IllegalAccessException {
     List<Node> children = getChildren();
     Function<ModelState, Double> action = (Function<ModelState, Double>) m.invoke(command,

@@ -11,6 +11,7 @@ import slogo.model.node.Node;
 public class ToCommand extends Command {
 
 
+  public static double NUM_ARGS =3;
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
@@ -32,3 +33,7 @@ public class ToCommand extends Command {
     //super.notifyListener(listener, value);
   }
 }
+
+//parse
+//r there any user defined commands
+//

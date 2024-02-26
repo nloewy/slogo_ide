@@ -93,9 +93,9 @@ public class ParseTest {
   @Test
   void testRepeat()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    slogo.parse("MAKE :CLASS 10 REPEAT DIFFERENCE :CLASS 5 [ RIGHT :CLASS ]");
+    slogo.parse("MAKE :CLASS 10 REPEAT DIFFERENCE :CLASS 5 [ RIGHT :CLASS ] RIGHT 50");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
-    assertEquals(50.0, myTurtle.getHeading(), DELTA);
+    assertEquals( 100.0, myTurtle.getHeading(), DELTA);
   }
 
   @Test
