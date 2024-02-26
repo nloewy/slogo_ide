@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.CommandNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.api.Node;
 import slogo.model.Turtle;
 
 public class PenUpCommandTest {

@@ -8,7 +8,7 @@ import slogo.model.CommandNode;
 import slogo.model.ConstantNode;
 import slogo.model.ListNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.api.Node;
 import slogo.model.Turtle;
 
 public class IfCommandTest {

@@ -1,4 +1,4 @@
-package slogo.model;
+package slogo.model.api;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

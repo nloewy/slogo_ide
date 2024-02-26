@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import slogo.model.api.ModelListener;
+import slogo.model.api.Node;
 
 public class ModelState implements ModelListener {
 

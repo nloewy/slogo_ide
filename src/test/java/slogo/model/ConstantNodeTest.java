@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Test;
+import slogo.model.api.Node;
 
 public class ConstantNodeTest {
 

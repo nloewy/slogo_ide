@@ -1,12 +1,8 @@
 package slogo.model;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
-import java.util.function.Function;
-import slogo.model.command.Command;
-import slogo.model.command.control.ToCommand;
-import slogo.model.command.control.UserCommand;
+import slogo.model.api.Node;
 
 public class UserCommandNode extends Node {
 
