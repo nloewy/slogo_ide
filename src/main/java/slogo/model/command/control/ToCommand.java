@@ -26,14 +26,4 @@ public class ToCommand extends Command {
     modelState.getUserDefinedCommands().put(name, arguments);
     return 1.0;
   }
-
-  
-  public void notifyListener(SlogoListener listener, double value) {
-
-    //super.notifyListener(listener, value);
-  }
 }
-
-//parse
-//r there any user defined commands
-//

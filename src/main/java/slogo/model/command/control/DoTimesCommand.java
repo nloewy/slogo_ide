@@ -33,14 +33,6 @@ public class DoTimesCommand extends Command {
       }
     }
     return res;
-
-
   }
 
-  
-
-  public void notifyListener(SlogoListener listener, double value) {
-
-    //super.notifyListener(listener, value);
-  }
 }

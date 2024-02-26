@@ -23,11 +23,8 @@ public class MakeCommand extends Command {
     String token = arguments.get(0).getToken();
     double arg1 = arguments.get(1).getValue();
     modelState.getVariables().put(token, arg1);
-    try {
-      return arguments.get(0).getValue();
-    } catch (InvocationTargetException | IllegalAccessException e) {
-      throw new RuntimeException(e);
-    }
+    listener.onUpdateValue(token,arg1);
+    return arg1;
   }
 
   

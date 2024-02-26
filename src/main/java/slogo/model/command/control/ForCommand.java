@@ -33,6 +33,7 @@ public class ForCommand extends Command {
       } catch (InvocationTargetException | IllegalAccessException e) {
         throw new RuntimeException(e);
       }
+      modelState.getVariables().remove(variableName);
     }
     return res;
   }

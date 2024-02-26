@@ -39,10 +39,4 @@ public class RepeatCommand extends Command {
     modelState.getVariables().put("repcount", holder);
     return res;
   }
-
-  
-  public void notifyListener(SlogoListener listener, double value) {
-
-    //super.notifyListener(listener, value);
-  }
 }

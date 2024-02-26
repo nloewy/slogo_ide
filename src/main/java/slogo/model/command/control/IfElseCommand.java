@@ -37,12 +37,4 @@ public class IfElseCommand extends Command {
       }
     }
   }
-
-  
 }
-/**
- * public void notifyListener(SlogoListener listener, double value) { super.notifyListener(listener,
- * value); }
- * <p>
- * }
- */

@@ -24,9 +24,4 @@ public class UserCommand extends Command {
     return 1.0;
 
   }
-
-  public void notifyListener(SlogoListener listener, double value) {
-
-    //super.notifyListener(listener, value);
-  }
 }
