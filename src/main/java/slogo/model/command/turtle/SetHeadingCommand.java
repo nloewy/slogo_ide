@@ -2,7 +2,6 @@ package slogo.model.command.turtle;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.function.Function;
 import slogo.model.ModelState;
 import slogo.model.SlogoListener;
 import slogo.model.Turtle;
@@ -20,7 +19,7 @@ public class SetHeadingCommand extends Command {
   }
 
   @Override
-  public Function<ModelState, Double> execute(List<Node> arguments)
+  public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double newHeading = arguments.get(0).getValue();
 

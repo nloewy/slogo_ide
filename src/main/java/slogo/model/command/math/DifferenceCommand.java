@@ -2,7 +2,6 @@ package slogo.model.command.math;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.function.Function;
 import slogo.model.ModelState;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
@@ -19,7 +18,7 @@ public class DifferenceCommand extends Command {
   }
 
   @Override
-  public Function<ModelState, Double> execute(List<Node> arguments)
+  public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     double arg2 = arguments.get(1).getValue();
