@@ -23,13 +23,6 @@ public class EqualCommand extends Command {
     double arg1 = arguments.get(0).getValue();
     double arg2 = arguments.get(1).getValue();
     return (arg1 == arg2) ? 1.0 : 0.0;
-
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
 
 }

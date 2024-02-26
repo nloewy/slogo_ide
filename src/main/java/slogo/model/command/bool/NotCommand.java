@@ -24,10 +24,4 @@ public class NotCommand extends Command {
     return (arg1 == 0) ? 1.0 : 0.0;
   }
 
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
-
 }

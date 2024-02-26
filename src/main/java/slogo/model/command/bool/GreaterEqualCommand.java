@@ -25,10 +25,4 @@ public class GreaterEqualCommand extends Command {
     return (arg1 >= arg2) ? 1.0 : 0.0;
   }
 
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
-
 }
