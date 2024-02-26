@@ -22,9 +22,7 @@ public class ArcTangentCommand extends Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
-    return modelState -> {
       return MathUtils.toDegrees(Math.atan(arg1));
-    };
   }
 
   @Override

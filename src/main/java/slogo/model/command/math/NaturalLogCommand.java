@@ -21,12 +21,10 @@ public class NaturalLogCommand extends Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
-    return modelState -> {
       if (arg1 <= 0) {
         throw new IllegalArgumentException("expr must be non-negative");
       }
       return Math.log(arg1);
-    };
   }
 
   @Override

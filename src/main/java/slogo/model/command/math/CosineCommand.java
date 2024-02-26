@@ -22,9 +22,7 @@ public class CosineCommand extends Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
-    return modelState -> {
       return Math.cos(MathUtils.toRadians(arg1));
-    };
   }
 
   @Override

@@ -22,12 +22,10 @@ public class RandomRangeCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     double arg2 = arguments.get(1).getValue();
-    return modelState -> {
       if (arg1 > arg2) {
         throw new IllegalArgumentException("Min must be less than Max");
       }
       return arg1 + (arg2 - arg1) * Math.random();
-    };
   }
 
   @Override

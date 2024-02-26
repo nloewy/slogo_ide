@@ -22,12 +22,10 @@ public class TangentCommand extends Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
-    return modelState -> {
       if (Math.abs(arg1 % 180) == 90) {
         throw new ArithmeticException("Illegal Value for Tangent Function");
       }
       return Math.tan(MathUtils.toRadians(arg1));
-    };
   }
 
   @Override

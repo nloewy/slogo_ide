@@ -22,14 +22,12 @@ public class PowerCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     double arg2 = arguments.get(1).getValue();
-    return modelState -> {
       double result = Math.pow(arg1, arg2);
       if (Double.isNaN(result) || result == Double.NEGATIVE_INFINITY ||
           result == Double.POSITIVE_INFINITY) {
         throw new IllegalArgumentException("Result is operation is undefined");
       }
       return result;
-    };
   }
 
   @Override
