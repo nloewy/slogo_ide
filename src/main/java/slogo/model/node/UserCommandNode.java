@@ -1,18 +1,14 @@
-package slogo.model;
+package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
-import java.util.function.Function;
-import slogo.model.command.Command;
-import slogo.model.command.control.ToCommand;
-import slogo.model.command.control.UserCommand;
+import slogo.model.ModelState;
+import slogo.model.node.Node;
 
 public class UserCommandNode extends Node {
 
   private String myToken;
   private ModelState myModelState;
-
 
   public UserCommandNode(String token, ModelState modelState)   {
     super();
@@ -20,12 +16,14 @@ public class UserCommandNode extends Node {
     myModelState = modelState;
   }
 
+  @Override
   public double getValue() throws InvocationTargetException {
     List<Node> children = getChildren();
     List<Node> arguments =  myModelState.getUserDefinedCommands().get(children.get(0).getToken());
     return 5.0;
   }
 
+  @Override
   public String getToken() {
     return myToken;
   }

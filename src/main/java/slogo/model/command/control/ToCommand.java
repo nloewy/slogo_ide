@@ -1,12 +1,10 @@
 package slogo.model.command.control;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.node.Node;
 import slogo.model.SlogoListener;
 
 import slogo.model.command.Command;

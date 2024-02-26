@@ -1,6 +1,7 @@
-package slogo.model;
+package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
+import slogo.model.ModelState;
 
 public class ConstantNode extends Node {
 
