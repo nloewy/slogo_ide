@@ -2,40 +2,34 @@ package slogo.model.command.turtle;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.function.Function;
 import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
+import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class SetPositionCommand extends Command {
+public class SetPositionCommand implements Command {
+  public static final int NUM_ARGS = 2;
+  private final ModelState modelState;
+  private final SlogoListener listener;
+
+  public SetPositionCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
+    this.listener = listener;
+  }
 
   @Override
-  public Function<ModelState, Double> execute(List<Node> arguments)
+  public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double newX = arguments.get(0).getValue();
     double newY = arguments.get(1).getValue();
-
-    return modelState -> {
-      Turtle turtle = modelState.getTurtles().get(0);
-      double currentX = turtle.getX();
-      double currentY = turtle.getY();
-      turtle.setX(newX);
-      turtle.setY(newY);
-      return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
-    };
+    Turtle turtle = modelState.getTurtles().get(0);
+    double currentX = turtle.getX();
+    double currentY = turtle.getY();
+    turtle.setX(newX);
+    turtle.setY(newY);
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
+    return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
   }
-
-  @Override
-  public int getNumArgs() {
-    return 2;
-  }
-
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
-
 }

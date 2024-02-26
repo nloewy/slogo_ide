@@ -1,6 +1,8 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +14,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
-public class MinusCommandTest {
+public class MinusCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -25,7 +27,7 @@ public class MinusCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.Minus", model);
+    node = new CommandNode("math.Minus", model, myListener);
 
   }
 
@@ -43,7 +45,7 @@ public class MinusCommandTest {
   })
   void testMinusBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 

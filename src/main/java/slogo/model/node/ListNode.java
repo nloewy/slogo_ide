@@ -2,11 +2,12 @@ package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
 import slogo.model.ModelState;
+import slogo.model.SlogoListener;
 
 public class ListNode extends Node {
 
 
-  public ListNode(String token, ModelState model) {
+  public ListNode(String token, ModelState model, SlogoListener listener) {
   }
 
   @Override

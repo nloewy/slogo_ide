@@ -1,6 +1,9 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,7 +18,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
-public class RandomRangeCommandTest {
+public class RandomRangeCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -28,7 +31,7 @@ public class RandomRangeCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.RandomRange", model);
+    node = new CommandNode("math.RandomRange", model, myListener);
 
   }
 
@@ -41,8 +44,8 @@ public class RandomRangeCommandTest {
   })
   void testBasicRandomRange(String min, String max)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(min, null));
-    node.addChild(new ConstantNode(max, null));
+    node.addChild(new ConstantNode(min, null, myListener));
+    node.addChild(new ConstantNode(max, null, myListener));
     double val = node.getValue();
     assertTrue(Double.parseDouble(min) <= val);
     assertTrue(Double.parseDouble(max) >= val);
@@ -52,18 +55,17 @@ public class RandomRangeCommandTest {
   @Test
   void testRandomRangeSameVal()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("0.00000", null));
-    node.addChild(new ConstantNode("0", null));
+    node.addChild(new ConstantNode("0.00000", null, myListener));
+    node.addChild(new ConstantNode("0", null, myListener));
     assertEquals(0, node.getValue(), DELTA);
   }
 
   @Test
   void testRandomRangeIllegal()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("-90.00000", null));
-    node.addChild(new ConstantNode("-90.00100", null));
-    Throwable e = assertThrows(IllegalArgumentException.class, () -> {
-      node.getValue();
-    });
+    node.addChild(new ConstantNode("-90.00000", null, myListener));
+    node.addChild(new ConstantNode("-90.00100", null, myListener));
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
+    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

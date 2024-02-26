@@ -1,6 +1,8 @@
 package slogo.model.command.turtle;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +13,7 @@ import slogo.model.Turtle;
 import slogo.model.node.CommandNode;
 import slogo.model.node.Node;
 
-public class HomeCommandTest {
+public class HomeCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -49,7 +51,7 @@ public class HomeCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.Home", model);
+    node = new CommandNode("turtle.Home", model, myListener);
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
     double expectedVal = Math.hypot(Double.parseDouble(originalX), Double.parseDouble(originalY));

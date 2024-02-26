@@ -36,20 +36,13 @@ public abstract class Node {
    * @return The token associated with the node.
    */
   public String getToken();
-
-  /**
-   * Returns number of arguments required following a token
-   *
-   * @return 0 for non-commands, and number of arguments required for (non-user defined commands)
-   */
-  public int getNumArgs();
 }
 
 
 /**
  * Represents a command to be executed.
  */
-public abstract class Command {
+interface Command {
 
   /**
    * Executes the command with the given arguments.
@@ -61,43 +54,13 @@ public abstract class Command {
    */
   public abstract Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException;
-
-  /**
-   * Retrieves the number of arguments expected by the command.
-   *
-   * @return The number of arguments expected by the command.
-   */
-  public abstract int getNumArgs();
-
-  /**
-   * Notifies the provided listener with a return value.
-   *
-   * @param listener The listener to be notified.
-   * @param value    The value to be returned by a command.
-   */
-  public void notifyListener(SlogoListener listener, double value) {
-    listener.onReturn(value);
-  }
 }
 
-/**
- * Represents a listener for model events.
- */
-public interface ModelListener {
-
-  /**
-   * Applies the given command to the model state.
-   *
-   * @param action The instructions of the command to be applied.
-   * @return The value returned by the command.
-   */
-  double applyCommandToModelState(Function<ModelState, Double> action);
-}
 
 /**
  * Represents the state of the model (turtles, variables/commands defined by users).
  */
-public class ModelState implements ModelListener {
+public class ModelState {
 
   /**
    * Retrieves the turtles in the model.
@@ -121,14 +84,6 @@ public class ModelState implements ModelListener {
    */
   public Map<String, List<Node>> getUserDefinedCommands();
 
-  /**
-   * Applies the given action to the model state.
-   *
-   * @param action The action to be applied.
-   * @return The result of applying the action.
-   */
-  @Override
-  public double applyCommandToModelState(Function<ModelState, Double> action);
 }
 
 /**

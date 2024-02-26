@@ -1,13 +1,15 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Test;
 import slogo.model.ModelState;
 import slogo.model.node.CommandNode;
 
-public class PiCommandTest {
+public class PiCommandTest extends CommandTest {
 
   public static final double DELTA = .001;
 
@@ -16,7 +18,7 @@ public class PiCommandTest {
 
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     ModelState model = new ModelState();
-    assertEquals(Math.PI, new CommandNode("math.Pi", model).getValue(),
+    assertEquals(Math.PI, new CommandNode("math.Pi", model, myListener).getValue(),
         DELTA);
   }
 }

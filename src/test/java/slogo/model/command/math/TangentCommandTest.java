@@ -1,7 +1,11 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import slogo.model.command.CommandTest;
+
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +17,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
-public class TangentCommandTest {
+public class TangentCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -25,7 +29,7 @@ public class TangentCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.Tangent", model);
+    node = new CommandNode("math.Tangent", model, myListener);
   }
 
   @ParameterizedTest
@@ -46,7 +50,7 @@ public class TangentCommandTest {
   })
   void testTangentBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -61,9 +65,8 @@ public class TangentCommandTest {
   })
   void testTangentInvalid(String degrees)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    node.addChild(new ConstantNode(degrees, null));
-    Throwable e = assertThrows(ArithmeticException.class, () -> {
-      node.getValue();
-    });
+    node.addChild(new ConstantNode(degrees, null, myListener));
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
+    assertInstanceOf(ArithmeticException.class, e.getCause());
   }
-}
+  }
