@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.node.Node;
 import slogo.model.command.Command;
 
 public class IfElseCommand extends Command {
@@ -31,6 +31,12 @@ public class IfElseCommand extends Command {
       }
     };
   }
+
+  @Override
+  public int getNumArgs() {
+    return 3;
+  }
+
 }
 /**
  * public void notifyListener(SlogoListener listener, double value) { super.notifyListener(listener,

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.node.Node;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
@@ -25,6 +25,11 @@ public class SetPositionCommand extends Command {
       turtle.setY(newY);
       return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
     };
+  }
+
+  @Override
+  public int getNumArgs() {
+    return 2;
   }
 
   /**@Override public void notifyListener(SlogoListener listener, double value) {

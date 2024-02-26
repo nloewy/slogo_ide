@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.node.Node;
 import slogo.model.command.Command;
 
 public class RandomRangeCommand extends Command {
@@ -20,6 +20,11 @@ public class RandomRangeCommand extends Command {
       }
       return arg1 + (arg2 - arg1) * Math.random();
     };
+  }
+
+  @Override
+  public int getNumArgs() {
+    return 2;
   }
 
   /**@Override public void notifyListener(SlogoListener listener, double value) {

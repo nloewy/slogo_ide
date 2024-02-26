@@ -1,9 +1,10 @@
-package slogo.model;
+package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.function.Function;
+import slogo.model.ModelState;
 import slogo.model.command.Command;
 
 public class CommandNode extends Node {
@@ -24,6 +25,7 @@ public class CommandNode extends Node {
     m = clazz.getDeclaredMethod("execute", List.class);
     myModelState = modelState;
   }
+
 
   public double getValue() throws InvocationTargetException, IllegalAccessException {
     List<Node> children = getChildren();

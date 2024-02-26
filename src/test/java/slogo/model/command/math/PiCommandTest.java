@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Test;
-import slogo.model.CommandNode;
+import slogo.model.node.CommandNode;
 import slogo.model.ModelState;
 
 public class PiCommandTest {

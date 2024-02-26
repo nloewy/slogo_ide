@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.node.Node;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
@@ -21,6 +21,11 @@ public class BackwardCommand extends Command {
       turtle.setY(newY);
       return pixels;
     };
+  }
+
+  @Override
+  public int getNumArgs() {
+    return 1;
   }
 
   /**

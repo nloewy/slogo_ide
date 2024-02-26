@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import slogo.model.api.Model;
+import slogo.model.node.Node;
 
 public class SlogoModel implements Model {
 

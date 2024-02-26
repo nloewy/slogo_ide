@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.node.Node;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
@@ -19,6 +19,12 @@ public class ShowTurtleCommand extends Command {
       return 1.0;
     };
   }
+
+  @Override
+  public int getNumArgs() {
+    return 0;
+  }
+
   /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());

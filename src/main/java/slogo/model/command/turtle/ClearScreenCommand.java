@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Function;
 import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.node.Node;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 
@@ -21,6 +21,11 @@ public class ClearScreenCommand extends Command {
       turtle.setY(0);
       return MathUtils.dist(0, 0, currentX, currentY);
     };
+  }
+
+  @Override
+  public int getNumArgs() {
+    return 0;
   }
 
   /**

@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.node.Node;
 import slogo.model.command.Command;
 
 public class GreaterEqualCommand extends Command {
@@ -17,6 +17,11 @@ public class GreaterEqualCommand extends Command {
     return modelState -> {
       return (arg1 >= arg2) ? 1.0 : 0.0;
     };
+  }
+
+  @Override
+  public int getNumArgs() {
+    return 2;
   }
 
   /**@Override public void notifyListener(SlogoListener listener, double value) {

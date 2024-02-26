@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.node.Node;
 import slogo.model.command.Command;
 
 public class ProductCommand extends Command {
@@ -19,6 +19,10 @@ public class ProductCommand extends Command {
     };
   }
 
+  @Override
+  public int getNumArgs() {
+    return 2;
+  }
   /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   }
