@@ -4,10 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import slogo.model.node.CommandNode;
 import slogo.model.ModelState;
-import slogo.model.node.Node;
 import slogo.model.Turtle;
+import slogo.model.node.CommandNode;
+import slogo.model.node.Node;
 
 public class IsPenDownCommandTest {
 

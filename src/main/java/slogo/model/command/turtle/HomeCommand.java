@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.function.Function;
 import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
-import slogo.model.node.Node;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
+import slogo.model.node.Node;
 
 public class HomeCommand extends Command {
 

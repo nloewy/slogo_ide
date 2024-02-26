@@ -10,9 +10,10 @@ import slogo.model.node.Node;
 
 public class ModelState implements ModelListener {
 
-  private List<Turtle> myTurtles;
-  private Map<String, Double> myVariables;
-  private Map<String, List<Node>> myUserDefinedCommands;
+  private final List<Turtle> myTurtles;
+  private final Map<String, Double> myVariables;
+  private final Map<String, List<Node>> myUserDefinedCommands;
+
   public ModelState() {
     myTurtles = new ArrayList<>();
     myVariables = new HashMap<>();
