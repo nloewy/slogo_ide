@@ -20,7 +20,7 @@ public class HeadingCommand extends Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-      return modelState.getTurtles().get(0).getHeading();
+    return modelState.getTurtles().get(0).getHeading();
   }
 
   @Override

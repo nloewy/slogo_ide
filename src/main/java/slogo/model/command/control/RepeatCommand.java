@@ -23,21 +23,21 @@ public class RepeatCommand extends Command {
     String variableName = "repcount";
     double end = arguments.get(0).getValue();
     Node commands = arguments.get(1);
-      double holder = modelState.getVariables().getOrDefault("repcount", Double.MAX_VALUE);
-      double res = 0.0;
-      for (double i = 1; i <= end; i += 1) {
-        modelState.getVariables().put(variableName, i);
-        try {
-          res = commands.getValue();
-        } catch (InvocationTargetException | IllegalAccessException e) {
-          throw new RuntimeException(e);
-        }
+    double holder = modelState.getVariables().getOrDefault("repcount", Double.MAX_VALUE);
+    double res = 0.0;
+    for (double i = 1; i <= end; i += 1) {
+      modelState.getVariables().put(variableName, i);
+      try {
+        res = commands.getValue();
+      } catch (InvocationTargetException | IllegalAccessException e) {
+        throw new RuntimeException(e);
       }
-      if (holder == Double.MAX_VALUE) {
-        holder = end;
-      }
-      modelState.getVariables().put("repcount", holder);
-      return res;
+    }
+    if (holder == Double.MAX_VALUE) {
+      holder = end;
+    }
+    modelState.getVariables().put("repcount", holder);
+    return res;
   }
 
   @Override

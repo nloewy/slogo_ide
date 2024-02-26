@@ -24,15 +24,15 @@ public class DoTimesCommand extends Command {
     double end = arguments.get(0).getChildren().get(1).getValue();
     Node commands = arguments.get(1);
     double res = 0.0;
-      for (double i = 1; i <= end; i += 1) {
-        modelState.getVariables().put(variableName, i);
-        try {
-          res = commands.getValue();
-        } catch (InvocationTargetException | IllegalAccessException e) {
-          throw new RuntimeException(e);
-        }
+    for (double i = 1; i <= end; i += 1) {
+      modelState.getVariables().put(variableName, i);
+      try {
+        res = commands.getValue();
+      } catch (InvocationTargetException | IllegalAccessException e) {
+        throw new RuntimeException(e);
       }
-      return res;
+    }
+    return res;
 
 
   }

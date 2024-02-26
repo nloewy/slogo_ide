@@ -23,19 +23,19 @@ public class IfElseCommand extends Command {
     double arg1 = arguments.get(0).getValue();
     Node toExecuteIfTrue = arguments.get(1);
     Node toExecuteIfFalse = arguments.get(2);
-      if (arg1 != 0.0) {
-        try {
-          return toExecuteIfTrue.getValue();
-        } catch (InvocationTargetException | IllegalAccessException e) {
-          throw new RuntimeException(e);
-        }
-      } else {
-        try {
-          return toExecuteIfFalse.getValue();
-        } catch (InvocationTargetException | IllegalAccessException e) {
-          throw new RuntimeException(e);
-        }
+    if (arg1 != 0.0) {
+      try {
+        return toExecuteIfTrue.getValue();
+      } catch (InvocationTargetException | IllegalAccessException e) {
+        throw new RuntimeException(e);
       }
+    } else {
+      try {
+        return toExecuteIfFalse.getValue();
+      } catch (InvocationTargetException | IllegalAccessException e) {
+        throw new RuntimeException(e);
+      }
+    }
   }
 
   @Override

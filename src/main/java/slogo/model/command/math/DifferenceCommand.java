@@ -22,7 +22,7 @@ public class DifferenceCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     double arg2 = arguments.get(1).getValue();
-      return arg1 - arg2;
+    return arg1 - arg2;
   }
 
   @Override

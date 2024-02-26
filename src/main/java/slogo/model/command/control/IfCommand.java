@@ -22,17 +22,17 @@ public class IfCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     Node toExecute = arguments.get(1);
-      if (arg1 != 0) {
-        try {
-          return toExecute.getValue();
-        } catch (InvocationTargetException e) {
-          throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-          throw new RuntimeException(e);
-        }
+    if (arg1 != 0) {
+      try {
+        return toExecute.getValue();
+      } catch (InvocationTargetException e) {
+        throw new RuntimeException(e);
+      } catch (IllegalAccessException e) {
+        throw new RuntimeException(e);
       }
-      return 0.0;
-    };
+    }
+    return 0.0;
+  }
 
   @Override
   public int getNumArgs() {

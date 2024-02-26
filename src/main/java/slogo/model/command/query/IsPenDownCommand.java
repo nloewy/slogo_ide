@@ -10,8 +10,8 @@ import slogo.model.node.Node;
 
 public class IsPenDownCommand extends Command {
 
-  private ModelState modelState;
-  private SlogoListener listener;
+  private final ModelState modelState;
+  private final SlogoListener listener;
 
   public IsPenDownCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
@@ -21,11 +21,11 @@ public class IsPenDownCommand extends Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-      Turtle turtle = modelState.getTurtles().get(0);
-      if (turtle.getPen()) {
-        return 1.0;
-      }
-      return 0.0;
+    Turtle turtle = modelState.getTurtles().get(0);
+    if (turtle.getPen()) {
+      return 1.0;
+    }
+    return 0.0;
   }
 
   @Override

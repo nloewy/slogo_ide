@@ -20,7 +20,7 @@ public class XcoordinateCommand extends Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-      return modelState.getTurtles().get(0).getX();
+    return modelState.getTurtles().get(0).getX();
 
   }
 

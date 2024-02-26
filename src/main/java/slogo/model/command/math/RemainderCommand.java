@@ -22,10 +22,10 @@ public class RemainderCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     double arg2 = arguments.get(1).getValue();
-      if (arg2 == 0) {
-        throw new ArithmeticException("Divisor must be non-zero");
-      }
-      return arg1 % arg2;
+    if (arg2 == 0) {
+      throw new ArithmeticException("Divisor must be non-zero");
+    }
+    return arg1 % arg2;
   }
 
   @Override

@@ -21,11 +21,11 @@ public class IsShowingCommand extends Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-      Turtle turtle = modelState.getTurtles().get(0);
-      if (turtle.getVisible()) {
-        return 1.0;
-      }
-      return 0.0;
+    Turtle turtle = modelState.getTurtles().get(0);
+    if (turtle.getVisible()) {
+      return 1.0;
+    }
+    return 0.0;
   }
 
   @Override
