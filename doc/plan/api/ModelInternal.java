@@ -36,13 +36,6 @@ public abstract class Node {
    * @return The token associated with the node.
    */
   public String getToken();
-
-  /**
-   * Returns number of arguments required following a token
-   *
-   * @return 0 for non-commands, and number of arguments required for (non-user defined commands)
-   */
-  public int getNumArgs();
 }
 
 
@@ -80,24 +73,11 @@ public abstract class Command {
   }
 }
 
-/**
- * Represents a listener for model events.
- */
-public interface ModelListener {
-
-  /**
-   * Applies the given command to the model state.
-   *
-   * @param action The instructions of the command to be applied.
-   * @return The value returned by the command.
-   */
-  double applyCommandToModelState(Function<ModelState, Double> action);
-}
 
 /**
  * Represents the state of the model (turtles, variables/commands defined by users).
  */
-public class ModelState implements ModelListener {
+public class ModelState {
 
   /**
    * Retrieves the turtles in the model.
@@ -121,14 +101,6 @@ public class ModelState implements ModelListener {
    */
   public Map<String, List<Node>> getUserDefinedCommands();
 
-  /**
-   * Applies the given action to the model state.
-   *
-   * @param action The action to be applied.
-   * @return The result of applying the action.
-   */
-  @Override
-  public double applyCommandToModelState(Function<ModelState, Double> action);
 }
 
 /**
