@@ -107,6 +107,13 @@ public class ParseTest {
   }
 
   @Test
+  void testCaseSensitiveVariables()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+    slogo.parse("mAkE :CLASS 10 REPEAT dIffEreNcE :CLass 5 [ RIGHT :cLASS ]");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertEquals(50.0, myTurtle.getHeading(), DELTA);
+  }
+  @Test
   void testRandom()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     slogo.parse("rt 270 mAke :random sum 1 random 100 fd sum 1 :random");
