@@ -26,14 +26,7 @@ public class ForwardCommand extends Command {
     Turtle turtle = modelState.getTurtles().get(0);
     turtle.setX(turtle.getX() + pixels * Math.sin(MathUtils.toRadians(turtle.getHeading())));
     turtle.setY(turtle.getY() + pixels * Math.cos(MathUtils.toRadians(turtle.getHeading())));
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
     return pixels;
   }
-
-  
-  /**
-   @Override public void notifyListener(SlogoListener listener, double value) {
-   super.notifyListener(listener, value);
-   listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-   }
-   */
 }

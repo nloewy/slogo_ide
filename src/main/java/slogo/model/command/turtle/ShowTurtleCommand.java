@@ -23,14 +23,7 @@ public class ShowTurtleCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     Turtle turtle = modelState.getTurtles().get(0);
     turtle.setVisible(true);
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
     return 1.0;
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
-
 }

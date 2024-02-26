@@ -23,14 +23,7 @@ public class PenUpCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     Turtle turtle = modelState.getTurtles().get(0);
     turtle.setPen(false);
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
     return 0.0;
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
-
 }

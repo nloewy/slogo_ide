@@ -25,18 +25,10 @@ public class ClearScreenCommand extends Command {
     double currentY = turtle.getY();
     turtle.setX(0);
     turtle.setY(0);
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
+    listener.onResetTurtle(modelState.getTurtles().get(0).getImmutableTurtle().id());
     return MathUtils.dist(0, 0, currentX, currentY);
   }
-
-  
-  /**
-   @Override public void notifyListener(SlogoListener listener, double value) {
-   super.notifyListener(listener, value);
-   TurtleRecord turtleRecord = myTurtle.getImmutableTurtle();
-   listener.onUpdateTurtleState(turtleRecord);
-   listener.onResetTurtle(turtleRecord.id());
-   }
-   */
 }
 
 

@@ -27,14 +27,7 @@ public class BackwardCommand extends Command {
     double newY = turtle.getY() - pixels * Math.cos(Math.toRadians(turtle.getHeading()));
     turtle.setX(newX);
     turtle.setY(newY);
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
     return pixels;
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
-
 }

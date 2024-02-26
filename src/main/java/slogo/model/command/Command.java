@@ -9,8 +9,4 @@ public abstract class Command {
 
   public abstract double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException;
-
-  public void notifyListener(SlogoListener listener, double value) {
-    listener.onReturn(value);
-  }
 }

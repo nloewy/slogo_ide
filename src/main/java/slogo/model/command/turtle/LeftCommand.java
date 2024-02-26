@@ -24,14 +24,7 @@ public class LeftCommand extends Command {
     double degrees = arguments.get(0).getValue();
     Turtle turtle = modelState.getTurtles().get(0);
     turtle.setHeading(turtle.getHeading() - degrees);
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
     return degrees;
   }
-
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
 }

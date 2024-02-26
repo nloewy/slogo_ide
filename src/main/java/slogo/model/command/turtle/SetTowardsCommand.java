@@ -33,14 +33,7 @@ public class SetTowardsCommand extends Command {
     double counterclockwiseTurn = Math.abs((currentHeading - targetHeading + 360) % 360);
     double minTurn = Math.min(clockwiseTurn, counterclockwiseTurn);
     turtle.setHeading(targetHeading);
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
     return minTurn;
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
-
 }

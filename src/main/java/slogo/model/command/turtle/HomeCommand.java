@@ -25,15 +25,7 @@ public class HomeCommand extends Command {
     double currentY = turtle.getY();
     turtle.setX(0);
     turtle.setY(0);
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
     return MathUtils.dist(0, 0, currentX, currentY);
   }
-
-  
-  /**
-   /**@Override
-   public void notifyListener(SlogoListener listener, double value) {
-   super.notifyListener(listener, value);
-   listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-   }
-   */
 }

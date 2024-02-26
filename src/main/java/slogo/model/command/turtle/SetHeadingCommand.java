@@ -23,20 +23,12 @@ public class SetHeadingCommand extends Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double newHeading = arguments.get(0).getValue();
-
     Turtle turtle = modelState.getTurtles().get(0);
     double oldHeading = turtle.getHeading();
     turtle.setHeading(newHeading);
     double clockwiseTurn = (newHeading - oldHeading + 360) % 360;
     double counterclockwiseTurn = (oldHeading - newHeading + 360) % 360;
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
     return Math.min(Math.abs(clockwiseTurn), Math.abs(counterclockwiseTurn));
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
-
 }

@@ -24,20 +24,12 @@ public class SetPositionCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double newX = arguments.get(0).getValue();
     double newY = arguments.get(1).getValue();
-
     Turtle turtle = modelState.getTurtles().get(0);
     double currentX = turtle.getX();
     double currentY = turtle.getY();
     turtle.setX(newX);
     turtle.setY(newY);
+    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
     return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
-
 }

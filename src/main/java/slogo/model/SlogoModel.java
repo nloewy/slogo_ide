@@ -74,22 +74,8 @@ public class SlogoModel implements Model {
     if (!nodeStack.isEmpty()) {
       throw new IllegalArgumentException("Unmatched '['");
     }
-    rootNode.getValue();
-    /*
-    getValue of the list node means get the value of everything in the list node
-    if we get a command node, well get the value of that, which means invoking the command's `execute`
-    method,which returns a function that we can apply to a model state (and we do that)
-    function also returns a value that can be bumped up to previous function
-     */
-//listener in constructor
-    // commands execute change model state
-    //questions for 2/26:
-      //1) Overarching Lambda Structure
-      //2) Handling of Listener
-      //3) Handling of ToCommand
-
-    //TODO: tell Listener value returned for outermost command
-
+    double value = rootNode.getValue();
+    myListener.onReturn(value);
   }
 
   //JUST FOR TESTING ==> WE USE A LISTENER
