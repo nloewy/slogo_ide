@@ -66,7 +66,6 @@ public class ToCommandTest {
     newNodes.add(new ConstantNode("3", model));
 
     for(int i = 0; i < model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().size() ; i++) {
-      //in reality wld parse
       String token = model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().get(i).getToken();
       model.getVariables().put(token, newNodes.get(i).getValue());
 
