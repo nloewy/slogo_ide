@@ -34,7 +34,7 @@ public class SlogoModel implements Model {
   }
 
   public void parse(String input)
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException {
     List<String> tokens = Arrays.asList(input.split("\\s+"));
     Stack<Node> nodeStack = new Stack<>();
     Node rootNode = new ListNode("[", modelstate, myListener); // Create a root node

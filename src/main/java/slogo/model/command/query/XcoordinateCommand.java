@@ -8,6 +8,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class XcoordinateCommand extends Command {
+  public static final int NUM_ARGS = 0;
 
   private final ModelState modelState;
   private final SlogoListener listener;
@@ -24,11 +25,7 @@ public class XcoordinateCommand extends Command {
 
   }
 
-  @Override
-  public int getNumArgs() {
-    return 0;
-  }
-
+  
   /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());

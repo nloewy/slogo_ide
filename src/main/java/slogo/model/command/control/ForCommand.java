@@ -8,7 +8,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class ForCommand extends Command {
-
+  public static final int NUM_ARGS = 2;
   private final ModelState modelState;
   private final SlogoListener listener;
 
@@ -38,11 +38,7 @@ public class ForCommand extends Command {
   }
 
 
-  @Override
-  public int getNumArgs() {
-    return 2;
-  }
-
+  
 
   //IN NOTIFY LISTENER MAKE SURE TO UPDATE THE FOR VARIABLE
   public void notifyListener(SlogoListener listener, double value) {

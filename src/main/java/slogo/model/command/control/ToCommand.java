@@ -9,7 +9,7 @@ import slogo.model.node.Node;
 
 public class ToCommand extends Command {
 
-  public static double NUM_ARGS = 3;
+  public static final int NUM_ARGS = 3;
   private final ModelState modelState;
   private final SlogoListener listener;
 
@@ -27,11 +27,7 @@ public class ToCommand extends Command {
     return 1.0;
   }
 
-  @Override
-  public int getNumArgs() {
-    return 3;
-  }
-
+  
   public void notifyListener(SlogoListener listener, double value) {
 
     //super.notifyListener(listener, value);

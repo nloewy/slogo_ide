@@ -10,7 +10,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class SetPositionCommand extends Command {
-
+  public static final int NUM_ARGS = 2;
   private final ModelState modelState;
   private final SlogoListener listener;
 
@@ -33,11 +33,7 @@ public class SetPositionCommand extends Command {
     return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
   }
 
-  @Override
-  public int getNumArgs() {
-    return 2;
-  }
-
+  
   /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());

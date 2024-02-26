@@ -9,6 +9,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class IsPenDownCommand extends Command {
+  public static final int NUM_ARGS = 0;
 
   private final ModelState modelState;
   private final SlogoListener listener;
@@ -28,11 +29,7 @@ public class IsPenDownCommand extends Command {
     return 0.0;
   }
 
-  @Override
-  public int getNumArgs() {
-    return 0;
-  }
-
+  
   /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());

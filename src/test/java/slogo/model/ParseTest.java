@@ -45,7 +45,8 @@ public class ParseTest {
   }
 
 @Test
-  void testCommandZero()throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+  void testCommandZero()
+    throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("PENUP");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertFalse(myTurtle.getPen());
@@ -54,7 +55,7 @@ public class ParseTest {
 
   @Test
   void testNestedIfElseFalse()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("PENUP FORWARD #LOL IFELSE PENDOWN? SUM 50 30 PRODUCT 30 SUM 1 1 RT 50");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertFalse(myTurtle.getPen());
@@ -64,7 +65,7 @@ public class ParseTest {
 
   @Test
   void testNestedIfElseTrue()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("PENDOWN #LOL FORWARD IFELSE PENDOWNP SUM 50 30 PRODUCT 30 SUM 1 1 RT 50");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertTrue(myTurtle.getPen());
@@ -74,7 +75,7 @@ public class ParseTest {
   }
   @Test
   void testNestedIfElseList()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("[ [ [ [ PENDOWN #LOL FORWARD IFELSE PENDOWNP SUM 50 30 PRODUCT 30 SUM 1 1 RT 50 ] ] ] ]");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertTrue(myTurtle.getPen());
@@ -84,7 +85,7 @@ public class ParseTest {
 
   @Test
   void testVariables()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("MAKE :CLASS 308 FORWARD SUM :CLASS 192");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertEquals(500.0, myTurtle.getY(), DELTA);
@@ -92,7 +93,7 @@ public class ParseTest {
 
   @Test
   void testRepeat()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("MAKE :CLASS 10 REPEAT DIFFERENCE :CLASS 5 [ RIGHT :CLASS ] RIGHT 50");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertEquals( 100.0, myTurtle.getHeading(), DELTA);
@@ -100,7 +101,7 @@ public class ParseTest {
 
   @Test
   void testCaseSensitiveCommands()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("mAkE :CLASS 10 REPEAT dIffEreNcE :CLASS 5 [ RIGHT :CLASS ]");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertEquals(50.0, myTurtle.getHeading(), DELTA);
@@ -108,14 +109,14 @@ public class ParseTest {
 
   @Test
   void testCaseSensitiveVariables()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("mAkE :CLASS 10 REPEAT dIffEreNcE :CLass 5 [ RIGHT :cLASS ]");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertEquals(50.0, myTurtle.getHeading(), DELTA);
   }
   @Test
   void testRandom()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("rt 270 mAke :random sum 1 random 100 fd sum 1 :random");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertEquals(0.0, myTurtle.getY(), DELTA);
@@ -124,7 +125,7 @@ public class ParseTest {
   }
   @Test
   void testDash()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("set :count 12 set :distance 20 to dash [ ] [ repeat :count [ pu fd :distance pd fd :distance ] ] dash");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertTrue( myTurtle.getPen());
@@ -133,7 +134,7 @@ public class ParseTest {
 
   @Test
   void testVariableMaker()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("set :count 16");
     assertEquals(16.0, slogo.getModelstate().getVariables().get("count"));
     slogo.parse("pendown");

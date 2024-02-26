@@ -9,7 +9,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class ArcTangentCommand extends Command {
-
+  public static final int NUM_ARGS = 1;
   private final ModelState modelState;
   private final SlogoListener listener;
 
@@ -25,11 +25,7 @@ public class ArcTangentCommand extends Command {
     return MathUtils.toDegrees(Math.atan(arg1));
   }
 
-  @Override
-  public int getNumArgs() {
-    return 1;
-  }
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
+    /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   }
    */

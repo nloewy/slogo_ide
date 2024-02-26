@@ -8,7 +8,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class DoTimesCommand extends Command {
-
+  public static final int NUM_ARGS = 2;
   private final ModelState modelState;
   private final SlogoListener listener;
 
@@ -37,11 +37,7 @@ public class DoTimesCommand extends Command {
 
   }
 
-  @Override
-  public int getNumArgs() {
-    return 2;
-  }
-
+  
 
   public void notifyListener(SlogoListener listener, double value) {
 

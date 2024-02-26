@@ -8,7 +8,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class IfElseCommand extends Command {
-
+  public static final int NUM_ARGS = 3;
   private final ModelState modelState;
   private final SlogoListener listener;
 
@@ -38,11 +38,7 @@ public class IfElseCommand extends Command {
     }
   }
 
-  @Override
-  public int getNumArgs() {
-    return 3;
-  }
-
+  
 }
 /**
  * public void notifyListener(SlogoListener listener, double value) { super.notifyListener(listener,

@@ -1,5 +1,6 @@
 package slogo.model.node;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -39,11 +40,8 @@ public class CommandNode extends Node {
 
   @Override
   public int getNumArgs()
-      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-    Class<?> clazz = Class.forName(myToken);
-    Command command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class).newInstance(myModelState, myListener);
-    Method method = clazz.getDeclaredMethod("getNumArgs");
-    return (int) method.invoke(command);
+      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+    return (int) Class.forName(myToken).getField("NUM_ARGS").get(null);
   }
 
 }

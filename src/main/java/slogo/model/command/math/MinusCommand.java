@@ -8,7 +8,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class MinusCommand extends Command {
-
+  public static final int NUM_ARGS = 1;
   private final ModelState modelState;
   private final SlogoListener listener;
 
@@ -25,11 +25,7 @@ public class MinusCommand extends Command {
 
   }
 
-  @Override
-  public int getNumArgs() {
-    return 1;
-  }
-
+  
   /**@Override public void notifyListener(SlogoListener listener, double value) {
   super.notifyListener(listener, value);
   }

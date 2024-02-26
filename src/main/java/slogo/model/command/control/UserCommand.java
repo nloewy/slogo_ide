@@ -8,7 +8,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class UserCommand extends Command {
-
+  public static final int NUM_ARGS = 1;
   private final ModelState modelState;
   private final SlogoListener listener;
 
@@ -23,11 +23,6 @@ public class UserCommand extends Command {
     Node listNode = arguments.get(0);
     return 1.0;
 
-  }
-
-  @Override
-  public int getNumArgs() {
-    return -1;
   }
 
   public void notifyListener(SlogoListener listener, double value) {

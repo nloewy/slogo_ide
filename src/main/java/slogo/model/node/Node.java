@@ -23,7 +23,7 @@ public abstract class Node {
   }
 
   public int getNumArgs()
-      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
     return 0;
   }
 }
