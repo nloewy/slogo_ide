@@ -27,7 +27,7 @@ public class RemainderCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.RemainderCommand", model);
+    node = new CommandNode("math.Remainder", model);
 
   }
 

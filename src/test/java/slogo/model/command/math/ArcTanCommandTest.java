@@ -23,7 +23,7 @@ public class ArcTanCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.ArcTangentCommand", model);
+    node = new CommandNode("math.ArcTangent", model);
   }
 
   @ParameterizedTest

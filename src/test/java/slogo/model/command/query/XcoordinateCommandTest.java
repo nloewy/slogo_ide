@@ -26,7 +26,7 @@ public class XcoordinateCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("query.XcoordinateCommand", model);
+    node = new CommandNode("query.Xcoordinate", model);
 
   }
 

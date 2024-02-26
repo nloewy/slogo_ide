@@ -22,7 +22,7 @@ public class PenUpCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.PenUpCommand", model);
+    node = new CommandNode("turtle.PenUp", model);
   }
 
   @Test

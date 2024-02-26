@@ -25,7 +25,7 @@ public class MakeCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
-    node = new CommandNode("control.MakeCommand", model);
+    node = new CommandNode("control.Make", model);
     Node variableNode = new VariableNode("MyVar", model);
     node.addChild(variableNode);
     node.addChild(new ConstantNode("5", model));
@@ -38,9 +38,9 @@ public class MakeCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
-    node = new CommandNode("control.MakeCommand", model);
+    node = new CommandNode("control.Make", model);
     Node variableNode = new VariableNode("Var", model);
-    Node nodeTwo = new CommandNode("math.SumCommand", model);
+    Node nodeTwo = new CommandNode("math.Sum", model);
     Node nodeThree = new ConstantNode("5", model);
     Node nodeFour = new ConstantNode("7", model);
     node.addChild(variableNode);

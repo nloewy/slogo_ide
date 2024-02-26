@@ -25,7 +25,7 @@ public class RightCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.RightCommand", model);
+    node = new CommandNode("turtle.Right", model);
 
   }
 

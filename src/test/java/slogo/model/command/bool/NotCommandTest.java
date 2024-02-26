@@ -23,7 +23,7 @@ public class NotCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("bool.NotCommand", model);
+    node = new CommandNode("bool.Not", model);
   }
 
   @ParameterizedTest

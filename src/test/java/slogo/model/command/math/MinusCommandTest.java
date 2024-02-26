@@ -25,7 +25,7 @@ public class MinusCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.MinusCommand", model);
+    node = new CommandNode("math.Minus", model);
 
   }
 
