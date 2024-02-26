@@ -3,6 +3,7 @@ package slogo.model.command.math;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import slogo.model.command.CommandTest;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -61,8 +62,7 @@ public class RandomCommandTest extends CommandTest {
   void testRandomNegative()
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode("-90.00000", null, myListener));
-    Throwable e = assertThrows(IllegalArgumentException.class, () -> {
-      node.getValue();
-    });
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
+    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

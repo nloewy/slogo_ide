@@ -3,6 +3,7 @@ package slogo.model.command.math;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import slogo.model.command.CommandTest;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
@@ -58,9 +59,8 @@ public class RemainderCommandTest extends CommandTest {
     {
       node.addChild(new ConstantNode("50", null, myListener));
       node.addChild(new ConstantNode("0", null, myListener));
-      Throwable e = assertThrows(ArithmeticException.class, () -> {
-        node.getValue();
-      });
+      Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
+      assertInstanceOf(ArithmeticException.class, e.getCause());
     }
 
   }

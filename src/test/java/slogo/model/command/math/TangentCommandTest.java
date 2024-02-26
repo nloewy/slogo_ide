@@ -3,7 +3,9 @@ package slogo.model.command.math;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import slogo.model.command.CommandTest;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,8 +66,7 @@ public class TangentCommandTest extends CommandTest {
   void testTangentInvalid(String degrees)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     node.addChild(new ConstantNode(degrees, null, myListener));
-    Throwable e = assertThrows(ArithmeticException.class, () -> {
-      node.getValue();
-    });
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
+    assertInstanceOf(ArithmeticException.class, e.getCause());
   }
-}
+  }

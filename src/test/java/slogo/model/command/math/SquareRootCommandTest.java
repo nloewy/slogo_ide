@@ -3,6 +3,7 @@ package slogo.model.command.math;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import slogo.model.command.CommandTest;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
@@ -88,8 +89,7 @@ public class SquareRootCommandTest extends CommandTest {
   void testSquareRootNegatives(String op1)
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null, myListener));
-    Throwable e = assertThrows(IllegalArgumentException.class, () -> {
-      node.getValue();
-    });
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
+    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }
