@@ -7,7 +7,7 @@ import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class NotCommand extends Command {
+public class NotCommand implements Command {
   public static final int NUM_ARGS = 1;
   private final ModelState modelState;
   private final SlogoListener listener;

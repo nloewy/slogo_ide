@@ -8,7 +8,7 @@ import slogo.model.Turtle;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class LeftCommand extends Command {
+public class LeftCommand implements Command {
   public static final int NUM_ARGS = 1;
   private final ModelState modelState;
   private final SlogoListener listener;

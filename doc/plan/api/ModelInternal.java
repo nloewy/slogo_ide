@@ -42,7 +42,7 @@ public abstract class Node {
 /**
  * Represents a command to be executed.
  */
-public abstract class Command {
+interface Command {
 
   /**
    * Executes the command with the given arguments.
@@ -54,23 +54,6 @@ public abstract class Command {
    */
   public abstract Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException;
-
-  /**
-   * Retrieves the number of arguments expected by the command.
-   *
-   * @return The number of arguments expected by the command.
-   */
-  public abstract int getNumArgs();
-
-  /**
-   * Notifies the provided listener with a return value.
-   *
-   * @param listener The listener to be notified.
-   * @param value    The value to be returned by a command.
-   */
-  public void notifyListener(SlogoListener listener, double value) {
-    listener.onReturn(value);
-  }
 }
 
 

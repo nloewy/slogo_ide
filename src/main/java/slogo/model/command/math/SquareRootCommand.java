@@ -7,7 +7,7 @@ import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class SquareRootCommand extends Command {
+public class SquareRootCommand implements Command {
   public static final int NUM_ARGS = 1;
   private final ModelState modelState;
   private final SlogoListener listener;

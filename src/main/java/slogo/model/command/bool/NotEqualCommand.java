@@ -7,7 +7,7 @@ import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class NotEqualCommand extends Command {
+public class NotEqualCommand implements Command {
   public static final int NUM_ARGS = 2;
   private final ModelState modelState;
   private final SlogoListener listener;

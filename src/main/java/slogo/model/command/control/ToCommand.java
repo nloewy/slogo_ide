@@ -7,7 +7,7 @@ import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class ToCommand extends Command {
+public class ToCommand implements Command {
 
   public static final int NUM_ARGS = 3;
   private final ModelState modelState;

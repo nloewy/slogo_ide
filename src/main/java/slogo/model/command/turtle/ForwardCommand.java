@@ -9,7 +9,7 @@ import slogo.model.Turtle;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class ForwardCommand extends Command {
+public class ForwardCommand implements Command {
   public static final int NUM_ARGS = 1;
   private final ModelState modelState;
   private final SlogoListener listener;

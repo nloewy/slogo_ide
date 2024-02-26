@@ -7,7 +7,7 @@ import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class QuotientCommand extends Command {
+public class QuotientCommand implements Command {
   public static final int NUM_ARGS = 2;
   private final ModelState modelState;
   private final SlogoListener listener;

@@ -7,7 +7,7 @@ import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class YcoordinateCommand extends Command {
+public class YcoordinateCommand implements Command {
   public static final int NUM_ARGS = 0;
   private final ModelState modelState;
   private final SlogoListener listener;

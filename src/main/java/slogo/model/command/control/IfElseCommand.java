@@ -7,7 +7,7 @@ import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class IfElseCommand extends Command {
+public class IfElseCommand implements Command {
   public static final int NUM_ARGS = 3;
   private final ModelState modelState;
   private final SlogoListener listener;
