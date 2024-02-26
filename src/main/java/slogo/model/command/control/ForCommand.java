@@ -25,7 +25,6 @@ public class ForCommand extends Command {
     double end = arguments.get(0).getChildren().get(2).getValue();
     double increment = arguments.get(0).getChildren().get(3).getValue();
     Node commands = arguments.get(1);
-    return modelState -> {
       double res = 0.0;
       for (double i = start; i <= end; i += increment) {
         modelState.getVariables().put(variableName, i);
@@ -36,7 +35,6 @@ public class ForCommand extends Command {
         }
       }
       return res;
-    };
   }
 
 

@@ -23,7 +23,6 @@ public class RepeatCommand extends Command {
     String variableName = "repcount";
     double end = arguments.get(0).getValue();
     Node commands = arguments.get(1);
-    return modelState -> {
       double holder = modelState.getVariables().getOrDefault("repcount", Double.MAX_VALUE);
       double res = 0.0;
       for (double i = 1; i <= end; i += 1) {
@@ -39,8 +38,6 @@ public class RepeatCommand extends Command {
       }
       modelState.getVariables().put("repcount", holder);
       return res;
-    };
-
   }
 
   @Override

@@ -23,7 +23,6 @@ public class IfElseCommand extends Command {
     double arg1 = arguments.get(0).getValue();
     Node toExecuteIfTrue = arguments.get(1);
     Node toExecuteIfFalse = arguments.get(2);
-    return modelState -> {
       if (arg1 != 0.0) {
         try {
           return toExecuteIfTrue.getValue();
@@ -37,7 +36,6 @@ public class IfElseCommand extends Command {
           throw new RuntimeException(e);
         }
       }
-    };
   }
 
   @Override

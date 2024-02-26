@@ -23,10 +23,8 @@ public class ToCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     String name = arguments.get(0).getToken();
     List<Node> variableNodes = arguments.get(0).getChildren();
-    return modelState -> {
       modelState.getUserDefinedCommands().put(name, arguments);
       return 1.0;
-    };
   }
 
   @Override

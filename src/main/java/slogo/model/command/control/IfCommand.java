@@ -22,7 +22,6 @@ public class IfCommand extends Command {
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     Node toExecute = arguments.get(1);
-    return modelState -> {
       if (arg1 != 0) {
         try {
           return toExecute.getValue();
@@ -34,7 +33,6 @@ public class IfCommand extends Command {
       }
       return 0.0;
     };
-  }
 
   @Override
   public int getNumArgs() {

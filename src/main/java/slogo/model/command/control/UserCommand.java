@@ -21,9 +21,8 @@ public class UserCommand extends Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     Node listNode = arguments.get(0);
-    return modelState -> {
-      return 1.0;
-    };
+    return 1.0;
+
   }
 
   @Override

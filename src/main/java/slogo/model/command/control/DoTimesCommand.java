@@ -23,8 +23,7 @@ public class DoTimesCommand extends Command {
     String variableName = arguments.get(0).getChildren().get(0).getToken();
     double end = arguments.get(0).getChildren().get(1).getValue();
     Node commands = arguments.get(1);
-    return modelState -> {
-      double res = 0.0;
+    double res = 0.0;
       for (double i = 1; i <= end; i += 1) {
         modelState.getVariables().put(variableName, i);
         try {
@@ -34,7 +33,7 @@ public class DoTimesCommand extends Command {
         }
       }
       return res;
-    };
+
 
   }
 
