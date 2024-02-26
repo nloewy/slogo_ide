@@ -131,4 +131,20 @@ public class ParseTest {
     assertEquals(480.0, myTurtle.getY(), DELTA);
   }
 
+  @Test
+  void testVariableMaker()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+    slogo.parse("set :count 16");
+    assertEquals(16.0, slogo.getModelstate().getVariables().get("count"));
+    slogo.parse("pendown");
+    assertTrue(slogo.getModelstate().getTurtles().get(0).getPen());
+    slogo.parse("set :count ifelse pendown? power :count 2 sqrt :count");
+    assertEquals(256.0, slogo.getModelstate().getVariables().get("count"));
+    slogo.parse("set :count 16");
+    slogo.parse("penup");
+    slogo.parse("set :count ifelse pendown? power :count 2 sqrt :count");
+    assertEquals(4.0, slogo.getModelstate().getVariables().get("count"));
+  }
+
+
 }
