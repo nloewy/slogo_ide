@@ -66,7 +66,6 @@ public class IfElseCommandTest {
     node.addChild(nodeTwo);
     nodeTwo.addChild(nodeThree);
     nodeTwo.addChild(nodeFour);
-
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
     Node nodeSix = new CommandNode("turtle.Forward", model);

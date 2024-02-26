@@ -82,5 +82,39 @@ public class ParseTest {
     assertEquals(80.0, myTurtle.getY(), DELTA);
   }
 
+  @Test
+  void testVariables()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+    slogo.parse("MAKE :CLASS 308 FORWARD SUM :CLASS 192");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertEquals(500.0, myTurtle.getY(), DELTA);
+  }
+
+  @Test
+  void testRepeat()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+    slogo.parse("MAKE :CLASS 10 REPEAT DIFFERENCE :CLASS 5 [ RIGHT :CLASS ]");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertEquals(50.0, myTurtle.getHeading(), DELTA);
+  }
+
+
+  @Test
+  void testRandom()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+    slogo.parse("rt 270 make :random sum 1 random 100 fd sum 1 :random");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertEquals(0.0, myTurtle.getY(), DELTA);
+    assertTrue(myTurtle.getX() < -1 && myTurtle.getX() > -101);
+    assertEquals(270.0, myTurtle.getHeading(), DELTA);
+  }
+  @Test
+  void testDash()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+    slogo.parse("set :count 12 set :distance 20 to dash [ ] [ repeat :count [ pu fd :distance pd fd :distance ] ] dash");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertTrue( myTurtle.getPen());
+    assertEquals(480.0, myTurtle.getY(), DELTA);
+  }
 
 }
