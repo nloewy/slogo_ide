@@ -37,6 +37,7 @@ public class Controller {
     }
 
 
+    // This method may need to use the Model api -- loadXML and others
     public void loadSession() {
         // This opens a file chooser. Once the file is chosen, it opens a new session
         // The file is not currently used for anything
@@ -78,4 +79,7 @@ public class Controller {
         return currentLanguage;
     }
 
+    public View getView() {
+        return view;
+    }
 }

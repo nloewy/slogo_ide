@@ -153,7 +153,7 @@ public class MainScreen implements ViewInternal {
         // this is here for testing, this should be replaced with animation
         turtle.getDisplay().setLayoutX(turtle.getPosition()[0]);
         turtle.getDisplay().setLayoutY(turtle.getPosition()[1]);
-        //TODO rotation needs troubleshooting
+        // TODO rotation needs troubleshooting
         turtle.getDisplay().setRotate(turtle.getHeading());
 
         if (turtle.isPenDisplayed()) {

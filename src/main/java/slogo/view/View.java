@@ -158,6 +158,14 @@ public class View implements SlogoListener {
 
     }
 
+    public String getLanguage() {
+        return lang;
+    }
+
+    public Object getScene() {
+        return stage.getScene();
+    }
+
 //   /*
 //    * Gets the current exception, and shows
 //    * it as an alert.
