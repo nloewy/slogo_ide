@@ -5,19 +5,23 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Stack;
 import slogo.model.api.Model;
 import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.ListNode;
 import slogo.model.node.Node;
+import slogo.model.node.VariableNode;
+
 
 public class SlogoModel implements Model {
 
   private final SlogoListener myListener;
-  private final List<Turtle> myTurtles;
-  private final Map<String, Double> myVariables;
   private final ModelState modelstate;
 
   private final Map<String, String> syntaxMap;
@@ -26,13 +30,10 @@ public class SlogoModel implements Model {
 
   public SlogoModel(SlogoListener listener) {
     modelstate = new ModelState();
-    myTurtles = new ArrayList<>();
-    myVariables = new HashMap<>();
-
+    modelstate.getTurtles().add(new Turtle(1));
     myListener = listener;
     syntaxMap = loadRegexMap("src/main/resources/slogo/example/languages/Syntax.properties");
     commandMap = loadCommandMap("src/main/resources/slogo/example/languages/English.properties");
-
   }
 
 
@@ -45,15 +46,12 @@ public class SlogoModel implements Model {
       for (String key : properties.stringPropertyNames()) {
         regexMap.put(properties.getProperty(key), key);
       }
-      System.out.println("Properties as Map:");
-      for (Map.Entry<String, String> entry : regexMap.entrySet()) {
-        System.out.println(entry.getKey() + " = " + entry.getValue());
-      }
     } catch (IOException e) {
       e.printStackTrace();
     }
     return regexMap;
   }
+
 
   private Map<String, String> loadCommandMap(String filePath) {
     Properties properties = new Properties();
@@ -77,48 +75,56 @@ public class SlogoModel implements Model {
     return commandMap;
   }
 
-  /**
-   * Parses the given command string.
-   *
-   * @param commandStr The command string to parse.
-   * @throws IllegalArgumentException If the command is invalid.
-   */
-  /**
-   * Parses the given command string.
-   *
-   * @param commandStr The command string to parse.
-   * @throws IllegalArgumentException If the command is invalid.
-   */
-  public void parse(String commandStr) throws IllegalArgumentException {
-
-    String[] tokens = commandStr.split("\\s+");
+  public void parse(String input)
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    List<String> tokens = Arrays.asList(input.split("\\s+"));
+    Stack<Node> nodeStack = new Stack<>();
+    Node rootNode = new ListNode("", modelstate); // Create a root node
+    nodeStack.push(rootNode);
     for (String token : tokens) {
-      boolean matched = false;
-      for (String key : syntaxMap.keySet()) {
-        if (token.matches(key)) {
-          matched = true;
-          if (currentNode == null) {
-            if (!(syntaxMap.get(key).equals("Command"))) {
-              throw new IllegalArgumentException("Command Required");
-            } else {
-              try {
-                String[] typeToken = commandMap.get(token).split("\\.");
+      if (token.isEmpty() || token.startsWith("#")) {
+        continue;
+      }
+      if (token.equals("[")) {
+        nodeStack.push(new ListNode("", modelstate));
+      } else if (token.equals("]")) {
+        while(nodeStack.size()>1 && !nodeStack.peek().getToken().equals('[')) {
+          nodeStack.pop();
+        }
+        if(!nodeStack.isEmpty()) {nodeStack.pop();}
+      } else {
+        createNode(token);
+        if (nodeStack.peek().equals(rootNode)) {
 
-                Node node = new CommandNode(
-                    "command." + typeToken[0] + "." + typeToken[1] + "Command", modelstate);
-              } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
-                       InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-              }
-            }
+          rootNode.addChild(currentNode);
+          nodeStack.push(currentNode);
+        } else if (nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+          while(nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+            nodeStack.pop();
           }
+          nodeStack.peek().addChild(currentNode);
+          nodeStack.push(currentNode);
+        } else {
+          nodeStack.peek().addChild(currentNode);
+          nodeStack.push(currentNode);
         }
       }
-      if (!matched) {
-        throw new IllegalArgumentException("Invalid command token: " + token);
-      }
     }
+    while(nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+      nodeStack.pop();
+    }
+    if (nodeStack.size() != 1) {
+      throw new IllegalArgumentException("Unmatched '['");
+    }
+    rootNode.getValue();
   }
+
+
+  //JUST FOR TESTING ==> WE USE A LISTENER
+  public ModelState getModelstate() {
+    return modelstate;
+  }
+
 
   @Override
   public File loadXml(String path) {
@@ -132,7 +138,27 @@ public class SlogoModel implements Model {
 
   @Override
   public void resetModel() {
+
   }
 
-}
+  private void createNode(String token)
+        throws ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    if (token.matches("-?[0-9]+\\.?[0-9]*")) {
+        currentNode = new ConstantNode(token, modelstate);
+      } else if (token.matches(":[a-zA-Z]+")) {
+        currentNode = new VariableNode(token.substring(1), modelstate); // Removing ":" from the variable name
+      } else if (token.matches("[a-zA-Z_]+(\\?)?")) {
+        token = token.toLowerCase();
+        currentNode = new CommandNode(commandMap.get(token), modelstate);
+      } else if (token.equals("[") || token.equals("]")) {
+    }
+    else {
+      throw new IllegalArgumentException("Invalid token: " + token);
+    }
+    }
+  }
+
+
+
+
 

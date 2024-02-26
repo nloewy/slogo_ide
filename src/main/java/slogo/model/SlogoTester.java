@@ -1,11 +1,13 @@
 package slogo.model;
 
+import java.lang.reflect.InvocationTargetException;
 import slogo.model.api.Model;
 import slogo.model.api.TurtleRecord;
 
 public class SlogoTester {
 
-  public static void main(String[] args) {
+  public static void main(String[] args)
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     Model s = new SlogoModel(new SlogoListener() {
       @Override
       public void onUpdateValue(String variableName, Number newValue) {
@@ -27,6 +29,6 @@ public class SlogoTester {
 
       }
     });
-    s.parse("RIGHT IFELSE PENUP PLUS 50 30 PRODUCT 30 PLUS 1 1 FD 50 END END");
+    s.parse("FORWARD #LOL IFELSE PENUP SUM 50 30 PRODUCT 30 SUM 1 1 RT 50");
   }
 }

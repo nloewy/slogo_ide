@@ -19,7 +19,7 @@ public abstract class Node {
   }
 
   public String getToken() {
-    return null;
+    return "";
   }
 
   public int getNumArgs()
