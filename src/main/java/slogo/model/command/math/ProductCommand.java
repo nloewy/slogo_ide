@@ -25,9 +25,4 @@ public class ProductCommand extends Command {
     return arg1 * arg2;
   }
 
-    /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
-
 }

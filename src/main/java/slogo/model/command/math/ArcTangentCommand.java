@@ -24,10 +24,4 @@ public class ArcTangentCommand extends Command {
     double arg1 = arguments.get(0).getValue();
     return MathUtils.toDegrees(Math.atan(arg1));
   }
-
-    /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
-
 }

@@ -27,11 +27,4 @@ public class TangentCommand extends Command {
     }
     return Math.tan(MathUtils.toRadians(arg1));
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
-
 }

@@ -26,11 +26,4 @@ public class NaturalLogCommand extends Command {
     }
     return Math.log(arg1);
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
-
 }

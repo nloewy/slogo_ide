@@ -24,11 +24,4 @@ public class SumCommand extends Command {
     double arg2 = arguments.get(1).getValue();
     return arg1 + arg2;
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
-
 }

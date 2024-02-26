@@ -24,11 +24,4 @@ public class MinusCommand extends Command {
     return -arg1;
 
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
-
 }

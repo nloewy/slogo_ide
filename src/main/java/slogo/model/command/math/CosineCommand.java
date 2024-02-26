@@ -24,11 +24,4 @@ public class CosineCommand extends Command {
     double arg1 = arguments.get(0).getValue();
     return Math.cos(MathUtils.toRadians(arg1));
   }
-
-  
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
-
 }
