@@ -16,7 +16,7 @@ public class PiCommandTest {
 
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     ModelState model = new ModelState();
-    assertEquals(Math.PI, new CommandNode("math.PiCommand", model).getValue(),
+    assertEquals(Math.PI, new CommandNode("math.Pi", model).getValue(),
         DELTA);
   }
 }

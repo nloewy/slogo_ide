@@ -19,7 +19,9 @@ public class CommandNode extends Node {
       throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
       InstantiationException, IllegalAccessException {
     super();
-    myToken = "slogo.model.command." + token;
+
+    myToken = "slogo.model.command." + token + "Command";
+    System.out.println(myToken);
     Class<?> clazz = Class.forName(myToken);
     command = (Command) clazz.getDeclaredConstructor().newInstance();
     m = clazz.getDeclaredMethod("execute", List.class);
@@ -39,8 +41,8 @@ public class CommandNode extends Node {
       throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
     Class<?> clazz = Class.forName(myToken);
     Command command = (Command) clazz.getDeclaredConstructor().newInstance();
-    Method method = clazz.getDeclaredMethod("getNumArgs", List.class);
-    return (int) m.invoke(command);
+    Method method = clazz.getDeclaredMethod("getNumArgs");
+    return (int) method.invoke(command);
   }
 
 }

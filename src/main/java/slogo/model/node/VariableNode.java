@@ -10,7 +10,7 @@ public class VariableNode extends Node {
 
   public VariableNode(String token, ModelState modelState) {
     myModelState = modelState;
-    myToken = token;
+    myToken = token.toLowerCase();
   }
 
   @Override

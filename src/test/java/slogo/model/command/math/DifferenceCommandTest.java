@@ -25,7 +25,7 @@ public class DifferenceCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.DifferenceCommand", model);
+    node = new CommandNode("math.Difference", model);
 
   }
 

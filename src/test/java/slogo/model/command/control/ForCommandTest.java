@@ -32,8 +32,8 @@ public class ForCommandTest {
   @Test
   void testForForwardVariableNotUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.ForCommand", model);
-    Node fwdNode = new CommandNode("turtle.ForwardCommand", model);
+    node = new CommandNode("control.For", model);
+    Node fwdNode = new CommandNode("turtle.Forward", model);
     Node varNode = new VariableNode("i", model);
     Node listNode = new ListNode("", model);
     Node commandListNode = new ListNode("", model);
@@ -52,10 +52,10 @@ public class ForCommandTest {
   @Test
   void testForForwardVariableUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.ForCommand", model);
+    node = new CommandNode("control.For", model);
     Node listNode = new ListNode("", model);
     Node commandListNode = new ListNode("", model);
-    Node cmdNode = new CommandNode("turtle.ForwardCommand", model);
+    Node cmdNode = new CommandNode("turtle.Forward", model);
     commandListNode.addChild(cmdNode);
     Node varNode = new VariableNode("i", model);
     cmdNode.addChild(new VariableNode("i", model));
@@ -63,7 +63,7 @@ public class ForCommandTest {
     listNode.addChild(new ConstantNode("5", model));
     listNode.addChild(new ConstantNode("10", model));
     listNode.addChild(new ConstantNode("1", model));
-    Node cmdNode2 = new CommandNode("turtle.ForwardCommand", model);
+    Node cmdNode2 = new CommandNode("turtle.Forward", model);
     cmdNode2.addChild(new VariableNode("i", model));
     commandListNode.addChild(cmdNode2);
     node.addChild(listNode);

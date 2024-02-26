@@ -27,7 +27,7 @@ public class SetTowardsCommandTest {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.SetTowardsCommand", model);
+    node = new CommandNode("turtle.SetTowards", model);
   }
 
   @ParameterizedTest

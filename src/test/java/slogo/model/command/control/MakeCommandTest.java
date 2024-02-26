@@ -25,12 +25,12 @@ public class MakeCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
-    node = new CommandNode("control.MakeCommand", model);
+    node = new CommandNode("control.Make", model);
     Node variableNode = new VariableNode("MyVar", model);
     node.addChild(variableNode);
     node.addChild(new ConstantNode("5", model));
     Assertions.assertEquals(5, node.getValue());
-    Assertions.assertEquals(5.0, model.getVariables().get("MyVar"));
+    Assertions.assertEquals(5.0, model.getVariables().get("myvar"));
   }
 
   @Test
@@ -38,9 +38,9 @@ public class MakeCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
-    node = new CommandNode("control.MakeCommand", model);
+    node = new CommandNode("control.Make", model);
     Node variableNode = new VariableNode("Var", model);
-    Node nodeTwo = new CommandNode("math.SumCommand", model);
+    Node nodeTwo = new CommandNode("math.Sum", model);
     Node nodeThree = new ConstantNode("5", model);
     Node nodeFour = new ConstantNode("7", model);
     node.addChild(variableNode);
@@ -48,7 +48,7 @@ public class MakeCommandTest {
     nodeTwo.addChild(nodeThree);
     nodeTwo.addChild(nodeFour);
     Assertions.assertEquals(12, node.getValue());
-    Assertions.assertEquals(12.0, model.getVariables().get("Var"));
+    Assertions.assertEquals(12.0, model.getVariables().get("var"));
   }
 
 }

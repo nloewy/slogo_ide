@@ -27,7 +27,7 @@ public class LogCommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.NaturalLogCommand", model);
+    node = new CommandNode("math.NaturalLog", model);
 
   }
 
