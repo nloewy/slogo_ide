@@ -30,7 +30,7 @@ public class MakeCommandTest {
     node.addChild(variableNode);
     node.addChild(new ConstantNode("5", model));
     Assertions.assertEquals(5, node.getValue());
-    Assertions.assertEquals(5.0, model.getVariables().get("MyVar"));
+    Assertions.assertEquals(5.0, model.getVariables().get("myvar"));
   }
 
   @Test
@@ -48,7 +48,7 @@ public class MakeCommandTest {
     nodeTwo.addChild(nodeThree);
     nodeTwo.addChild(nodeFour);
     Assertions.assertEquals(12, node.getValue());
-    Assertions.assertEquals(12.0, model.getVariables().get("Var"));
+    Assertions.assertEquals(12.0, model.getVariables().get("var"));
   }
 
 }

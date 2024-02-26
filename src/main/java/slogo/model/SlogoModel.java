@@ -46,7 +46,7 @@ public class SlogoModel implements Model {
       if (token.equals("[")) {
         nodeStack.push(new ListNode("", modelstate));
       } else if (token.equals("]")) {
-        while(!nodeStack.isEmpty()) {
+        while (!nodeStack.isEmpty()) {
           nodeStack.peek().getToken();
           nodeStack.pop();
         }
@@ -55,35 +55,32 @@ public class SlogoModel implements Model {
         if (nodeStack.peek().equals(rootNode)) {
           rootNode.addChild(currentNode);
           nodeStack.push(currentNode);
-        } else if (nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
-          while(!nodeStack.peek().equals(rootNode) && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
-            nodeStack.pop();
-          }
-          nodeStack.peek().addChild(currentNode);
-          nodeStack.push(currentNode);
         } else {
+          if (nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+            while (!nodeStack.peek().equals(rootNode)
+                && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+              nodeStack.pop();
+            }
+          }
           nodeStack.peek().addChild(currentNode);
           nodeStack.push(currentNode);
         }
       }
     }
-    while(!nodeStack.isEmpty()  && nodeStack.peek().getNumArgs() <= nodeStack.peek().getChildren().size()) {
+    while (!nodeStack.isEmpty() && nodeStack.peek().getNumArgs() <= nodeStack.peek().getChildren()
+        .size()) {
       nodeStack.pop();
     }
-
     if (!nodeStack.isEmpty()) {
       throw new IllegalArgumentException("Unmatched '['");
     }
-
     rootNode.getValue();
   }
-
 
   //JUST FOR TESTING ==> WE USE A LISTENER
   public ModelState getModelstate() {
     return modelstate;
   }
-
 
   @Override
   public File loadXml(String path) {
@@ -102,20 +99,19 @@ public class SlogoModel implements Model {
   }
 
   private void createNode(String token)
-        throws ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+      throws ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     if (token.matches("-?[0-9]+\\.?[0-9]*")) {
-        currentNode = new ConstantNode(token, modelstate);
-      } else if (token.matches(":[a-zA-Z]+")) {
-        currentNode = new VariableNode(token.substring(1), modelstate); // Removing ":" from the variable name
-      } else if (token.matches("[a-zA-Z_]+(\\?)?")) {
-        token = token.toLowerCase();
-        currentNode = new CommandNode(commandMap.get(token), modelstate);
-      } else if (token.equals("[") || token.equals("]")) {
-    }
-    else {
+      currentNode = new ConstantNode(token, modelstate);
+    } else if (token.matches(":[a-zA-Z]+")) {
+      currentNode = new VariableNode(token.substring(1),
+          modelstate); // Removing ":" from the variable name
+    } else if (token.matches("[a-zA-Z_]+(\\?)?")) {
+      token = token.toLowerCase();
+      currentNode = new CommandNode(commandMap.get(token), modelstate);
+    } else {
       throw new IllegalArgumentException("Invalid token: " + token);
     }
-    }
+  }
 
   private Map<String, String> loadCommandMap(String filePath) {
     Properties properties = new Properties();
@@ -134,7 +130,7 @@ public class SlogoModel implements Model {
     }
     return commandMap;
   }
-  }
+}
 
 
 

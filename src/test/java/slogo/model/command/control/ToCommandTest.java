@@ -70,7 +70,6 @@ public class ToCommandTest {
       String token = model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().get(i)
           .getToken();
       model.getVariables().put(token, newNodes.get(i).getValue());
-
     }
     assertEquals(3.0, model.getUserDefinedCommands().get("HalfSquare").get(1).getValue(), DELTA);
     assertEquals(2.0, myTurtle.getY(), DELTA);
