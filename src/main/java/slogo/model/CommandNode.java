@@ -25,6 +25,7 @@ public class CommandNode extends Node {
     myModelState = modelState;
   }
 
+
   public double getValue() throws InvocationTargetException, IllegalAccessException {
     List<Node> children = getChildren();
     Function<ModelState, Double> action = (Function<ModelState, Double>) m.invoke(command,

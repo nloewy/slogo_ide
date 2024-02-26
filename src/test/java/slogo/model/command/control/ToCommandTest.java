@@ -3,6 +3,8 @@ package slogo.model.command.control;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.CommandNode;
@@ -13,7 +15,6 @@ import slogo.model.Node;
 import slogo.model.Turtle;
 import slogo.model.UserCommandNode;
 import slogo.model.VariableNode;
-import slogo.model.command.Command;
 
 public class ToCommandTest {
 
@@ -33,17 +34,54 @@ public class ToCommandTest {
   }
 
   @Test
+  void testToCommandYesVariables()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+    node = new CommandNode("control.ToCommand", model);
+    Node nodeTwo = new UserCommandNode("HalfSquare",  model);
+    nodeTwo.addChild(new VariableNode("var1", model));
+    nodeTwo.addChild(new VariableNode("var2", model));
+    nodeTwo.addChild(new VariableNode("var3", model));
+    node.addChild(nodeTwo);
+
+    Node fwdNode = new CommandNode("turtle.ForwardCommand", model);
+    fwdNode.addChild(new VariableNode("var1", model));
+
+    Node rightNode = new CommandNode("turtle.RightCommand", model);
+    rightNode.addChild(new VariableNode("var2", model));
+
+    Node fwdNodeSecond = new CommandNode("turtle.ForwardCommand", model);
+    fwdNodeSecond.addChild(new VariableNode("var3", model));
+
+    Node commandList = new ListNode("", model);
+    commandList.addChild(fwdNode);
+    commandList.addChild(rightNode);
+    commandList.addChild(fwdNodeSecond);
+    node.addChild(commandList);
+
+    assertEquals(1.0, node.getValue(), DELTA);
+
+    List<Node> newNodes = new ArrayList<>(); //nodeTwo.getChildren.size() nodes
+    newNodes.add(new ConstantNode("2", model));
+    newNodes.add(new ConstantNode("90", model));
+    newNodes.add(new ConstantNode("3", model));
+
+    for(int i = 0; i < model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().size() ; i++) {
+      //in reality wld parse
+      String token = model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().get(i).getToken();
+      model.getVariables().put(token, newNodes.get(i).getValue());
+
+    }
+    assertEquals(3.0, model.getUserDefinedCommands().get("HalfSquare").get(1).getValue(), DELTA);
+    assertEquals(2.0, myTurtle.getY(), DELTA);
+    assertEquals(3.0, myTurtle.getX(), DELTA);
+  }
+
+  @Test
   void testToCommandNoVariables()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     node = new CommandNode("control.ToCommand", model);
     Node nodeTwo = new UserCommandNode("HalfSquare",  model);
     node.addChild(nodeTwo);
-    Node nodeThree = new VariableNode("var1", model);
-    Node nodeFour = new VariableNode("var2", model);
-    nodeTwo.addChild(nodeThree);
-    nodeTwo.addChild(nodeFour);
-
-
 
     Node fwdNode = new CommandNode("turtle.ForwardCommand", model);
     fwdNode.addChild(new ConstantNode("2", model));
@@ -51,56 +89,27 @@ public class ToCommandTest {
     Node rightNode = new CommandNode("turtle.RightCommand", model);
     rightNode.addChild(new ConstantNode("90", model));
 
-    Node commandList = new ListNode("", model);
-    commandList.addChild(fwdNode);
-    commandList.addChild(rightNode);
-    commandList.addChild(fwdNode);
-    node.addChild(commandList);
-
-    assertEquals(1.0, node.getValue(), DELTA);
-
-    Command c = new UserCommand();
-
-    assertEquals(2,  model.applyCommandToModelState(c.execute(model.getUserDefinedCommands().get("HalfSquare"))));
-    assertEquals(2.0, myTurtle.getY(), DELTA);
-    assertEquals(2.0, myTurtle.getX(), DELTA);
-  }
-
-  @Test
-  void testToCommandWithVariables()
-      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.ToCommand", model);
-    Node nodeTwo = new UserCommandNode("HalfSquare", model);
-    node.addChild(nodeTwo);
-
-
-    Node fwdNode = new CommandNode("turtle.ForwardCommand", model);
-    fwdNode.addChild(new ConstantNode("2", model));
-
-    Node rightNode = new CommandNode("turtle.RightCommand", model);
-    rightNode.addChild(new VariableNode("i", model));
-
+    Node fwdNodeSecond = new CommandNode("turtle.ForwardCommand", model);
+    fwdNodeSecond.addChild(new ConstantNode("3", model));
 
     Node commandList = new ListNode("", model);
     commandList.addChild(fwdNode);
     commandList.addChild(rightNode);
-    commandList.addChild(fwdNode);
+    commandList.addChild(fwdNodeSecond);
     node.addChild(commandList);
-
-
-    Node variableMaker = new CommandNode("control.MakeCommand", model);
-    variableMaker.addChild(new VariableNode("i", model));
-    variableMaker.addChild(new ConstantNode("90", model));
-    assertEquals(90.0, variableMaker.getValue(), DELTA);
-
 
     assertEquals(1.0, node.getValue(), DELTA);
 
+    List<Node> newNodes = new ArrayList<>(); //nodeTwo.getChildren.size() nodes
 
-    Command c = new UserCommand();
+    for(int i = 0; i < model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().size() ; i++) {
+      //in reality wld parse
+      String token = model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().get(i).getToken();
+      model.getVariables().put(token, newNodes.get(i).getValue());
 
-    assertEquals(2.0,  model.applyCommandToModelState(c.execute(model.getUserDefinedCommands().get("HalfSquare"))));
+    }
+    assertEquals(3.0, model.getUserDefinedCommands().get("HalfSquare").get(1).getValue(), DELTA);
     assertEquals(2.0, myTurtle.getY(), DELTA);
-    assertEquals(2.0, myTurtle.getX(), DELTA);
+    assertEquals(3.0, myTurtle.getX(), DELTA);
   }
 }

@@ -20,10 +20,10 @@ public class UserCommandNode extends Node {
     myModelState = modelState;
   }
 
-  public double getValue() throws InvocationTargetException, IllegalAccessException {
+  public double getValue() throws InvocationTargetException {
     List<Node> children = getChildren();
-    Command commandMaker = new UserCommand();
-    return myModelState.applyCommandToModelState(commandMaker.execute(children));
+    List<Node> arguments =  myModelState.getUserDefinedCommands().get(children.get(0).getToken());
+    return 5.0;
   }
 
   public String getToken() {

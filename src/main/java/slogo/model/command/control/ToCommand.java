@@ -8,6 +8,7 @@ import java.util.function.Function;
 import slogo.model.ModelState;
 import slogo.model.Node;
 import slogo.model.SlogoListener;
+
 import slogo.model.command.Command;
 
 public class ToCommand extends Command {
@@ -16,17 +17,17 @@ public class ToCommand extends Command {
   @Override
   public Function<ModelState, Double> execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    Node userDefinedNode = arguments.get(0);
-
+    String name = arguments.get(0).getToken();
+    List<Node> variableNodes = arguments.get(0).getChildren();
     return modelState -> {
-      modelState.getUserDefinedCommands().put(userDefinedNode.getToken(), arguments);
+      modelState.getUserDefinedCommands().put(name, arguments);
       return 1.0;
     };
   }
 
   @Override
   public int getNumArgs() {
-    return 2;
+    return 3;
   }
   public void notifyListener(SlogoListener listener, double value) {
 
