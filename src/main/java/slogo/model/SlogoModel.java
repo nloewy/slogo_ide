@@ -46,10 +46,10 @@ public class SlogoModel implements Model {
       if (token.equals("[")) {
         nodeStack.push(new ListNode("", modelstate));
       } else if (token.equals("]")) {
-        while(!nodeStack.isEmpty() && !nodeStack.peek().getToken().equals('[')) {
+        while(!nodeStack.isEmpty()) {
+          nodeStack.peek().getToken();
           nodeStack.pop();
         }
-        if(!nodeStack.isEmpty()) {nodeStack.pop();}
       } else {
         createNode(token);
         if (nodeStack.peek().equals(rootNode)) {
