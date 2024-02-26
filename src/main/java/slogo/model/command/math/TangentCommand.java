@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
-import slogo.model.api.Node;
+import slogo.model.Node;
 import slogo.model.command.Command;
 
 public class TangentCommand extends Command {
