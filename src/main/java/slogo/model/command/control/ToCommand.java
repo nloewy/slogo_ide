@@ -4,10 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.node.Node;
 import slogo.model.SlogoListener;
-
 import slogo.model.command.Command;
+import slogo.model.node.Node;
 
 public class ToCommand extends Command {
 
@@ -27,6 +26,7 @@ public class ToCommand extends Command {
   public int getNumArgs() {
     return 3;
   }
+
   public void notifyListener(SlogoListener listener, double value) {
 
     //super.notifyListener(listener, value);

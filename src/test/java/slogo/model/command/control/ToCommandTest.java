@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.ListNode;
-import slogo.model.ModelState;
 import slogo.model.node.Node;
-import slogo.model.Turtle;
 import slogo.model.node.UserCommandNode;
 import slogo.model.node.VariableNode;
 
@@ -37,7 +37,7 @@ public class ToCommandTest {
   void testToCommandYesVariables()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     node = new CommandNode("control.ToCommand", model);
-    Node nodeTwo = new UserCommandNode("HalfSquare",  model);
+    Node nodeTwo = new UserCommandNode("HalfSquare", model);
     nodeTwo.addChild(new VariableNode("var1", model));
     nodeTwo.addChild(new VariableNode("var2", model));
     nodeTwo.addChild(new VariableNode("var3", model));
@@ -65,8 +65,10 @@ public class ToCommandTest {
     newNodes.add(new ConstantNode("90", model));
     newNodes.add(new ConstantNode("3", model));
 
-    for(int i = 0; i < model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().size() ; i++) {
-      String token = model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().get(i).getToken();
+    for (int i = 0;
+        i < model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().size(); i++) {
+      String token = model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().get(i)
+          .getToken();
       model.getVariables().put(token, newNodes.get(i).getValue());
 
     }
@@ -79,7 +81,7 @@ public class ToCommandTest {
   void testToCommandNoVariables()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     node = new CommandNode("control.ToCommand", model);
-    Node nodeTwo = new UserCommandNode("HalfSquare",  model);
+    Node nodeTwo = new UserCommandNode("HalfSquare", model);
     node.addChild(nodeTwo);
 
     Node fwdNode = new CommandNode("turtle.ForwardCommand", model);
@@ -101,9 +103,11 @@ public class ToCommandTest {
 
     List<Node> newNodes = new ArrayList<>(); //nodeTwo.getChildren.size() nodes
 
-    for(int i = 0; i < model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().size() ; i++) {
+    for (int i = 0;
+        i < model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().size(); i++) {
       //in reality wld parse
-      String token = model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().get(i).getToken();
+      String token = model.getUserDefinedCommands().get("HalfSquare").get(0).getChildren().get(i)
+          .getToken();
       model.getVariables().put(token, newNodes.get(i).getValue());
 
     }

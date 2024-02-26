@@ -35,10 +35,16 @@ public abstract class Node {
    *
    * @return The token associated with the node.
    */
-  public String getToken() {
-    return null;
-  }
+  public String getToken();
+
+  /**
+   * Returns number of arguments required following a token
+   *
+   * @return 0 for non-commands, and number of arguments required for (non-user defined commands)
+   */
+  public int getNumArgs();
 }
+
 
 /**
  * Represents a command to be executed.

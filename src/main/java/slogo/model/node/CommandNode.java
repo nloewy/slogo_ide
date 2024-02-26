@@ -34,4 +34,13 @@ public class CommandNode extends Node {
     return myModelState.applyCommandToModelState(action);
   }
 
+  @Override
+  public int getNumArgs()
+      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    Class<?> clazz = Class.forName(myToken);
+    Command command = (Command) clazz.getDeclaredConstructor().newInstance();
+    Method method = clazz.getDeclaredMethod("getNumArgs", List.class);
+    return (int) m.invoke(command);
+  }
+
 }
