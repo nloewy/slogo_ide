@@ -1,7 +1,9 @@
 package slogo.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,23 +44,43 @@ public class ParseTest {
 
   }
 
+@Test
+  void testCommandZero()throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+    slogo.parse("PENUP");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertFalse(myTurtle.getPen());
+  }
+
 
   @Test
-  void testCommandOne()
+  void testNestedIfElseFalse()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    slogo.parse("PENUP FORWARD #LOL IFELSE PENDOWNP SUM 50 30 PRODUCT 30 SUM 1 1 RT 50");
+    slogo.parse("PENUP FORWARD #LOL IFELSE PENDOWN? SUM 50 30 PRODUCT 30 SUM 1 1 RT 50");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertFalse(myTurtle.getPen());
     assertEquals(60.0, myTurtle.getY(), DELTA);
     assertEquals(50.0, myTurtle.getHeading(), DELTA);
   }
 
   @Test
-  void testCommandTwo()
+  void testNestedIfElseTrue()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    slogo.parse("PENDOWN #LOL IFELSE PENDOWNP SUM 50 30 PRODUCT 30 SUM 1 1 RT 50 ]");
+    slogo.parse("PENDOWN #LOL FORWARD IFELSE PENDOWNP SUM 50 30 PRODUCT 30 SUM 1 1 RT 50");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
-    assertEquals(80.0, myTurtle.getY(), DELTA);
+    assertTrue(myTurtle.getPen());
     assertEquals(50.0, myTurtle.getHeading(), DELTA);
+    assertEquals(80.0, myTurtle.getY(), DELTA);
+
   }
+  @Test
+  void testNestedIfElseList()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
+    slogo.parse("[ [ [ [ PENDOWN #LOL FORWARD IFELSE PENDOWNP SUM 50 30 PRODUCT 30 SUM 1 1 RT 50 ] ] ] ]");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertTrue(myTurtle.getPen());
+    assertEquals(50.0, myTurtle.getHeading(), DELTA);
+    assertEquals(80.0, myTurtle.getY(), DELTA);
+  }
+
 
 }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -22,9 +21,8 @@ import slogo.model.node.VariableNode;
 public class SlogoModel implements Model {
 
   private final SlogoListener myListener;
-  private final ModelState modelstate;
+  private ModelState modelstate;
 
-  private final Map<String, String> syntaxMap;
   private Map<String, String> commandMap;
   private Node currentNode;
 
@@ -32,54 +30,14 @@ public class SlogoModel implements Model {
     modelstate = new ModelState();
     modelstate.getTurtles().add(new Turtle(1));
     myListener = listener;
-    syntaxMap = loadRegexMap("src/main/resources/slogo/example/languages/Syntax.properties");
     commandMap = loadCommandMap("src/main/resources/slogo/example/languages/English.properties");
-  }
-
-
-  private Map<String, String> loadRegexMap(String filePath) {
-    Properties properties = new Properties();
-    Map<String, String> regexMap = new HashMap<>();
-    try {
-      File file = new File(filePath);
-      properties.load(new FileInputStream(file));
-      for (String key : properties.stringPropertyNames()) {
-        regexMap.put(properties.getProperty(key), key);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return regexMap;
-  }
-
-
-  private Map<String, String> loadCommandMap(String filePath) {
-    Properties properties = new Properties();
-    commandMap = new HashMap<>();
-    try {
-      File file = new File(filePath);
-      properties.load(new FileInputStream(file));
-      for (String commandName : properties.stringPropertyNames()) {
-        String[] aliases = properties.getProperty(commandName).split("\\|");
-        for (String alias : aliases) {
-          commandMap.put(alias, commandName);
-        }
-      }
-      System.out.println("Commands as Map:");
-      for (Map.Entry<String, String> entry : commandMap.entrySet()) {
-        System.out.println(entry.getKey() + " = " + entry.getValue());
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return commandMap;
   }
 
   public void parse(String input)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     List<String> tokens = Arrays.asList(input.split("\\s+"));
     Stack<Node> nodeStack = new Stack<>();
-    Node rootNode = new ListNode("", modelstate); // Create a root node
+    Node rootNode = new ListNode("[", modelstate); // Create a root node
     nodeStack.push(rootNode);
     for (String token : tokens) {
       if (token.isEmpty() || token.startsWith("#")) {
@@ -88,18 +46,17 @@ public class SlogoModel implements Model {
       if (token.equals("[")) {
         nodeStack.push(new ListNode("", modelstate));
       } else if (token.equals("]")) {
-        while(nodeStack.size()>1 && !nodeStack.peek().getToken().equals('[')) {
+        while(!nodeStack.isEmpty() && !nodeStack.peek().getToken().equals('[')) {
           nodeStack.pop();
         }
         if(!nodeStack.isEmpty()) {nodeStack.pop();}
       } else {
         createNode(token);
         if (nodeStack.peek().equals(rootNode)) {
-
           rootNode.addChild(currentNode);
           nodeStack.push(currentNode);
         } else if (nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
-          while(nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+          while(!nodeStack.peek().equals(rootNode) && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
             nodeStack.pop();
           }
           nodeStack.peek().addChild(currentNode);
@@ -110,12 +67,14 @@ public class SlogoModel implements Model {
         }
       }
     }
-    while(nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+    while(!nodeStack.isEmpty()  && nodeStack.peek().getNumArgs() <= nodeStack.peek().getChildren().size()) {
       nodeStack.pop();
     }
-    if (nodeStack.size() != 1) {
+
+    if (!nodeStack.isEmpty()) {
       throw new IllegalArgumentException("Unmatched '['");
     }
+
     rootNode.getValue();
   }
 
@@ -138,7 +97,8 @@ public class SlogoModel implements Model {
 
   @Override
   public void resetModel() {
-
+    modelstate = new ModelState();
+    //modelstate.getTurtles().add(new Turtle(1));
   }
 
   private void createNode(String token)
@@ -156,6 +116,24 @@ public class SlogoModel implements Model {
       throw new IllegalArgumentException("Invalid token: " + token);
     }
     }
+
+  private Map<String, String> loadCommandMap(String filePath) {
+    Properties properties = new Properties();
+    commandMap = new HashMap<>();
+    try {
+      File file = new File(filePath);
+      properties.load(new FileInputStream(file));
+      for (String commandName : properties.stringPropertyNames()) {
+        String[] aliases = properties.getProperty(commandName).split("\\|");
+        for (String alias : aliases) {
+          commandMap.put(alias, commandName);
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return commandMap;
+  }
   }
 
 
