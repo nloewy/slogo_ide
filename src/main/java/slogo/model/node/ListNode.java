@@ -7,7 +7,9 @@ import slogo.model.SlogoListener;
 public class ListNode extends Node {
 
 
+  private String myToken;
   public ListNode(String token, ModelState model, SlogoListener listener) {
+    myToken = token;
   }
 
   @Override
@@ -17,6 +19,10 @@ public class ListNode extends Node {
       ret = child.getValue();
     }
     return ret;
+  }
+
+  public String getToken() {
+    return myToken;
   }
 
 

@@ -76,7 +76,7 @@ public class ParseTest {
   @Test
   void testNestedIfElseList()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
-    slogo.parse("[ [ [ [ PENDOWN #LOL FORWARD IFELSE PENDOWNP SUM 50 30 PRODUCT 30 SUM 1 1 RT 50 ] ] ] ]");
+    slogo.parse("[ [ [ [ [ PENDOWN #LOL FORWARD IFELSE PENDOWNP SUM 50 30 PRODUCT 30 SUM 1 1 RT 50 ] ] ] ] ]");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertTrue(myTurtle.getPen());
     assertEquals(50.0, myTurtle.getHeading(), DELTA);
@@ -129,6 +129,18 @@ public class ParseTest {
     slogo.parse("set :count 12 set :distance 20 to dash [ ] [ repeat :count [ pu fd :distance pd fd :distance ] ] dash");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertTrue( myTurtle.getPen());
+    assertEquals(12.0, slogo.getModelstate().getVariables().get(":count"));
+    assertEquals(20.0, slogo.getModelstate().getVariables().get(":distance"));
+
+    assertEquals(480.0, myTurtle.getY(), DELTA);
+  }
+
+  @Test
+  void testDashWithoutUserDefined()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+    slogo.parse("repeat 12 [ fd 20 fd 20 ]");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertTrue( myTurtle.getPen());
     assertEquals(480.0, myTurtle.getY(), DELTA);
   }
 
@@ -136,15 +148,15 @@ public class ParseTest {
   void testVariableMaker()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("set :count 16");
-    assertEquals(16.0, slogo.getModelstate().getVariables().get("count"));
+    assertEquals(16.0, slogo.getModelstate().getVariables().get(":count"));
     slogo.parse("pendown");
     assertTrue(slogo.getModelstate().getTurtles().get(0).getPen());
     slogo.parse("set :count ifelse pendown? power :count 2 sqrt :count");
-    assertEquals(256.0, slogo.getModelstate().getVariables().get("count"));
+    assertEquals(256.0, slogo.getModelstate().getVariables().get(":count"));
     slogo.parse("set :count 16");
     slogo.parse("penup");
     slogo.parse("set :count ifelse pendown? power :count 2 sqrt :count");
-    assertEquals(4.0, slogo.getModelstate().getVariables().get("count"));
+    assertEquals(4.0, slogo.getModelstate().getVariables().get(":count"));
   }
 
 

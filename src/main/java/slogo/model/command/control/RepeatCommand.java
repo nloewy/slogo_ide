@@ -20,23 +20,22 @@ public class RepeatCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    String variableName = "repcount";
+    String variableName = ":repcount";
     double end = arguments.get(0).getValue();
     Node commands = arguments.get(1);
-    double holder = modelState.getVariables().getOrDefault("repcount", Double.MAX_VALUE);
     double res = 0.0;
+    System.out.println(arguments.get(1).getChildren());
     for (double i = 1; i <= end; i += 1) {
       modelState.getVariables().put(variableName, i);
       try {
         res = commands.getValue();
+        System.out.println(res);
       } catch (InvocationTargetException | IllegalAccessException e) {
+        System.out.println(2);
         throw new RuntimeException(e);
       }
     }
-    if (holder == Double.MAX_VALUE) {
-      holder = end;
-    }
-    modelState.getVariables().put("repcount", holder);
+    modelState.getVariables().remove(":repcount");
     return res;
   }
 }

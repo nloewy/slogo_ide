@@ -18,4 +18,9 @@ public class ConstantNode extends Node {
   public double getValue() throws InvocationTargetException, IllegalAccessException {
     return myConstant;
   }
+
+  public String getToken() {
+    return myToken
+        ;
+  }
 }

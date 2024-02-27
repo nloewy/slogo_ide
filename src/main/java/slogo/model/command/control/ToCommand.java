@@ -21,9 +21,6 @@ public class ToCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    String name = arguments.get(0).getToken();
-    List<Node> variableNodes = arguments.get(0).getChildren();
-    modelState.getUserDefinedCommands().put(name, arguments);
     return 1.0;
   }
 }

@@ -10,12 +10,14 @@ public class ModelState {
 
   private final List<Turtle> myTurtles;
   private final Map<String, Double> myVariables;
-  private final Map<String, List<Node>> myUserDefinedCommands;
+  private Map<String, Integer> myUserDefinedCommands;
+  private Map<String, List<Node>> myUserDefinedCommandNodes;
 
   public ModelState() {
     myTurtles = new ArrayList<>();
     myVariables = new HashMap<>();
     myUserDefinedCommands = new HashMap<>();
+    myUserDefinedCommandNodes = new HashMap<>();
   }
 
   public List<Turtle> getTurtles() {
@@ -26,7 +28,12 @@ public class ModelState {
     return myVariables;
   }
 
-  public Map<String, List<Node>> getUserDefinedCommands() {
+  public Map<String, Integer> getUserDefinedCommands() {
     return myUserDefinedCommands;
   }
+
+  public Map<String, List<Node>> getUserDefinedCommandNodes() {
+    return myUserDefinedCommandNodes;
+  }
+
 }

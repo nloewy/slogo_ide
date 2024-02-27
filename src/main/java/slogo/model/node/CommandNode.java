@@ -44,4 +44,7 @@ public class CommandNode extends Node {
     return (int) Class.forName(myToken).getField("NUM_ARGS").get(null);
   }
 
+  public String getToken() {
+    return myToken;
+  }
 }

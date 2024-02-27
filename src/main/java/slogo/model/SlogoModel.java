@@ -15,6 +15,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.ListNode;
 import slogo.model.node.Node;
+import slogo.model.node.UserCommandNode;
 import slogo.model.node.VariableNode;
 
 
@@ -25,58 +26,73 @@ public class SlogoModel implements Model {
 
   private Map<String, String> commandMap;
   private Node currentNode;
+  private int myIndex;
 
   public SlogoModel(SlogoListener listener) {
     modelstate = new ModelState();
     modelstate.getTurtles().add(new Turtle(1));
     myListener = listener;
+    myIndex = 0;
     commandMap = loadCommandMap("src/main/resources/slogo/example/languages/English.properties");
   }
+
 
   public void parse(String input)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException {
     List<String> tokens = Arrays.asList(input.split("\\s+"));
+    myIndex = 0;
     Stack<Node> nodeStack = new Stack<>();
     Node rootNode = new ListNode("[", modelstate, myListener); // Create a root node
     nodeStack.push(rootNode);
-    for (String token : tokens) {
+    while (myIndex < tokens.size()) {
+      String token = tokens.get(myIndex);
+      System.out.println(token);
       if (token.isEmpty() || token.startsWith("#")) {
+        myIndex++;
         continue;
       }
       if (token.equals("[")) {
-        nodeStack.push(new ListNode("", modelstate,myListener));
+        while (!nodeStack.peek().equals(rootNode)
+            && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+          nodeStack.pop();
+        }
+        Node newNode = new ListNode("[", modelstate, myListener);
+        nodeStack.peek().addChild(newNode);
+        nodeStack.push(newNode);
       } else if (token.equals("]")) {
-        while (!nodeStack.peek().equals(rootNode)) {
+        while (!nodeStack.peek().getToken().equals("[")) {
           nodeStack.peek().getToken();
           nodeStack.pop();
         }
-      } else {
-        createNode(token);
-        if (nodeStack.peek().equals(rootNode)) {
-          rootNode.addChild(currentNode);
-          nodeStack.push(currentNode);
-        } else {
-          if (nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
-            while (!nodeStack.peek().equals(rootNode)
-                && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
-              nodeStack.pop();
-            }
-          }
-          nodeStack.peek().addChild(currentNode);
-          nodeStack.push(currentNode);
+        if (nodeStack.size() > 1) {
+          nodeStack.pop();
         }
+      } else {
+        createNode(tokens);
+        if (!nodeStack.peek().getToken().equals("[")
+            && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+          while (!nodeStack.peek().equals(rootNode) && !nodeStack.peek().getToken().equals("[") &&
+              nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+            nodeStack.pop();
+          }
+        }
+        nodeStack.peek().addChild(currentNode);
+        nodeStack.push(currentNode);
       }
+      myIndex++;
     }
     while (!nodeStack.isEmpty() && nodeStack.peek().getNumArgs() <= nodeStack.peek().getChildren()
         .size()) {
       nodeStack.pop();
     }
-    if (!nodeStack.isEmpty()) {
-      throw new IllegalArgumentException("Unmatched '['");
-    }
+    System.out.println(nodeStack);
+  //  if (!nodeStack.isEmpty()) {
+   //   throw new IllegalArgumentException("Unmatched '['");
+   // }
     double value = rootNode.getValue();
     myListener.onReturn(value);
   }
+
 
   //JUST FOR TESTING ==> WE USE A LISTENER
   public ModelState getModelstate() {
@@ -96,19 +112,34 @@ public class SlogoModel implements Model {
   @Override
   public void resetModel() {
     modelstate = new ModelState();
-    //modelstate.getTurtles().add(new Turtle(1));
   }
 
-  private void createNode(String token)
+  private void createNode(List<String> tokens)
       throws ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    String token = tokens.get(myIndex);
     if (token.matches("-?[0-9]+\\.?[0-9]*")) {
-      currentNode = new ConstantNode(token, modelstate,myListener);
+      currentNode = new ConstantNode(token, modelstate, myListener);
     } else if (token.matches(":[a-zA-Z]+")) {
-      currentNode = new VariableNode(token.substring(1),
-          modelstate,myListener); // Removing ":" from the variable name
+      currentNode = new VariableNode(token, modelstate, myListener);
     } else if (token.matches("[a-zA-Z_]+(\\?)?")) {
       token = token.toLowerCase();
-      currentNode = new CommandNode(commandMap.get(token), modelstate,myListener);
+      System.out.println(modelstate.getUserDefinedCommands());
+      if (commandMap.containsKey(token)) {
+        /**
+        if(commandMap.get(token).equals("control.To")) {
+          int index = myIndex+2;
+          while(index < tokens.size() && !tokens.get(index).equals("]")) {
+            index++;
+          }
+          modelstate.getUserDefinedCommands().put(tokens.get(myIndex+1), index-myIndex+1);
+        }
+         */
+        currentNode = new CommandNode(commandMap.get(token), modelstate, myListener);
+
+      } else if (modelstate.getUserDefinedCommands().containsKey(token)) {
+        currentNode = new UserCommandNode(token, modelstate, myListener);
+        myIndex++;
+      }
     } else {
       throw new IllegalArgumentException("Invalid token: " + token);
     }

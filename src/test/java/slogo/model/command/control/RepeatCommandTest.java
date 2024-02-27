@@ -61,7 +61,7 @@ public class RepeatCommandTest extends CommandTest {
     Node commandListNode = new ListNode("", model, myListener);
     Node cmdNode = new CommandNode("turtle.Forward", model, myListener);
     commandListNode.addChild(cmdNode);
-    Node varNode = new VariableNode("repcount", model, myListener);
+    Node varNode = new VariableNode(":repcount", model, myListener);
     cmdNode.addChild(varNode);
     node.addChild(commandListNode);
 
