@@ -11,7 +11,8 @@ public class SquareRootCommand implements Command {
 
   public static final int NUM_ARGS = 1;
 
-  public SquareRootCommand(ModelState modelState, SlogoListener listener) {}
+  public SquareRootCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

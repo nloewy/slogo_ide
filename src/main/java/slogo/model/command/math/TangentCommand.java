@@ -12,7 +12,8 @@ public class TangentCommand implements Command {
 
   public static final int NUM_ARGS = 1;
 
-  public TangentCommand(ModelState modelState, SlogoListener listener) {}
+  public TangentCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

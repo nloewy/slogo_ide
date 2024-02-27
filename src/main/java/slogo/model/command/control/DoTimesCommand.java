@@ -10,7 +10,7 @@ import slogo.model.node.Node;
 public class DoTimesCommand implements Command {
 
   public static final int NUM_ARGS = 2;
-  private ModelState modelState;
+  private final ModelState modelState;
 
   public DoTimesCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;

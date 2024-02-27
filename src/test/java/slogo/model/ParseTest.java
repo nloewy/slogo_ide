@@ -139,6 +139,14 @@ public class ParseTest {
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertEquals(50.0, myTurtle.getHeading(), DELTA);
   }
+
+  @Test
+  void testExtraParam()
+      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+    slogo.parse("mAkE :CLASS 10 REPEAT dIffEreNcE :CLass 5 [ RIGHT :cLASS 10 ]");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertEquals(50.0, myTurtle.getHeading(), DELTA);
+  }
   @Test
   void testRandom()
       throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {

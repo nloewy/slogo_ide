@@ -11,7 +11,8 @@ public class QuotientCommand implements Command {
 
   public static final int NUM_ARGS = 2;
 
-  public QuotientCommand(ModelState modelState, SlogoListener listener) {}
+  public QuotientCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

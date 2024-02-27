@@ -12,7 +12,8 @@ public class SineCommand implements Command {
 
   public static final int NUM_ARGS = 1;
 
-  public SineCommand(ModelState modelState, SlogoListener listener) {}
+  public SineCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

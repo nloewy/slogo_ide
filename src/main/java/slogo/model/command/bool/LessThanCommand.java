@@ -11,7 +11,8 @@ public class LessThanCommand implements Command {
 
   public static final int NUM_ARGS = 2;
 
-  public LessThanCommand(ModelState modelState, SlogoListener listener) {}
+  public LessThanCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

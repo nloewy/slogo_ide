@@ -10,7 +10,9 @@ import slogo.model.node.Node;
 public class IfCommand implements Command {
 
   public static final int NUM_ARGS = 2;
-  public IfCommand(ModelState modelState, SlogoListener listener) {}
+
+  public IfCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

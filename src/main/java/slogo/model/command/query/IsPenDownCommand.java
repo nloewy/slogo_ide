@@ -16,7 +16,7 @@ public class IsPenDownCommand implements Command {
 
   public IsPenDownCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
-   }
+  }
 
   @Override
   public double execute(List<Node> arguments)

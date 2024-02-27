@@ -27,15 +27,15 @@ public class Parser {
   private Map<String, String> commandMap;
   private Node currentNode;
   private int myIndex;
-  private PatternLoader patternLoader;
-
+  private final PatternLoader patternLoader;
 
 
   public Parser(ModelState modelState, SlogoListener listener) throws IOException {
     this.modelState = modelState;
     this.myListener = listener;
     commandMap = loadCommandMap("src/main/resources/slogo/example/languages/English.properties");
-    patternLoader = new PatternLoader("src/main/resources/slogo/example/languages/Syntax.properties");
+    patternLoader = new PatternLoader(
+        "src/main/resources/slogo/example/languages/Syntax.properties");
   }
 
   public Node parse(String input)
@@ -128,6 +128,7 @@ public class Parser {
   private boolean matchesPattern(String token, String pattern) {
     return token.matches(pattern);
   }
+
   private void handleCommand(String token, List<String> tokens)
       throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, InvalidCommandException {
     token = token.toLowerCase();

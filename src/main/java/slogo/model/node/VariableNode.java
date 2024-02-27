@@ -7,8 +7,8 @@ import slogo.model.SlogoListener;
 public class VariableNode extends Node {
 
   private final String myToken;
-  private SlogoListener myListener;
   private final ModelState myModelState;
+  private final SlogoListener myListener;
 
 
   public VariableNode(String token, ModelState modelState, SlogoListener listener) {

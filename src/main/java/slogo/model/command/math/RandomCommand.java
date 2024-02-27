@@ -11,7 +11,8 @@ public class RandomCommand implements Command {
 
   public static final int NUM_ARGS = 1;
 
-  public RandomCommand(ModelState modelState, SlogoListener listener) {}
+  public RandomCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

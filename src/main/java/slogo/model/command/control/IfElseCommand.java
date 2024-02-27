@@ -11,7 +11,8 @@ public class IfElseCommand implements Command {
 
   public static final int NUM_ARGS = 3;
 
-  public IfElseCommand(ModelState modelState, SlogoListener listener) {}
+  public IfElseCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

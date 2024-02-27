@@ -10,7 +10,9 @@ import slogo.model.node.Node;
 public class EqualCommand implements Command {
 
   public static final int NUM_ARGS = 2;
-  public EqualCommand(ModelState modelState, SlogoListener listener) {}
+
+  public EqualCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

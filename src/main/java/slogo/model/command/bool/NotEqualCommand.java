@@ -10,7 +10,9 @@ import slogo.model.node.Node;
 public class NotEqualCommand implements Command {
 
   public static final int NUM_ARGS = 2;
-  public NotEqualCommand(ModelState modelState, SlogoListener listener) {}
+
+  public NotEqualCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

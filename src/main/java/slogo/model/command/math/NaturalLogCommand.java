@@ -11,7 +11,9 @@ public class NaturalLogCommand implements Command {
 
   public static final int NUM_ARGS = 1;
 
-  public NaturalLogCommand(ModelState modelState, SlogoListener listener) {}
+  public NaturalLogCommand(ModelState modelState, SlogoListener listener) {
+  }
+
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {

@@ -11,7 +11,8 @@ public class PiCommand implements Command {
 
   public static final int NUM_ARGS = 0;
 
-  public PiCommand(ModelState modelState, SlogoListener listener) {}
+  public PiCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

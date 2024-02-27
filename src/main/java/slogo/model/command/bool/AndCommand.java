@@ -12,7 +12,8 @@ public class AndCommand implements Command {
   public static final int NUM_ARGS = 2;
 
 
-  public AndCommand(ModelState modelState, SlogoListener listener) {}
+  public AndCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

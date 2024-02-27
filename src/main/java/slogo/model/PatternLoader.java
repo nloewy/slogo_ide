@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PatternLoader {
-  private Properties properties;
+
+  private final Properties properties;
 
   public PatternLoader(String filePath) throws IOException {
     properties = new Properties();

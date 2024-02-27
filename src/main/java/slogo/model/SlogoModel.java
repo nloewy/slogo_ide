@@ -10,8 +10,8 @@ import slogo.model.node.Node;
 public class SlogoModel implements Model {
 
   private final SlogoListener myListener;
-  private ModelState modelstate;
   private final Parser parser;
+  private ModelState modelstate;
 
   public SlogoModel(SlogoListener listener) throws IOException {
     modelstate = new ModelState();

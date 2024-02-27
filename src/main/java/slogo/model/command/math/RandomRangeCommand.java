@@ -10,7 +10,9 @@ import slogo.model.node.Node;
 public class RandomRangeCommand implements Command {
 
   public static final int NUM_ARGS = 2;
-  public RandomRangeCommand(ModelState modelState, SlogoListener listener) {}
+
+  public RandomRangeCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)

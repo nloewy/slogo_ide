@@ -11,7 +11,9 @@ import slogo.model.node.Node;
 public class ArcTangentCommand implements Command {
 
   public static final int NUM_ARGS = 1;
-  public ArcTangentCommand(ModelState modelState, SlogoListener listener) {}
+
+  public ArcTangentCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
   public double execute(List<Node> arguments)
