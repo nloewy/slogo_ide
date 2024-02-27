@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Stack;
 import slogo.model.api.Model;
+import slogo.model.node.CommandCreatorNode;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.ListNode;
@@ -46,7 +47,6 @@ public class SlogoModel implements Model {
     nodeStack.push(rootNode);
     while (myIndex < tokens.size()) {
       String token = tokens.get(myIndex);
-      System.out.println(token);
       if (token.isEmpty() || token.startsWith("#")) {
         myIndex++;
         continue;
@@ -85,10 +85,6 @@ public class SlogoModel implements Model {
         .size()) {
       nodeStack.pop();
     }
-    System.out.println(nodeStack);
-  //  if (!nodeStack.isEmpty()) {
-   //   throw new IllegalArgumentException("Unmatched '['");
-   // }
     double value = rootNode.getValue();
     myListener.onReturn(value);
   }
@@ -123,22 +119,21 @@ public class SlogoModel implements Model {
       currentNode = new VariableNode(token, modelstate, myListener);
     } else if (token.matches("[a-zA-Z_]+(\\?)?")) {
       token = token.toLowerCase();
-      System.out.println(modelstate.getUserDefinedCommands());
       if (commandMap.containsKey(token)) {
-        /**
         if(commandMap.get(token).equals("control.To")) {
           int index = myIndex+2;
           while(index < tokens.size() && !tokens.get(index).equals("]")) {
             index++;
           }
-          modelstate.getUserDefinedCommands().put(tokens.get(myIndex+1), index-myIndex+1);
+          currentNode = new CommandCreatorNode(tokens.get(myIndex+1).toLowerCase(), modelstate, myListener, index-myIndex-1);
+          myIndex++;
         }
-         */
-        currentNode = new CommandNode(commandMap.get(token), modelstate, myListener);
+        else {
+          currentNode = new CommandNode(commandMap.get(token), modelstate, myListener);
+        }
 
       } else if (modelstate.getUserDefinedCommands().containsKey(token)) {
         currentNode = new UserCommandNode(token, modelstate, myListener);
-        myIndex++;
       }
     } else {
       throw new IllegalArgumentException("Invalid token: " + token);

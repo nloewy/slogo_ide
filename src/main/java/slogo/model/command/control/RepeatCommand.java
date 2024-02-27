@@ -24,14 +24,11 @@ public class RepeatCommand implements Command {
     double end = arguments.get(0).getValue();
     Node commands = arguments.get(1);
     double res = 0.0;
-    System.out.println(arguments.get(1).getChildren());
     for (double i = 1; i <= end; i += 1) {
       modelState.getVariables().put(variableName, i);
       try {
         res = commands.getValue();
-        System.out.println(res);
       } catch (InvocationTargetException | IllegalAccessException e) {
-        System.out.println(2);
         throw new RuntimeException(e);
       }
     }

@@ -15,7 +15,7 @@ public class UserCommandNode extends Node {
   public UserCommandNode(String token, ModelState modelState, SlogoListener listener) {
     super();
     myToken = token;
-    numArgs = modelState.getUserDefinedCommands().get(token);
+    numArgs = modelState.getUserDefinedCommands().get(token) - 2;
     this.modelState = modelState;
     myListener = listener;
   }
@@ -45,18 +45,15 @@ public class UserCommandNode extends Node {
 
   @Override
   public double getValue() throws InvocationTargetException, IllegalAccessException {
-
-    List<Node> children = getChildren();
-    System.out.println(children);
-    for(int i = 0; i < numArgs - 2; i++) {
-      Node rootOfSubtree = children.get(0);
-      String tokenToReplace = children.get(1).getChildren().get(i).getToken();
+    List<Node> children = modelState.getUserDefinedCommandNodes().get(myToken);
+    children.addAll(getChildren());
+    for(int i = 0; i < numArgs; i++) {
+      Node rootOfSubtree = children.get(1);
+      String tokenToReplace = children.get(0).getChildren().get(i).getToken();
       double value = children.get(i + 2).getValue();
       replaceNodesWithToken(rootOfSubtree, tokenToReplace, value);
     }
-   // System.out.println(children.get(0));
-    System.out.println(3);
-    return children.get(0).getValue();
+    return children.get(1).getValue();
   }
 
   @Override

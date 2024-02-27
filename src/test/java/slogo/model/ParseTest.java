@@ -123,8 +123,18 @@ public class ParseTest {
     assertTrue(myTurtle.getX() <= -1 && myTurtle.getX() >= -101);
     assertEquals(270.0, myTurtle.getHeading(), DELTA);
   }
+
   @Test
-  void testDash()
+  void testDashWithoutUserDefined()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+    slogo.parse("repeat 12 [ fd 20 fd 20 ]");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertTrue( myTurtle.getPen());
+    assertEquals(480.0, myTurtle.getY(), DELTA);
+  }
+
+  @Test
+  void testDashNoParams()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("set :count 12 set :distance 20 to dash [ ] [ repeat :count [ pu fd :distance pd fd :distance ] ] dash");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
@@ -136,13 +146,44 @@ public class ParseTest {
   }
 
   @Test
-  void testDashWithoutUserDefined()
+  void testDashWithParams()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
-    slogo.parse("repeat 12 [ fd 20 fd 20 ]");
+    slogo.parse("to dash [ :count :distance ] [ repeat :count [ pu fd :distance pd fd :distance ] ] dash 12 20");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertTrue( myTurtle.getPen());
     assertEquals(480.0, myTurtle.getY(), DELTA);
   }
+
+  @Test
+  void testDashWithStuffAfter()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+    slogo.parse("to dash [ :count :distance ] [ repeat :count [ pu fd :distance pd fd :distance ] ] dash 12 20 rt 50");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertTrue( myTurtle.getPen());
+    assertEquals(480.0, myTurtle.getY(), DELTA);
+    assertEquals(50.0, myTurtle.getHeading(), DELTA);
+  }
+
+  @Test
+  void testDoubleUserDefinedNoParams()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+    slogo.parse("to partialrect [ ] [ fd 50 rt 90 fd 60 rt 90 fd 30 rt 90 ] to twice [ ] [ repeat 2 [ partialrect ] ] twice fd 60 left 100");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertTrue( myTurtle.getPen());
+    assertEquals(40.0, myTurtle.getX(), DELTA);
+    assertEquals(20.0, myTurtle.getY(), DELTA);
+    assertEquals(80.0, myTurtle.getHeading(), DELTA);
+  }
+
+  @Test
+  void testPartialFlower()
+      throws NoSuchFieldException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    slogo.parse("to arc [ :incr :degrees ] [ repeat quotIEnt :degrees 2 [ fd 40 rt :incr ] ] to petal [ :size ] [ repeat 2 [ arc :size 60 rt 120 ] ] to fLOwer [ :length ] [ repeat 5 [ petal :length rt 60 ] ] flowEr 100");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertTrue( myTurtle.getPen());
+    assertEquals(-34.6410161514, myTurtle.getX(), DELTA);
+  }
+
 
   @Test
   void testVariableMaker()
