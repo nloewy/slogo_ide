@@ -8,6 +8,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class XcoordinateCommand implements Command {
+
   public static final int NUM_ARGS = 0;
 
   private final ModelState modelState;

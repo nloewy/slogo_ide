@@ -8,6 +8,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class PowerCommand implements Command {
+
   public static final int NUM_ARGS = 2;
   private final ModelState modelState;
   private final SlogoListener listener;

@@ -10,8 +10,8 @@ public class ModelState {
 
   private final List<Turtle> myTurtles;
   private final Map<String, Double> myVariables;
-  private Map<String, Integer> myUserDefinedCommands;
-  private Map<String, List<Node>> myUserDefinedCommandNodes;
+  private final Map<String, Integer> myUserDefinedCommands;
+  private final Map<String, List<Node>> myUserDefinedCommandNodes;
 
   public ModelState() {
     myTurtles = new ArrayList<>();

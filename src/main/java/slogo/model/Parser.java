@@ -19,16 +19,17 @@ import slogo.model.node.UserCommandNode;
 import slogo.model.node.VariableNode;
 
 public class Parser {
-  private ModelState modelState;
-  private SlogoListener myListener;
-  private Map<String, String> commandMap;
+
   private static final String OPEN_BRACKET = "[";
   private static final String CLOSED_BRACKET = "]";
+  private final ModelState modelState;
+  private final SlogoListener myListener;
+  private Map<String, String> commandMap;
   private Node currentNode;
   private int myIndex;
 
 
-  public Parser (ModelState modelState, SlogoListener listener) {
+  public Parser(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
     this.myListener = listener;
     commandMap = loadCommandMap("src/main/resources/slogo/example/languages/English.properties");
@@ -118,10 +119,9 @@ public class Parser {
     } else if (token.matches("[a-zA-Z_]+(\\?)?")) {
       token = token.toLowerCase();
       if (commandMap.containsKey(token)) {
-        if(commandMap.get(token).equals("control.To")) {
+        if (commandMap.get(token).equals("control.To")) {
           makeCommandCreatorNode(tokens);
-        }
-        else {
+        } else {
           currentNode = new CommandNode(commandMap.get(token), modelState, myListener);
         }
 
@@ -134,11 +134,12 @@ public class Parser {
   }
 
   private void makeCommandCreatorNode(List<String> tokens) {
-    int index = myIndex+2;
-    while(index < tokens.size() && !tokens.get(index).equals(CLOSED_BRACKET)) {
+    int index = myIndex + 2;
+    while (index < tokens.size() && !tokens.get(index).equals(CLOSED_BRACKET)) {
       index++;
     }
-    currentNode = new CommandCreatorNode(tokens.get(myIndex+1).toLowerCase(), modelState, myListener, index-myIndex-1);
+    currentNode = new CommandCreatorNode(tokens.get(myIndex + 1).toLowerCase(), modelState,
+        myListener, index - myIndex - 1);
     myIndex++;
   }
 

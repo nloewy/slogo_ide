@@ -1,20 +1,8 @@
 package slogo.model;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Stack;
 import slogo.model.api.Model;
-import slogo.model.node.CommandCreatorNode;
-import slogo.model.node.CommandNode;
-import slogo.model.node.ConstantNode;
-import slogo.model.node.ListNode;
 import slogo.model.node.Node;
 
 
@@ -22,7 +10,7 @@ public class SlogoModel implements Model {
 
   private final SlogoListener myListener;
   private ModelState modelstate;
-  private Parser parser;
+  private final Parser parser;
 
   public SlogoModel(SlogoListener listener) {
     modelstate = new ModelState();
@@ -35,10 +23,11 @@ public class SlogoModel implements Model {
   @Override
   public void parse(String input)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException {
-      Node root = parser.parse(input);
-      double val = root.getValue();
-      myListener.onReturn(val);
+    Node root = parser.parse(input);
+    double val = root.getValue();
+    myListener.onReturn(val);
   }
+
   //JUST FOR TESTING ==> WE USE A LISTENER
   public ModelState getModelstate() {
     return modelstate;

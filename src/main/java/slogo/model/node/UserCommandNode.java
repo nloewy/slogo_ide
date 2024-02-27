@@ -8,10 +8,11 @@ import slogo.model.SlogoListener;
 public class UserCommandNode extends Node {
 
   private final String myToken;
-  private int numArgs;
-  private ModelState modelState;
+  private final int numArgs;
+  private final ModelState modelState;
 
-  private SlogoListener myListener;
+  private final SlogoListener myListener;
+
   public UserCommandNode(String token, ModelState modelState, SlogoListener listener) {
     super();
     myToken = token;
@@ -33,7 +34,8 @@ public class UserCommandNode extends Node {
         // Replace the node with a ConstantNode
         int index = children.indexOf(child);
         if (index != -1) {
-          ConstantNode constantNode = new ConstantNode(String.valueOf(value), modelState, myListener);
+          ConstantNode constantNode = new ConstantNode(String.valueOf(value), modelState,
+              myListener);
           children.set(index, constantNode);
         }
       } else {
@@ -47,7 +49,7 @@ public class UserCommandNode extends Node {
   public double getValue() throws InvocationTargetException, IllegalAccessException {
     List<Node> children = modelState.getUserDefinedCommandNodes().get(myToken);
     children.addAll(getChildren());
-    for(int i = 0; i < numArgs; i++) {
+    for (int i = 0; i < numArgs; i++) {
       Node rootOfSubtree = children.get(1);
       String tokenToReplace = children.get(0).getChildren().get(i).getToken();
       double value = children.get(i + 2).getValue();
@@ -60,6 +62,7 @@ public class UserCommandNode extends Node {
   public int getNumArgs() {
     return numArgs;
   }
+
   @Override
   public String getToken() {
     return myToken;

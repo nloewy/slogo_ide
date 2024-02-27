@@ -8,6 +8,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 public class NaturalLogCommand implements Command {
+
   public static final int NUM_ARGS = 1;
   private final ModelState modelState;
   private final SlogoListener listener;

@@ -7,7 +7,8 @@ import slogo.model.SlogoListener;
 public class ListNode extends Node {
 
 
-  private String myToken;
+  private final String myToken;
+
   public ListNode(String token, ModelState model, SlogoListener listener) {
     myToken = token;
   }
