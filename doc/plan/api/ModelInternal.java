@@ -175,3 +175,11 @@ public class Turtle {
    */
   public int getId();
 }
+
+public Parser(ModelState modelState, SlogoListener myListener) {
+
+  /**
+   * Parses command and returns a node that can be executed
+   */
+  public Node parse(String input);
+}
