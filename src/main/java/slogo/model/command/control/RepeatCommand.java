@@ -10,12 +10,10 @@ import slogo.model.node.Node;
 public class RepeatCommand implements Command {
 
   public static final int NUM_ARGS = 2;
-  private final ModelState modelState;
-  private final SlogoListener listener;
+  private ModelState modelState;
 
   public RepeatCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
-    this.listener = listener;
   }
 
   @Override

@@ -10,13 +10,7 @@ import slogo.model.node.Node;
 public class IfCommand implements Command {
 
   public static final int NUM_ARGS = 2;
-  private final ModelState modelState;
-  private final SlogoListener listener;
-
-  public IfCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
-    this.listener = listener;
-  }
+  public IfCommand(ModelState modelState, SlogoListener listener) {}
 
   @Override
   public double execute(List<Node> arguments)
@@ -26,9 +20,7 @@ public class IfCommand implements Command {
     if (arg1 != 0) {
       try {
         return toExecute.getValue();
-      } catch (InvocationTargetException e) {
-        throw new RuntimeException(e);
-      } catch (IllegalAccessException e) {
+      } catch (InvocationTargetException | IllegalAccessException e) {
         throw new RuntimeException(e);
       }
     }

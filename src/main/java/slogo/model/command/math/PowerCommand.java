@@ -10,13 +10,8 @@ import slogo.model.node.Node;
 public class PowerCommand implements Command {
 
   public static final int NUM_ARGS = 2;
-  private final ModelState modelState;
-  private final SlogoListener listener;
 
-  public PowerCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
-    this.listener = listener;
-  }
+  public PowerCommand(ModelState modelState, SlogoListener listener) {}
 
   @Override
   public double execute(List<Node> arguments)

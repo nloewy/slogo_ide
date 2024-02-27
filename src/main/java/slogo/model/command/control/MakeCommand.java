@@ -10,8 +10,8 @@ import slogo.model.node.Node;
 public class MakeCommand implements Command {
 
   public static final int NUM_ARGS = 2;
-  private final ModelState modelState;
-  private final SlogoListener listener;
+  private ModelState modelState;
+  private SlogoListener listener;
 
   public MakeCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;

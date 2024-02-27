@@ -10,13 +10,8 @@ import slogo.model.node.Node;
 public class GreaterEqualCommand implements Command {
 
   public static final int NUM_ARGS = 2;
-  private final ModelState modelState;
-  private final SlogoListener listener;
 
-  public GreaterEqualCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
-    this.listener = listener;
-  }
+  public GreaterEqualCommand(ModelState modelState, SlogoListener listener) {}
 
   @Override
   public double execute(List<Node> arguments)
