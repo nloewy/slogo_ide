@@ -11,23 +11,17 @@ public class CommandNode extends Node {
 
   private final Command command;
   private final Method m;
-  private final ModelState myModelState;
   private final String myToken;
-
-  private final SlogoListener myListener;
 
   public CommandNode(String token, ModelState modelState, SlogoListener listener)
       throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
       InstantiationException, IllegalAccessException {
     super();
-
-    myListener = listener;
     myToken = "slogo.model.command." + token + "Command";
     Class<?> clazz = Class.forName(myToken);
     command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
         .newInstance(modelState, listener);
     m = clazz.getDeclaredMethod("execute", List.class);
-    myModelState = modelState;
   }
 
   @Override

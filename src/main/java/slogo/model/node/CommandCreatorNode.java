@@ -9,13 +9,11 @@ public class CommandCreatorNode extends Node {
 
   private final String myToken;
   private final ModelState myModelState;
-  private final SlogoListener myListener;
   private final int myNumArgs;
 
   public CommandCreatorNode(String token, ModelState modelState, SlogoListener listener,
       int numArgs) {
     super();
-    myListener = listener;
     myModelState = modelState;
     myToken = token;
     myNumArgs = numArgs;
