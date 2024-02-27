@@ -27,20 +27,22 @@ public class Parser {
   private Map<String, String> commandMap;
   private Node currentNode;
   private int myIndex;
+  private PatternLoader patternLoader;
 
 
-  public Parser(ModelState modelState, SlogoListener listener) {
+
+  public Parser(ModelState modelState, SlogoListener listener) throws IOException {
     this.modelState = modelState;
     this.myListener = listener;
     commandMap = loadCommandMap("src/main/resources/slogo/example/languages/English.properties");
-
+    patternLoader = new PatternLoader("src/main/resources/slogo/example/languages/Syntax.properties");
   }
 
-
   public Node parse(String input)
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException {
     List<String> tokens = Arrays.asList(input.split("\\s+"));
     myIndex = 0;
+    currentNode = null;
     Stack<Node> nodeStack = new Stack<>();
     Node rootNode = new ListNode(OPEN_BRACKET, modelState, myListener); // Create a root node
     nodeStack.push(rootNode);
@@ -55,7 +57,7 @@ public class Parser {
   }
 
   private void handleNextToken(List<String> tokens, Stack<Node> nodeStack, Node rootNode)
-      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException {
     String token = retrieveNextToken(tokens);
     if (token.equals(OPEN_BRACKET)) {
       handleOpenBracket(nodeStack, rootNode);
@@ -68,7 +70,7 @@ public class Parser {
   }
 
   private void createTokenAndUpdateStack(List<String> tokens, Stack<Node> nodeStack)
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException {
     createNode(tokens);
     if (!nodeStack.peek().getToken().equals(OPEN_BRACKET)
         && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
@@ -110,26 +112,35 @@ public class Parser {
 
 
   private void createNode(List<String> tokens)
-      throws ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+      throws ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvalidCommandException, InvalidTokenException {
     String token = tokens.get(myIndex);
-    if (token.matches("-?[0-9]+\\.?[0-9]*")) {
+    if (matchesPattern(token, patternLoader.getPattern("Constant"))) {
       currentNode = new ConstantNode(token, modelState, myListener);
-    } else if (token.matches(":[a-zA-Z]+")) {
+    } else if (matchesPattern(token, patternLoader.getPattern("Variable"))) {
       currentNode = new VariableNode(token, modelState, myListener);
-    } else if (token.matches("[a-zA-Z_]+(\\?)?")) {
-      token = token.toLowerCase();
-      if (commandMap.containsKey(token)) {
-        if (commandMap.get(token).equals("control.To")) {
-          makeCommandCreatorNode(tokens);
-        } else {
-          currentNode = new CommandNode(commandMap.get(token), modelState, myListener);
-        }
-
-      } else if (modelState.getUserDefinedCommands().containsKey(token)) {
-        currentNode = new UserCommandNode(token, modelState, myListener);
-      }
+    } else if (matchesPattern(token, patternLoader.getPattern("Command"))) {
+      handleCommand(token, tokens);
     } else {
-      throw new IllegalArgumentException("Invalid token: " + token);
+      throw new InvalidTokenException("No Pattern Recognized");
+    }
+  }
+
+  private boolean matchesPattern(String token, String pattern) {
+    return token.matches(pattern);
+  }
+  private void handleCommand(String token, List<String> tokens)
+      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, InvalidCommandException {
+    token = token.toLowerCase();
+    if (commandMap.containsKey(token)) {
+      if (commandMap.get(token).equals("control.To")) {
+        makeCommandCreatorNode(tokens);
+      } else {
+        currentNode = new CommandNode(commandMap.get(token), modelState, myListener);
+      }
+    } else if (modelState.getUserDefinedCommands().containsKey(token)) {
+      currentNode = new UserCommandNode(token, modelState, myListener);
+    } else {
+      throw new InvalidCommandException(token + " is not a recognized command");
     }
   }
 

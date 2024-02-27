@@ -28,12 +28,4 @@ public class MakeCommand implements Command {
     listener.onUpdateValue(token, arg1);
     return arg1;
   }
-
-
 }
-/**
- * public void notifyListener(SlogoListener listener, double value) { super.notifyListener(listener,
- * value); }
- * <p>
- * }
- */
