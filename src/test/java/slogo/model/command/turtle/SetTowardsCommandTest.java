@@ -1,8 +1,6 @@
 package slogo.model.command.turtle;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import slogo.model.command.CommandTest;
-
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
@@ -85,7 +84,7 @@ public class SetTowardsCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setX(50);
     myTurtle.setY(-50);
-    node.addChild(new ConstantNode(x, model , myListener));
+    node.addChild(new ConstantNode(x, model, myListener));
     node.addChild(new ConstantNode(y, model, myListener));
     assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);

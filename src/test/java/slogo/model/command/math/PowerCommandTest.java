@@ -1,8 +1,6 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import slogo.model.command.CommandTest;
-
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -12,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
@@ -46,8 +45,8 @@ public class PowerCommandTest extends CommandTest {
   })
   void testPowerBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null,myListener));
-    node.addChild(new ConstantNode(op2, null,myListener));
+    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op2, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -63,7 +62,9 @@ public class PowerCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null, myListener));
     node.addChild(new ConstantNode(op2, null, myListener));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {node.getValue();});
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+      node.getValue();
+    });
     assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

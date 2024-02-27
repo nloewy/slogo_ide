@@ -1,14 +1,13 @@
 package slogo.model.command.turtle;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import slogo.model.command.CommandTest;
-
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
@@ -35,7 +34,7 @@ public class RightCommandTest extends CommandTest {
   void testBasicRight()
       throws InvocationTargetException, IllegalAccessException {
     String rot = "75";
-    node.addChild(new ConstantNode(rot, null,myListener));
+    node.addChild(new ConstantNode(rot, null, myListener));
     assertEquals(75, node.getValue(), DELTA);
     assertEquals(75, myTurtle.getHeading(), DELTA);
 

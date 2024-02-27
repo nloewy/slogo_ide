@@ -1,12 +1,11 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import slogo.model.command.CommandTest;
-
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Test;
 import slogo.model.ModelState;
+import slogo.model.command.CommandTest;
 import slogo.model.node.CommandNode;
 
 public class PiCommandTest extends CommandTest {
