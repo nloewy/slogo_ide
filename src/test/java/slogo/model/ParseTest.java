@@ -122,6 +122,14 @@ public class ParseTest {
   }
 
   @Test
+  void testVariablesNotDefined()
+      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+    slogo.parse("REPEAT 5 [ RIGHT NOT :CLASS ]");
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertEquals(5.0, myTurtle.getHeading(), DELTA);
+  }
+
+  @Test
   void testCaseSensitiveVariables()
       throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse("mAkE :CLASS 10 REPEAT dIffEreNcE :CLass 5 [ RIGHT :cLASS ]");
