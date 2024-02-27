@@ -2,6 +2,7 @@ package slogo.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -124,9 +125,11 @@ public class ParseTest {
   @Test
   void testVariablesNotDefined()
       throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+    assertFalse(slogo.getModelstate().getVariables().containsKey(":CLASS"));
     slogo.parse("REPEAT 5 [ RIGHT NOT :CLASS ]");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertEquals(5.0, myTurtle.getHeading(), DELTA);
+    assertEquals(0.0, slogo.getModelstate().getVariables().get(":class"), DELTA);
   }
 
   @Test

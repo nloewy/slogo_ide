@@ -7,16 +7,24 @@ import slogo.model.SlogoListener;
 public class VariableNode extends Node {
 
   private final String myToken;
+  private SlogoListener myListener;
   private final ModelState myModelState;
+
 
   public VariableNode(String token, ModelState modelState, SlogoListener listener) {
     myModelState = modelState;
     myToken = token.toLowerCase();
+    myListener = listener;
   }
 
   @Override
   public double getValue() throws InvocationTargetException, IllegalAccessException {
+    if (!myModelState.getVariables().containsKey(myToken)) {
+      myListener.onUpdateValue(myToken, 0.0);
+      myModelState.getVariables().put(myToken, 0.0);
+    }
     return myModelState.getVariables().getOrDefault(myToken, 0.0);
+
   }
 
   @Override
