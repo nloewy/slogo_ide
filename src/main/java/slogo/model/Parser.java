@@ -12,7 +12,6 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Stack;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import slogo.model.node.CommandCreatorNode;
 import slogo.model.node.CommandNode;
@@ -27,17 +26,15 @@ public class Parser {
 
   private static final String OPEN_BRACKET = "[";
   private static final String CLOSED_BRACKET = "]";
+  private Node rootNode;
   private final ModelState modelState;
   private final SlogoListener myListener;
   private Map<String, String> commandMap;
   private Node currentNode;
   private int myIndex;
   private final PatternLoader patternLoader;
-  private List<Map.Entry<Predicate<String>, Consumer<List<String>>>> createNodeHandler;
-  private Map<String, BiConsumer<Stack<Node>, Node>> tokenHandlers;
-
-
-
+  private List<Map.Entry<Predicate<String>, Consumer<List<String>>>> nodeHandler;
+  private Map<String, Consumer<Stack<Node>>> tokenHandlers;
 
   public Parser(ModelState modelState, SlogoListener listener) throws IOException {
     this.modelState = modelState;
@@ -45,38 +42,51 @@ public class Parser {
     commandMap = loadCommandMap("src/main/resources/slogo/example/languages/English.properties");
     patternLoader = new PatternLoader(
         "src/main/resources/slogo/example/languages/Syntax.properties");
-    initializeActionList();
+    initializeNodeHandler();
     initializeTokenMap();
   }
 
   public Node parse(String input) {
+    resetParsing();
     List<String> tokens = Arrays.asList(input.split("\\s+"));
-    myIndex = 0;
-    currentNode = null;
     Stack<Node> nodeStack = new Stack<>();
-    Node rootNode = new ListNode(OPEN_BRACKET, modelState, myListener); // Create a root node
+    rootNode = new ListNode(OPEN_BRACKET, modelState, myListener);
     nodeStack.push(rootNode);
     while (myIndex < tokens.size()) {
-      handleNextToken(tokens, nodeStack, rootNode);
+      parseNextToken(tokens, nodeStack);
+      myIndex++;
     }
-    while (!nodeStack.isEmpty() && nodeStack.peek().getNumArgs() <= nodeStack.peek().getChildren().size()) {
-      nodeStack.pop();
-    }
-    if(!nodeStack.isEmpty()) {
-      throw new RuntimeException("Extra Commands");
-    }
+    checkForExtraneousArguments(nodeStack);
     return rootNode;
   }
 
-    private void handleNextToken(List<String> tokens, Stack<Node> nodeStack, Node rootNode) {
-    skipEmptyOrCommentTokens(tokens);
-    String token = tokens.get(myIndex);
-      BiConsumer<Stack<Node>, Node> handler = tokenHandlers.getOrDefault(token, (stack, node) -> createTokenAndUpdateStack(tokens, stack));
-      handler.accept(nodeStack, rootNode);
-    myIndex++;
+  private void resetParsing() {
+    myIndex = 0;
+    rootNode = null;
+    currentNode = null;
   }
 
-  private void skipEmptyOrCommentTokens(List<String> tokens) {
+  private void checkForExtraneousArguments(Stack<Node> nodeStack) {
+    while (!nodeStack.isEmpty() && topNodeSatisfied(nodeStack)) {
+      nodeStack.pop();
+    }
+    if(!nodeStack.isEmpty()) {
+      throw new InsufficientArgumentsException("More Tokens Expected");
+    }
+  }
+
+  private boolean topNodeSatisfied(Stack<Node> nodeStack) {
+    return nodeStack.peek().getNumArgs() <= nodeStack.peek().getChildren().size();
+  }
+
+  private void parseNextToken(List<String> tokens, Stack<Node> nodeStack) {
+    skipCommentsAndWhitespace(tokens);
+    Consumer<Stack<Node>> handler = tokenHandlers.getOrDefault(
+        tokens.get(myIndex), (stack) -> createTokenAndUpdateStack(tokens, stack));
+    handler.accept(nodeStack);
+  }
+
+  private void skipCommentsAndWhitespace(List<String> tokens) {
     while (myIndex < tokens.size() && (tokens.get(myIndex).isEmpty() || tokens.get(myIndex).startsWith("#"))) {
       myIndex++;
     }
@@ -84,15 +94,17 @@ public class Parser {
 
   private void createTokenAndUpdateStack(List<String> tokens, Stack<Node> nodeStack) {
     createNode(tokens);
-    while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) &&
-          nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+    while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) && topNodeSatisfied(nodeStack)) {
         nodeStack.pop();
+    }
+    if(!tokens.get(myIndex).matches(patternLoader.getPattern("Command")) && nodeStack.peek().equals(rootNode)) {
+      throw new InsufficientArgumentsException("Command Expected. Cannot use " + tokens.get(myIndex) + " here");
     }
     nodeStack.peek().addChild(currentNode);
     nodeStack.push(currentNode);
   }
 
-  private void handleClosedBracket(Stack<Node> nodeStack, Node rootNode) {
+  private void handleClosedBracket(Stack<Node> nodeStack) {
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET)) {
       nodeStack.pop();
     }
@@ -101,9 +113,8 @@ public class Parser {
     }
   }
 
-  private void handleOpenBracket(Stack<Node> nodeStack, Node rootNode) {
-    while (!nodeStack.peek().equals(rootNode)
-        && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
+  private void handleOpenBracket(Stack<Node> nodeStack) {
+    while (!nodeStack.peek().equals(rootNode) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
     }
     Node newNode = new ListNode(OPEN_BRACKET, modelState, myListener);
@@ -114,7 +125,7 @@ public class Parser {
   private void createNode(List<String> tokens) {
     String token = tokens.get(myIndex);
     boolean flag = false;
-    for (Map.Entry<Predicate<String>, Consumer<List<String>>> entry : createNodeHandler) {
+    for (Map.Entry<Predicate<String>, Consumer<List<String>>> entry : nodeHandler) {
       if (entry.getKey().test(token)) {
         entry.getValue().accept(tokens);
         flag = true;
@@ -130,7 +141,6 @@ public class Parser {
       }
     }
   }
-
 
   private void makeCommandCreatorNode(List<String> tokens) {
     int index = myIndex + 2;
@@ -160,21 +170,21 @@ public class Parser {
     return commandMap;
   }
 
-  private void initializeActionList() {
-    createNodeHandler = new ArrayList<>();
-    createNodeHandler.add(new SimpleEntry<>(
+  private void initializeNodeHandler() {
+    nodeHandler = new ArrayList<>();
+    nodeHandler.add(new SimpleEntry<>(
         token -> token.matches(patternLoader.getPattern("Constant")),
         tokens -> currentNode = new ConstantNode(tokens.get(myIndex).toLowerCase(), modelState, myListener)));
 
-    createNodeHandler.add(new SimpleEntry<>(
+    nodeHandler.add(new SimpleEntry<>(
         token -> token.matches(patternLoader.getPattern("Variable")),
         tokens -> currentNode = new VariableNode(tokens.get(myIndex).toLowerCase(), modelState, myListener)));
 
-    createNodeHandler.add(new SimpleEntry<>(
+    nodeHandler.add(new SimpleEntry<>(
         token -> token.matches(patternLoader.getPattern("Command")) && commandMap.containsKey(token.toLowerCase()) && commandMap.get(token.toLowerCase()).equals("control.To"),
         this::makeCommandCreatorNode));
 
-    createNodeHandler.add(new SimpleEntry<>(
+    nodeHandler.add(new SimpleEntry<>(
         token -> token.matches(patternLoader.getPattern("Command")) && commandMap.containsKey(token.toLowerCase()) && !commandMap.get(token.toLowerCase()).equals("control.To"),
         tokens -> {
           try {
@@ -185,7 +195,7 @@ public class Parser {
           }
         }));
 
-    createNodeHandler.add(new SimpleEntry<>(
+    nodeHandler.add(new SimpleEntry<>(
         token -> token.matches(patternLoader.getPattern("Command")) && modelState.getUserDefinedCommands().containsKey(token.toLowerCase()),
         tokens -> currentNode = new UserCommandNode(tokens.get(myIndex).toLowerCase(), modelState, myListener)));
   }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import slogo.model.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
@@ -58,10 +59,9 @@ public class QuotientCommandTest extends CommandTest {
     {
       node.addChild(new ConstantNode("50", null, myListener));
       node.addChild(new ConstantNode("0", null, myListener));
-      Throwable e = assertThrows(InvocationTargetException.class, () -> {
+      assertThrows(InvalidOperandException.class, () -> {
         node.getValue();
       });
-      assertInstanceOf(ArithmeticException.class, e.getCause());
     }
 
   }

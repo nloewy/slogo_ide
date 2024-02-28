@@ -73,6 +73,27 @@ public class ParseTest {
   }
 
   @Test
+  void valueWithNoCommandAlone()
+      throws InvocationTargetException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException, InvalidCommandException {
+    assertThrows(InsufficientArgumentsException.class, () -> {
+      slogo.parse(
+          "50");
+    });
+  }
+
+  @Test
+  void constantWithNoCommandBetweenProperCommands()
+      throws InvocationTargetException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException, InvalidCommandException {
+    assertThrows(InsufficientArgumentsException.class, () -> slogo.parse("FD 10 10 RT 30"));
+
+  }
+
+  @Test
+  void variableWithNoCommandBetweenProperCommands()
+      throws InvocationTargetException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException, InvalidCommandException {
+    assertThrows(InsufficientArgumentsException.class, () -> slogo.parse("FD 10 :C RT 30"));
+  }
+  @Test
   void testNestedIfElseList()
       throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse(
@@ -101,7 +122,7 @@ public class ParseTest {
 
   @Test
   void testInvalidCommand()
-      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+      throws InvalidCommandException, InvalidTokenException {
     assertThrows(InvalidCommandException.class, () -> {
       slogo.parse(
           "MAKE :CLASS 10 RANDOMTEXT DIFFERENCE :CLASS 5 [ RIGHT :CLASS ] RIGHT 50");
@@ -110,12 +131,20 @@ public class ParseTest {
 
   @Test
   void testInvalidToken()
-      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+      throws InvalidCommandException, InvalidTokenException {
     assertThrows(InvalidTokenException.class, () -> {
       slogo.parse("MAKE :CLASS 10 REPEAT DIFFERENCE :CLASS 5 [ RIGHT4 :CLASS ] RIGHT 50");
     });
   }
 
+
+  @Test
+  void testNotEnoughArguments()
+      throws InsufficientArgumentsException, InvalidCommandException, InvalidTokenException {
+    assertThrows(InsufficientArgumentsException.class, () -> {
+      slogo.parse("MAKE :CLASS");
+    });
+  }
 
   @Test
   void testCaseSensitiveCommands()

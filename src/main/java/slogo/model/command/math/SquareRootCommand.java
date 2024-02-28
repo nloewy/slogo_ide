@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import slogo.model.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
@@ -19,7 +20,7 @@ public class SquareRootCommand implements Command {
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     if (arg1 < 0) {
-      throw new IllegalArgumentException("Operand must be non-negative");
+      throw new InvalidOperandException("Operand must be non-negative");
     }
     return Math.sqrt(arg1);
   }

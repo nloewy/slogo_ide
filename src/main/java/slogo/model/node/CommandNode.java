@@ -3,6 +3,7 @@ package slogo.model.node;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import slogo.model.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.IncompleteClassException;
 import slogo.model.SlogoListener;
@@ -32,15 +33,15 @@ public class CommandNode extends Node {
 
 
   @Override
-  public double getValue() throws IncompleteClassException {
-
-    List<Node> children = getChildren();
+  public double getValue()
+      throws  InvocationTargetException, IllegalAccessException {
     try {
+      List<Node> children = getChildren();
       return (double) m.invoke(command, children);
-    } catch ( IllegalAccessException | InvocationTargetException e) {
-      throw new IncompleteClassException("Error getting number of arguments. Method execute not found for " + myToken);
     }
-
+    catch (InvocationTargetException | IllegalAccessException e) {
+      throw new InvalidOperandException("");
+    }
   }
 
   public int getNumArgs() throws IncompleteClassException {

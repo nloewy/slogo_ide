@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import slogo.model.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
@@ -22,7 +23,7 @@ public class PowerCommand implements Command {
     double result = Math.pow(arg1, arg2);
     if (Double.isNaN(result) || result == Double.NEGATIVE_INFINITY ||
         result == Double.POSITIVE_INFINITY) {
-      throw new IllegalArgumentException("Result is operation is undefined");
+      throw new InvalidOperandException("Result is operation is undefined");
     }
     return result;
   }

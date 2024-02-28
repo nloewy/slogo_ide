@@ -3,6 +3,7 @@ package slogo.model.command.math;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.mathutils.MathUtils;
+import slogo.model.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
@@ -20,7 +21,7 @@ public class TangentCommand implements Command {
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).getValue();
     if (Math.abs(arg1 % 180) == 90) {
-      throw new ArithmeticException("Illegal Value for Tangent Function");
+      throw new InvalidOperandException("Illegal Value for Tangent Function");
     }
     return Math.tan(MathUtils.toRadians(arg1));
   }
