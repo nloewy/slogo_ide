@@ -31,7 +31,6 @@ public class UserCommandNode extends Node {
     List<Node> children = node.getChildren(); // Get the children of the current node
     for (Node child : children) {
       if (child.getToken().equals(tokenToReplace)) {
-        // Replace the node with a ConstantNode
         int index = children.indexOf(child);
         if (index != -1) {
           ConstantNode constantNode = new ConstantNode(String.valueOf(value), modelState,
@@ -39,7 +38,6 @@ public class UserCommandNode extends Node {
           children.set(index, constantNode);
         }
       } else {
-        // Recursively check the children of the current node
         replaceNodesWithTokenHelper(child, tokenToReplace, value);
       }
     }

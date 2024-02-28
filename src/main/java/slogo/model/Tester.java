@@ -34,7 +34,10 @@ public class Tester {
     Node node = new CommandNode("math.RandomRange", model, myListener);
     node.addChild(new ConstantNode("-90.00000", null, myListener));
     node.addChild(new ConstantNode("-90.00100", null, myListener));
-    node.getValue();
+    try { node.getValue();}
+    catch (InvalidOperandException e) {
+      System.out.println(e.getMessage());
+    }
 
 
   }

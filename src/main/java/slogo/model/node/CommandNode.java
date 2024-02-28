@@ -33,14 +33,14 @@ public class CommandNode extends Node {
 
 
   @Override
-  public double getValue()
-      throws  InvocationTargetException, IllegalAccessException {
+  public double getValue() throws InvocationTargetException, IllegalAccessException {
     try {
       List<Node> children = getChildren();
       return (double) m.invoke(command, children);
     }
     catch (InvocationTargetException | IllegalAccessException e) {
-      throw new InvalidOperandException("");
+      System.out.println(e.getMessage());
+      throw new InvalidOperandException(e.getMessage());
     }
   }
 
