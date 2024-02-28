@@ -6,13 +6,14 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.CommandNode;
-import slogo.model.ConstantNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.Node;
 
-public class AndCommandTest {
+public class AndCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
   private Turtle myTurtle;
@@ -25,7 +26,8 @@ public class AndCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     model = new ModelState();
-    node = new CommandNode("bool.AndCommand", model);
+
+    node = new CommandNode("bool.And", model, myListener);
 
   }
 
@@ -53,8 +55,8 @@ public class AndCommandTest {
   })
   void testAnd(String op1, String op2, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, model));
-    node.addChild(new ConstantNode(op2, model));
+    node.addChild(new ConstantNode(op1, model, myListener));
+    node.addChild(new ConstantNode(op2, model, myListener));
     assertEquals(result, node.getValue(), DELTA);
   }
 }

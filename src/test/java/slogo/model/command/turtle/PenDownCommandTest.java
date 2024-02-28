@@ -4,12 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import slogo.model.CommandNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.Node;
 
-public class PenDownCommandTest {
+public class PenDownCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -22,7 +23,7 @@ public class PenDownCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.PenDownCommand", model);
+    node = new CommandNode("turtle.PenDown", model, myListener);
   }
 
   @Test

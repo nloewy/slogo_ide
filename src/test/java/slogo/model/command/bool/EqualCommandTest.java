@@ -6,13 +6,14 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.CommandNode;
-import slogo.model.ConstantNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.Node;
 
-public class EqualCommandTest {
+public class EqualCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
   private Turtle myTurtle;
@@ -23,7 +24,7 @@ public class EqualCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("bool.EqualCommand", model);
+    node = new CommandNode("bool.Equal", model, myListener);
   }
 
   @ParameterizedTest
@@ -45,8 +46,8 @@ public class EqualCommandTest {
   })
   void testEqual(String op1, String op2, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
-    node.addChild(new ConstantNode(op2, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op2, null, myListener));
     assertEquals(result, node.getValue(), DELTA);
   }
 }

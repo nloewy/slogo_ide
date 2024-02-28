@@ -1,70 +1,185 @@
 /**
- * This interface defines methods for internal operations of a model in a SLogo application.
- * These operations include creating command objects, managing commands, variables, and listeners.
+ * Represents a node in an abstract syntax tree.
  */
-public interface ModelInternal {
+public abstract class Node {
 
   /**
-   * Creates a command object that can be executed later by the model.
-   * @param commandType a String representation of the command
-   * @return A command object.
+   * Retrieves the value of the node.
+   *
+   * @return The value of the node.
+   * @throws InvocationTargetException If the underlying method throws an exception.
+   * @throws IllegalAccessException    If the underlying method is inaccessible.
    */
-  Command createCommand(String commandType);
+  public abstract double getValue() throws InvocationTargetException, IllegalAccessException;
 
   /**
-   * Adds a command to the history.
-   * @param command The command to add to the history.
+   * Retrieves the children of the node.
+   *
+   * @return The children of the node.
    */
-  void addCommandToHistory(Command command);
+  public List<Node> getChildren() {
+    return myChildren;
+  }
 
   /**
-   * Adds a listener for receiving updates from the model.
-   * @param listener The listener to add.
+   * Adds a child node to the current node.
+   *
+   * @param node The child node to be added.
    */
-  void addListener(SLogoListener listener);
+  public void addChild(Node node) {
+    myChildren.add(node);
+  }
 
   /**
-   * Removes a listener from the model.
-   * @param listener The listener to remove.
+   * Retrieves the token associated with the node.
+   *
+   * @return The token associated with the node.
    */
-  void removeListener(SLogoListener listener);
+  public String getToken();
 }
 
+
 /**
- * This interface represents a command that can be executed in the Slogo language framework.
+ * Represents a command to be executed.
  */
 interface Command {
+
   /**
-   * Executes the command.
+   * Executes the command with the given arguments.
+   *
+   * @param arguments The arguments for the command.
+   * @return The result of executing the command.
+   * @throws InvocationTargetException If the underlying method throws an exception.
+   * @throws IllegalAccessException    If the underlying method is inaccessible.
    */
-  void execute();
+  public abstract Function<ModelState, Double> execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException;
+}
+
+
+/**
+ * Represents the state of the model (turtles, variables/commands defined by users).
+ */
+public class ModelState {
+
+  /**
+   * Retrieves the turtles in the model.
+   *
+   * @return The list of turtles in the model.
+   */
+  public List<Turtle> getTurtles();
+
+  /**
+   * Retrieves the variables currently defined in the Slogo model.
+   *
+   * @return The map of variables in the model, from String "names/tokens" to their numeric values.
+   */
+  public Map<String, Double> getVariables();
+
+  /**
+   * Retrieves the user-defined commands in the model.
+   *
+   * @return The map of user-defined commands in the model, from String command names, to list of
+   * Nodes that can be executed.
+   */
+  public Map<String, List<Node>> getUserDefinedCommands();
+
 }
 
 /**
- * This interface defines methods for receiving updates from a Slogo model.
+ * Represents a turtle in the model.
  */
-interface SlogoListener {
-  /**
-   * Called when a variable value is updated.
-   * @param variableName The name of the variable.
-   * @param value The new value of the variable.
-   */
-  void onUpdateValue(String variableName, double value);
+public class Turtle {
 
   /**
-   * Called by a command that involves updating the state of the turtle
-   * @param turtleState The new state of the turtle.
+   * Retrieves the y-coordinate of the turtle.
    *
+   * @return The y-coordinate of the turtle.
    */
-  void onUpdateTurtleState(ImmutableTurtle turtleState, double value);
+  public double getY();
 
   /**
-   * Called by a command that involves setting the value of a variable.
-   * @param text The text representation of the variable.
-   * @param value The new value of the variable.
+   * Sets the y-coordinate of the turtle.
+   *
+   * @param myY The new y-coordinate of the turtle.
    */
-  void onUpdateVariable(String text, double value);
+  public void setY(double myY);
+
+  /**
+   * Retrieves the x-coordinate of the turtle.
+   *
+   * @return The x-coordinate of the turtle.
+   */
+  public double getX();
+
+  /**
+   * Sets the x-coordinate of the turtle.
+   *
+   * @param myX The new x-coordinate of the turtle.
+   */
+  public void setX(double myX);
+
+  /**
+   * Retrieves the heading of the turtle.
+   *
+   * @return The heading of the turtle.
+   */
+  public double getHeading();
+
+  /**
+   * Sets the heading of the turtle.
+   *
+   * @param myHeading The new heading of the turtle.
+   */
+  public void setHeading(double myHeading);
+
+  /**
+   * Retrieves an immutable record of the turtle.
+   *
+   * @return An immutable record of the turtle.
+   */
+  public TurtleRecord getImmutableTurtle();
+
+  /**
+   * Retrieves the pen state of the turtle.
+   *
+   * @return The pen state of the turtle.
+   */
+  public boolean getPen();
+
+  /**
+   * Sets the pen state of the turtle.
+   *
+   * @param b The new pen state of the turtle.
+   */
+  public void setPen(boolean b);
+
+  /**
+   * Retrieves the visibility state of the turtle.
+   *
+   * @return The visibility state of the turtle.
+   */
+  public boolean getVisible();
+
+  /**
+   * Sets the visibility state of the turtle.
+   *
+   * @param b The new visibility state of the turtle.
+   */
+  public void setVisible(boolean b);
+
+  /**
+   * Retrieves the ID of the turtle.
+   *
+   * @return The ID of the turtle.
+   */
+  public int getId();
 }
 
+public Parser(ModelState modelState, SlogoListener myListener) {
 
-
+  /**
+   * Parses command and returns a node that can be executed
+   */
+  public Node parse(String input);
+}

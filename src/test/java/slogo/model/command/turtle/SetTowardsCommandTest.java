@@ -6,13 +6,14 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.CommandNode;
-import slogo.model.ConstantNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.Node;
 
-public class SetTowardsCommandTest {
+public class SetTowardsCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -27,7 +28,7 @@ public class SetTowardsCommandTest {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.SetTowardsCommand", model);
+    node = new CommandNode("turtle.SetTowards", model, myListener);
   }
 
   @ParameterizedTest
@@ -61,8 +62,8 @@ public class SetTowardsCommandTest {
   })
   void testBasicToward(String x, String y, String expectedValue, String expectedHeading)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(x, model));
-    node.addChild(new ConstantNode(y, model));
+    node.addChild(new ConstantNode(x, model, myListener));
+    node.addChild(new ConstantNode(y, model, myListener));
     assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
   }
@@ -83,8 +84,8 @@ public class SetTowardsCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setX(50);
     myTurtle.setY(-50);
-    node.addChild(new ConstantNode(x, model));
-    node.addChild(new ConstantNode(y, model));
+    node.addChild(new ConstantNode(x, model, myListener));
+    node.addChild(new ConstantNode(y, model, myListener));
     assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
   }

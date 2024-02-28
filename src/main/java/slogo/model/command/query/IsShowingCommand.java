@@ -2,29 +2,29 @@ package slogo.model.command.query;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
+import slogo.model.node.Node;
 
-public class IsShowingCommand extends Command {
+public class IsShowingCommand implements Command {
+
+  public static final int NUM_ARGS = 0;
+
+  private final ModelState modelState;
+
+  public IsShowingCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
+  }
 
   @Override
-  public Function<ModelState, Double> execute(List<Node> arguments)
+  public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return modelState -> {
-      Turtle turtle = modelState.getTurtles().get(0);
-      if (turtle.getVisible()) {
-        return 1.0;
-      }
-      return 0.0;
-    };
+    Turtle turtle = modelState.getTurtles().get(0);
+    if (turtle.getVisible()) {
+      return 1.0;
+    }
+    return 0.0;
   }
-
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  listener.onUpdateTurtleState(myTurtle.getImmutableTurtle());
-  }
-   */
 }

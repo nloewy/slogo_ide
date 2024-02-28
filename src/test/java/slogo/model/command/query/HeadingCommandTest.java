@@ -6,13 +6,14 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.CommandNode;
-import slogo.model.ConstantNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.Node;
 
-public class HeadingCommandTest {
+public class HeadingCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -26,7 +27,7 @@ public class HeadingCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("query.HeadingCommand", model);
+    node = new CommandNode("query.Heading", model, myListener);
 
   }
 
@@ -46,7 +47,7 @@ public class HeadingCommandTest {
   void testHeadingBasic(String heading)
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setHeading(-393993);
-    node.addChild(new ConstantNode(heading, null));
+    node.addChild(new ConstantNode(heading, null, myListener));
     assertEquals(myTurtle.getHeading(), node.getValue(), DELTA);
   }
 

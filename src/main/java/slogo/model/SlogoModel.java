@@ -1,36 +1,32 @@
 package slogo.model;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import slogo.model.api.Model;
+import slogo.model.node.Node;
+
 
 public class SlogoModel implements Model {
 
-  // private ModelState modelState;
-  private final Parser parser;
-
   private final SlogoListener myListener;
-  private final List<Turtle> myTurtles;
-  private final Map<String, Double> myVariables;
-  private final ModelState modelstate;
+  private final Parser parser;
+  private ModelState modelstate;
 
-  public SlogoModel(SlogoListener listener) {
+  public SlogoModel(SlogoListener listener) throws IOException {
     modelstate = new ModelState();
-    myTurtles = new ArrayList<>();
-    myVariables = new HashMap<>();
-
-    parser = new Parser();
+    modelstate.getTurtles().add(new Turtle(1));
     myListener = listener;
+    parser = new Parser(modelstate, myListener);
+
   }
 
-  public void parse(String commandStr) {
-    List<Node> nodes = parser.parse(commandStr);
-    for (Node node : nodes) {
-      //execute, send to listener
-    }
+  @Override
+  public void parse(String input)
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException {
+    Node root = parser.parse(input);
+    double val = root.getValue();
+    myListener.onReturn(val);
   }
 
   @Override
@@ -45,8 +41,17 @@ public class SlogoModel implements Model {
 
   @Override
   public void resetModel() {
+    modelstate = new ModelState();
   }
 
+  //FOR TESTING PURPOSES ONLY
+  ModelState getModelstate() {
+    return modelstate;
+  }
 
 }
+
+
+
+
 

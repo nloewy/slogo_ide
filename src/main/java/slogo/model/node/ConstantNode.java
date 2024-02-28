@@ -1,13 +1,16 @@
-package slogo.model;
+package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
+import slogo.model.ModelState;
+import slogo.model.SlogoListener;
 
 public class ConstantNode extends Node {
 
   private final double myConstant;
   private final String myToken;
 
-  public ConstantNode(String token, ModelState modelState) throws NumberFormatException {
+  public ConstantNode(String token, ModelState modelState, SlogoListener listener)
+      throws NumberFormatException {
     super();
     myToken = token;
     myConstant = Double.parseDouble(token);
@@ -15,5 +18,10 @@ public class ConstantNode extends Node {
 
   public double getValue() throws InvocationTargetException, IllegalAccessException {
     return myConstant;
+  }
+
+  public String getToken() {
+    return myToken
+        ;
   }
 }

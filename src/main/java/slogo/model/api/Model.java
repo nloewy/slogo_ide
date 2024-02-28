@@ -1,11 +1,15 @@
 package slogo.model.api;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import slogo.model.InvalidCommandException;
+import slogo.model.InvalidTokenException;
 
 public interface Model {
 
 
-  void parse(String commandStr);
+  void parse(String commandStr)
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException;
 
   /**
    * Opens a file dialog to load a new XML file.

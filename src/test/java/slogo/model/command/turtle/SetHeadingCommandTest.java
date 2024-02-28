@@ -7,13 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.CommandNode;
-import slogo.model.ConstantNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.Node;
 
-public class SetHeadingCommandTest {
+public class SetHeadingCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -28,7 +29,7 @@ public class SetHeadingCommandTest {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.SetHeadingCommand", model);
+    node = new CommandNode("turtle.SetHeading", model, myListener);
 
   }
 
@@ -42,7 +43,7 @@ public class SetHeadingCommandTest {
   })
   void testBasicHeading(String newHeading, String expectedValue, String expectedHeading)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(newHeading, model));
+    node.addChild(new ConstantNode(newHeading, model, myListener));
     assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
 
@@ -53,7 +54,7 @@ public class SetHeadingCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setHeading(60);
     String newHeading = "20";
-    node.addChild(new ConstantNode(newHeading, model));
+    node.addChild(new ConstantNode(newHeading, model, myListener));
     assertEquals(40, node.getValue(), DELTA);
     assertEquals(20, myTurtle.getHeading(), DELTA);
   }
@@ -63,7 +64,7 @@ public class SetHeadingCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     String newHeading = "940";
     myTurtle.setHeading(500);
-    node.addChild(new ConstantNode(newHeading, model));
+    node.addChild(new ConstantNode(newHeading, model, myListener));
     assertEquals(80, node.getValue(), DELTA);
     assertEquals(220, myTurtle.getHeading(), DELTA);
   }
@@ -73,7 +74,7 @@ public class SetHeadingCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     String newHeading = "1081";
     myTurtle.setHeading(361);
-    node.addChild(new ConstantNode(newHeading, model));
+    node.addChild(new ConstantNode(newHeading, model, myListener));
     assertEquals(0, node.getValue(), DELTA);
     assertEquals(1, myTurtle.getHeading(), DELTA);
   }
@@ -83,7 +84,7 @@ public class SetHeadingCommandTest {
       throws InvocationTargetException, IllegalAccessException {
     String newHeading = "-270";
     myTurtle.setHeading(95);
-    node.addChild(new ConstantNode(newHeading, model));
+    node.addChild(new ConstantNode(newHeading, model, myListener));
     assertEquals(5, node.getValue(), DELTA);
     assertEquals(90, myTurtle.getHeading(), DELTA);
   }

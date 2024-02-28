@@ -2,25 +2,21 @@ package slogo.model.command.math;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.Node;
+import slogo.model.SlogoListener;
 import slogo.model.command.Command;
+import slogo.model.node.Node;
 
-public class PiCommand extends Command {
+public class PiCommand implements Command {
 
+  public static final int NUM_ARGS = 0;
+
+  public PiCommand(ModelState modelState, SlogoListener listener) {
+  }
 
   @Override
-  public Function<ModelState, Double> execute(List<Node> arguments)
+  public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return modelState -> {
-      return Math.PI;
-    };
+    return Math.PI;
   }
-
-  /**@Override public void notifyListener(SlogoListener listener, double value) {
-  super.notifyListener(listener, value);
-  }
-   */
-
 }

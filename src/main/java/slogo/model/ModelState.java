@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import slogo.model.api.ModelListener;
+import slogo.model.node.Node;
 
-public class ModelState implements ModelListener {
+public class ModelState {
 
-  private List<Turtle> myTurtles;
-  private Map<String, Double> myVariables;
-  private Map<String, List<Node>> myUserDefinedCommands;
+  private final List<Turtle> myTurtles;
+  private final Map<String, Double> myVariables;
+  private final Map<String, Integer> myUserDefinedCommands;
+  private final Map<String, List<Node>> myUserDefinedCommandNodes;
+
   public ModelState() {
     myTurtles = new ArrayList<>();
     myVariables = new HashMap<>();
     myUserDefinedCommands = new HashMap<>();
+    myUserDefinedCommandNodes = new HashMap<>();
   }
 
   public List<Turtle> getTurtles() {
@@ -26,13 +28,12 @@ public class ModelState implements ModelListener {
     return myVariables;
   }
 
-  public Map<String, List<Node>> getUserDefinedCommands() {
+  public Map<String, Integer> getUserDefinedCommands() {
     return myUserDefinedCommands;
   }
 
-  @Override
-  public double applyCommandToModelState(Function<ModelState, Double> action) {
-    return action.apply(this);
+  public Map<String, List<Node>> getUserDefinedCommandNodes() {
+    return myUserDefinedCommandNodes;
   }
 
 }

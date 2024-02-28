@@ -6,13 +6,14 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.CommandNode;
-import slogo.model.ConstantNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.Node;
 
-public class XcoordinateCommandTest {
+public class XcoordinateCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -26,7 +27,7 @@ public class XcoordinateCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("query.XcoordinateCommand", model);
+    node = new CommandNode("query.Xcoordinate", model, myListener);
 
   }
 
@@ -44,7 +45,7 @@ public class XcoordinateCommandTest {
   })
   void testXCorBasic(String x)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(x, null));
+    node.addChild(new ConstantNode(x, new ModelState(), myListener));
     assertEquals(myTurtle.getX(), node.getValue(), DELTA);
   }
 

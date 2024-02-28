@@ -2,42 +2,36 @@ package slogo.model.command.control;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.function.Function;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
+import slogo.model.node.Node;
 
-public class RepeatCommand extends Command {
+public class RepeatCommand implements Command {
 
+  public static final int NUM_ARGS = 2;
+  private final ModelState modelState;
 
-  @Override
-  public Function<ModelState, Double> execute(List<Node> arguments)
-      throws InvocationTargetException, IllegalAccessException {
-    String variableName = "repcount";
-    double end = arguments.get(0).getValue();
-    Node commands = arguments.get(1);
-    return modelState -> {
-      double holder = modelState.getVariables().getOrDefault("repcount",Double.MAX_VALUE);
-      double res = 0.0;
-      for (double i = 1; i <= end; i += 1) {
-        modelState.getVariables().put(variableName, i);
-        try {
-          res = commands.getValue();
-        } catch (InvocationTargetException | IllegalAccessException e) {
-          throw new RuntimeException(e);
-        }
-      }
-      if(holder == Double.MAX_VALUE) { holder = end; }
-      modelState.getVariables().put("repcount", holder);
-      return res;
-    };
-
+  public RepeatCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
-
-  public void notifyListener(SlogoListener listener, double value) {
-
-    //super.notifyListener(listener, value);
+  @Override
+  public double execute(List<Node> arguments)
+      throws InvocationTargetException, IllegalAccessException {
+    String variableName = ":repcount";
+    double end = arguments.get(0).getValue();
+    Node commands = arguments.get(1);
+    double res = 0.0;
+    for (double i = 1; i <= end; i += 1) {
+      modelState.getVariables().put(variableName, i);
+      try {
+        res = commands.getValue();
+      } catch (InvocationTargetException | IllegalAccessException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    modelState.getVariables().remove(":repcount");
+    return res;
   }
 }

@@ -6,12 +6,13 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.CommandNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.Node;
 
-public class ClearScreenCommandTest {
+public class ClearScreenCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -49,7 +50,7 @@ public class ClearScreenCommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.ClearScreenCommand", model);
+    node = new CommandNode("turtle.ClearScreen", model, myListener);
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
     double expectedVal = Math.hypot(Double.parseDouble(originalX), Double.parseDouble(originalY));

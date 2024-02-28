@@ -1,6 +1,7 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,13 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.CommandNode;
-import slogo.model.ConstantNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.Node;
 
-public class RandomCommandTest {
+public class RandomCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -27,7 +29,7 @@ public class RandomCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.RandomCommand", model);
+    node = new CommandNode("math.Random", model, myListener);
 
   }
 
@@ -41,7 +43,7 @@ public class RandomCommandTest {
   })
   void testBasicRandom(String positiveValue)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(positiveValue, null));
+    node.addChild(new ConstantNode(positiveValue, null, myListener));
     double val = node.getValue();
     assertTrue(0 <= val);
     assertTrue(Double.parseDouble(positiveValue) > val);
@@ -51,16 +53,17 @@ public class RandomCommandTest {
   @Test
   void testRandomZero()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("0.00000", null));
+    node.addChild(new ConstantNode("0.00000", null, myListener));
     assertEquals(0, node.getValue(), DELTA);
   }
 
   @Test
   void testRandomNegative()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("-90.00000", null));
-    Throwable e = assertThrows(IllegalArgumentException.class, () -> {
+    node.addChild(new ConstantNode("-90.00000", null, myListener));
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {
       node.getValue();
     });
+    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

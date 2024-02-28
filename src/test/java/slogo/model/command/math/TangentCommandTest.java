@@ -1,19 +1,21 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.CommandNode;
-import slogo.model.ConstantNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.Node;
 
-public class TangentCommandTest {
+public class TangentCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -25,7 +27,7 @@ public class TangentCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.TangentCommand", model);
+    node = new CommandNode("math.Tangent", model, myListener);
   }
 
   @ParameterizedTest
@@ -46,7 +48,7 @@ public class TangentCommandTest {
   })
   void testTangentBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -61,9 +63,10 @@ public class TangentCommandTest {
   })
   void testTangentInvalid(String degrees)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    node.addChild(new ConstantNode(degrees, null));
-    Throwable e = assertThrows(ArithmeticException.class, () -> {
+    node.addChild(new ConstantNode(degrees, null, myListener));
+    Throwable e = assertThrows(InvocationTargetException.class, () -> {
       node.getValue();
     });
+    assertInstanceOf(ArithmeticException.class, e.getCause());
   }
 }

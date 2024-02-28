@@ -6,13 +6,14 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.CommandNode;
-import slogo.model.ConstantNode;
 import slogo.model.ModelState;
-import slogo.model.Node;
 import slogo.model.Turtle;
+import slogo.model.command.CommandTest;
+import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.Node;
 
-public class CosineCommandTest {
+public class CosineCommandTest extends CommandTest {
 
   public static final double DELTA = 0.001;
 
@@ -24,7 +25,7 @@ public class CosineCommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.CosineCommand", model);
+    node = new CommandNode("math.Cosine", model, myListener);
   }
 
   @ParameterizedTest
@@ -49,7 +50,7 @@ public class CosineCommandTest {
   })
   void testCosineBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, null, myListener));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 }
