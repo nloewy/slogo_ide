@@ -3,6 +3,7 @@ package slogo.model.node;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import slogo.model.IncompleteClassException;
 
 public abstract class Node {
 
@@ -23,7 +24,7 @@ public abstract class Node {
   }
 
   public int getNumArgs()
-      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+      throws IncompleteClassException {
     return 0;
   }
 }

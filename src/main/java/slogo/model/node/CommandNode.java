@@ -3,8 +3,8 @@ package slogo.model.node;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import slogo.model.InvalidCommandException;
 import slogo.model.ModelState;
+import slogo.model.IncompleteClassException;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 
@@ -32,15 +32,23 @@ public class CommandNode extends Node {
 
 
   @Override
-  public double getValue() throws InvocationTargetException, IllegalAccessException {
+  public double getValue() throws IncompleteClassException {
+
     List<Node> children = getChildren();
-    return (double) m.invoke(command, children);
+    try {
+      return (double) m.invoke(command, children);
+    } catch ( IllegalAccessException | InvocationTargetException e) {
+      throw new IncompleteClassException("Error getting number of arguments. Method execute not found for " + myToken);
+    }
+
   }
 
-  @Override
-  public int getNumArgs()
-      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
-    return (int) Class.forName(myToken).getField("NUM_ARGS").get(null);
+  public int getNumArgs() throws IncompleteClassException {
+    try {
+      return (int) Class.forName(myToken).getField("NUM_ARGS").get(null);
+    } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException e) {
+      throw new IncompleteClassException("Error getting number of arguments. Field NUM_ARGS not found for " + myToken);
+    }
   }
 
   public String getToken() {

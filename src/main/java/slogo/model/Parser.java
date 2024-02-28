@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,6 +12,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Stack;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import slogo.model.node.CommandCreatorNode;
 import slogo.model.node.CommandNode;
@@ -33,8 +33,9 @@ public class Parser {
   private Node currentNode;
   private int myIndex;
   private final PatternLoader patternLoader;
+  private List<Map.Entry<Predicate<String>, Consumer<List<String>>>> createNodeHandler;
+  private Map<String, BiConsumer<Stack<Node>, Node>> tokenHandlers;
 
-  private List<Map.Entry<Predicate<String>, Consumer<List<String>>>> actionList;
 
 
 
@@ -45,12 +46,10 @@ public class Parser {
     patternLoader = new PatternLoader(
         "src/main/resources/slogo/example/languages/Syntax.properties");
     initializeActionList();
+    initializeTokenMap();
   }
 
-
-
-  public Node parse(String input)
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException {
+  public Node parse(String input) {
     List<String> tokens = Arrays.asList(input.split("\\s+"));
     myIndex = 0;
     currentNode = null;
@@ -60,51 +59,49 @@ public class Parser {
     while (myIndex < tokens.size()) {
       handleNextToken(tokens, nodeStack, rootNode);
     }
-    while (!nodeStack.isEmpty() && nodeStack.peek().getNumArgs() <= nodeStack.peek().getChildren()
-        .size()) {
+    while (!nodeStack.isEmpty() && nodeStack.peek().getNumArgs() <= nodeStack.peek().getChildren().size()) {
       nodeStack.pop();
+    }
+    if(!nodeStack.isEmpty()) {
+      throw new RuntimeException("Extra Commands");
     }
     return rootNode;
   }
 
-    private void handleNextToken(List<String> tokens, Stack<Node> nodeStack, Node rootNode)
-      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException {
-    String token = retrieveNextToken(tokens);
-    if (token.equals(OPEN_BRACKET)) {
-      handleOpenBracket(nodeStack, rootNode);
-    } else if (token.equals(CLOSED_BRACKET)) {
-      handleClosedBracket(nodeStack);
-    } else {
-      createTokenAndUpdateStack(tokens, nodeStack);
-    }
+    private void handleNextToken(List<String> tokens, Stack<Node> nodeStack, Node rootNode) {
+    skipEmptyOrCommentTokens(tokens);
+    String token = tokens.get(myIndex);
+      BiConsumer<Stack<Node>, Node> handler = tokenHandlers.getOrDefault(token, (stack, node) -> createTokenAndUpdateStack(tokens, stack));
+      handler.accept(nodeStack, rootNode);
     myIndex++;
   }
 
-  private void createTokenAndUpdateStack(List<String> tokens, Stack<Node> nodeStack)
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidTokenException {
+  private void skipEmptyOrCommentTokens(List<String> tokens) {
+    while (myIndex < tokens.size() && (tokens.get(myIndex).isEmpty() || tokens.get(myIndex).startsWith("#"))) {
+      myIndex++;
+    }
+  }
+
+  private void createTokenAndUpdateStack(List<String> tokens, Stack<Node> nodeStack) {
     createNode(tokens);
-    if (!nodeStack.peek().getToken().equals(OPEN_BRACKET)
-        && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
-      while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) &&
+    while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) &&
           nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
         nodeStack.pop();
-      }
     }
     nodeStack.peek().addChild(currentNode);
     nodeStack.push(currentNode);
   }
 
-  private void handleClosedBracket(Stack<Node> nodeStack) {
+  private void handleClosedBracket(Stack<Node> nodeStack, Node rootNode) {
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET)) {
       nodeStack.pop();
     }
-    if (nodeStack.size() > 1) {
+    if (!nodeStack.peek().equals(rootNode)) {
       nodeStack.pop();
     }
   }
 
-  private void handleOpenBracket(Stack<Node> nodeStack, Node rootNode)
-      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+  private void handleOpenBracket(Stack<Node> nodeStack, Node rootNode) {
     while (!nodeStack.peek().equals(rootNode)
         && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
       nodeStack.pop();
@@ -114,19 +111,10 @@ public class Parser {
     nodeStack.push(newNode);
   }
 
-  private String retrieveNextToken(List<String> tokens) {
-    while (tokens.get(myIndex).isEmpty() || tokens.get(myIndex).startsWith("#")) {
-      myIndex++;
-    }
-    return tokens.get(myIndex);
-  }
-
-
-  private void createNode(List<String> tokens)
-      throws IllegalArgumentException, InvalidTokenException {
+  private void createNode(List<String> tokens) {
     String token = tokens.get(myIndex);
     boolean flag = false;
-    for (Map.Entry<Predicate<String>, Consumer<List<String>>> entry : actionList) {
+    for (Map.Entry<Predicate<String>, Consumer<List<String>>> entry : createNodeHandler) {
       if (entry.getKey().test(token)) {
         entry.getValue().accept(tokens);
         flag = true;
@@ -134,22 +122,15 @@ public class Parser {
       }
     }
     if (!flag) {
-      throwException(token);
+      if (token.matches(patternLoader.getPattern("Command"))) {
+        throw new InvalidCommandException("Command " + " '" + token + "' does not exist");
+      }
+      else {
+        throw new InvalidTokenException("Invalid Token : " + "'" + token + "'");
+      }
     }
   }
 
-  private void throwException(String token) {
-    if (token.matches(patternLoader.getPattern("Command"))) {
-      throw new InvalidCommandException("Command " + " '" + token + "' does not exist");
-    }
-    else {
-      throw new InvalidTokenException("Invalid Token : " + "'" + token + "'");
-    }
-  }
-
-  private boolean matchesPattern(String token, String pattern) {
-    return token.matches(pattern);
-  }
 
   private void makeCommandCreatorNode(List<String> tokens) {
     int index = myIndex + 2;
@@ -169,7 +150,7 @@ public class Parser {
       properties.load(new FileInputStream(file));
       for (String commandName : properties.stringPropertyNames()) {
         String[] aliases = properties.getProperty(commandName).split("\\|");
-        for (String alias : aliases) {
+        for(String alias : aliases) {
           commandMap.put(alias, commandName);
         }
       }
@@ -180,21 +161,21 @@ public class Parser {
   }
 
   private void initializeActionList() {
-    actionList = new ArrayList<>();
-    actionList.add(new SimpleEntry<>(
-        token -> matchesPattern(token, patternLoader.getPattern("Constant")),
+    createNodeHandler = new ArrayList<>();
+    createNodeHandler.add(new SimpleEntry<>(
+        token -> token.matches(patternLoader.getPattern("Constant")),
         tokens -> currentNode = new ConstantNode(tokens.get(myIndex).toLowerCase(), modelState, myListener)));
 
-    actionList.add(new SimpleEntry<>(
-        token -> matchesPattern(token, patternLoader.getPattern("Variable")),
+    createNodeHandler.add(new SimpleEntry<>(
+        token -> token.matches(patternLoader.getPattern("Variable")),
         tokens -> currentNode = new VariableNode(tokens.get(myIndex).toLowerCase(), modelState, myListener)));
 
-    actionList.add(new SimpleEntry<>(
-        token -> matchesPattern(token, patternLoader.getPattern("Command")) && commandMap.containsKey(token.toLowerCase()) && commandMap.get(token.toLowerCase()).equals("control.To"),
+    createNodeHandler.add(new SimpleEntry<>(
+        token -> token.matches(patternLoader.getPattern("Command")) && commandMap.containsKey(token.toLowerCase()) && commandMap.get(token.toLowerCase()).equals("control.To"),
         this::makeCommandCreatorNode));
 
-    actionList.add(new SimpleEntry<>(
-        token -> matchesPattern(token, patternLoader.getPattern("Command")) && commandMap.containsKey(token.toLowerCase()) && !commandMap.get(token.toLowerCase()).equals("control.To"),
+    createNodeHandler.add(new SimpleEntry<>(
+        token -> token.matches(patternLoader.getPattern("Command")) && commandMap.containsKey(token.toLowerCase()) && !commandMap.get(token.toLowerCase()).equals("control.To"),
         tokens -> {
           try {
             currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()), modelState,
@@ -204,9 +185,13 @@ public class Parser {
           }
         }));
 
-    actionList.add(new SimpleEntry<>(
-        token -> matchesPattern(token, patternLoader.getPattern("Command")) && modelState.getUserDefinedCommands().containsKey(token.toLowerCase()),
+    createNodeHandler.add(new SimpleEntry<>(
+        token -> token.matches(patternLoader.getPattern("Command")) && modelState.getUserDefinedCommands().containsKey(token.toLowerCase()),
         tokens -> currentNode = new UserCommandNode(tokens.get(myIndex).toLowerCase(), modelState, myListener)));
-
+  }
+  private void initializeTokenMap() {
+    tokenHandlers = new HashMap<>();
+    tokenHandlers.put(OPEN_BRACKET, this::handleOpenBracket);
+    tokenHandlers.put(CLOSED_BRACKET, this::handleClosedBracket);
   }
 }
