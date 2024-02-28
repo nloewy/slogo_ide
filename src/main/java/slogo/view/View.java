@@ -31,9 +31,7 @@ public class View implements SlogoListener {
     private String lang;
     private Controller controller;
 
-
     public View(Stage stage, Controller controller) {
-
         this.stage = stage;
         this. controller = controller;
 
@@ -87,7 +85,7 @@ public class View implements SlogoListener {
         stage.getScene().setFill(color);
     }
 
-    public boolean hasCommandString() {
+    private boolean hasCommandString() {
         return !commandString.isEmpty();
     }
 
