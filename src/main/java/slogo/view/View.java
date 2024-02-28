@@ -1,13 +1,11 @@
 package slogo.view;
 
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import slogo.Controller;
-import slogo.model.SlogoListener;
+import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.view.pages.MainScreen;
 import java.io.FileInputStream;

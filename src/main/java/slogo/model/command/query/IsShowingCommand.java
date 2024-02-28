@@ -3,7 +3,7 @@ package slogo.model.command.query;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
-import slogo.model.SlogoListener;
+import slogo.model.api.SlogoListener;
 import slogo.model.Turtle;
 import slogo.model.command.Command;
 import slogo.model.node.Node;

@@ -2,7 +2,7 @@ package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
 import slogo.model.ModelState;
-import slogo.model.SlogoListener;
+import slogo.model.api.SlogoListener;
 
 public class ConstantNode extends Node {
 

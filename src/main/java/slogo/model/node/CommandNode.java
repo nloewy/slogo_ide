@@ -6,7 +6,7 @@ import java.util.List;
 import slogo.model.api.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.api.IncompleteClassException;
-import slogo.model.SlogoListener;
+import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 
 public class CommandNode extends Node {

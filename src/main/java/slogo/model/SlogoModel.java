@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import slogo.model.api.InvalidCommandException;
 import slogo.model.api.InvalidTokenException;
 import slogo.model.api.Model;
+import slogo.model.api.SlogoListener;
 import slogo.model.node.Node;
 
 

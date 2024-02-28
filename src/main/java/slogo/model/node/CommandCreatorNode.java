@@ -3,7 +3,7 @@ package slogo.model.node;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
-import slogo.model.SlogoListener;
+import slogo.model.api.SlogoListener;
 
 public class CommandCreatorNode extends Node {
 
