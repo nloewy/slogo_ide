@@ -46,7 +46,7 @@ public class StartScreen implements ViewInternal {
             }),
             ButtonUtil.generateButton("Load New General Session", 100, 330, e -> {
                 try {
-                    controller.openNewSession();
+                    controller.openBlankIDESession();
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }

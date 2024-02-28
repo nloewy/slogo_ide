@@ -11,6 +11,7 @@ import slogo.view.pages.MainScreen;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.function.Consumer;
 
 /*
 Represents one IDE session.
@@ -28,8 +29,9 @@ public class View implements SlogoListener {
     private String commandString;
     private String lang;
     private Controller controller;
+    private Consumer<String> parse;
 
-    public View(Stage stage, Controller controller) {
+    public View(Controller controller, Stage stage) {
         this.stage = stage;
         this. controller = controller;
 
@@ -52,8 +54,9 @@ public class View implements SlogoListener {
         turtles.add(new FrontEndTurtle(1, new Double[]{200.0, 0.0}, Color.BLUE, true, 0, defaultImage));
     }
 
-    public void run() throws FileNotFoundException {
+    public void run(Consumer<String> parseMethod) throws FileNotFoundException {
         MainScreen page = new MainScreen(this, stage, controller);
+        parse = parseMethod;
 
         page.setUp();
         Scene scene = new Scene(page.getGroup(), width, height);
@@ -105,6 +108,7 @@ public class View implements SlogoListener {
     //this parse method should handle starting the backend too
     public void pushCommand(String s) {
         commandString = s;
+        parse.accept(commandString);
     }
 
     public Map<String, Number> getVariables() {

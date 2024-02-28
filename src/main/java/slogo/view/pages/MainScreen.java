@@ -77,7 +77,6 @@ public class MainScreen implements ViewInternal {
     field = new TextField();
 
     submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
-      view.onUpdateValue(field.getText(), field.getLength());
       sendCommandStringToView();
       //test for adding variables
     });

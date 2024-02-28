@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main extends Application {
 
@@ -24,7 +25,12 @@ public class Main extends Application {
 
         stage.setTitle("SLogo");
 
-        Controller controller = new Controller(stage);
+        try {
+            Controller controller = new Controller(stage);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 //        try {
 //            controller.run();
 //        } catch (FileNotFoundException e) {
