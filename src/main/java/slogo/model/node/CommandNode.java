@@ -3,9 +3,9 @@ package slogo.model.node;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import slogo.model.InvalidOperandException;
+import slogo.model.api.InvalidOperandException;
 import slogo.model.ModelState;
-import slogo.model.IncompleteClassException;
+import slogo.model.api.IncompleteClassException;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
 
@@ -39,7 +39,6 @@ public class CommandNode extends Node {
       return (double) m.invoke(command, children);
     }
     catch (InvocationTargetException | IllegalAccessException e) {
-      System.out.println(e.getMessage());
       throw new InvalidOperandException(e.getMessage());
     }
   }

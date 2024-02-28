@@ -3,6 +3,8 @@ package slogo.model;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import slogo.model.api.InvalidCommandException;
+import slogo.model.api.InvalidTokenException;
 import slogo.model.api.Model;
 import slogo.model.node.Node;
 

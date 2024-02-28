@@ -2,7 +2,7 @@ package slogo.model.command.math;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import slogo.model.InvalidOperandException;
+import slogo.model.api.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;

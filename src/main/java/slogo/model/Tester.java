@@ -1,6 +1,7 @@
 package slogo.model;
 
 import java.lang.reflect.InvocationTargetException;
+import slogo.model.api.InvalidOperandException;
 import slogo.model.api.TurtleRecord;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;

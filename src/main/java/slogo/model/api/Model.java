@@ -2,8 +2,6 @@ package slogo.model.api;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import slogo.model.InvalidCommandException;
-import slogo.model.InvalidTokenException;
 
 public interface Model {
 

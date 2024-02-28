@@ -3,7 +3,7 @@ package slogo.model.node;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import slogo.model.IncompleteClassException;
+import slogo.model.api.IncompleteClassException;
 
 public abstract class Node {
 
