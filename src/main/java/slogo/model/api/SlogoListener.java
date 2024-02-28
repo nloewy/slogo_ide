@@ -1,6 +1,4 @@
-package slogo.model;
-
-import slogo.model.api.TurtleRecord;
+package slogo.model.api;
 
 public interface SlogoListener {
 

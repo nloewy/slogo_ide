@@ -1,6 +1,6 @@
 package slogo.model.command;
 
-import slogo.model.SlogoListener;
+import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
 
 public class CommandTest {

@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import slogo.model.api.InsufficientArgumentsException;
+import slogo.model.api.InvalidCommandException;
+import slogo.model.api.InvalidTokenException;
+import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
 
 public class ParseTest {
