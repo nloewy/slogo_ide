@@ -2,17 +2,22 @@ package slogo.model;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Stack;
+import java.util.function.Consumer;
 import slogo.model.node.CommandCreatorNode;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
+import java.util.function.Predicate;
 import slogo.model.node.ListNode;
 import slogo.model.node.Node;
 import slogo.model.node.UserCommandNode;
@@ -29,6 +34,9 @@ public class Parser {
   private int myIndex;
   private final PatternLoader patternLoader;
 
+  private List<Map.Entry<Predicate<String>, Consumer<List<String>>>> actionList;
+
+
 
   public Parser(ModelState modelState, SlogoListener listener) throws IOException {
     this.modelState = modelState;
@@ -36,7 +44,10 @@ public class Parser {
     commandMap = loadCommandMap("src/main/resources/slogo/example/languages/English.properties");
     patternLoader = new PatternLoader(
         "src/main/resources/slogo/example/languages/Syntax.properties");
+    initializeActionList();
   }
+
+
 
   public Node parse(String input)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException {
@@ -56,7 +67,7 @@ public class Parser {
     return rootNode;
   }
 
-  private void handleNextToken(List<String> tokens, Stack<Node> nodeStack, Node rootNode)
+    private void handleNextToken(List<String> tokens, Stack<Node> nodeStack, Node rootNode)
       throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException {
     String token = retrieveNextToken(tokens);
     if (token.equals(OPEN_BRACKET)) {
@@ -70,7 +81,7 @@ public class Parser {
   }
 
   private void createTokenAndUpdateStack(List<String> tokens, Stack<Node> nodeStack)
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException {
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidTokenException {
     createNode(tokens);
     if (!nodeStack.peek().getToken().equals(OPEN_BRACKET)
         && nodeStack.peek().getNumArgs() == nodeStack.peek().getChildren().size()) {
@@ -112,37 +123,32 @@ public class Parser {
 
 
   private void createNode(List<String> tokens)
-      throws ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvalidCommandException, InvalidTokenException {
+      throws IllegalArgumentException, InvalidTokenException {
     String token = tokens.get(myIndex);
-    if (matchesPattern(token, patternLoader.getPattern("Constant"))) {
-      currentNode = new ConstantNode(token, modelState, myListener);
-    } else if (matchesPattern(token, patternLoader.getPattern("Variable"))) {
-      currentNode = new VariableNode(token, modelState, myListener);
-    } else if (matchesPattern(token, patternLoader.getPattern("Command"))) {
-      handleCommand(token, tokens);
-    } else {
-      throw new InvalidTokenException("No Pattern Recognized");
+    boolean flag = false;
+    for (Map.Entry<Predicate<String>, Consumer<List<String>>> entry : actionList) {
+      if (entry.getKey().test(token)) {
+        entry.getValue().accept(tokens);
+        flag = true;
+        break;
+      }
+    }
+    if (!flag) {
+      throwException(token);
+    }
+  }
+
+  private void throwException(String token) {
+    if (token.matches(patternLoader.getPattern("Command"))) {
+      throw new InvalidCommandException("Command " + " '" + token + "' does not exist");
+    }
+    else {
+      throw new InvalidTokenException("Invalid Token : " + "'" + token + "'");
     }
   }
 
   private boolean matchesPattern(String token, String pattern) {
     return token.matches(pattern);
-  }
-
-  private void handleCommand(String token, List<String> tokens)
-      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, InvalidCommandException {
-    token = token.toLowerCase();
-    if (commandMap.containsKey(token)) {
-      if (commandMap.get(token).equals("control.To")) {
-        makeCommandCreatorNode(tokens);
-      } else {
-        currentNode = new CommandNode(commandMap.get(token), modelState, myListener);
-      }
-    } else if (modelState.getUserDefinedCommands().containsKey(token)) {
-      currentNode = new UserCommandNode(token, modelState, myListener);
-    } else {
-      throw new InvalidCommandException(token + " is not a recognized command");
-    }
   }
 
   private void makeCommandCreatorNode(List<String> tokens) {
@@ -155,7 +161,7 @@ public class Parser {
     myIndex++;
   }
 
-  private Map<String, String> loadCommandMap(String filePath) {
+  private Map<String, String> loadCommandMap(String filePath) throws FileNotFoundException {
     Properties properties = new Properties();
     commandMap = new HashMap<>();
     try {
@@ -168,9 +174,39 @@ public class Parser {
         }
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new FileNotFoundException("Cannot find file " + filePath);
     }
     return commandMap;
   }
 
+  private void initializeActionList() {
+    actionList = new ArrayList<>();
+    actionList.add(new SimpleEntry<>(
+        token -> matchesPattern(token, patternLoader.getPattern("Constant")),
+        tokens -> currentNode = new ConstantNode(tokens.get(myIndex).toLowerCase(), modelState, myListener)));
+
+    actionList.add(new SimpleEntry<>(
+        token -> matchesPattern(token, patternLoader.getPattern("Variable")),
+        tokens -> currentNode = new VariableNode(tokens.get(myIndex).toLowerCase(), modelState, myListener)));
+
+    actionList.add(new SimpleEntry<>(
+        token -> matchesPattern(token, patternLoader.getPattern("Command")) && commandMap.containsKey(token.toLowerCase()) && commandMap.get(token.toLowerCase()).equals("control.To"),
+        this::makeCommandCreatorNode));
+
+    actionList.add(new SimpleEntry<>(
+        token -> matchesPattern(token, patternLoader.getPattern("Command")) && commandMap.containsKey(token.toLowerCase()) && !commandMap.get(token.toLowerCase()).equals("control.To"),
+        tokens -> {
+          try {
+            currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()), modelState,
+                myListener);
+          } catch (ClassNotFoundException e) {
+            throw new InvalidCommandException("Command Not Found");
+          }
+        }));
+
+    actionList.add(new SimpleEntry<>(
+        token -> matchesPattern(token, patternLoader.getPattern("Command")) && modelState.getUserDefinedCommands().containsKey(token.toLowerCase()),
+        tokens -> currentNode = new UserCommandNode(tokens.get(myIndex).toLowerCase(), modelState, myListener)));
+
+  }
 }

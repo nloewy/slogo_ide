@@ -104,7 +104,7 @@ public class ParseTest {
       throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     assertThrows(InvalidCommandException.class, () -> {
       slogo.parse(
-          "MAKE :CLASS 10 THIS_IS_NOT_A_COMMAND DIFFERENCE :CLASS 5 [ RIGHT :CLASS ] RIGHT 50");
+          "MAKE :CLASS 10 RANDOMTEXT DIFFERENCE :CLASS 5 [ RIGHT :CLASS ] RIGHT 50");
     });
   }
 
@@ -208,7 +208,7 @@ public class ParseTest {
   void testDoubleUserDefinedNoParams()
       throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     slogo.parse(
-        "to partialrect [ ] [ fd 50 rt 90 fd 60 rt 90 fd 30 rt 90 ] to twice [ ] [ repeat 2 [ partialrect ] ] twice fd 60 left 100");
+        "to       partialrect [ ] [ fd 50 rt 90 fd         60 rt 90 fd 30 rt 90 ] to twice         [ ] [ repeat 2 [ partialrect ] ] twice fd 60 left 100");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertTrue(myTurtle.getPen());
     assertEquals(40.0, myTurtle.getX(), DELTA);
@@ -220,10 +220,12 @@ public class ParseTest {
   void testPartialFlower()
       throws NoSuchFieldException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvalidCommandException, InvalidTokenException {
     slogo.parse(
-        "to arc [ :incr :degrees ] [ repeat quotIEnt :degrees 2 [ fd 40 rt :incr ] ] to petal [ :size ] [ repeat 2 [ arc :size 60 rt 120 ] ] to fLOwer [ :length ] [ repeat 5 [ petal :length rt 60 ] ] flowEr 100");
+        "to arc [ :incr :degrees ] [ repeat quotIEnt   :degrees 2 [ fd 40 rt :incr ] ] to petal [ :size ] [ repeat 2 [ arc :size 60 rt 120 ] ] to fLOwer [ :length ] [ repeat 5 [ petal :length rt 60 ] ] flowEr 100");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertTrue(myTurtle.getPen());
     assertEquals(-34.6410161514, myTurtle.getX(), DELTA);
+    assertEquals(29.0672638767, myTurtle.getY(), DELTA);
+    assertEquals(180.0, myTurtle.getHeading(), DELTA);
   }
 
 
