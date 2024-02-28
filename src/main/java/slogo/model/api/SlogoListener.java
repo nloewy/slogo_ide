@@ -1,7 +1,5 @@
 package slogo.model.api;
 
-import slogo.model.api.TurtleRecord;
-
 public interface SlogoListener {
 
   /**

@@ -37,7 +37,8 @@ public class UserCommandNode extends Node {
               myListener);
           children.set(index, constantNode);
         }
-      } else {replaceNodesWithTokenHelper(child, tokenToReplace, value);
+      } else {
+        replaceNodesWithTokenHelper(child, tokenToReplace, value);
       }
     }
   }

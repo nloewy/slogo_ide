@@ -3,9 +3,9 @@ package slogo.model.node;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import slogo.model.api.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.api.IncompleteClassException;
+import slogo.model.api.InvalidOperandException;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 
@@ -24,9 +24,8 @@ public class CommandNode extends Node {
       command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
           .newInstance(modelState, listener);
       m = clazz.getDeclaredMethod("execute", List.class);
-    }
-    catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
-           NoSuchMethodException | IllegalAccessException e) {
+    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
+             NoSuchMethodException | IllegalAccessException e) {
       throw new ClassNotFoundException("Command Class Not Found");
     }
   }
@@ -37,8 +36,7 @@ public class CommandNode extends Node {
     try {
       List<Node> children = getChildren();
       return (double) m.invoke(command, children);
-    }
-    catch (InvocationTargetException | IllegalAccessException e) {
+    } catch (InvocationTargetException | IllegalAccessException e) {
       throw new InvalidOperandException(e.getMessage());
     }
   }
@@ -47,7 +45,8 @@ public class CommandNode extends Node {
     try {
       return (int) Class.forName(myToken).getField("NUM_ARGS").get(null);
     } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException e) {
-      throw new IncompleteClassException("Error getting number of arguments. Field NUM_ARGS not found for " + myToken);
+      throw new IncompleteClassException(
+          "Error getting number of arguments. Field NUM_ARGS not found for " + myToken);
     }
   }
 
