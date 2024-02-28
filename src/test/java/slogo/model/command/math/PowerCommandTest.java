@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import slogo.model.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
@@ -62,9 +63,8 @@ public class PowerCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null, myListener));
     node.addChild(new ConstantNode(op2, null, myListener));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+    assertThrows(InvalidOperandException.class, () -> {
       node.getValue();
     });
-    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import slogo.model.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
@@ -86,9 +87,8 @@ public class LogCommandTest extends CommandTest {
   void testLogNonPositive(String op1)
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null, myListener));
-    Throwable e = assertThrows(InvocationTargetException.class, () -> {
+    assertThrows(InvalidOperandException.class, () -> {
       node.getValue();
     });
-    assertInstanceOf(IllegalArgumentException.class, e.getCause());
   }
 }

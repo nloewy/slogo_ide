@@ -1,6 +1,6 @@
 package slogo.model;
 
-public class InvalidCommandException extends Throwable {
+public class InvalidCommandException extends RuntimeException{
 
   public InvalidCommandException(String s) {
   }

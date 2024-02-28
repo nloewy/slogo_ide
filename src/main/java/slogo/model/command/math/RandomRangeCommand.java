@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import slogo.model.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.SlogoListener;
 import slogo.model.command.Command;
@@ -20,7 +21,7 @@ public class RandomRangeCommand implements Command {
     double arg1 = arguments.get(0).getValue();
     double arg2 = arguments.get(1).getValue();
     if (arg1 > arg2) {
-      throw new IllegalArgumentException("Min must be less than Max");
+      throw new InvalidOperandException("Min must be less than Max");
     }
     return arg1 + (arg2 - arg1) * Math.random();
   }
