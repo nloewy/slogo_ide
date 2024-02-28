@@ -25,3 +25,34 @@ public interface ModelExternal {
    */
   public void resetModel();
 }
+
+
+public interface SlogoListener {
+
+  /**
+   * Called when a variable value is updated.
+   *
+   * @param variableName The name of the variable.
+   */
+  void onUpdateValue(String variableName, Number newValue);
+
+  /**
+   * Called by a command that involves updating the state of the turtle
+   *
+   * @param turtleState The new state of the turtle.
+   */
+  void onUpdateTurtleState(TurtleRecord turtleState);
+
+  /**
+   * Called by a command that involves resetting a turtle, given its id
+   *
+   * @param id The turtle id of the reset turtle.
+   */
+  void onResetTurtle(int id);
+
+  /**
+   * Returns the result of a nested method call
+   * @param value of the outermost command in parse
+   */
+  void onReturn(double value);
+}
