@@ -30,6 +30,7 @@ public class View implements SlogoListener {
     private String lang;
     private Controller controller;
     private Consumer<String> parse;
+    private static final Double[] CENTER = new Double[]{500.0, 300.0};
 
     public View(Controller controller, Stage stage) {
         this.stage = stage;
@@ -48,10 +49,7 @@ public class View implements SlogoListener {
             throw new RuntimeException(e);
         }
 
-        //This line is for testing, this should be filled in by the xml file
-        //All turtles should be sent from the parser
-        turtles.add(new FrontEndTurtle(0, new Double[]{0.0, 0.0}, Color.BLACK, true, 0, defaultImage));
-        turtles.add(new FrontEndTurtle(1, new Double[]{200.0, 0.0}, Color.BLUE, true, 0, defaultImage));
+        turtles.add(new FrontEndTurtle(1, CENTER, Color.BLUE, true, 0, defaultImage));
     }
 
     public void run(Consumer<String> parseMethod) throws FileNotFoundException {
@@ -108,6 +106,7 @@ public class View implements SlogoListener {
     //this parse method should handle starting the backend too
     public void pushCommand(String s) {
         commandString = s;
+        System.out.println(commandString);
         parse.accept(commandString);
     }
 
@@ -122,9 +121,10 @@ public class View implements SlogoListener {
 
     //Backend should call this when adding a new turtle too. THis has to be called on initialization in the model.
     //Ready for multiple turtles
+    //TODO flip the y axis thing
     @Override
     public void onUpdateTurtleState(TurtleRecord turtleState) {
-        for (FrontEndTurtle turtle : turtles) {
+        for (FrontEndTurtle turtle : getTurtles()) {
             if (turtle.getId() == turtleState.id()) {
                 turtle.setIsPenDisplayed(turtleState.pen());
                 turtle.setPosition(new Double[]{turtleState.x(), turtleState.y()});
@@ -153,6 +153,8 @@ public class View implements SlogoListener {
         }
     }
 
+    //val returned by last command
+    //add it to history
     @Override
     public void onReturn(double value) {
 

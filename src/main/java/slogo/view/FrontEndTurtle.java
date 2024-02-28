@@ -22,7 +22,7 @@ public class FrontEndTurtle {
         display.setId("turtle"); // doing this for testing, did not work because it keeps making new FrontEndTurtle objects
         display.setPreserveRatio(true);
         display.setFitWidth(50);
-        myPosition = position;
+        setPosition(position);
         penColor = color;
         isPenDisplayed = isPenVisible;
         this.heading = heading;
@@ -69,6 +69,9 @@ public class FrontEndTurtle {
 
     public void setPosition(Double[] newPosition) {
         myPosition = newPosition;
+        
+        display.setLayoutX(myPosition[0]);
+        display.setLayoutY(myPosition[1]);
     }
 
     public ImageView getDisplay() {

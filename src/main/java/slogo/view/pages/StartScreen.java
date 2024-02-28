@@ -12,6 +12,7 @@ import slogo.view.ViewInternal;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class StartScreen implements ViewInternal {
     private javafx.scene.Scene scene;
@@ -47,7 +48,7 @@ public class StartScreen implements ViewInternal {
             ButtonUtil.generateButton("Load New General Session", 100, 330, e -> {
                 try {
                     controller.openBlankIDESession();
-                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }),
@@ -58,10 +59,6 @@ public class StartScreen implements ViewInternal {
         );
 
         scene = new javafx.scene.Scene(root, 600, 400);
-    }
-
-    @Override
-    public void initScene() {
     }
 
     @Override

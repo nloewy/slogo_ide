@@ -10,10 +10,13 @@ import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -46,7 +49,6 @@ public class MainScreen implements ViewInternal {
     Group root;
     Stage stage;
     TextField field;
-    Button testButton;
     Map<FrontEndTurtle, Double[]> myTurtlePositions = new HashMap<>();
     private static final double FRAME_RATE = 4.0;
     private final Timeline animation = new Timeline();
@@ -64,61 +66,11 @@ public class MainScreen implements ViewInternal {
         this.controller = controller;
 
         initResources();
-        initScene();
 
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames()
             .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> update()));
     }
-
-
-  @Override
-  public void initScene() {
-    field = new TextField();
-
-    submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
-      sendCommandStringToView();
-      //test for adding variables
-    });
-
-    //I'm not using the pen boolean i dont know what it is
-    testButton = ButtonUtil.generateButton("test", 300, 100, event -> {
-      view.onUpdateTurtleState(new TurtleRecord(0, 100, 100, true, true, 90));
-      view.onUpdateTurtleState(new TurtleRecord(1, 300, 200, true, true, 90));
-    });
-
-    Button testButtonB = ButtonUtil.generateButton("testB", 300, 100, event -> {
-      view.onUpdateTurtleState(new TurtleRecord(0, 200, 500, true, true, 90));
-      view.onUpdateTurtleState(new TurtleRecord(1, 700, 800, true, true, 90));
-    });
-
-    Button testButtonC = ButtonUtil.generateButton("testC", 300, 100, event -> {
-      view.onUpdateTurtleState(new TurtleRecord(0, 0, 0, true, true, 90));
-      view.onUpdateTurtleState(new TurtleRecord(1, 200, 0, true, true, 90));
-    });
-
-    HBox hbox = new HBox();
-    hbox.setSpacing(10);
-    hbox.getChildren().addAll(field, submitField, testButton, testButtonB, testButtonC);
-    root = new Group();
-    hbox.setAlignment(javafx.geometry.Pos.CENTER);
-    hbox.setLayoutX(100);
-    hbox.setLayoutY(100);
-    root.getChildren().add(hbox);
-
-    //TODO Add variables from XML file here maybe
-    variablesBox = new VBox();
-    variablesBox.setAlignment(javafx.geometry.Pos.CENTER);
-    variablesBox.setLayoutX(300);
-    variablesBox.setLayoutY(500);
-    variablesBox.setId("vbox");
-
-    root.getChildren().add(variablesBox);
-
-    initializeTurtleDisplays();
-
-    System.out.println("Testing");
-  }
 
   public void initializeTurtleDisplays() {
     for (FrontEndTurtle turtle : view.getTurtles()) {
@@ -149,9 +101,6 @@ public class MainScreen implements ViewInternal {
                 turtle.getPosition()[1]);
         line.setStroke(turtle.getPenColor());
 
-        // this is here for testing, this should be replaced with animation
-        turtle.getDisplay().setLayoutX(turtle.getPosition()[0]);
-        turtle.getDisplay().setLayoutY(turtle.getPosition()[1]);
         //TODO rotation needs troubleshooting
         turtle.getDisplay().setRotate(turtle.getHeading());
 
@@ -178,8 +127,6 @@ public class MainScreen implements ViewInternal {
   }
 
   private void updateVariables() {
-    variablesBox.getChildren().clear();
-    
     for (String key : view.getVariables().keySet()) {
       variablesBox.getChildren().add(new Label(key + view.getVariables().get(key)));
     }
@@ -215,8 +162,27 @@ public class MainScreen implements ViewInternal {
 
   @Override
   public void setUp() {
-    field.setLayoutX(100);
-    field.setLayoutY(100);
+    field = new TextField();
+    field.setPrefWidth(400);
+    field.setPrefHeight(100);
+    field.setAlignment(Pos.TOP_LEFT);
+
+    submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
+      sendCommandStringToView();
+      //test for adding variables
+    });
+
+    HBox hbox = new HBox();
+    hbox.setSpacing(10);
+    hbox.getChildren().addAll(field, submitField);
+    root = new Group();
+    hbox.setAlignment(javafx.geometry.Pos.CENTER);
+    hbox.setLayoutX(10);
+    hbox.setLayoutY(600);
+    root.getChildren().add(hbox);
+
+    initializeTurtleDisplays();
+
     animation.play();
   }
 
