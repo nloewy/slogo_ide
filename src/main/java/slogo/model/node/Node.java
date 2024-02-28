@@ -19,9 +19,7 @@ public abstract class Node {
     myChildren.add(node);
   }
 
-  public String getToken() {
-    return "";
-  }
+  public abstract String getToken();
 
   public int getNumArgs()
       throws IncompleteClassException {

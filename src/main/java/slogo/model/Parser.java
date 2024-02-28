@@ -201,9 +201,7 @@ public class Parser {
             currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
                 modelState,
                 myListener);
-          } catch (ClassNotFoundException e) {
-            throw new InvalidCommandException("Command Not Found");
-          }
+          } catch (ClassNotFoundException e) {}
         }));
 
     nodeHandler.add(new SimpleEntry<>(
