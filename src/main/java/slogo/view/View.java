@@ -30,7 +30,6 @@ public class View implements SlogoListener {
     private String lang;
     private Controller controller;
     private Consumer<String> parse;
-    private static final Double[] CENTER = new Double[]{500.0, 300.0};
 
     public View(Controller controller, Stage stage) {
         this.stage = stage;
@@ -49,7 +48,7 @@ public class View implements SlogoListener {
             throw new RuntimeException(e);
         }
 
-        turtles.add(new FrontEndTurtle(1, CENTER, Color.BLUE, true, 0, defaultImage));
+        turtles.add(new FrontEndTurtle(1, new Double[]{0.0,0.0}, Color.BLUE, true, 0, defaultImage));
     }
 
     public void run(Consumer<String> parseMethod) throws FileNotFoundException {

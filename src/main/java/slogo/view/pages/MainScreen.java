@@ -98,18 +98,9 @@ public class MainScreen implements ViewInternal {
 
   public void update() {
     for (FrontEndTurtle turtle : view.getTurtles()) {
-      Line line = new Line(
-          turtle.getDisplay().getLayoutX(),
-          turtle.getDisplay().getLayoutY(),
-          turtle.getPosition()[0],
-          turtle.getPosition()[1]);
-      line.setStroke(turtle.getPenColor());
-
-      // TODO rotation needs troubleshooting
-      turtle.getDisplay().setRotate(turtle.getHeading());
 
       if (turtle.isPenDisplayed()) {
-        root.getChildren().add(line);
+        root.getChildren().add(turtle.getLastPath());
       }
 
       updateVariables();

@@ -1,9 +1,12 @@
 package slogo.view;
 
+import java.util.Stack;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-
+import javafx.scene.shape.Line;
+import slogo.model.Turtle;
 
 public class FrontEndTurtle {
     ImageView display;
@@ -15,11 +18,16 @@ public class FrontEndTurtle {
     int myId;
     boolean isPenDisplayed = false;
 
+    private Stack<Line> pathHistory = new Stack<Line>();
+
+    public static Double[] ORIGIN = { 200.0, 200.0 };
+
     public FrontEndTurtle(int id, Double[] position, Color color, boolean isPenVisible, double heading, Image image) {
         myId = id;
         displayImage = image;
         display = new ImageView(displayImage);
-        display.setId("turtle"); // doing this for testing, did not work because it keeps making new FrontEndTurtle objects
+        display.setId("turtle"); // doing this for testing, did not work because it keeps making new
+                                 // FrontEndTurtle objects
         display.setPreserveRatio(true);
         display.setFitWidth(50);
         setPosition(position);
@@ -30,6 +38,10 @@ public class FrontEndTurtle {
 
     public int getId() {
         return myId;
+    }
+
+    public Line getLastPath() {
+        return pathHistory.peek();
     }
 
     public Color getPenColor() {
@@ -53,7 +65,7 @@ public class FrontEndTurtle {
     }
 
     public void setHeading(double newValue) {
-        heading = newValue;
+        display.setRotate(newValue);
     }
 
     public void setImage(Image newImage) {
@@ -67,13 +79,20 @@ public class FrontEndTurtle {
         return myPosition;
     }
 
-    //Figure out a way
-    //To handle animation here
+    // Figure out a way
+    // To handle animation here
     public void setPosition(Double[] newPosition) {
-        myPosition = newPosition;
-        
-        display.setLayoutX(myPosition[0]);
-        display.setLayoutY(myPosition[1]);
+        Line line = new Line(
+                display.getLayoutX(),
+                display.getLayoutY(),
+                ORIGIN[0] + newPosition[0],
+                ORIGIN[1] + newPosition[1]);
+        line.setStroke(penColor);
+
+        pathHistory.push(line);
+
+        display.setLayoutX(ORIGIN[0] + newPosition[0]);
+        display.setLayoutY(ORIGIN[1] + newPosition[1]);
     }
 
     public ImageView getDisplay() {

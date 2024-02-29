@@ -16,7 +16,6 @@ public class Turtle {
   private boolean myVisible;
   private double myHeading; //range [0.0,360.0)
 
-
   public Turtle(int id) {
     myId = id;
     myX = 0.0;
