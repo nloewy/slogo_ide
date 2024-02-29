@@ -83,10 +83,10 @@ public class FrontEndTurtle {
     // To handle animation here
     public void setPosition(Double[] newPosition) {
         Line line = new Line(
-                display.getLayoutX(),
-                display.getLayoutY(),
-                ORIGIN[0] + newPosition[0],
-                ORIGIN[1] + newPosition[1]);
+                display.getLayoutX() + 25,
+                display.getLayoutY() + 25,
+                ORIGIN[0] + newPosition[0] + 25,
+                ORIGIN[1] + newPosition[1] + 25);
         line.setStroke(penColor);
 
         pathHistory.push(line);
