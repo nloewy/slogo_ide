@@ -39,7 +39,7 @@ public class View implements SlogoListener {
         lang = "EG";
         commandString = "";
 
-        variables = new HashMap<>();
+        variables = new LinkedHashMap<>();
         turtles = new ArrayList<>();
         commandList = new ArrayList<>();
 
@@ -67,6 +67,10 @@ public class View implements SlogoListener {
 
     public List<FrontEndTurtle> getTurtles() {
         return turtles;
+    }
+
+    public Map<String, Number> getVariables() {
+        return variables;
     }
 
     /*
@@ -108,10 +112,6 @@ public class View implements SlogoListener {
         commandString = s;
         System.out.println(commandString);
         parse.accept(commandString);
-    }
-
-    public Map<String, Number> getVariables() {
-        return variables;
     }
 
     @Override

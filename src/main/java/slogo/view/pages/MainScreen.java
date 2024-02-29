@@ -1,30 +1,25 @@
 
-
 package slogo.view.pages;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import slogo.Controller;
-import slogo.model.api.TurtleRecord;
 import slogo.view.ButtonUtil;
 import slogo.view.FrontEndTurtle;
 import slogo.view.View;
@@ -39,38 +34,38 @@ animation keyframes.
 
 public class MainScreen implements ViewInternal {
 
-    private final Controller controller;
-    private javafx.scene.Scene scene;
-    private VBox layout = new VBox(10);
-//    private Controller controller;
-    private View view;
-    public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
-    private ResourceBundle myResources;
-    Group root;
-    Stage stage;
-    TextField field;
-    Map<FrontEndTurtle, Double[]> myTurtlePositions = new HashMap<>();
-    private static final double FRAME_RATE = 4.0;
-    private final Timeline animation = new Timeline();
-    private final double speed = 0.75;
-    Button submitField;
-    private VBox variablesBox;
+  private final Controller controller;
+  private javafx.scene.Scene scene;
+  private VBox variablesPane;
+  private HBox commandPane;
+  // private Controller controller;
+  private View view;
+  public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
+  private ResourceBundle myResources;
+  Group root;
+  Stage stage;
+  TextField field;
+  Map<FrontEndTurtle, Double[]> myTurtlePositions = new HashMap<>();
+  private static final double FRAME_RATE = 4.0;
+  private final Timeline animation = new Timeline();
+  private final double speed = 0.75;
+  Button submitField;
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
-    public MainScreen(View view, Stage stage, Controller controller) throws FileNotFoundException {
-        super();
-        this.stage = stage;
+  public MainScreen(View view, Stage stage, Controller controller) throws FileNotFoundException {
+    super();
+    this.stage = stage;
 
-        this.view = view;
-        this.controller = controller;
+    this.view = view;
+    this.controller = controller;
 
-        initResources();
+    initResources();
 
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames()
-            .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> update()));
-    }
+    animation.setCycleCount(Timeline.INDEFINITE);
+    animation.getKeyFrames()
+        .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> update()));
+  }
 
   public void initializeTurtleDisplays() {
     for (FrontEndTurtle turtle : view.getTurtles()) {
@@ -91,77 +86,77 @@ public class MainScreen implements ViewInternal {
   }
 
   public void update() {
-    // Map<FrontEndTurtle, Double[]> deltaPositions = new HashMap<>();
-
     for (FrontEndTurtle turtle : view.getTurtles()) {
-        Line line = new Line(
-                turtle.getDisplay().getLayoutX(),
-                turtle.getDisplay().getLayoutY(),
-                turtle.getPosition()[0],
-                turtle.getPosition()[1]);
-        line.setStroke(turtle.getPenColor());
+      Line line = new Line(
+          turtle.getDisplay().getLayoutX(),
+          turtle.getDisplay().getLayoutY(),
+          turtle.getPosition()[0],
+          turtle.getPosition()[1]);
+      line.setStroke(turtle.getPenColor());
 
-        //TODO rotation needs troubleshooting
-        turtle.getDisplay().setRotate(turtle.getHeading());
+      // TODO rotation needs troubleshooting
+      turtle.getDisplay().setRotate(turtle.getHeading());
 
-        if (turtle.isPenDisplayed()) {
-            root.getChildren().add(line);
-        }
+      if (turtle.isPenDisplayed()) {
+        root.getChildren().add(line);
+      }
 
-        updateVariables();
-
-        // if (!myTurtlePositions.containsKey(turtle)) {
-        // System.out
-        // myTurtlePositions.put(turtle, turtle.getPosition());
-        // }
-
-        // deltaPositions.put(
-        // turtle,
-        // new Double[] {
-        // turtle.getPosition()[0] - myTurtlePositions.get(turtle)[0],
-        // turtle.getPosition()[1] - myTurtlePositions.get(turtle)[1]
-        // });
+      updateVariables();
     }
-    // handleTurtleAnimation(deltaPositions);
-    // syncTurtlesWithView();
   }
 
   private void updateVariables() {
+    variablesPane.getChildren().clear();
+
     for (String key : view.getVariables().keySet()) {
-      variablesBox.getChildren().add(new Label(key + view.getVariables().get(key)));
+      variablesPane.getChildren().add(new Label(key + view.getVariables().get(key)));
     }
   }
 
-  public void handleTurtleAnimation(Map<FrontEndTurtle, Double[]> deltas) {
-    animation.stop();
+  // public void handleTurtleAnimation(Map<FrontEndTurtle, Double[]> deltas) {
+  // animation.stop();
 
-    Timeline localAnimation = new Timeline();
-    localAnimation.setCycleCount(5);
-    localAnimation.getKeyFrames()
-        .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> animateMovement(deltas)));
+  // Timeline localAnimation = new Timeline();
+  // localAnimation.setCycleCount(5);
+  // localAnimation.getKeyFrames()
+  // .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e ->
+  // animateMovement(deltas)));
 
-    animation.play();
-  }
+  // animation.play();
+  // }
 
-  public void animateMovement(Map<FrontEndTurtle, Double[]> deltas) {
-    for (FrontEndTurtle turtle : deltas.keySet()) {
-      double xStep = deltas.get(turtle)[0] / 5;
-      double yStep = deltas.get(turtle)[1] / 5;
+  // public void animateMovement(Map<FrontEndTurtle, Double[]> deltas) {
+  // for (FrontEndTurtle turtle : deltas.keySet()) {
+  // double xStep = deltas.get(turtle)[0] / 5;
+  // double yStep = deltas.get(turtle)[1] / 5;
 
-      turtle.getDisplay().setLayoutX(turtle.getPosition()[0] + xStep);
-      turtle.getDisplay().setLayoutY(turtle.getPosition()[1] + yStep);
-    }
-  }
+  // turtle.getDisplay().setLayoutX(turtle.getPosition()[0] + xStep);
+  // turtle.getDisplay().setLayoutY(turtle.getPosition()[1] + yStep);
+  // }
+  // }
 
-  public void syncTurtlesWithView() {
-    for (FrontEndTurtle turtle : view.getTurtles()) {
-      myTurtlePositions.remove(turtle);
-      myTurtlePositions.put(turtle, turtle.getPosition());
-    }
-  }
+  // public void syncTurtlesWithView() {
+  // for (FrontEndTurtle turtle : view.getTurtles()) {
+  // myTurtlePositions.remove(turtle);
+  // myTurtlePositions.put(turtle, turtle.getPosition());
+  // }
+  // }
 
   @Override
   public void setUp() {
+
+    Button testButton = ButtonUtil.generateButton("test", 0, 0, (event) -> {
+      view.onUpdateValue("" + new Random().nextDouble(), new Random().nextDouble());
+    });
+
+    variablesPane = new VBox();
+    variablesPane.setSpacing(10);
+    variablesPane.setAlignment(javafx.geometry.Pos.CENTER);
+    variablesPane.setLayoutX(100);
+    variablesPane.setLayoutY(100);
+    variablesPane.setPrefWidth(200);
+    variablesPane.setPrefHeight(200);
+
     field = new TextField();
     field.setPrefWidth(400);
     field.setPrefHeight(100);
@@ -169,17 +164,19 @@ public class MainScreen implements ViewInternal {
 
     submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
       sendCommandStringToView();
-      //test for adding variables
     });
 
-    HBox hbox = new HBox();
-    hbox.setSpacing(10);
-    hbox.getChildren().addAll(field, submitField);
+    commandPane = new HBox();
+    commandPane.setSpacing(10);
+    commandPane.getChildren().addAll(field, submitField);
+    commandPane.setAlignment(javafx.geometry.Pos.CENTER);
+    commandPane.setLayoutX(10);
+    commandPane.setLayoutY(600);
+
     root = new Group();
-    hbox.setAlignment(javafx.geometry.Pos.CENTER);
-    hbox.setLayoutX(10);
-    hbox.setLayoutY(600);
-    root.getChildren().add(hbox);
+    root.getChildren().add(testButton);
+    root.getChildren().add(variablesPane);
+    root.getChildren().add(commandPane);
 
     initializeTurtleDisplays();
 
@@ -197,4 +194,3 @@ public class MainScreen implements ViewInternal {
   }
 
 }
-

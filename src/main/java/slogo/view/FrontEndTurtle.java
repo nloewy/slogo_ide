@@ -67,6 +67,8 @@ public class FrontEndTurtle {
         return myPosition;
     }
 
+    //Figure out a way
+    //To handle animation here
     public void setPosition(Double[] newPosition) {
         myPosition = newPosition;
         
