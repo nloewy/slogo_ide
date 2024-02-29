@@ -19,4 +19,6 @@ public interface SlogoListener {
   void onResetTurtle(int id);
 
   void onReturn(double value);
+
+  void onCommand(String string, boolean userDefined); //highlights if it is userDefined command, or history command
 }

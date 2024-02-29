@@ -19,8 +19,6 @@ public class ParseTest {
 
 
   public static final double DELTA = .0001;
-  private Turtle myTurtle;
-  private ModelState model;
   private SlogoModel slogo;
 
   @BeforeEach
@@ -41,6 +39,9 @@ public class ParseTest {
 
       @Override
       public void onReturn(double value) {
+      }
+      @Override
+      public void onCommand(String s, boolean b) {
       }
     });
 

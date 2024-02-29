@@ -30,6 +30,7 @@ public class Parser {
 
   private static final String OPEN_BRACKET = "[";
   private static final String CLOSED_BRACKET = "]";
+  private static final String TO_COMMAND = "control.To";
   private final ModelState modelState;
   private final SlogoListener myListener;
   private final PatternLoader patternLoader;
@@ -116,6 +117,7 @@ public class Parser {
       nodeStack.pop();
     }
     if (!nodeStack.peek().equals(rootNode)) {
+      nodeStack.peek().addChild(new ListNode(CLOSED_BRACKET, modelState, myListener));
       nodeStack.pop();
     }
   }
@@ -178,39 +180,50 @@ public class Parser {
 
   private void initializeNodeHandler() {
     nodeHandler = new ArrayList<>();
+
     nodeHandler.add(new SimpleEntry<>(
-        token -> token.matches(patternLoader.getPattern("Constant")),
+        token -> tokenMatched(token, "Constant"),
         tokens -> currentNode = new ConstantNode(tokens.get(myIndex).toLowerCase(), modelState,
             myListener)));
 
     nodeHandler.add(new SimpleEntry<>(
-        token -> token.matches(patternLoader.getPattern("Variable")),
+        token -> tokenMatched(token, "Variable"),
         tokens -> currentNode = new VariableNode(tokens.get(myIndex).toLowerCase(), modelState,
             myListener)));
 
     nodeHandler.add(new SimpleEntry<>(
-        token -> token.matches(patternLoader.getPattern("Command")) && commandMap.containsKey(
-            token.toLowerCase()) && commandMap.get(token.toLowerCase()).equals("control.To"),
+        token -> tokenMatched(token, "Command") && isCommand(token) && isToCommand(token),
         this::makeCommandCreatorNode));
 
     nodeHandler.add(new SimpleEntry<>(
-        token -> token.matches(patternLoader.getPattern("Command")) && commandMap.containsKey(
-            token.toLowerCase()) && !commandMap.get(token.toLowerCase()).equals("control.To"),
+        token -> tokenMatched(token, "Command") && isCommand(token) && !isToCommand(token),
         tokens -> {
           try {
             currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
-                modelState,
-                myListener);
-          } catch (ClassNotFoundException e) {
-            throw new InvalidCommandException("Command Not Found");
-          }
+                modelState, myListener);
+          } catch (ClassNotFoundException e) {}
         }));
 
     nodeHandler.add(new SimpleEntry<>(
-        token -> token.matches(patternLoader.getPattern("Command"))
-            && modelState.getUserDefinedCommands().containsKey(token.toLowerCase()),
+        token -> tokenMatched(token, "Command") && isUserDefinedCommand(token),
         tokens -> currentNode = new UserCommandNode(tokens.get(myIndex).toLowerCase(), modelState,
             myListener)));
+  }
+
+  private boolean isToCommand(String token) {
+    return commandMap.get(token.toLowerCase()).equals(TO_COMMAND);
+  }
+
+  private boolean isCommand(String token) {
+    return commandMap.containsKey(token.toLowerCase());
+  }
+
+  private boolean isUserDefinedCommand(String token) {
+    return modelState.getUserDefinedCommands().containsKey(token.toLowerCase());
+  }
+
+  private boolean tokenMatched(String token, String key) {
+    return token.matches(patternLoader.getPattern(key));
   }
 
   private void initializeTokenMap() {

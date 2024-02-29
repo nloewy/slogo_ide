@@ -33,6 +33,11 @@ public class Tester {
       @Override
       public void onReturn(double value) {
       }
+
+      @Override
+      public void onCommand(String string, boolean userDefined) {
+
+      }
     };
     Node node = new CommandNode("math.RandomRange", model, myListener);
     node.addChild(new ConstantNode("-90.00000", null, myListener));

@@ -156,6 +156,11 @@ public class View implements SlogoListener {
 
     }
 
+    @Override
+    public void onCommand(String string, boolean userDefined) {
+
+    }
+
 //   /*
 //    * Gets the current exception, and shows
 //    * it as an alert.

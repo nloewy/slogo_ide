@@ -26,9 +26,10 @@ public class SlogoModel implements Model {
 
   @Override
   public void parse(String input)
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException {
+      throws InvocationTargetException, IllegalAccessException, InvalidCommandException, InvalidTokenException {
     Node root = parser.parse(input);
     double val = root.getValue();
+    System.out.println(root.toString());
     myListener.onReturn(val);
   }
 
