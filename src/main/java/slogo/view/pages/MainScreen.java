@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -36,8 +37,9 @@ public class MainScreen implements ViewInternal {
 
   private final Controller controller;
   private javafx.scene.Scene scene;
-  private VBox variablesPane;
-  private HBox commandPane;
+  private ScrollPane variablesPane;
+  private VBox variablesBox;
+  private HBox commandBox;
   // private Controller controller;
   private View view;
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
@@ -106,10 +108,10 @@ public class MainScreen implements ViewInternal {
   }
 
   private void updateVariables() {
-    variablesPane.getChildren().clear();
+    variablesBox.getChildren().clear();
 
     for (String key : view.getVariables().keySet()) {
-      variablesPane.getChildren().add(new Label(key + view.getVariables().get(key)));
+      variablesBox.getChildren().add(new Label(key + view.getVariables().get(key)));
     }
   }
 
@@ -149,13 +151,14 @@ public class MainScreen implements ViewInternal {
       view.onUpdateValue("" + new Random().nextDouble(), new Random().nextDouble());
     });
 
-    variablesPane = new VBox();
-    variablesPane.setSpacing(10);
-    variablesPane.setAlignment(javafx.geometry.Pos.CENTER);
+    variablesBox = new VBox();
+    variablesBox.setSpacing(10);
+    variablesBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+    variablesPane = new ScrollPane(variablesBox);
+    variablesPane.setPrefSize(200, 200);
     variablesPane.setLayoutX(100);
     variablesPane.setLayoutY(100);
-    variablesPane.setPrefWidth(200);
-    variablesPane.setPrefHeight(200);
 
     field = new TextField();
     field.setPrefWidth(400);
@@ -166,17 +169,17 @@ public class MainScreen implements ViewInternal {
       sendCommandStringToView();
     });
 
-    commandPane = new HBox();
-    commandPane.setSpacing(10);
-    commandPane.getChildren().addAll(field, submitField);
-    commandPane.setAlignment(javafx.geometry.Pos.CENTER);
-    commandPane.setLayoutX(10);
-    commandPane.setLayoutY(600);
+    commandBox = new HBox();
+    commandBox.setSpacing(10);
+    commandBox.getChildren().addAll(field, submitField);
+    commandBox.setAlignment(javafx.geometry.Pos.CENTER);
+    commandBox.setLayoutX(10);
+    commandBox.setLayoutY(600);
 
     root = new Group();
     root.getChildren().add(testButton);
     root.getChildren().add(variablesPane);
-    root.getChildren().add(commandPane);
+    root.getChildren().add(commandBox);
 
     initializeTurtleDisplays();
 
