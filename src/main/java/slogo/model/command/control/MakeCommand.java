@@ -22,10 +22,12 @@ public class MakeCommand implements Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     String token = arguments.get(0).getToken();
-
     double arg1 = arguments.get(1).getValue();
     modelState.getVariables().put(token, arg1);
     listener.onUpdateValue(token, arg1);
     return arg1;
   }
 }
+
+
+

@@ -18,6 +18,11 @@ public class CommandTest {
 
     public void onReturn(double value) {
     }
+
+    @Override
+    public void onCommand(String string, boolean userDefined) {
+
+    }
   };
 
 }
