@@ -15,6 +15,8 @@ public class Main extends Application {
     public static final String DEFAULT_LANGUAGE = "English";
 
 // I AM MAKING A CHANGE TO THE FILE THAT I WILL COMMIT RIGHT NOW
+// I made another comment and then commit it locally, and then git reset --hard f7615691
+// to go back to the previously when that comment wasn't there
 
     public static void main(String[] args) {
         launch(args);
