@@ -15,9 +15,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import slogo.Controller;
@@ -37,6 +40,7 @@ public class MainScreen implements ViewInternal {
 
   private final Controller controller;
   private javafx.scene.Scene scene;
+  private BorderPane layout;
   private ScrollPane variablesPane;
   private VBox variablesBox;
   private HBox commandBox;
@@ -52,6 +56,9 @@ public class MainScreen implements ViewInternal {
   private final Timeline animation = new Timeline();
   private final double speed = 0.75;
   Button submitField;
+
+  //TEST
+  Pane testpane = new Pane();
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
@@ -71,8 +78,10 @@ public class MainScreen implements ViewInternal {
 
   public void initializeTurtleDisplays() {
     for (FrontEndTurtle turtle : view.getTurtles()) {
-      // myTurtlePositions.put(turtle, turtle.getPosition());
-      root.getChildren().add(turtle.getDisplay());
+      // root.getChildren().add(turtle.getDisplay());
+
+      //TEST
+      testpane.getChildren().add(turtle.getDisplay());
     }
   }
 
@@ -147,6 +156,8 @@ public class MainScreen implements ViewInternal {
   @Override
   public void setUp() {
 
+    layout = new BorderPane();
+
     Button testButton = ButtonUtil.generateButton("test", 0, 0, (event) -> {
       view.onUpdateValue("" + new Random().nextDouble(), new Random().nextDouble());
     });
@@ -157,11 +168,11 @@ public class MainScreen implements ViewInternal {
 
     variablesPane = new ScrollPane(variablesBox);
     variablesPane.setPrefSize(200, 200);
-    variablesPane.setLayoutX(100);
-    variablesPane.setLayoutY(100);
+    // variablesPane.setLayoutX(100);
+    // variablesPane.setLayoutY(100);
 
     field = new TextField();
-    field.setPrefWidth(400);
+    field.setPrefWidth(1000);
     field.setPrefHeight(100);
     field.setAlignment(Pos.TOP_LEFT);
 
@@ -173,15 +184,19 @@ public class MainScreen implements ViewInternal {
     commandBox.setSpacing(10);
     commandBox.getChildren().addAll(field, submitField);
     commandBox.setAlignment(javafx.geometry.Pos.CENTER);
-    commandBox.setLayoutX(10);
-    commandBox.setLayoutY(600);
 
     root = new Group();
-    root.getChildren().add(testButton);
-    root.getChildren().add(variablesPane);
-    root.getChildren().add(commandBox);
+    // root.getChildren().add(testButton);
+    // root.getChildren().add(variablesPane);
+    // root.getChildren().add(commandBox);
 
     initializeTurtleDisplays();
+
+    layout.setPrefSize(1400,650);
+    layout.setCenter(testpane);
+    layout.setBottom(commandBox);
+    layout.setRight(variablesPane);
+    root.getChildren().add(layout);
 
     animation.play();
   }
