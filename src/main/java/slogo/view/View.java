@@ -118,9 +118,6 @@ public class View implements SlogoListener {
         variables.put(variableName, newValue);
     }
 
-    //Backend should call this when adding a new turtle too. THis has to be called on initialization in the model.
-    //Ready for multiple turtles
-    //TODO flip the y axis thing
     @Override
     public void onUpdateTurtleState(TurtleRecord turtleState) {
         for (FrontEndTurtle turtle : getTurtles()) {
@@ -153,7 +150,7 @@ public class View implements SlogoListener {
     }
 
     //val returned by last command
-    //add it to history
+    //add it to history next to the command
     @Override
     public void onReturn(double value) {
 
