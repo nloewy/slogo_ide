@@ -122,8 +122,7 @@ public class View implements SlogoListener {
         for (FrontEndTurtle turtle : getTurtles()) {
             if (turtle.getId() == turtleState.id()) {
                 turtle.setIsPenDisplayed(turtleState.pen());
-                turtle.setPosition(new Double[]{turtleState.x(), turtleState.y()});
-                turtle.setHeading(turtleState.heading());
+                turtle.setPosition(new Double[]{turtleState.x(), turtleState.y()}, turtleState.heading());
                 return;
             }
         }
@@ -141,8 +140,7 @@ public class View implements SlogoListener {
         for (FrontEndTurtle turtle : turtles) {
             if (turtle.getId() == id) {
                 turtle.setIsPenDisplayed(false);
-                turtle.setPosition(new Double[]{0.0, 0.0});
-                turtle.setHeading(0);
+                turtle.setPosition(new Double[]{0.0, 0.0}, 0);
                 turtle.setImage(defaultImage);
             }
         }
@@ -154,8 +152,6 @@ public class View implements SlogoListener {
     public void onReturn(double value) {
 
     }
-<<<<<<< HEAD
-=======
 
     @Override
     public void onCommand(String string, boolean userDefined) {
@@ -172,6 +168,5 @@ public class View implements SlogoListener {
 //    * Resets all panels in the view
 //    */
 //   public void resetView();
->>>>>>> b51b74f1587ca11eabad31e9939fc53ef332457b
 }
 

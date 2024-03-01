@@ -2,11 +2,11 @@ package slogo.view;
 
 import java.util.Stack;
 
+import javafx.animation.Animation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import slogo.model.Turtle;
 
 public class FrontEndTurtle {
     ImageView display;
@@ -30,7 +30,7 @@ public class FrontEndTurtle {
                                  // FrontEndTurtle objects
         display.setPreserveRatio(true);
         display.setFitWidth(50);
-        setPosition(position);
+        setPosition(position, heading);
         penColor = color;
         isPenDisplayed = isPenVisible;
         this.heading = heading;
@@ -81,7 +81,7 @@ public class FrontEndTurtle {
 
     // Figure out a way
     // To handle animation here
-    public void setPosition(Double[] newPosition) {
+    public void setPosition(Double[] newPosition, double heading) {
         Line line = new Line(
             //fix the line stuff its lagging behind
                 display.getLayoutX() + 25,
@@ -92,8 +92,8 @@ public class FrontEndTurtle {
 
         pathHistory.push(line);
 
-        display.setLayoutX(ORIGIN[0] + newPosition[0]);
-        display.setLayoutY(ORIGIN[1] + newPosition[1]);
+        Animation animation = AnimationUtil.makeAnimation(display, ORIGIN[0] + newPosition[0], ORIGIN[1] + newPosition[1], heading);
+        animation.play();
     }
 
     public ImageView getDisplay() {
