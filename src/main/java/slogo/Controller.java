@@ -15,6 +15,8 @@ import slogo.model.api.Model;
 import slogo.view.View;
 import slogo.view.pages.StartScreen;
 
+//TODO add method to add user
+//defined commands call it in parse try catch
 public class Controller {
     private Stage stage;
     private String currentLanguage = "English";

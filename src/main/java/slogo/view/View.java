@@ -105,14 +105,13 @@ public class View implements SlogoListener {
         throw new Exception("No Command String Found!");
     }
 
-    //TODO call the parse method here
-    //this parse method should handle starting the backend too
     public void pushCommand(String s) {
         commandString = s;
         System.out.println(commandString);
         parse.accept(commandString);
     }
 
+    //display with command assigned???
     @Override
     public void onUpdateValue(String variableName, Number newValue) {
         variables.put(variableName, newValue);
@@ -155,16 +154,5 @@ public class View implements SlogoListener {
     public void onReturn(double value) {
 
     }
-
-//   /*
-//    * Gets the current exception, and shows
-//    * it as an alert.
-//    */
-//   public void displayErrorMessage();
-
-//   /**
-//    * Resets all panels in the view
-//    */
-//   public void resetView();
 }
 

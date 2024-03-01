@@ -83,6 +83,7 @@ public class FrontEndTurtle {
     // To handle animation here
     public void setPosition(Double[] newPosition) {
         Line line = new Line(
+            //fix the line stuff its lagging behind
                 display.getLayoutX() + 25,
                 display.getLayoutY() + 25,
                 ORIGIN[0] + newPosition[0] + 25,
