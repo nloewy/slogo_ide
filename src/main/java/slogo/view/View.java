@@ -154,5 +154,24 @@ public class View implements SlogoListener {
     public void onReturn(double value) {
 
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public void onCommand(String string, boolean userDefined) {
+
+    }
+
+//   /*
+//    * Gets the current exception, and shows
+//    * it as an alert.
+//    */
+//   public void displayErrorMessage();
+
+//   /**
+//    * Resets all panels in the view
+//    */
+//   public void resetView();
+>>>>>>> b51b74f1587ca11eabad31e9939fc53ef332457b
 }
 

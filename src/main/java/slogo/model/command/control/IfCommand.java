@@ -20,11 +20,7 @@ public class IfCommand implements Command {
     double arg1 = arguments.get(0).getValue();
     Node toExecute = arguments.get(1);
     if (arg1 != 0) {
-      try {
-        return toExecute.getValue();
-      } catch (InvocationTargetException | IllegalAccessException e) {
-        throw new RuntimeException(e);
-      }
+      return toExecute.getValue();
     }
     return 0.0;
   }

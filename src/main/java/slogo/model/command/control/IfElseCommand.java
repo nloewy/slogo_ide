@@ -21,17 +21,9 @@ public class IfElseCommand implements Command {
     Node toExecuteIfTrue = arguments.get(1);
     Node toExecuteIfFalse = arguments.get(2);
     if (arg1 != 0.0) {
-      try {
-        return toExecuteIfTrue.getValue();
-      } catch (InvocationTargetException | IllegalAccessException e) {
-        throw new RuntimeException(e);
-      }
+      return toExecuteIfTrue.getValue();
     } else {
-      try {
         return toExecuteIfFalse.getValue();
-      } catch (InvocationTargetException | IllegalAccessException e) {
-        throw new RuntimeException(e);
-      }
     }
   }
 }

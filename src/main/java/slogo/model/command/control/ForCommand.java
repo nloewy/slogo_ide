@@ -27,20 +27,9 @@ public class ForCommand implements Command {
     double res = 0.0;
     for (double i = start; i <= end; i += increment) {
       modelState.getVariables().put(variableName, i);
-      try {
-        res = commands.getValue();
-      } catch (InvocationTargetException | IllegalAccessException e) {
-        throw new RuntimeException(e);
-      }
+      res = commands.getValue();
       modelState.getVariables().remove(variableName);
     }
     return res;
-  }
-
-
-  //IN NOTIFY LISTENER MAKE SURE TO UPDATE THE FOR VARIABLE
-  public void notifyListener(SlogoListener listener, double value) {
-
-    //super.notifyListener(listener, value);
   }
 }
