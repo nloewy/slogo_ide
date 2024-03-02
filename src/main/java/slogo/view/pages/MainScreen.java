@@ -97,16 +97,16 @@ public class MainScreen implements ViewInternal {
   }
 
   public void update() {
-    // for (FrontEndTurtle turtle : view.getTurtles()) {
+    for (FrontEndTurtle turtle : view.getTurtles()) {
 
-    //   if (
-    //     turtle.isPenDisplayed() && 
-    //     !root.getChildren().contains(turtle.getLastPath()
-    //     )) {
-    //     root.getChildren().add(turtle.getLastPath());
-    //   }
+      if (
+        turtle.isPenDisplayed() && 
+        !root.getChildren().contains(turtle.getLastPath()
+        )) {
+        root.getChildren().add(turtle.getLastPath());
+      }
 
-    // }
+    }
     updateVariables();
   }
 

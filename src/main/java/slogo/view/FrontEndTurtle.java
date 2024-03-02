@@ -3,7 +3,6 @@ package slogo.view;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -24,7 +23,6 @@ public class FrontEndTurtle {
     boolean isPenDisplayed = false;
 
     private static final double FRAME_RATE = 4.0;
-    private final Timeline animation = new Timeline();
     private final double speed = 0.75;
 
     private Stack<Line> pathHistory = new Stack<Line>();
@@ -48,9 +46,9 @@ public class FrontEndTurtle {
         return myId;
     }
 
-    // public Line getLastPath() {
-    // return pathHistory.pop();
-    // }
+    public Line getLastPath() {
+    return pathHistory.peek();
+    }
 
     public Color getPenColor() {
         return penColor;
@@ -80,47 +78,46 @@ public class FrontEndTurtle {
     }
 
     public void setPosition(Double[] newPosition, double newHeading) {
-        Double[] oldPosition = {display.getLayoutX(), display.getLayoutY()};
+        Double[] oldPosition = { display.getLayoutX(), display.getLayoutY() };
         double oldHeading = display.getRotate();
 
         Timeline animation = new Timeline();
         animation.setCycleCount(3);
         animation.getKeyFrames()
-                .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> stepTurtle(oldPosition, newPosition, oldHeading, newHeading)));
+                .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)),
+                        e -> stepTurtle(oldPosition, newPosition, oldHeading, newHeading)));
+        animation.setOnFinished((event) -> {
+            pathHistory.add(drawLine(oldPosition[0], oldPosition[1], newPosition[0], newPosition[1]));
+        });
 
-        // create and start new Thread, so we don't block the UI
-new Thread(() -> {
-    try {
-        // wait some time on the new Thread
-        TimeUnit.MILLISECONDS.sleep(500);
-    } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        new Thread(() -> {
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(() -> {
+                animation.play();
+            });
+        }).start();
     }
-    // give this to the UI system to be executed on the UI
-    // thread as soon as there are resources 
-    Platform.runLater(() -> {
-        animation.play();
-    });
-}).start();
+
+    public Line drawLine(Double oldPosition, Double oldPosition2, Double newPosition, Double newPosition2) {
+        Line line = new Line(oldPosition + 25, oldPosition2 + 80, newPosition + 25, newPosition2 + 80);
+        line.setStroke(penColor);
+        line.setVisible(isPenDisplayed);
+        return line;
     }
 
-    public void stepTurtle(Double[] oldPosition, Double[] newPosition, double
-    oldHeading, double newHeading) {
-        
+    public void stepTurtle(Double[] oldPosition, Double[] newPosition, double oldHeading, double newHeading) {
 
-    double xStep = (newPosition[0] - oldPosition[0])/3;
-    double yStep = (newPosition[1] - oldPosition[1])/3;
-    double rotStep = (newHeading - oldHeading)/3;
+        double xStep = (newPosition[0] - oldPosition[0]) / 3;
+        double yStep = (newPosition[1] - oldPosition[1]) / 3;
+        double rotStep = (newHeading - oldHeading) / 3;
 
-    System.out.println(oldHeading);
-    System.out.println(newHeading);
-    System.out.println("TEST, rotStep =" + rotStep);
-
-    display.setLayoutX(display.getLayoutX() + xStep);
-    display.setLayoutY(display.getLayoutY() + yStep);
-    display.setRotate(display.getRotate() + rotStep);
-
+        display.setLayoutX(display.getLayoutX() + xStep);
+        display.setLayoutY(display.getLayoutY() + yStep);
+        display.setRotate(display.getRotate() + rotStep);
     }
 
     public ImageView getDisplay() {
