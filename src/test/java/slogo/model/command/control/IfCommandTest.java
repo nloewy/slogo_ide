@@ -68,7 +68,6 @@ public class IfCommandTest extends CommandTest {
     nodeFive.addChild(nodeSix);
     Node nodeSeven = new CommandNode("turtle.Forward", model);
     nodeSeven.addChild(new ConstantNode("30", model));
-    node.addChild(nodeFive);
     dfsAddListener(node);
     Assertions.assertEquals(0.0, node.getValue(), DELTA);
     Assertions.assertEquals(0.0, myTurtle.getY(), DELTA);
