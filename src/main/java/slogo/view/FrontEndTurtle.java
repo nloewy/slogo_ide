@@ -1,9 +1,12 @@
 package slogo.view;
 
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -84,29 +87,41 @@ public class FrontEndTurtle {
         return myPosition;
     }
 
-    public void setPosition(Double[] newPosition, double heading) {
-        // Double[] oldPosition = {display.getLayoutX(), display.getLayoutY()};
+    public void setPosition(Double[] newPosition, double newHeading) {
+        Double[] oldPosition = {display.getLayoutX(), display.getLayoutY()};
 
-        // Timeline animation = new Timeline();
-        // animation.setCycleCount(100);
-        // animation.getKeyFrames()
-        // .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> stepTurtle(oldPosition, newPosition, display.getRotate(), heading)));
-        // animation.play();
+        Timeline animation = new Timeline();
+        animation.setCycleCount(3);
+        animation.getKeyFrames()
+                .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> stepTurtle(oldPosition, newPosition, heading, newHeading)));
 
-        display.setLayoutX(newPosition[0]);
-        display.setLayoutY(newPosition[0]);
-        display.setRotate(heading);
+        // create and start new Thread, so we don't block the UI
+new Thread(() -> {
+    try {
+        // wait some time on the new Thread
+        TimeUnit.MILLISECONDS.sleep(500);
+    } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    // give this to the UI system to be executed on the UI
+    // thread as soon as there are resources 
+    Platform.runLater(() -> {
+        animation.play();
+    });
+}).start();
     }
 
-    // public void stepTurtle(Double[] oldPosition, Double[] newPosition, double oldHeading, double newHeading) {
-    //     double xStep = (newPosition[0] - oldPosition[0])/5;
-    //     double yStep = (newPosition[1] - oldPosition[1])/5;
-    //     double rotStep = (newHeading - oldHeading)/5;
+    public void stepTurtle(Double[] oldPosition, Double[] newPosition, double
+    oldHeading, double newHeading) {
+    double xStep = (newPosition[0] - oldPosition[0])/3;
+    double yStep = (newPosition[1] - oldPosition[1])/3;
+    double rotStep = (newHeading - oldHeading)/3;
 
-    //     display.setLayoutX(display.getLayoutX() + xStep);
-    //     display.setLayoutX(display.getLayoutY() + yStep);
-    //     display.setRotate(display.getRotate() + rotStep);
-    // }
+    display.setLayoutX(display.getLayoutX() + xStep);
+    display.setLayoutY(display.getLayoutY() + yStep);
+    display.setRotate(display.getRotate() + rotStep);
+    }
 
     public ImageView getDisplay() {
         return display;

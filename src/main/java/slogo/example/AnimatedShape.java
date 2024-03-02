@@ -18,6 +18,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -45,7 +46,6 @@ public class AnimatedShape extends Application {
 
   public AnimatedShape() {
     super();
-    setResources(CONFIGURATION_RESOURCE_PATH + "Animation");
   }
 
   /**
@@ -69,21 +69,10 @@ public class AnimatedShape extends Application {
     primaryStage.show();
 
     // create and start animation, could be used in separate contexts
-    Animation animation = makeAnimation(myActor, 500,
+    Animation animation = makeAnimation(myActor, 1000,
         300,
         90);
     animation.play();
-  }
-
-  /**
-   * Allow different animations based on settings
-   */
-  public void setResources(String filename) throws IllegalArgumentException {
-    try {
-      myResources = ResourceBundle.getBundle(filename);
-    } catch (NullPointerException | MissingResourceException e) {
-      throw new IllegalArgumentException(String.format("Invalid resource file: %s", filename));
-    }
   }
 
   // create a simple scene
@@ -91,7 +80,7 @@ public class AnimatedShape extends Application {
     Group root = new Group();
     myActor = makeActor(0, 0,
         50, 50,
-        Color.PINK);
+        Color.BLACK);
     root.getChildren().add(myActor);
     return new Scene(root, width, height);
   }
@@ -99,7 +88,9 @@ public class AnimatedShape extends Application {
   // create something to animate
   Node makeActor(int x, int y, int width, int height, Paint color) {
 //        Shape result = new Rectangle(x, y, width, height);
-    Shape result = getResourceShape("ShapeClass", x, y, width, height);
+    Shape result = new Rectangle(width, height);
+    result.setLayoutX(x);
+    result.setLayoutY(y);
     result.setFill(color);
     result.setId("actor");
     return result;
@@ -108,6 +99,7 @@ public class AnimatedShape extends Application {
   // create sequence of animations
   Animation makeAnimation(Node agent, int endX, int endY, int rotateDegrees) {
     // create something to follow
+    agent = myActor;
     Path path = new Path();
     path.getElements().addAll(
         new MoveTo(agent.getBoundsInParent().getMinX(), agent.getBoundsInParent().getMinY()),
@@ -120,28 +112,4 @@ public class AnimatedShape extends Application {
     // put them together in order
     return new SequentialTransition(agent, pt, rt);
   }
-
-  Shape getResourceShape(String key, int x, int y, int width, int height)
-      throws InputMismatchException {
-    String shape = myResources.getString(key).trim();
-    try {
-      Class<?> clazz = Class.forName(shape);
-      Constructor<?> ctor = clazz.getDeclaredConstructor(Double.TYPE, Double.TYPE, Double.TYPE,
-          Double.TYPE);
-      return (Shape) ctor.newInstance(x, y, width, height);
-    } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException |
-             InstantiationException | IllegalAccessException e) {
-      // for debugging
-      e.printStackTrace();
-      throw new InputMismatchException(String.format("Property %s is not a shape: %s", key, shape));
-    }
-  }
-
-public Integer getResourceNumber(String string) {
-    return null;
-}
-
-public Object getResourceColor(String string) {
-    return null;
-}
 }
