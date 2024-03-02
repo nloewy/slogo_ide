@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.IncompleteClassException;
+import slogo.model.api.InsufficientArgumentsException;
 import slogo.model.api.InvalidCommandException;
 import slogo.model.api.InvalidOperandException;
 import slogo.model.api.SlogoListener;
@@ -34,12 +35,20 @@ public class CommandNode extends Node {
       m = clazz.getDeclaredMethod("execute", List.class);
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
-      throw new InvalidCommandException("Command Class Not Found");
+      throw new InvalidCommandException("Command Class Not Found. Previous Commands successfully executed");
     }
     List<Node> children = getChildren();
+    if(getNumArgs() != getChildren().size()) {
+      throw new InsufficientArgumentsException(getToken() + " expected " + getNumArgs() + " arguments. Previous (non-nested) commands executed successfully");
+    }
     try {
       return (double) m.invoke(command, children);
+
     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+      Class<? extends RuntimeException> causeClass = (Class<? extends RuntimeException>) e.getCause().getClass();
+      if (causeClass.equals(InsufficientArgumentsException.class)) {
+        throw new InsufficientArgumentsException(e.getCause().getMessage());
+      }
       throw new InvalidOperandException(e.getCause().getMessage());
     }
   }

@@ -14,10 +14,7 @@ import java.util.Properties;
 import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import slogo.model.api.InsufficientArgumentsException;
-import slogo.model.api.InvalidCommandException;
 import slogo.model.api.InvalidTokenException;
-import slogo.model.api.SlogoListener;
 import slogo.model.node.CommandCreatorNode;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
@@ -49,18 +46,17 @@ public class Parser {
     initializeTokenMap();
   }
 
-  public Node parse(String input) {
+  public void parse(String input, Node rootNode) {
     resetParsing();
     List<String> tokens = Arrays.asList(input.split("\\s+"));
     Stack<Node> nodeStack = new Stack<>();
-    rootNode = new ListNode(OPEN_BRACKET, modelState);
+    this.rootNode = rootNode;
     nodeStack.push(rootNode);
     while (myIndex < tokens.size()) {
       parseNextToken(tokens, nodeStack);
       myIndex++;
     }
     checkForExtraneousArguments(nodeStack);
-    return rootNode;
   }
 
   private void resetParsing() {
@@ -72,9 +68,6 @@ public class Parser {
   private void checkForExtraneousArguments(Stack<Node> nodeStack) {
     while (!nodeStack.isEmpty() && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
-    }
-    if (!nodeStack.isEmpty()) {
-      throw new InsufficientArgumentsException("More Tokens Expected");
     }
   }
 
@@ -103,8 +96,8 @@ public class Parser {
     }
     if (!tokens.get(myIndex).matches(patternLoader.getPattern("Command")) && nodeStack.peek()
         .equals(rootNode)) {
-      throw new InsufficientArgumentsException(
-          "Command Expected. Cannot use " + tokens.get(myIndex) + " here");
+      throw new InvalidTokenException(
+          "Command Expected. Cannot use " + tokens.get(myIndex) + " here. Commands executed up until this point");
     }
     nodeStack.peek().addChild(currentNode);
     nodeStack.push(currentNode);
@@ -140,17 +133,11 @@ public class Parser {
       }
     }
     if (invalidToken) {
-      handleInvalidToken(token);
+      throw new InvalidTokenException("Invalid Token : " + "'" + token + "'. Commands executed up until this point");
     }
   }
 
-  private void handleInvalidToken(String token) {
-    if (token.matches(patternLoader.getPattern("Command"))) {
-      throw new InvalidCommandException("Command " + " '" + token + "' does not exist");
-    } else {
-      throw new InvalidTokenException("Invalid Token : " + "'" + token + "'");
-    }
-  }
+
 
   private void makeCommandCreatorNode(List<String> tokens) {
     int index = myIndex + 2;
@@ -229,4 +216,7 @@ public class Parser {
     tokenHandlers.put(OPEN_BRACKET, this::handleOpenBracket);
     tokenHandlers.put(CLOSED_BRACKET, this::handleClosedBracket);
   }
+
+
+
 }
