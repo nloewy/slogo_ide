@@ -48,7 +48,7 @@ public class PowerCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null));
     node.addChild(new ConstantNode(op2, null));
-    assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
+    assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
 
@@ -64,7 +64,7 @@ public class PowerCommandTest extends CommandTest {
     node.addChild(new ConstantNode(op1, null));
     node.addChild(new ConstantNode(op2, null));
     assertThrows(InvalidOperandException.class, () -> {
-      node.getValue();
+      node.evaluate();
     });
   }
 }

@@ -57,6 +57,6 @@ public class AndCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, model));
     node.addChild(new ConstantNode(op2, model));
-    assertEquals(result, node.getValue(), DELTA);
+    assertEquals(result, node.evaluate(), DELTA);
   }
 }

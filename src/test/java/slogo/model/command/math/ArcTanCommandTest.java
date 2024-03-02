@@ -41,7 +41,7 @@ public class ArcTanCommandTest extends CommandTest {
   void testArctanBasic(String op, String result)
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op, null));
-    assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
+    assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
 }

@@ -17,13 +17,13 @@ public class IfElseCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double arg1 = arguments.get(0).getValue();
+    double arg1 = arguments.get(0).evaluate();
     Node toExecuteIfTrue = arguments.get(1);
     Node toExecuteIfFalse = arguments.get(2);
     if (arg1 != 0.0) {
-      return toExecuteIfTrue.getValue();
+      return toExecuteIfTrue.evaluate();
     } else {
-        return toExecuteIfFalse.getValue();
+        return toExecuteIfFalse.evaluate();
     }
   }
 }

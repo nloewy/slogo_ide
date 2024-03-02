@@ -31,7 +31,7 @@ public class MakeCommandTest extends CommandTest {
     node.addChild(variableNode);
     node.addChild(new ConstantNode("5", model));
     dfsAddListener(node);
-    Assertions.assertEquals(5, node.getValue());
+    Assertions.assertEquals(5, node.evaluate());
     Assertions.assertEquals(5.0, model.getVariables().get("myvar"));
   }
 
@@ -50,7 +50,7 @@ public class MakeCommandTest extends CommandTest {
     nodeTwo.addChild(nodeThree);
     nodeTwo.addChild(nodeFour);
     dfsAddListener(node);
-    Assertions.assertEquals(12, node.getValue());
+    Assertions.assertEquals(12, node.evaluate());
     Assertions.assertEquals(12.0, model.getVariables().get("var"));
   }
 

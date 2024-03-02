@@ -23,7 +23,7 @@ public class SetHeadingCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double newHeading = arguments.get(0).getValue();
+    double newHeading = arguments.get(0).evaluate();
     Turtle turtle = modelState.getTurtles().get(0);
     double oldHeading = turtle.getHeading();
     turtle.setHeading(newHeading);

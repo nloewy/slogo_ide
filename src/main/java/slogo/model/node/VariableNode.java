@@ -16,7 +16,7 @@ public class VariableNode extends Node {
   }
 
   @Override
-  public double getValue() throws InvocationTargetException, IllegalAccessException {
+  public double evaluate() throws InvocationTargetException, IllegalAccessException {
     if (!myModelState.getVariables().containsKey(myToken)) {
       getListener().onUpdateValue(myToken, 0.0);
       myModelState.getVariables().put(myToken, 0.0);

@@ -1,6 +1,10 @@
 package slogo.view;
 
+import static slogo.view.View.ORIGIN;
+
+import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +22,9 @@ public class FrontEndTurtle {
     Image displayImage;
     Color penColor;
 
-    Double[] myPosition;
+    double myX;
+    double myHeading;
+    double myY;
     double heading = 0;
     int myId;
     boolean isPenDisplayed = false;
@@ -32,6 +38,8 @@ public class FrontEndTurtle {
 
     public FrontEndTurtle(int id, Double[] position, Color color, boolean isPenVisible, double heading, Image image) {
         myId = id;
+        myX = ORIGIN[0];
+        myY = ORIGIN[1];
         displayImage = image;
         display = new ImageView(displayImage);
         display.setId("turtle"); // doing this for testing, did not work because it keeps making new
@@ -49,13 +57,19 @@ public class FrontEndTurtle {
         return myId;
     }
 
-    public Line getLastPath() {
-        if (!pathHistory.isEmpty()) {
-            return pathHistory.peek();
-        }
-        throw new EmptyStackException();
+    public List<Line> getPathHistory() {
+        return pathHistory;
     }
 
+    public double getX() {
+        return myX;
+    }
+    public double getY() {
+        return myY;
+    }
+    public double getHeading() {
+        return myHeading;
+    }
     public Color getPenColor() {
         return penColor;
     }
@@ -79,17 +93,20 @@ public class FrontEndTurtle {
         display.setFitWidth(50);
     }
 
-    public Double[] getPosition() {
-        return myPosition;
-    }
 
-    public Timeline getAnimation() {
-        return animation;
-    }
+   // public Timeline getAnimation() {
+     //   return animation;
+  //  }
 
-    public void setPosition(Double[] newPosition, double newHeading) {
-        Double[] oldPosition = { display.getLayoutX(), display.getLayoutY() };
-        double oldHeading = display.getRotate();
+    public void setPosition(double x, double y, double newHeading) {
+        myX = x;
+        myY = y;
+        myHeading = newHeading;
+
+        display.setLayoutX(x);
+        display.setLayoutY(y);
+        display.setRotate(newHeading);
+        /**
 
         animation = new Timeline();
         animation.setCycleCount(3);
@@ -110,25 +127,18 @@ public class FrontEndTurtle {
                 animation.play();
             });
         }).start();
+         */
     }
 
     public Line drawLine(Double oldPosition, Double oldPosition2, Double newPosition, Double newPosition2) {
         Line line = new Line(oldPosition + 225, oldPosition2 + 125, newPosition + 225, newPosition2 + 125);
         line.setStroke(penColor);
         line.setVisible(isPenDisplayed);
+        pathHistory.push(line);
         return line;
     }
 
-    public void stepTurtle(Double[] oldPosition, Double[] newPosition, double oldHeading, double newHeading) {
 
-        double xStep = (newPosition[0] - oldPosition[0]) / 3;
-        double yStep = (newPosition[1] - oldPosition[1]) / 3;
-        double rotStep = (newHeading - oldHeading) / 3;
-
-        display.setLayoutX(display.getLayoutX() + xStep);
-        display.setLayoutY(display.getLayoutY() + yStep);
-        display.setRotate(display.getRotate() + rotStep);
-    }
 
     public ImageView getDisplay() {
         return display;

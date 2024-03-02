@@ -31,7 +31,7 @@ public class PenUpCommandTest extends CommandTest {
   void testBasicUp()
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setPen(false);
-    Assertions.assertEquals(0, node.getValue());
+    Assertions.assertEquals(0, node.evaluate());
     Assertions.assertFalse(myTurtle.getPen());
   }
 
@@ -39,7 +39,7 @@ public class PenUpCommandTest extends CommandTest {
   void testPenUpAlreadyUp()
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setPen(false);
-    Assertions.assertEquals(0, node.getValue());
+    Assertions.assertEquals(0, node.evaluate());
     Assertions.assertFalse(myTurtle.getPen());
   }
 }

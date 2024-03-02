@@ -1,9 +1,10 @@
 package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import slogo.model.ModelState;
-import slogo.model.api.SlogoListener;
 
 public class UserCommandNode extends Node {
 
@@ -19,38 +20,66 @@ public class UserCommandNode extends Node {
     this.modelState = modelState;
   }
 
-  private void replaceNodesWithToken(Node node, String tokenToReplace, double value) {
+  private void replaceNodesWithToken(Node node, String tokenToReplace, Node constantNode) {
     for (Node child : node.getChildren()) {
-      replaceNodesWithTokenHelper(child, tokenToReplace, value);
+      replaceNodesWithTokenHelper(child, tokenToReplace, constantNode);
     }
   }
 
-  private void replaceNodesWithTokenHelper(Node node, String tokenToReplace, double value) {
+
+
+
+  private void replaceNodesWithTokenHelper(Node node, String tokenToReplace, Node constantNode) {
     List<Node> children = node.getChildren(); // Get the children of the current node
     for (Node child : children) {
       if (child.getToken().equals(tokenToReplace)) {
         int index = children.indexOf(child);
         if (index != -1) {
-          ConstantNode constantNode = new ConstantNode(String.valueOf(value), modelState);
           children.set(index, constantNode);
         }
       } else {
-        replaceNodesWithTokenHelper(child, tokenToReplace, value);
+        replaceNodesWithTokenHelper(child, tokenToReplace, constantNode);
+      }
+    }
+  }
+  private void replaceTokensWithNodes(Node node, Map<Node, String> nodeToVar) {
+    for (Node child : node.getChildren()) {
+      replaceTokensWithNodesHelper(child, nodeToVar);
+    }
+  }
+
+  private void replaceTokensWithNodesHelper(Node node, Map<Node, String> nodeToVar) {
+    List<Node> children = node.getChildren(); // Get the children of the current node
+    for (Node child : children) {
+      if (nodeToVar.containsKey(child)) {
+        int index = children.indexOf(child);
+        if (index != -1) {
+          children.set(index, new VariableNode(nodeToVar.get(child), modelState));
+          children.get(index).addListener(getListener());
+        }
+      } else {
+        replaceTokensWithNodesHelper(child, nodeToVar);
       }
     }
   }
 
   @Override
-  public double getValue() throws InvocationTargetException, IllegalAccessException {
+  public double evaluate() throws InvocationTargetException, IllegalAccessException {
     List<Node> children = modelState.getUserDefinedCommandNodes().get(myToken);
     children.addAll(getChildren());
+    Node rootOfSubtree = children.get(1);
+    Map<Node, String> constantNodeToVariable = new HashMap<>();
     for (int i = 0; i < numArgs; i++) {
-      Node rootOfSubtree = children.get(1);
       String tokenToReplace = children.get(0).getChildren().get(i).getToken();
-      double value = children.get(i + 2).getValue();
-      replaceNodesWithToken(rootOfSubtree, tokenToReplace, value);
+      double value = children.get(i + 2).evaluate();
+      Node constantNode = new ConstantNode(String.valueOf(value), modelState);
+      constantNodeToVariable.put(constantNode, tokenToReplace);
+      replaceNodesWithToken(rootOfSubtree, tokenToReplace, constantNode);
     }
-    return children.get(1).getValue();
+    double val = rootOfSubtree.evaluate();
+    replaceTokensWithNodes(rootOfSubtree, constantNodeToVariable);
+    modelState.getUserDefinedCommandNodes().put(myToken, children.subList(0,2));
+    return val;
   }
 
   @Override

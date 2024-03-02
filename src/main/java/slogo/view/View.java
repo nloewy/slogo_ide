@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import slogo.Controller;
 import slogo.model.api.SlogoListener;
@@ -39,7 +40,7 @@ public class View implements SlogoListener {
     private Controller controller;
     private Consumer<String> parse;
     private Scene scene;
-    private static final Double[] ORIGIN = new Double[]{460.0, 200.0};
+    public static final Double[] ORIGIN = new Double[]{width/2.0, height/2.0};
 
     public View(Controller controller, Stage stage) {
         this.stage = stage;
@@ -160,14 +161,19 @@ public class View implements SlogoListener {
         }
         variables.put(variableName + " :: " + newValue, List.of(commandHistory.peek()));
     }
+    private void drawLine(double x1, double y1, double x2, double y2) {
+        Line line = new Line(x1 , y1 , x2, y2);
+        line.setStroke(Color.BLACK);
 
+    }
     @Override
     public void onUpdateTurtleState(TurtleRecord turtleState) {
         System.out.println(turtleState.heading());
         for (FrontEndTurtle turtle : getTurtles()) {
             if (turtle.getId() == turtleState.id()) {
                 turtle.setIsPenDisplayed(turtleState.pen());
-                turtle.setPosition(new Double[]{turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1]}, turtleState.heading());
+                turtle.drawLine(turtle.getX(),turtle.getY(), turtleState.x()+ORIGIN[0], turtleState.y() + ORIGIN[1]);
+                turtle.setPosition(turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1], turtleState.heading());
                 return;
             }
         }
@@ -185,7 +191,7 @@ public class View implements SlogoListener {
         for (FrontEndTurtle turtle : turtles) {
             if (turtle.getId() == id) {
                 turtle.setIsPenDisplayed(false);
-                turtle.setPosition(new Double[]{0.0, 0.0}, 0);
+                turtle.setPosition(ORIGIN[0], ORIGIN[1],0);
                 turtle.setImage(defaultImage);
             }
         }

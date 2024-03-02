@@ -60,7 +60,7 @@ public class SetPositionCommandTest extends CommandTest {
     node.addChild(new ConstantNode(newY, null));
     double expectedVal = Math.hypot(Double.parseDouble(newX) - myTurtle.getX(),
         Double.parseDouble(newY) - myTurtle.getY());
-    assertEquals(expectedVal, node.getValue(), DELTA);
+    assertEquals(expectedVal, node.evaluate(), DELTA);
     assertEquals(Double.parseDouble(newX), myTurtle.getX(), DELTA);
     assertEquals(Double.parseDouble(newY), myTurtle.getY(), DELTA);
   }

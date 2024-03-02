@@ -15,7 +15,7 @@ public class ConstantNode extends Node {
     myConstant = Double.parseDouble(token);
   }
 
-  public double getValue() throws InvocationTargetException, IllegalAccessException {
+  public double evaluate() throws InvocationTargetException, IllegalAccessException {
     return myConstant;
   }
 

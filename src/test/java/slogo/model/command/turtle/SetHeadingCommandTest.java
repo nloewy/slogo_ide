@@ -45,7 +45,7 @@ public class SetHeadingCommandTest extends CommandTest {
   void testBasicHeading(String newHeading, String expectedValue, String expectedHeading)
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(newHeading, model));
-    assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
+    assertEquals(Double.parseDouble(expectedValue), node.evaluate(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
 
   }
@@ -56,7 +56,7 @@ public class SetHeadingCommandTest extends CommandTest {
     myTurtle.setHeading(60);
     String newHeading = "20";
     node.addChild(new ConstantNode(newHeading, model));
-    assertEquals(40, node.getValue(), DELTA);
+    assertEquals(40, node.evaluate(), DELTA);
     assertEquals(20, myTurtle.getHeading(), DELTA);
   }
 
@@ -66,7 +66,7 @@ public class SetHeadingCommandTest extends CommandTest {
     String newHeading = "940";
     myTurtle.setHeading(500);
     node.addChild(new ConstantNode(newHeading, model));
-    assertEquals(80, node.getValue(), DELTA);
+    assertEquals(80, node.evaluate(), DELTA);
     assertEquals(220, myTurtle.getHeading(), DELTA);
   }
 
@@ -76,7 +76,7 @@ public class SetHeadingCommandTest extends CommandTest {
     String newHeading = "1081";
     myTurtle.setHeading(361);
     node.addChild(new ConstantNode(newHeading, model));
-    assertEquals(0, node.getValue(), DELTA);
+    assertEquals(0, node.evaluate(), DELTA);
     assertEquals(1, myTurtle.getHeading(), DELTA);
   }
 
@@ -86,7 +86,7 @@ public class SetHeadingCommandTest extends CommandTest {
     String newHeading = "-270";
     myTurtle.setHeading(95);
     node.addChild(new ConstantNode(newHeading, model));
-    assertEquals(5, node.getValue(), DELTA);
+    assertEquals(5, node.evaluate(), DELTA);
     assertEquals(90, myTurtle.getHeading(), DELTA);
   }
 }

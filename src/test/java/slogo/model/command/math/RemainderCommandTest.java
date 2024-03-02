@@ -51,7 +51,7 @@ public class RemainderCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null));
     node.addChild(new ConstantNode(op2, null));
-    assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
+    assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
   @Test
@@ -60,7 +60,7 @@ public class RemainderCommandTest extends CommandTest {
       node.addChild(new ConstantNode("50", null));
       node.addChild(new ConstantNode("0", null));
       assertThrows(InvalidOperandException.class, () -> {
-        node.getValue();
+        node.evaluate();
       });
     }
 

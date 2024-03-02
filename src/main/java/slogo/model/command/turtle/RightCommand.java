@@ -22,7 +22,7 @@ public class RightCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double degrees = arguments.get(0).getValue();
+    double degrees = arguments.get(0).evaluate();
     Turtle turtle = modelState.getTurtles().get(0);
     turtle.setHeading(turtle.getHeading() + degrees);
     listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());

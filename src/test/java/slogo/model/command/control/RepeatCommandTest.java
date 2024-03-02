@@ -46,8 +46,8 @@ public class RepeatCommandTest extends CommandTest {
     commandListNode.addChild(fwdNode2);
     node.addChild(commandListNode);
     dfsAddListener(node);
-    assertEquals(node.getValue(), 5, DELTA);
-    assertEquals(myTurtle.getY(), 21, DELTA);
+    assertEquals(5, node.evaluate(), DELTA);
+    assertEquals(21, myTurtle.getY(), DELTA);
   }
 
   @Test
@@ -66,7 +66,7 @@ public class RepeatCommandTest extends CommandTest {
     node.addChild(commandListNode);
 
     dfsAddListener(node);
-    assertEquals(node.getValue(), 3, DELTA);
-    assertEquals(myTurtle.getY(), 6, DELTA);
+    assertEquals(3, node.evaluate(), DELTA);
+    assertEquals(6, myTurtle.getY(), DELTA);
   }
 }

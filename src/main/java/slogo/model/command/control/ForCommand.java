@@ -20,14 +20,14 @@ public class ForCommand implements Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     String variableName = arguments.get(0).getChildren().get(0).getToken();
-    double start = arguments.get(0).getChildren().get(1).getValue();
-    double end = arguments.get(0).getChildren().get(2).getValue();
-    double increment = arguments.get(0).getChildren().get(3).getValue();
+    double start = arguments.get(0).getChildren().get(1).evaluate();
+    double end = arguments.get(0).getChildren().get(2).evaluate();
+    double increment = arguments.get(0).getChildren().get(3).evaluate();
     Node commands = arguments.get(1);
     double res = 0.0;
     for (double i = start; i <= end; i += increment) {
       modelState.getVariables().put(variableName, i);
-      res = commands.getValue();
+      res = commands.evaluate();
       modelState.getVariables().remove(variableName);
     }
     return res;

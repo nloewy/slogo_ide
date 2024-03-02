@@ -31,7 +31,7 @@ public class ShowTurtleCommandTest extends CommandTest {
   void testBasicShowTurtle()
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setVisible(false);
-    Assertions.assertEquals(1, node.getValue());
+    Assertions.assertEquals(1, node.evaluate());
     Assertions.assertTrue(myTurtle.getVisible());
   }
 
@@ -39,7 +39,7 @@ public class ShowTurtleCommandTest extends CommandTest {
   void testShowTurtleAlreadyShown()
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setVisible(true);
-    Assertions.assertEquals(1, node.getValue());
+    Assertions.assertEquals(1, node.evaluate());
     Assertions.assertTrue(myTurtle.getVisible());
   }
 }

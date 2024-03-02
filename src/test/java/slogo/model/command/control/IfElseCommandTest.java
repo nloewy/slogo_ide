@@ -52,7 +52,7 @@ public class IfElseCommandTest extends CommandTest {
     node.addChild(nodeEight);
     dfsAddListener(node);
 
-    Assertions.assertEquals(30.0, node.getValue(), DELTA);
+    Assertions.assertEquals(30.0, node.evaluate(), DELTA);
     Assertions.assertEquals(90.0, myTurtle.getY(), DELTA);
   }
 
@@ -83,7 +83,7 @@ public class IfElseCommandTest extends CommandTest {
     nodeNine.addChild(new ConstantNode("100", model));
     node.addChild(nodeEight);
     dfsAddListener(node);
-    Assertions.assertEquals(100.0, node.getValue(), DELTA);
+    Assertions.assertEquals(100.0, node.evaluate(), DELTA);
     Assertions.assertEquals(100.0, myTurtle.getY(), DELTA);
 
   }
