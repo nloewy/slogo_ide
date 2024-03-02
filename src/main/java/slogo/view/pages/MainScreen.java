@@ -137,16 +137,17 @@ public class MainScreen implements ViewInternal {
     for (String key : view.getVariables().keySet()) {
       List<String> relatedCommands = view.getVariables().get(key);
       Button openRelatedCommands = new Button(key);
+      openRelatedCommands.setId("variable");
 
       openRelatedCommands.setOnAction((event) -> {
         String commands = "";
         for (String command : relatedCommands) {
           commands = commands + "\n" + command;
         }
-        new Alert(AlertType.ERROR, commands).showAndWait();
+        new Alert(AlertType.NONE, "RELATED COMMANDS\n" + commands).showAndWait();
       });
 
-      variablesBox.getChildren().add(new Label(key));
+      variablesBox.getChildren().add(openRelatedCommands);
     }
   }
 

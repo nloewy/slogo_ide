@@ -83,16 +83,7 @@ public class Controller {
 
         view.run(parse);
     }
-
-    public void handleCommand(String command) {
-//         Here, implement command handling logic
-//        if ("MOVE UP".equalsIgnoreCase(command)) {
-//            view.moveTurtleUp(); If it was in view
-//        But for otherwise it run another class that will get from model side
-
-//        }
-    }
-
+    
     public void setCurrentLanguage(String language) {
         this.currentLanguage = language;
         for (View view : windows) {
