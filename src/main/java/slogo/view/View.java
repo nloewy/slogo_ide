@@ -38,6 +38,7 @@ public class View implements SlogoListener {
     private String lang;
     private Controller controller;
     private Consumer<String> parse;
+    private Scene scene;
     private static final Double[] ORIGIN = new Double[]{460.0, 200.0};
 
     public View(Controller controller, Stage stage) {
@@ -66,12 +67,22 @@ public class View implements SlogoListener {
         parse = parseMethod;
 
         page.setUp();
-        Scene scene = new Scene(page.getGroup(), width, height);
+        scene = new Scene(page.getGroup(), width, height);
         scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
 
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
+    }
+
+    public void switchToLightMode() {
+        scene.getStylesheets().remove(Objects.requireNonNull(View.class.getResource("DarkMode.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
+    }
+
+    public void switchToDarkMode() {
+        scene.getStylesheets().remove(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("DarkMode.css")).toExternalForm());
     }
 
     public void setTurtleImage(File f) {
@@ -142,8 +153,6 @@ public class View implements SlogoListener {
 
     @Override
     public void onUpdateValue(String variableName, Number newValue) {
-        //new Variable display class
-        //commandHistory.peek()
         if (variables.get(variableName) != null) {
             List<String> commands = variables.get(variableName);
             commands.add(commandHistory.peek());
@@ -195,16 +204,5 @@ public class View implements SlogoListener {
             userDefinedCommandHistory.add(string);
         }
     }
-
-//   /*
-//    * Gets the current exception, and shows
-//    * it as an alert.
-//    */
-//   public void displayErrorMessage();
-
-//   /**
-//    * Resets all panels in the view
-//    */
-//   public void resetView();
 }
 

@@ -6,14 +6,17 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import slogo.model.SlogoModel;
 import slogo.model.api.InvalidCommandException;
 import slogo.model.api.InvalidTokenException;
 import slogo.model.api.Model;
 import slogo.view.View;
+import slogo.view.pages.MainScreen;
 import slogo.view.pages.StartScreen;
 
 //TODO add method to add user
@@ -83,7 +86,7 @@ public class Controller {
 
         view.run(parse);
     }
-    
+
     public void setCurrentLanguage(String language) {
         this.currentLanguage = language;
         for (View view : windows) {
@@ -97,7 +100,7 @@ public class Controller {
 
     public void loadSession() {
         System.out.println("To Be Implemented! Need to figure out how to move "
-            + "file choosing from screen to controller");
+                + "file choosing from screen to controller");
     }
 
     public void openNewXMLSession() {

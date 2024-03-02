@@ -13,9 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import slogo.Controller;
-import slogo.Main;
 import slogo.view.ButtonUtil;
-import slogo.view.View;
 import slogo.view.ViewInternal;
 
 public class StartScreen implements ViewInternal {
@@ -61,6 +59,12 @@ public class StartScreen implements ViewInternal {
             ButtonUtil.generateButton("Load Old Session", 100, 360,
                 e -> controller.loadSession()),
             ButtonUtil.generateButton("Upload Turtle Image", 400, 300, (event) -> {
+                handleLoadTurtleImage();
+            }),
+            ButtonUtil.generateButton("Light Mode", 400, 330, (event) -> {
+                handleLoadTurtleImage();
+            }),
+            ButtonUtil.generateButton("Dark Mode", 400, 360, (event) -> {
                 handleLoadTurtleImage();
             }),
             logoView,
