@@ -62,6 +62,8 @@ public class MainScreen implements ViewInternal {
   private final Timeline animation = new Timeline();
   private final double speed = 0.75;
   Button submitField;
+  Button play;
+  Button pause;
   Pane centerPane = new Pane();
 
   // Add an XMLFile object to this when Model adds one
@@ -176,9 +178,25 @@ public class MainScreen implements ViewInternal {
       sendCommandStringToView();
     });
 
+    play = ButtonUtil.generateButton("Play", 300, 300, (event) -> {
+      for (FrontEndTurtle t : view.getTurtles()) {
+        if (t.getAnimation() != null) {
+          t.getAnimation().play();
+        }
+      }
+    });
+
+    pause = ButtonUtil.generateButton("Pause", 300, 400, (event) -> {
+      for (FrontEndTurtle t : view.getTurtles()) {
+        if (t.getAnimation() != null) {
+          t.getAnimation().pause();
+        }
+      }
+    });
+
     textInputBox = new HBox();
     textInputBox.setSpacing(10);
-    textInputBox.getChildren().addAll(field, submitField);
+    textInputBox.getChildren().addAll(field, submitField, play, pause);
     textInputBox.setAlignment(javafx.geometry.Pos.CENTER);
 
     root = new Group();

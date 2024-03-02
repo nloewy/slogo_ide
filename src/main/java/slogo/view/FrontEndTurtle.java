@@ -22,6 +22,8 @@ public class FrontEndTurtle {
     int myId;
     boolean isPenDisplayed = false;
 
+    private Timeline animation;
+
     private static final double FRAME_RATE = 4.0;
     private final double speed = 0.75;
 
@@ -77,11 +79,15 @@ public class FrontEndTurtle {
         return myPosition;
     }
 
+    public Timeline getAnimation() {
+        return animation;
+    }
+
     public void setPosition(Double[] newPosition, double newHeading) {
         Double[] oldPosition = { display.getLayoutX(), display.getLayoutY() };
         double oldHeading = display.getRotate();
 
-        Timeline animation = new Timeline();
+        animation = new Timeline();
         animation.setCycleCount(3);
         animation.getKeyFrames()
                 .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)),
