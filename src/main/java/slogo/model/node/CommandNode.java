@@ -17,12 +17,13 @@ public class CommandNode extends Node {
   private Method m;
   private final String myToken;
   private ModelState myModelState;
-  private String className;
+  private String myFullToken;
 
+  private static final String BASE_PACKAGE = "slogo.model.command.";
   public CommandNode(String token, ModelState modelState)
       throws ClassNotFoundException {
     super();
-    myToken = "slogo.model.command." + token + "Command";
+    myToken =  token ;
     myModelState = modelState;
   }
 
@@ -30,7 +31,7 @@ public class CommandNode extends Node {
   @Override
   public double getValue() throws InvocationTargetException, IllegalAccessException {
     try {
-      Class<?> clazz = Class.forName(myToken);
+      Class<?> clazz = Class.forName(BASE_PACKAGE + myToken + "Command");
       command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
           .newInstance(myModelState, getListener());
       m = clazz.getDeclaredMethod("execute", List.class);
@@ -40,7 +41,6 @@ public class CommandNode extends Node {
     }
     List<Node> children = getChildren();
     if(getNumArgs() != getChildren().size()) {
-      System.out.println(getChildren());
       throw new InsufficientArgumentsException(getToken() + " expected " + getNumArgs() + " arguments. Previous (non-nested) commands executed successfully");
     }
     try {
@@ -57,7 +57,7 @@ public class CommandNode extends Node {
 
   public int getNumArgs() throws IncompleteClassException {
     try {
-      return (int) Class.forName(myToken).getField("NUM_ARGS").get(null);
+      return (int) Class.forName(BASE_PACKAGE + myToken + "Command").getField("NUM_ARGS").get(null);
     } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException e) {
       throw new IncompleteClassException(
           "Error getting number of arguments. Field NUM_ARGS not found for " + myToken);

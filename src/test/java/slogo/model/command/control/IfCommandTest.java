@@ -37,10 +37,10 @@ public class IfCommandTest extends CommandTest {
     nodeTwo.addChild(nodeFour);
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("turtle.Forward", model);
+    Node nodeSix = new CommandNode("turtle.Backward", model);
     nodeSix.addChild(new ConstantNode("60", model));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("turtle.Forward", model);
+    Node nodeSeven = new CommandNode("turtle.Backward", model);
     nodeSeven.addChild(new ConstantNode("30", model));
     nodeFive.addChild(nodeSeven);
     dfsAddListener(node);
@@ -63,10 +63,10 @@ public class IfCommandTest extends CommandTest {
     nodeTwo.addChild(nodeFour);
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("turtle.Forward", model);
+    Node nodeSix = new CommandNode("turtle.Backward", model);
     nodeSix.addChild(new ConstantNode("60", model));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("turtle.Forward", model);
+    Node nodeSeven = new CommandNode("turtle.Backward", model);
     nodeSeven.addChild(new ConstantNode("30", model));
     dfsAddListener(node);
     Assertions.assertEquals(0.0, node.getValue(), DELTA);

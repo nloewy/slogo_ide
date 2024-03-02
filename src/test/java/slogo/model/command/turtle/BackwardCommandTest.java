@@ -37,7 +37,7 @@ public class BackwardCommandTest extends CommandTest {
     node.addChild(new ConstantNode(dist, null));
     node.addListener(myListener);
     assertEquals(node.getValue(), 75, DELTA);
-    assertEquals(myTurtle.getY(), -75, DELTA);
+    assertEquals(myTurtle.getY(), 75, DELTA);
 
   }
 
@@ -49,8 +49,8 @@ public class BackwardCommandTest extends CommandTest {
     node.addChild(new ConstantNode(dist, null));
     node.addListener(myListener);
     assertEquals(20, node.getValue(), DELTA);
-    assertEquals(-10 * Math.sqrt(3), myTurtle.getX(), DELTA);
-    assertEquals(-10, myTurtle.getY(), DELTA);
+    assertEquals(10 * Math.sqrt(3), myTurtle.getX(), DELTA);
+    assertEquals(10, myTurtle.getY(), DELTA);
   }
 
   @Test
@@ -63,8 +63,8 @@ public class BackwardCommandTest extends CommandTest {
     node.addChild(new ConstantNode(dist, null));
     node.addListener(myListener);
     assertEquals(20, node.getValue(), DELTA);
-    assertEquals(50 - 10 * Math.sqrt(3), myTurtle.getX(), DELTA);
-    assertEquals(60, myTurtle.getY(), DELTA);
+    assertEquals(50 + 10 * Math.sqrt(3), myTurtle.getX(), DELTA);
+    assertEquals(80, myTurtle.getY(), DELTA);
   }
 
   @Test
@@ -85,6 +85,6 @@ public class BackwardCommandTest extends CommandTest {
     node.addChild(new ConstantNode(dist, null));
     node.addListener(myListener);
     assertEquals(-75, node.getValue(), DELTA);
-    assertEquals(75, myTurtle.getY(), DELTA);
+    assertEquals(-75, myTurtle.getY(), DELTA);
   }
 }

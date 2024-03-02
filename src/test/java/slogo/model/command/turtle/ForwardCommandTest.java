@@ -26,7 +26,7 @@ public class ForwardCommandTest extends CommandTest {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.Forward", model);
+    node = new CommandNode("turtle.Backward", model);
     dfsAddListener(node);
   }
 
