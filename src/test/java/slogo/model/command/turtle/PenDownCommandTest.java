@@ -31,7 +31,7 @@ public class PenDownCommandTest extends CommandTest {
   void testBasicPenDown()
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setPen(false);
-    Assertions.assertEquals(1, node.getValue());
+    Assertions.assertEquals(1, node.evaluate());
     Assertions.assertTrue(myTurtle.getPen());
   }
 
@@ -39,7 +39,7 @@ public class PenDownCommandTest extends CommandTest {
   void testPenDownAlreadyDown()
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setPen(true);
-    Assertions.assertEquals(1, node.getValue());
+    Assertions.assertEquals(1, node.evaluate());
     Assertions.assertTrue(myTurtle.getPen());
   }
 }

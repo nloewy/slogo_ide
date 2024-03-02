@@ -29,7 +29,7 @@ public class CommandNode extends Node {
 
 
   @Override
-  public double getValue() throws InvocationTargetException, IllegalAccessException {
+  public double evaluate() throws InvocationTargetException, IllegalAccessException {
     try {
       Class<?> clazz = Class.forName(BASE_PACKAGE + myToken + "Command");
       command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)

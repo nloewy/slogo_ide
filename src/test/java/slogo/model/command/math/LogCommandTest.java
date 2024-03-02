@@ -38,14 +38,14 @@ public class LogCommandTest extends CommandTest {
   void testLogBasicE()
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(Double.toString(Math.E), null));
-    assertEquals(1, node.getValue(), DELTA);
+    assertEquals(1, node.evaluate(), DELTA);
   }
 
   @Test
   void testLogBasicOne()
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode("1", null));
-    assertEquals(0, node.getValue(), DELTA);
+    assertEquals(0, node.evaluate(), DELTA);
   }
 
   @ParameterizedTest
@@ -72,7 +72,7 @@ public class LogCommandTest extends CommandTest {
   void testLogFloats(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null));
-    assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
+    assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
 
@@ -88,7 +88,7 @@ public class LogCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null));
     assertThrows(InvalidOperandException.class, () -> {
-      node.getValue();
+      node.evaluate();
     });
   }
 }

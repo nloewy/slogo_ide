@@ -41,6 +41,6 @@ public class NotCommandTest extends CommandTest {
   void testNot(String op1, int result)
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null));
-    assertEquals(result, node.getValue(), DELTA);
+    assertEquals(result, node.evaluate(), DELTA);
   }
 }

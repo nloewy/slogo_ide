@@ -26,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -113,13 +114,11 @@ public class MainScreen implements ViewInternal {
   public void update() {
     for (FrontEndTurtle turtle : view.getTurtles()) {
 
-      try {
-        if (turtle.isPenDisplayed() &&
-            !root.getChildren().contains(turtle.getLastPath())) {
-          root.getChildren().add(turtle.getLastPath());
-        }
-      } catch (EmptyStackException e) {
-        continue;
+      List<Line> pathHistory = turtle.getPathHistory();
+      int i = pathHistory.size()-1;
+      while(i>=0 && !root.getChildren().contains(pathHistory.get(i))) {
+        root.getChildren().add(pathHistory.get(i));
+        i--;
       }
 
       updateVariables();
@@ -201,6 +200,7 @@ public class MainScreen implements ViewInternal {
       sendCommandStringToView();
     });
 
+    /**
     play = ButtonUtil.generateButton("Play", 300, 300, (event) -> {
       for (FrontEndTurtle t : view.getTurtles()) {
         if (t.getAnimation() != null) {
@@ -217,12 +217,14 @@ public class MainScreen implements ViewInternal {
       }
     });
 
+     */
     textInputBox = new HBox();
     textInputBox.setSpacing(10);
-    textInputBox.getChildren().addAll(field, submitField, play, pause);
+    textInputBox.getChildren().addAll(field, submitField);//, play, pause);
     textInputBox.setAlignment(javafx.geometry.Pos.CENTER);
 
     root = new Group();
+
     // root.getChildren().add(variablesPane);
     // root.getChildren().add(commandBox);
 

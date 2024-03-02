@@ -44,7 +44,7 @@ public class ProductCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, new ModelState()));
     node.addChild(new ConstantNode(op2, new ModelState()));
-    assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
+    assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
 }

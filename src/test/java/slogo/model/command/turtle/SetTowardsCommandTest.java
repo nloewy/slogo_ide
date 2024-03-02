@@ -65,7 +65,7 @@ public class SetTowardsCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(x, model));
     node.addChild(new ConstantNode(y, model));
-    assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
+    assertEquals(Double.parseDouble(expectedValue), node.evaluate(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
   }
 
@@ -87,7 +87,7 @@ public class SetTowardsCommandTest extends CommandTest {
     myTurtle.setY(-50);
     node.addChild(new ConstantNode(x, model));
     node.addChild(new ConstantNode(y, model));
-    assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
+    assertEquals(Double.parseDouble(expectedValue), node.evaluate(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
   }
 }

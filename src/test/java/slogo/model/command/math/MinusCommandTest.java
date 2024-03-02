@@ -45,7 +45,7 @@ public class MinusCommandTest extends CommandTest {
   void testMinusBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null));
-    assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
+    assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
 }

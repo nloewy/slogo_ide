@@ -55,7 +55,7 @@ public class ClearScreenCommandTest extends CommandTest {
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
     double expectedVal = Math.hypot(Double.parseDouble(originalX), Double.parseDouble(originalY));
-    assertEquals(expectedVal, node.getValue(), DELTA);
+    assertEquals(expectedVal, node.evaluate(), DELTA);
     assertEquals(0, myTurtle.getX(), DELTA);
     assertEquals(0, myTurtle.getY(), DELTA);
   }

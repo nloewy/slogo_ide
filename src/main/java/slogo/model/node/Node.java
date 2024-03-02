@@ -6,12 +6,12 @@ import java.util.List;
 import slogo.model.api.IncompleteClassException;
 import slogo.model.api.SlogoListener;
 
-public abstract class Node {
+public abstract class Node implements Cloneable {
 
   private final List<Node> myChildren = new ArrayList<>();
   private SlogoListener myListener;
 
-  public abstract double getValue() throws InvocationTargetException, IllegalAccessException;
+  public abstract double evaluate() throws InvocationTargetException, IllegalAccessException;
 
   public List<Node> getChildren() {
     return myChildren;

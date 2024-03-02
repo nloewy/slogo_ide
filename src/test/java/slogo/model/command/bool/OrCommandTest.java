@@ -53,6 +53,6 @@ public class OrCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null));
     node.addChild(new ConstantNode(op2, null));
-    assertEquals(result, node.getValue(), DELTA);
+    assertEquals(result, node.evaluate(), DELTA);
   }
 }

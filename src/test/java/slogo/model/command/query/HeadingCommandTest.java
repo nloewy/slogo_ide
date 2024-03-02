@@ -10,7 +10,6 @@ import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
 import slogo.model.node.CommandNode;
-import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
 public class HeadingCommandTest extends CommandTest {
@@ -47,7 +46,7 @@ public class HeadingCommandTest extends CommandTest {
   void testHeadingBasic(String heading)
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setHeading(-393993);
-    assertEquals(myTurtle.getHeading(), node.getValue(), DELTA);
+    assertEquals(myTurtle.getHeading(), node.evaluate(), DELTA);
   }
 
 }

@@ -45,7 +45,7 @@ public class DoTimesCommandTest extends CommandTest {
     node.addChild(listNode);
     node.addChild(commandListNode);
     dfsAddListener(node);
-    assertEquals(node.getValue(), 2, DELTA);
+    assertEquals(node.evaluate(), 2, DELTA);
     assertEquals(myTurtle.getY(), 10, DELTA);
   }
 
@@ -67,7 +67,7 @@ public class DoTimesCommandTest extends CommandTest {
     node.addChild(listNode);
     node.addChild(commandListNode);
     dfsAddListener(node);
-    assertEquals(node.getValue(), 5, DELTA);
+    assertEquals(node.evaluate(), 5, DELTA);
     assertEquals(myTurtle.getY(), 30, DELTA);
   }
 }

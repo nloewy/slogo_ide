@@ -22,9 +22,9 @@ public class BackwardCommand implements Command {
 
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double pixels = arguments.get(0).getValue();
+    double pixels = arguments.get(0).evaluate();
     Turtle turtle = modelState.getTurtles().get(0);
-    double newX = turtle.getX() + pixels * Math.sin(Math.toRadians(turtle.getHeading()));
+    double newX = turtle.getX() - pixels * Math.sin(Math.toRadians(turtle.getHeading()));
     double newY = turtle.getY() + pixels * Math.cos(Math.toRadians(turtle.getHeading()));
     turtle.setX(newX);
     turtle.setY(newY);

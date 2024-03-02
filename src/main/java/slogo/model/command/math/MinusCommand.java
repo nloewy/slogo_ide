@@ -17,7 +17,7 @@ public class MinusCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double arg1 = arguments.get(0).getValue();
+    double arg1 = arguments.get(0).evaluate();
     return -arg1;
 
   }
