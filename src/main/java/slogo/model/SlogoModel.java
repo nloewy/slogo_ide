@@ -29,8 +29,7 @@ public class SlogoModel implements Model {
       throws InvocationTargetException, IllegalAccessException, InvalidCommandException, InvalidTokenException {
     Node root = parser.parse(input);
     double val = root.getValue();
-    System.out.println(root.toString());
-    myListener.onReturn(val);
+    myListener.onReturn(val, root.toString());
   }
 
   @Override

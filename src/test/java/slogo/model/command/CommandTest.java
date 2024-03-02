@@ -16,7 +16,7 @@ public class CommandTest {
     public void onResetTurtle(int id) {
     }
 
-    public void onReturn(double value) {
+    public void onReturn(double value, String string) {
     }
 
     @Override

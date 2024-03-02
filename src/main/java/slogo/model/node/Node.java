@@ -25,30 +25,22 @@ public abstract class Node {
 
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append(getToken());
-    if (!getChildren().isEmpty()) {
-      sb.append("\t").append(getChildren().get(0).getToken());
-      for (int i = 0; i < getChildren().get(0).getChildren().size(); i++) {
-        sb.append("\t").append(getChildren().get(0).getChildren().get(i).getToken());
-      }
-      sb.append(toStringHelper(this, 0, true));
-
+    for(Node child : getChildren()) {
+      sb.append(toStringHelper(child, 0));
     }
     return sb.toString();
   }
 
-  private String toStringHelper(Node node, int indent, boolean firstLevel) {
+  private String toStringHelper(Node node, int indent) {
     StringBuilder sb = new StringBuilder();
-    if(!firstLevel) {
-      sb.append("\n");
-      sb.append("\t".repeat(indent)).append(node.getToken());
-    }
+    sb.append("\n");
+    sb.append("\t".repeat(indent)).append(node.getToken());
     for (int i = 0; i < node.getChildren().size(); i++) {
-      if(firstLevel && i==0) {continue;}
-      sb.append(toStringHelper(node.getChildren().get(i), indent + 1, false));
+      sb.append(toStringHelper(node.getChildren().get(i), indent + 1));
     }
     return sb.toString();
   }
+
 
 }
 

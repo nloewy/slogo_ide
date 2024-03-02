@@ -151,11 +151,9 @@ public class View implements SlogoListener {
     //val returned by last command
     //add it to history next to the command
     @Override
-    public void onReturn(double value) {
+    public void onReturn(double value, String string) {
 
     }
-<<<<<<< HEAD
-=======
 
     @Override
     public void onCommand(String string, boolean userDefined) {
@@ -172,6 +170,5 @@ public class View implements SlogoListener {
 //    * Resets all panels in the view
 //    */
 //   public void resetView();
->>>>>>> b51b74f1587ca11eabad31e9939fc53ef332457b
 }
 

@@ -38,7 +38,7 @@ public class ParseTest {
       }
 
       @Override
-      public void onReturn(double value) {
+      public void onReturn(double value, String string) {
       }
       @Override
       public void onCommand(String s, boolean b) {
