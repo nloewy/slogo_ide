@@ -33,18 +33,19 @@ public class RepeatCommandTest extends CommandTest {
   @Test
   void testRepeatNoVariable()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.Repeat", model, myListener);
-    Node cmd = new CommandNode("math.SquareRoot", model, myListener);
+    node = new CommandNode("control.Repeat", model);
+    Node cmd = new CommandNode("math.SquareRoot", model);
     node.addChild(cmd);
-    cmd.addChild(new ConstantNode("9", model, myListener));
-    Node commandListNode = new ListNode("", model, myListener);
-    Node fwdNode = new CommandNode("turtle.Forward", model, myListener);
-    fwdNode.addChild(new ConstantNode("2", model, myListener));
+    cmd.addChild(new ConstantNode("9", model));
+    Node commandListNode = new ListNode("", model);
+    Node fwdNode = new CommandNode("turtle.Forward", model);
+    fwdNode.addChild(new ConstantNode("2", model));
     commandListNode.addChild(fwdNode);
-    Node fwdNode2 = new CommandNode("turtle.Forward", model, myListener);
-    fwdNode2.addChild(new ConstantNode("5", model, myListener));
+    Node fwdNode2 = new CommandNode("turtle.Forward", model);
+    fwdNode2.addChild(new ConstantNode("5", model));
     commandListNode.addChild(fwdNode2);
     node.addChild(commandListNode);
+    dfsAddListener(node);
     assertEquals(node.getValue(), 5, DELTA);
     assertEquals(myTurtle.getY(), 21, DELTA);
   }
@@ -52,18 +53,19 @@ public class RepeatCommandTest extends CommandTest {
   @Test
   void testRepeatVariableUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.Repeat", model, myListener);
-    Node cmd = new CommandNode("math.SquareRoot", model, myListener);
+    node = new CommandNode("control.Repeat", model);
+    Node cmd = new CommandNode("math.SquareRoot", model);
     node.addChild(cmd);
-    cmd.addChild(new ConstantNode("9", model, myListener));
+    cmd.addChild(new ConstantNode("9", model));
 
-    Node commandListNode = new ListNode("", model, myListener);
-    Node cmdNode = new CommandNode("turtle.Forward", model, myListener);
+    Node commandListNode = new ListNode("", model);
+    Node cmdNode = new CommandNode("turtle.Forward", model);
     commandListNode.addChild(cmdNode);
-    Node varNode = new VariableNode(":repcount", model, myListener);
+    Node varNode = new VariableNode(":repcount", model);
     cmdNode.addChild(varNode);
     node.addChild(commandListNode);
 
+    dfsAddListener(node);
     assertEquals(node.getValue(), 3, DELTA);
     assertEquals(myTurtle.getY(), 6, DELTA);
   }

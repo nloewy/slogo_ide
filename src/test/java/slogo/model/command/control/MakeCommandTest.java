@@ -26,10 +26,11 @@ public class MakeCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
-    node = new CommandNode("control.Make", model, myListener);
-    Node variableNode = new VariableNode("MyVar", model, myListener);
+    node = new CommandNode("control.Make", model);
+    Node variableNode = new VariableNode("MyVar", model);
     node.addChild(variableNode);
-    node.addChild(new ConstantNode("5", model, myListener));
+    node.addChild(new ConstantNode("5", model));
+    dfsAddListener(node);
     Assertions.assertEquals(5, node.getValue());
     Assertions.assertEquals(5.0, model.getVariables().get("myvar"));
   }
@@ -39,15 +40,16 @@ public class MakeCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
-    node = new CommandNode("control.Make", model, myListener);
-    Node variableNode = new VariableNode("Var", model, myListener);
-    Node nodeTwo = new CommandNode("math.Sum", model, myListener);
-    Node nodeThree = new ConstantNode("5", model, myListener);
-    Node nodeFour = new ConstantNode("7", model, myListener);
+    node = new CommandNode("control.Make", model);
+    Node variableNode = new VariableNode("Var", model);
+    Node nodeTwo = new CommandNode("math.Sum", model);
+    Node nodeThree = new ConstantNode("5", model);
+    Node nodeFour = new ConstantNode("7", model);
     node.addChild(variableNode);
     node.addChild(nodeTwo);
     nodeTwo.addChild(nodeThree);
     nodeTwo.addChild(nodeFour);
+    dfsAddListener(node);
     Assertions.assertEquals(12, node.getValue());
     Assertions.assertEquals(12.0, model.getVariables().get("var"));
   }

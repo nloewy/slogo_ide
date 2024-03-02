@@ -2,6 +2,7 @@ package slogo.model.command;
 
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
+import slogo.model.node.Node;
 
 public class CommandTest {
 
@@ -16,7 +17,7 @@ public class CommandTest {
     public void onResetTurtle(int id) {
     }
 
-    public void onReturn(double value) {
+    public void onReturn(double value, String string) {
     }
 
     @Override
@@ -24,5 +25,15 @@ public class CommandTest {
 
     }
   };
+
+
+  protected void dfsAddListener(Node node) {
+    if(node != null) {
+      node.addListener(myListener);
+      for(Node child : node.getChildren()) {
+        dfsAddListener(child);
+      }
+    }
+  }
 
 }

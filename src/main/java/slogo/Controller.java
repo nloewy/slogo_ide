@@ -75,9 +75,6 @@ public class Controller {
             } catch (NoSuchFieldException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            } catch (InvalidCommandException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             } catch (InvalidTokenException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

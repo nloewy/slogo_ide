@@ -14,10 +14,7 @@ import java.util.Properties;
 import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import slogo.model.api.InsufficientArgumentsException;
-import slogo.model.api.InvalidCommandException;
 import slogo.model.api.InvalidTokenException;
-import slogo.model.api.SlogoListener;
 import slogo.model.node.CommandCreatorNode;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
@@ -32,7 +29,6 @@ public class Parser {
   private static final String CLOSED_BRACKET = "]";
   private static final String TO_COMMAND = "control.To";
   private final ModelState modelState;
-  private final SlogoListener myListener;
   private final PatternLoader patternLoader;
   private Node rootNode;
   private Map<String, String> commandMap;
@@ -41,9 +37,8 @@ public class Parser {
   private List<Map.Entry<Predicate<String>, Consumer<List<String>>>> nodeHandler;
   private Map<String, Consumer<Stack<Node>>> tokenHandlers;
 
-  public Parser(ModelState modelState, SlogoListener listener) throws IOException {
+  public Parser(ModelState modelState) throws IOException {
     this.modelState = modelState;
-    this.myListener = listener;
     commandMap = loadCommandMap("src/main/resources/slogo/example/languages/English.properties");
     patternLoader = new PatternLoader(
         "src/main/resources/slogo/example/languages/Syntax.properties");
@@ -51,18 +46,17 @@ public class Parser {
     initializeTokenMap();
   }
 
-  public Node parse(String input) {
+  public void parse(String input, Node rootNode) {
     resetParsing();
     List<String> tokens = Arrays.asList(input.split("\\s+"));
     Stack<Node> nodeStack = new Stack<>();
-    rootNode = new ListNode(OPEN_BRACKET, modelState, myListener);
+    this.rootNode = rootNode;
     nodeStack.push(rootNode);
     while (myIndex < tokens.size()) {
       parseNextToken(tokens, nodeStack);
       myIndex++;
     }
     checkForExtraneousArguments(nodeStack);
-    return rootNode;
   }
 
   private void resetParsing() {
@@ -74,9 +68,6 @@ public class Parser {
   private void checkForExtraneousArguments(Stack<Node> nodeStack) {
     while (!nodeStack.isEmpty() && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
-    }
-    if (!nodeStack.isEmpty()) {
-      throw new InsufficientArgumentsException("More Tokens Expected");
     }
   }
 
@@ -105,8 +96,8 @@ public class Parser {
     }
     if (!tokens.get(myIndex).matches(patternLoader.getPattern("Command")) && nodeStack.peek()
         .equals(rootNode)) {
-      throw new InsufficientArgumentsException(
-          "Command Expected. Cannot use " + tokens.get(myIndex) + " here");
+      throw new InvalidTokenException(
+          "Command Expected. Cannot use " + tokens.get(myIndex) + " here. Commands executed up until this point");
     }
     nodeStack.peek().addChild(currentNode);
     nodeStack.push(currentNode);
@@ -117,7 +108,7 @@ public class Parser {
       nodeStack.pop();
     }
     if (!nodeStack.peek().equals(rootNode)) {
-      nodeStack.peek().addChild(new ListNode(CLOSED_BRACKET, modelState, myListener));
+      nodeStack.peek().addChild(new ListNode(CLOSED_BRACKET, modelState));
       nodeStack.pop();
     }
   }
@@ -126,37 +117,34 @@ public class Parser {
     while (!nodeStack.peek().equals(rootNode) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
     }
-    Node newNode = new ListNode(OPEN_BRACKET, modelState, myListener);
+    Node newNode = new ListNode(OPEN_BRACKET, modelState);
     nodeStack.peek().addChild(newNode);
     nodeStack.push(newNode);
   }
 
   private void createNode(List<String> tokens) {
     String token = tokens.get(myIndex);
-    boolean flag = false;
+    boolean invalidToken = true;
     for (Map.Entry<Predicate<String>, Consumer<List<String>>> entry : nodeHandler) {
       if (entry.getKey().test(token)) {
         entry.getValue().accept(tokens);
-        flag = true;
+        invalidToken = false;
         break;
       }
     }
-    if (!flag) {
-      if (token.matches(patternLoader.getPattern("Command"))) {
-        throw new InvalidCommandException("Command " + " '" + token + "' does not exist");
-      } else {
-        throw new InvalidTokenException("Invalid Token : " + "'" + token + "'");
-      }
+    if (invalidToken) {
+      throw new InvalidTokenException("Invalid Token : " + "'" + token + "'. Commands executed up until this point");
     }
   }
+
+
 
   private void makeCommandCreatorNode(List<String> tokens) {
     int index = myIndex + 2;
     while (index < tokens.size() && !tokens.get(index).equals(CLOSED_BRACKET)) {
       index++;
     }
-    currentNode = new CommandCreatorNode(tokens.get(myIndex + 1).toLowerCase(), modelState,
-        myListener, index - myIndex - 1);
+    currentNode = new CommandCreatorNode(tokens.get(myIndex + 1).toLowerCase(), modelState, index - myIndex - 1);
     myIndex++;
   }
 
@@ -183,13 +171,11 @@ public class Parser {
 
     nodeHandler.add(new SimpleEntry<>(
         token -> tokenMatched(token, "Constant"),
-        tokens -> currentNode = new ConstantNode(tokens.get(myIndex).toLowerCase(), modelState,
-            myListener)));
+        tokens -> currentNode = new ConstantNode(tokens.get(myIndex).toLowerCase(), modelState)));
 
     nodeHandler.add(new SimpleEntry<>(
         token -> tokenMatched(token, "Variable"),
-        tokens -> currentNode = new VariableNode(tokens.get(myIndex).toLowerCase(), modelState,
-            myListener)));
+        tokens -> currentNode = new VariableNode(tokens.get(myIndex).toLowerCase(), modelState)));
 
     nodeHandler.add(new SimpleEntry<>(
         token -> tokenMatched(token, "Command") && isCommand(token) && isToCommand(token),
@@ -200,14 +186,13 @@ public class Parser {
         tokens -> {
           try {
             currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
-                modelState, myListener);
+                modelState);
           } catch (ClassNotFoundException e) {}
         }));
 
     nodeHandler.add(new SimpleEntry<>(
         token -> tokenMatched(token, "Command") && isUserDefinedCommand(token),
-        tokens -> currentNode = new UserCommandNode(tokens.get(myIndex).toLowerCase(), modelState,
-            myListener)));
+        tokens -> currentNode = new UserCommandNode(tokens.get(myIndex).toLowerCase(), modelState)));
   }
 
   private boolean isToCommand(String token) {
@@ -231,4 +216,7 @@ public class Parser {
     tokenHandlers.put(OPEN_BRACKET, this::handleOpenBracket);
     tokenHandlers.put(CLOSED_BRACKET, this::handleClosedBracket);
   }
+
+
+
 }

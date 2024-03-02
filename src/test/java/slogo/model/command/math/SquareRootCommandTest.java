@@ -27,7 +27,7 @@ public class SquareRootCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.SquareRoot", model, myListener);
+    node = new CommandNode("math.SquareRoot", model);
   }
 
   @ParameterizedTest
@@ -40,7 +40,7 @@ public class SquareRootCommandTest extends CommandTest {
   })
   void testSquareRootPerfectSquares(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -56,7 +56,7 @@ public class SquareRootCommandTest extends CommandTest {
   })
   void testSquareRootNonPerfectSquares(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -75,7 +75,7 @@ public class SquareRootCommandTest extends CommandTest {
   })
   void testSquareRootFloats(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -88,7 +88,7 @@ public class SquareRootCommandTest extends CommandTest {
   })
   void testSquareRootNegatives(String op1)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
     assertThrows(InvalidOperandException.class, () -> {
       node.getValue();
     });

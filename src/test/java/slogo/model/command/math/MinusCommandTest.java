@@ -26,7 +26,7 @@ public class MinusCommandTest extends CommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.Minus", model, myListener);
+    node = new CommandNode("math.Minus", model);
 
   }
 
@@ -44,7 +44,7 @@ public class MinusCommandTest extends CommandTest {
   })
   void testMinusBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 

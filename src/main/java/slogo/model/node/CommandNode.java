@@ -5,39 +5,53 @@ import java.lang.reflect.Method;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.IncompleteClassException;
+import slogo.model.api.InsufficientArgumentsException;
+import slogo.model.api.InvalidCommandException;
 import slogo.model.api.InvalidOperandException;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 
 public class CommandNode extends Node {
 
-  private final Command command;
-  private final Method m;
+  private Command command;
+  private Method m;
   private final String myToken;
+  private ModelState myModelState;
+  private String className;
 
-  public CommandNode(String token, ModelState modelState, SlogoListener listener)
+  public CommandNode(String token, ModelState modelState)
       throws ClassNotFoundException {
     super();
-    try {
-      myToken = "slogo.model.command." + token + "Command";
-      Class<?> clazz = Class.forName(myToken);
-      command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
-          .newInstance(modelState, listener);
-      m = clazz.getDeclaredMethod("execute", List.class);
-    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
-             NoSuchMethodException | IllegalAccessException e) {
-      throw new ClassNotFoundException("Command Class Not Found");
-    }
+    myToken = "slogo.model.command." + token + "Command";
+    myModelState = modelState;
   }
 
 
   @Override
   public double getValue() throws InvocationTargetException, IllegalAccessException {
     try {
-      List<Node> children = getChildren();
+      Class<?> clazz = Class.forName(myToken);
+      command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
+          .newInstance(myModelState, getListener());
+      m = clazz.getDeclaredMethod("execute", List.class);
+    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
+             NoSuchMethodException | IllegalAccessException e) {
+      throw new InvalidCommandException("Command Class Not Found. Previous Commands successfully executed");
+    }
+    List<Node> children = getChildren();
+    if(getNumArgs() != getChildren().size()) {
+      System.out.println(getChildren());
+      throw new InsufficientArgumentsException(getToken() + " expected " + getNumArgs() + " arguments. Previous (non-nested) commands executed successfully");
+    }
+    try {
       return (double) m.invoke(command, children);
-    } catch (InvocationTargetException | IllegalAccessException e) {
-      throw new InvalidOperandException(e.getMessage());
+
+    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+      Class<? extends RuntimeException> causeClass = (Class<? extends RuntimeException>) e.getCause().getClass();
+      if (causeClass.equals(InsufficientArgumentsException.class)) {
+        throw new InsufficientArgumentsException(e.getCause().getMessage());
+      }
+      throw new InvalidOperandException(e.getCause().getMessage());
     }
   }
 

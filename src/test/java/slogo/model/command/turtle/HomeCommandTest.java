@@ -50,7 +50,8 @@ public class HomeCommandTest extends CommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.Home", model, myListener);
+    node = new CommandNode("turtle.Home", model);
+    node.addListener(myListener);
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
     double expectedVal = Math.hypot(Double.parseDouble(originalX), Double.parseDouble(originalY));

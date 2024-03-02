@@ -24,7 +24,7 @@ public class NotEqualCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("bool.NotEqual", model, myListener);
+    node = new CommandNode("bool.NotEqual", model);
   }
 
   @ParameterizedTest
@@ -46,8 +46,8 @@ public class NotEqualCommandTest extends CommandTest {
   })
   void testNotEqual(String op1, String op2, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
-    node.addChild(new ConstantNode(op2, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op2, null));
     assertEquals(result, node.getValue(), DELTA);
   }
 }

@@ -7,7 +7,7 @@ public interface Model {
 
 
   void parse(String commandStr)
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidCommandException, InvalidTokenException;
+      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidTokenException;
 
   /**
    * Opens a file dialog to load a new XML file.

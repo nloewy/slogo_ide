@@ -26,7 +26,7 @@ public class ProductCommandTest extends CommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.Product", model, myListener);
+    node = new CommandNode("math.Product", model);
 
   }
 
@@ -42,8 +42,8 @@ public class ProductCommandTest extends CommandTest {
   })
   void testProductBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, new ModelState(), myListener));
-    node.addChild(new ConstantNode(op2, new ModelState(), myListener));
+    node.addChild(new ConstantNode(op1, new ModelState()));
+    node.addChild(new ConstantNode(op2, new ModelState()));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 

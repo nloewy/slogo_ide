@@ -31,7 +31,7 @@ public class RandomRangeCommandTest extends CommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.RandomRange", model, myListener);
+    node = new CommandNode("math.RandomRange", model);
 
   }
 
@@ -44,8 +44,8 @@ public class RandomRangeCommandTest extends CommandTest {
   })
   void testBasicRandomRange(String min, String max)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(min, null, myListener));
-    node.addChild(new ConstantNode(max, null, myListener));
+    node.addChild(new ConstantNode(min, null));
+    node.addChild(new ConstantNode(max, null));
     double val = node.getValue();
     assertTrue(Double.parseDouble(min) <= val);
     assertTrue(Double.parseDouble(max) >= val);
@@ -55,16 +55,16 @@ public class RandomRangeCommandTest extends CommandTest {
   @Test
   void testRandomRangeSameVal()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("0.00000", null, myListener));
-    node.addChild(new ConstantNode("0", null, myListener));
+    node.addChild(new ConstantNode("0.00000", null));
+    node.addChild(new ConstantNode("0", null));
     assertEquals(0, node.getValue(), DELTA);
   }
 
   @Test
   void testRandomRangeIllegal()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("-90.00000", null, myListener));
-    node.addChild(new ConstantNode("-90.00100", null, myListener));
+    node.addChild(new ConstantNode("-90.00000", null));
+    node.addChild(new ConstantNode("-90.00100", null));
     assertThrows(InvalidOperandException.class, () -> {
       node.getValue();
     });

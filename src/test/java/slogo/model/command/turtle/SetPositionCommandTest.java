@@ -26,7 +26,8 @@ public class SetPositionCommandTest extends CommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.SetPosition", model, myListener);
+    node = new CommandNode("turtle.SetPosition", model);
+    node.addListener(myListener);
   }
 
   @ParameterizedTest
@@ -55,8 +56,8 @@ public class SetPositionCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));
-    node.addChild(new ConstantNode(newX, null, myListener));
-    node.addChild(new ConstantNode(newY, null, myListener));
+    node.addChild(new ConstantNode(newX, null));
+    node.addChild(new ConstantNode(newY, null));
     double expectedVal = Math.hypot(Double.parseDouble(newX) - myTurtle.getX(),
         Double.parseDouble(newY) - myTurtle.getY());
     assertEquals(expectedVal, node.getValue(), DELTA);

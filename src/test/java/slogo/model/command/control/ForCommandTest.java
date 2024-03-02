@@ -23,8 +23,7 @@ public class ForCommandTest extends CommandTest {
   private ModelState model;
 
   @BeforeEach
-  void setUp()
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+  void setUp() {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
@@ -33,19 +32,20 @@ public class ForCommandTest extends CommandTest {
   @Test
   void testForForwardVariableNotUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.For", model, myListener);
-    Node fwdNode = new CommandNode("turtle.Forward", model, myListener);
-    Node varNode = new VariableNode("i", model, myListener);
-    Node listNode = new ListNode("", model, myListener);
-    Node commandListNode = new ListNode("", model, myListener);
+    node = new CommandNode("control.For", model);
+    Node fwdNode = new CommandNode("turtle.Forward", model);
+    Node varNode = new VariableNode("i", model);
+    Node listNode = new ListNode("", model);
+    Node commandListNode = new ListNode("", model);
     commandListNode.addChild(fwdNode);
-    fwdNode.addChild(new ConstantNode("2", model, myListener));
+    fwdNode.addChild(new ConstantNode("2", model));
     listNode.addChild(varNode);
-    listNode.addChild(new ConstantNode("1", model, myListener));
-    listNode.addChild(new ConstantNode("5", model, myListener));
-    listNode.addChild(new ConstantNode("1", model, myListener));
+    listNode.addChild(new ConstantNode("1", model));
+    listNode.addChild(new ConstantNode("5", model));
+    listNode.addChild(new ConstantNode("1", model));
     node.addChild(listNode);
     node.addChild(commandListNode);
+    dfsAddListener(node);
     assertEquals(node.getValue(), 2, DELTA);
     assertEquals(myTurtle.getY(), 10, DELTA);
   }
@@ -53,22 +53,23 @@ public class ForCommandTest extends CommandTest {
   @Test
   void testForForwardVariableUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.For", model, myListener);
-    Node listNode = new ListNode("", model, myListener);
-    Node commandListNode = new ListNode("", model, myListener);
-    Node cmdNode = new CommandNode("turtle.Forward", model, myListener);
+    node = new CommandNode("control.For", model);
+    Node listNode = new ListNode("", model);
+    Node commandListNode = new ListNode("", model);
+    Node cmdNode = new CommandNode("turtle.Forward", model);
     commandListNode.addChild(cmdNode);
-    Node varNode = new VariableNode("i", model, myListener);
-    cmdNode.addChild(new VariableNode("i", model, myListener));
+    Node varNode = new VariableNode("i", model);
+    cmdNode.addChild(new VariableNode("i", model));
     listNode.addChild(varNode);
-    listNode.addChild(new ConstantNode("5", model, myListener));
-    listNode.addChild(new ConstantNode("10", model, myListener));
-    listNode.addChild(new ConstantNode("1", model, myListener));
-    Node cmdNode2 = new CommandNode("turtle.Forward", model, myListener);
-    cmdNode2.addChild(new VariableNode("i", model, myListener));
+    listNode.addChild(new ConstantNode("5", model));
+    listNode.addChild(new ConstantNode("10", model));
+    listNode.addChild(new ConstantNode("1", model));
+    Node cmdNode2 = new CommandNode("turtle.Forward", model);
+    cmdNode2.addChild(new VariableNode("i", model));
     commandListNode.addChild(cmdNode2);
     node.addChild(listNode);
     node.addChild(commandListNode);
+    dfsAddListener(node);
     assertEquals(node.getValue(), 10, DELTA);
     assertEquals(myTurtle.getY(), 90, DELTA);
   }

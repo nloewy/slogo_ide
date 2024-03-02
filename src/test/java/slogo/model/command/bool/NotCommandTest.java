@@ -24,7 +24,7 @@ public class NotCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("bool.Not", model, myListener);
+    node = new CommandNode("bool.Not", model);
   }
 
   @ParameterizedTest
@@ -40,7 +40,7 @@ public class NotCommandTest extends CommandTest {
   })
   void testNot(String op1, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(result, node.getValue(), DELTA);
   }
 }

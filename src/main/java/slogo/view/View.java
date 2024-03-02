@@ -194,7 +194,7 @@ public class View implements SlogoListener {
     //val returned by last command
     //add it to history next to the command
     @Override
-    public void onReturn(double value) {
+    public void onReturn(double value, String string) {
 
     }
 

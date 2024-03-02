@@ -24,7 +24,7 @@ public class OrCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("bool.Or", model, myListener);
+    node = new CommandNode("bool.Or", model);
   }
 
   @ParameterizedTest
@@ -51,8 +51,8 @@ public class OrCommandTest extends CommandTest {
   })
   void testOr(String op1, String op2, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
-    node.addChild(new ConstantNode(op2, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op2, null));
     assertEquals(result, node.getValue(), DELTA);
   }
 }

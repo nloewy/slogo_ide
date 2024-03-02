@@ -26,7 +26,7 @@ public class DifferenceCommandTest extends CommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.Difference", model, myListener);
+    node = new CommandNode("math.Difference", model);
 
   }
 
@@ -45,8 +45,8 @@ public class DifferenceCommandTest extends CommandTest {
   })
   void testDifferenceBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
-    node.addChild(new ConstantNode(op2, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op2, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 

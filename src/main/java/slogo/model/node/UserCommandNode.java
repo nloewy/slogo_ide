@@ -11,14 +11,12 @@ public class UserCommandNode extends Node {
   private final int numArgs;
   private final ModelState modelState;
 
-  private final SlogoListener myListener;
 
-  public UserCommandNode(String token, ModelState modelState, SlogoListener listener) {
+  public UserCommandNode(String token, ModelState modelState) {
     super();
     myToken = token;
     numArgs = modelState.getUserDefinedCommands().get(token) - 2;
     this.modelState = modelState;
-    myListener = listener;
   }
 
   private void replaceNodesWithToken(Node node, String tokenToReplace, double value) {
@@ -33,8 +31,7 @@ public class UserCommandNode extends Node {
       if (child.getToken().equals(tokenToReplace)) {
         int index = children.indexOf(child);
         if (index != -1) {
-          ConstantNode constantNode = new ConstantNode(String.valueOf(value), modelState,
-              myListener);
+          ConstantNode constantNode = new ConstantNode(String.valueOf(value), modelState);
           children.set(index, constantNode);
         }
       } else {

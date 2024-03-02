@@ -24,7 +24,7 @@ public class ArcTanCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.ArcTangent", model, myListener);
+    node = new CommandNode("math.ArcTangent", model);
   }
 
   @ParameterizedTest
@@ -40,7 +40,7 @@ public class ArcTanCommandTest extends CommandTest {
   })
   void testArctanBasic(String op, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op, null, myListener));
+    node.addChild(new ConstantNode(op, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
