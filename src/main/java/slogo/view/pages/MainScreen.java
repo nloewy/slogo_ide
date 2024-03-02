@@ -43,9 +43,11 @@ public class MainScreen implements ViewInternal {
   private BorderPane layout;
   private ScrollPane variablesPane;
   private ScrollPane commandsHistory;
+  private ScrollPane userDefinedCommandsPane;
   private VBox variablesBox;
   private HBox textInputBox;
   private HBox commandHistoryBox;
+  private VBox userDefinedCommandsBox;
   // private Controller controller;
   private View view;
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
@@ -123,6 +125,11 @@ public class MainScreen implements ViewInternal {
     for (String s : view.getCommandHistory()) {
       commandHistoryBox.getChildren().add(new Label(s));
     }
+
+    userDefinedCommandsBox.getChildren().clear();
+    for (String s : view.getUserDefinedCommandHistory()) {
+      userDefinedCommandsBox.getChildren().add(new Label(s));
+    }
   }
 
   @Override
@@ -141,6 +148,12 @@ public class MainScreen implements ViewInternal {
     commandHistoryBox.setAlignment(javafx.geometry.Pos.CENTER);
     commandsHistory = new ScrollPane(commandHistoryBox);
     commandsHistory.setPrefSize(1000, 100);
+
+    userDefinedCommandsBox = new VBox();
+    userDefinedCommandsBox.setSpacing(10);
+    userDefinedCommandsBox.setAlignment(javafx.geometry.Pos.CENTER);
+    userDefinedCommandsPane = new ScrollPane(userDefinedCommandsBox);
+    userDefinedCommandsPane.setPrefSize(200, 200);
 
     field = new TextField();
     field.setPrefWidth(1000);
@@ -168,6 +181,7 @@ public class MainScreen implements ViewInternal {
     layout.setBottom(textInputBox);
     layout.setRight(variablesPane);
     layout.setTop(commandsHistory);
+    layout.setLeft(userDefinedCommandsPane);
     root.getChildren().add(layout);
 
     animation.play();

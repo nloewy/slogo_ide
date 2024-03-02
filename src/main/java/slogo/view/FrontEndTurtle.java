@@ -103,7 +103,7 @@ public class FrontEndTurtle {
     }
 
     public Line drawLine(Double oldPosition, Double oldPosition2, Double newPosition, Double newPosition2) {
-        Line line = new Line(oldPosition + 25, oldPosition2 + 80, newPosition + 25, newPosition2 + 80);
+        Line line = new Line(oldPosition + 225, oldPosition2 + 125, newPosition + 225, newPosition2 + 125);
         line.setStroke(penColor);
         line.setVisible(isPenDisplayed);
         return line;

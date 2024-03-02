@@ -26,11 +26,12 @@ public class View implements SlogoListener {
     private final Stage stage;
     private final List<FrontEndTurtle> turtles;
     private final Stack<String> commandHistory;
+    private final Stack<String> userDefinedCommandHistory;
     private String commandString;
     private String lang;
     private Controller controller;
     private Consumer<String> parse;
-    private static final Double[] ORIGIN = new Double[]{600.0, 200.0};
+    private static final Double[] ORIGIN = new Double[]{460.0, 200.0};
 
     public View(Controller controller, Stage stage) {
         this.stage = stage;
@@ -42,6 +43,7 @@ public class View implements SlogoListener {
         variables = new LinkedHashMap<>();
         turtles = new ArrayList<>();
         commandHistory = new Stack<String>();
+        userDefinedCommandHistory = new Stack<String>();
 
         try {
             defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
@@ -116,6 +118,10 @@ public class View implements SlogoListener {
         return commandHistory;
     }
 
+    public Stack<String> getUserDefinedCommandHistory() {
+        return userDefinedCommandHistory;
+    }
+
     @Override
     public void onUpdateValue(String variableName, Number newValue) {
         //new Variable display class
@@ -162,7 +168,9 @@ public class View implements SlogoListener {
 
     @Override
     public void onCommand(String string, boolean userDefined) {
-
+        if (userDefined) {
+            userDefinedCommandHistory.add(string);
+        }
     }
 
 //   /*
