@@ -1,5 +1,16 @@
 package slogo.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Stack;
+import java.util.function.Consumer;
+
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -8,10 +19,6 @@ import slogo.Controller;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.view.pages.MainScreen;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.*;
-import java.util.function.Consumer;
 
 /*
 Represents one IDE session.
@@ -21,15 +28,18 @@ public class View implements SlogoListener {
 
     private static final int height = 600;
     private static final int width = 1000;
-    private final Map<String, Number> variables;
-    private final Image defaultImage;
+    private final Map<String, List<String>> variables;
+    private Image defaultImage;
     private final Stage stage;
     private final List<FrontEndTurtle> turtles;
-    private final List<String> commandList;
+    private final Stack<String> commandHistory;
+    private final Stack<String> userDefinedCommandHistory;
     private String commandString;
     private String lang;
     private Controller controller;
     private Consumer<String> parse;
+    private Scene scene;
+    private static final Double[] ORIGIN = new Double[]{460.0, 200.0};
 
     public View(Controller controller, Stage stage) {
         this.stage = stage;
@@ -40,7 +50,8 @@ public class View implements SlogoListener {
 
         variables = new LinkedHashMap<>();
         turtles = new ArrayList<>();
-        commandList = new ArrayList<>();
+        commandHistory = new Stack<String>();
+        userDefinedCommandHistory = new Stack<String>();
 
         try {
             defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
@@ -48,7 +59,7 @@ public class View implements SlogoListener {
             throw new RuntimeException(e);
         }
 
-        turtles.add(new FrontEndTurtle(1, new Double[]{0.0,0.0}, Color.BLUE, true, 0, defaultImage));
+        turtles.add(new FrontEndTurtle(1, ORIGIN, Color.BLUE, true, 0, defaultImage));
     }
 
     public void run(Consumer<String> parseMethod) throws FileNotFoundException {
@@ -56,7 +67,7 @@ public class View implements SlogoListener {
         parse = parseMethod;
 
         page.setUp();
-        Scene scene = new Scene(page.getGroup(), width, height);
+        scene = new Scene(page.getGroup(), width, height);
         scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
 
         stage.setScene(scene);
@@ -64,11 +75,32 @@ public class View implements SlogoListener {
         stage.show();
     }
 
+    public void switchToLightMode() {
+        scene.getStylesheets().remove(Objects.requireNonNull(View.class.getResource("DarkMode.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
+    }
+
+    public void switchToDarkMode() {
+        scene.getStylesheets().remove(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("DarkMode.css")).toExternalForm());
+    }
+
+    public void setTurtleImage(File f) {
+        try {
+            defaultImage = new Image(new FileInputStream(f));
+            for (FrontEndTurtle t : getTurtles()) {
+                t.setImage(defaultImage);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<FrontEndTurtle> getTurtles() {
         return turtles;
     }
 
-    public Map<String, Number> getVariables() {
+    public Map<String, List<String>> getVariables() {
         return variables;
     }
 
@@ -98,7 +130,7 @@ public class View implements SlogoListener {
         if (hasCommandString()) {
             String temp = commandString;
             commandString = "";
-            commandList.add(temp);
+            commandHistory.push(temp);
             return temp;
         }
 
@@ -107,29 +139,41 @@ public class View implements SlogoListener {
 
     public void pushCommand(String s) {
         commandString = s;
-        System.out.println(commandString);
+        commandHistory.push(s);
         parse.accept(commandString);
     }
 
-    //display with command assigned???
+    public Stack<String> getCommandHistory() {
+        return commandHistory;
+    }
+
+    public Stack<String> getUserDefinedCommandHistory() {
+        return userDefinedCommandHistory;
+    }
+
     @Override
     public void onUpdateValue(String variableName, Number newValue) {
-        variables.put(variableName, newValue);
+        if (variables.get(variableName) != null) {
+            List<String> commands = variables.get(variableName);
+            commands.add(commandHistory.peek());
+            return;
+        }
+        variables.put(variableName + " :: " + newValue, List.of(commandHistory.peek()));
     }
 
     @Override
     public void onUpdateTurtleState(TurtleRecord turtleState) {
+        System.out.println(turtleState.heading());
         for (FrontEndTurtle turtle : getTurtles()) {
             if (turtle.getId() == turtleState.id()) {
                 turtle.setIsPenDisplayed(turtleState.pen());
-                turtle.setPosition(new Double[]{turtleState.x(), turtleState.y()});
-                turtle.setHeading(turtleState.heading());
+                turtle.setPosition(new Double[]{turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1]}, turtleState.heading());
                 return;
             }
         }
         turtles.add(new FrontEndTurtle(
             turtleState.id(), 
-            new Double[]{turtleState.x(), turtleState.y()}, 
+            new Double[]{turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1]}, 
             Color.BLACK, 
             true, 
             turtleState.heading(), 
@@ -141,8 +185,7 @@ public class View implements SlogoListener {
         for (FrontEndTurtle turtle : turtles) {
             if (turtle.getId() == id) {
                 turtle.setIsPenDisplayed(false);
-                turtle.setPosition(new Double[]{0.0, 0.0});
-                turtle.setHeading(0);
+                turtle.setPosition(new Double[]{0.0, 0.0}, 0);
                 turtle.setImage(defaultImage);
             }
         }
@@ -157,18 +200,9 @@ public class View implements SlogoListener {
 
     @Override
     public void onCommand(String string, boolean userDefined) {
-
+        if (userDefined) {
+            userDefinedCommandHistory.add(string);
+        }
     }
-
-//   /*
-//    * Gets the current exception, and shows
-//    * it as an alert.
-//    */
-//   public void displayErrorMessage();
-
-//   /**
-//    * Resets all panels in the view
-//    */
-//   public void resetView();
 }
 

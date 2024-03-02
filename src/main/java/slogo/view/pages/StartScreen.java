@@ -1,26 +1,30 @@
 package slogo.view.pages;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import slogo.Controller;
 import slogo.view.ButtonUtil;
 import slogo.view.ViewInternal;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class StartScreen implements ViewInternal {
     private javafx.scene.Scene scene;
     private Group root = new Group();
     private final Controller controller;
+    private Stage stage;
 
-    public StartScreen(Controller controller) throws FileNotFoundException {
+    public StartScreen(Stage stage, Controller controller) throws FileNotFoundException {
         this.controller = controller;
+        this.stage = stage;
 
         Image logo = new Image(new FileInputStream("src/main/resources/SlogoLOGO.png"));
         ImageView logoView = new ImageView(logo);
@@ -54,6 +58,15 @@ public class StartScreen implements ViewInternal {
             }),
             ButtonUtil.generateButton("Load Old Session", 100, 360,
                 e -> controller.loadSession()),
+            ButtonUtil.generateButton("Upload Turtle Image", 400, 300, (event) -> {
+                handleLoadTurtleImage();
+            }),
+            ButtonUtil.generateButton("Light Mode", 400, 330, (event) -> {
+                handleLoadTurtleImage();
+            }),
+            ButtonUtil.generateButton("Dark Mode", 400, 360, (event) -> {
+                handleLoadTurtleImage();
+            }),
             logoView,
             langBox
         );
@@ -61,6 +74,11 @@ public class StartScreen implements ViewInternal {
         scene = new javafx.scene.Scene(root, 600, 400);
     }
 
+    private void handleLoadTurtleImage() {
+        File dataFile = Screen.IMAGE_CHOOSER.showOpenDialog(stage);
+        controller.setTurtleImage(dataFile);
+      }
+    
     @Override
     public javafx.scene.Scene getScene() {
         return scene;
