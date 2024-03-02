@@ -4,7 +4,6 @@ package slogo.view.pages;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
@@ -19,8 +18,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import slogo.Controller;
@@ -48,13 +48,15 @@ public class MainScreen implements ViewInternal {
   private HBox textInputBox;
   private HBox commandHistoryBox;
   private VBox userDefinedCommandsBox;
-  // private Controller controller;
   private View view;
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
   private ResourceBundle myResources;
   Group root;
   Stage stage;
   TextField field;
+  Text variablesBoxLabel = new Text("Variables");
+  Text commandHistoryLabel = new Text("History");
+  Text userDefinedCommandsLabel = new Text("My Commands");
   Map<FrontEndTurtle, Double[]> myTurtlePositions = new HashMap<>();
   private static final double FRAME_RATE = 4.0;
   private final Timeline animation = new Timeline();
@@ -114,6 +116,7 @@ public class MainScreen implements ViewInternal {
 
   private void updateVariables() {
     variablesBox.getChildren().clear();
+    variablesBox.getChildren().add(variablesBoxLabel);
 
     for (String key : view.getVariables().keySet()) {
       variablesBox.getChildren().add(new Label(key + view.getVariables().get(key)));
@@ -122,11 +125,13 @@ public class MainScreen implements ViewInternal {
 
   private void updateCommands() {
     commandHistoryBox.getChildren().clear();
+    commandHistoryBox.getChildren().add(commandHistoryLabel);
     for (String s : view.getCommandHistory()) {
       commandHistoryBox.getChildren().add(new Label(s));
     }
 
     userDefinedCommandsBox.getChildren().clear();
+    userDefinedCommandsBox.getChildren().add(userDefinedCommandsLabel);
     for (String s : view.getUserDefinedCommandHistory()) {
       userDefinedCommandsBox.getChildren().add(new Label(s));
     }
@@ -142,23 +147,30 @@ public class MainScreen implements ViewInternal {
     variablesBox.setAlignment(javafx.geometry.Pos.CENTER);
     variablesPane = new ScrollPane(variablesBox);
     variablesPane.setPrefSize(200, 200);
+    variablesBox.getChildren().add(variablesBoxLabel);
 
     commandHistoryBox = new HBox();
     commandHistoryBox.setSpacing(10);
     commandHistoryBox.setAlignment(javafx.geometry.Pos.CENTER);
     commandsHistory = new ScrollPane(commandHistoryBox);
     commandsHistory.setPrefSize(1000, 100);
+    commandHistoryBox.getChildren().add(commandHistoryLabel);
 
     userDefinedCommandsBox = new VBox();
     userDefinedCommandsBox.setSpacing(10);
     userDefinedCommandsBox.setAlignment(javafx.geometry.Pos.CENTER);
     userDefinedCommandsPane = new ScrollPane(userDefinedCommandsBox);
     userDefinedCommandsPane.setPrefSize(200, 200);
+    userDefinedCommandsBox.getChildren().add(userDefinedCommandsLabel);
 
     field = new TextField();
     field.setPrefWidth(1000);
     field.setPrefHeight(100);
     field.setAlignment(Pos.TOP_LEFT);
+
+    variablesBoxLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+    commandHistoryLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+    userDefinedCommandsLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
 
     submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
       sendCommandStringToView();
