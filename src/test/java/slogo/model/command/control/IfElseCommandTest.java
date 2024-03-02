@@ -38,14 +38,14 @@ public class IfElseCommandTest extends CommandTest {
 
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("turtle.Forward", model);
+    Node nodeSix = new CommandNode("turtle.Backward", model);
     nodeSix.addChild(new ConstantNode("60", model));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("turtle.Forward", model);
+    Node nodeSeven = new CommandNode("turtle.Backward", model);
     nodeSeven.addChild(new ConstantNode("30", model));
     nodeFive.addChild(nodeSeven);
     Node nodeEight = new ListNode("", model);
-    Node nodeNine = new CommandNode("turtle.Forward", model);
+    Node nodeNine = new CommandNode("turtle.Backward", model);
     nodeNine.addChild(new ConstantNode("100", model));
     nodeEight.addChild(nodeNine);
 
@@ -71,14 +71,14 @@ public class IfElseCommandTest extends CommandTest {
     nodeTwo.addChild(nodeFour);
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("turtle.Forward", model);
+    Node nodeSix = new CommandNode("turtle.Backward", model);
     nodeSix.addChild(new ConstantNode("60", model));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("turtle.Forward", model);
+    Node nodeSeven = new CommandNode("turtle.Backward", model);
     nodeSeven.addChild(new ConstantNode("30", model));
     nodeFive.addChild(nodeSeven);
     Node nodeEight = new ListNode("", model);
-    Node nodeNine = new CommandNode("turtle.Forward", model);
+    Node nodeNine = new CommandNode("turtle.Backward", model);
     nodeEight.addChild(nodeNine);
     nodeNine.addChild(new ConstantNode("100", model));
     node.addChild(nodeEight);
