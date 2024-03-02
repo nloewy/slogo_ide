@@ -42,8 +42,10 @@ public class MainScreen implements ViewInternal {
   private javafx.scene.Scene scene;
   private BorderPane layout;
   private ScrollPane variablesPane;
+  private ScrollPane commandsHistory;
   private VBox variablesBox;
-  private HBox commandBox;
+  private HBox textInputBox;
+  private HBox commandHistoryBox;
   // private Controller controller;
   private View view;
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
@@ -56,9 +58,7 @@ public class MainScreen implements ViewInternal {
   private final Timeline animation = new Timeline();
   private final double speed = 0.75;
   Button submitField;
-
-  // TEST
-  Pane testpane = new Pane();
+  Pane centerPane = new Pane();
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
@@ -81,7 +81,7 @@ public class MainScreen implements ViewInternal {
       // root.getChildren().add(turtle.getDisplay());
 
       // TEST
-      testpane.getChildren().add(turtle.getDisplay());
+      centerPane.getChildren().add(turtle.getDisplay());
     }
   }
 
@@ -107,6 +107,7 @@ public class MainScreen implements ViewInternal {
       }
     }
     updateVariables();
+    updateCommands();
   }
 
   private void updateVariables() {
@@ -117,20 +118,29 @@ public class MainScreen implements ViewInternal {
     }
   }
 
+  private void updateCommands() {
+    commandHistoryBox.getChildren().clear();
+    for (String s : view.getCommandHistory()) {
+      commandHistoryBox.getChildren().add(new Label(s));
+    }
+  }
+
   @Override
   public void setUp() {
 
     layout = new BorderPane();
-
-    Button testButton = ButtonUtil.generateButton("test", 0, 0, (event) -> {
-      view.onUpdateValue("" + new Random().nextDouble(), new Random().nextDouble());
-    });
 
     variablesBox = new VBox();
     variablesBox.setSpacing(10);
     variablesBox.setAlignment(javafx.geometry.Pos.CENTER);
     variablesPane = new ScrollPane(variablesBox);
     variablesPane.setPrefSize(200, 200);
+
+    commandHistoryBox = new HBox();
+    commandHistoryBox.setSpacing(10);
+    commandHistoryBox.setAlignment(javafx.geometry.Pos.CENTER);
+    commandsHistory = new ScrollPane(commandHistoryBox);
+    commandsHistory.setPrefSize(1000, 100);
 
     field = new TextField();
     field.setPrefWidth(1000);
@@ -141,10 +151,10 @@ public class MainScreen implements ViewInternal {
       sendCommandStringToView();
     });
 
-    commandBox = new HBox();
-    commandBox.setSpacing(10);
-    commandBox.getChildren().addAll(field, submitField);
-    commandBox.setAlignment(javafx.geometry.Pos.CENTER);
+    textInputBox = new HBox();
+    textInputBox.setSpacing(10);
+    textInputBox.getChildren().addAll(field, submitField);
+    textInputBox.setAlignment(javafx.geometry.Pos.CENTER);
 
     root = new Group();
     // root.getChildren().add(variablesPane);
@@ -154,10 +164,10 @@ public class MainScreen implements ViewInternal {
 
     layout.setPrefSize(1400, 650);
 
-    layout.setCenter(testpane);
-    layout.setBottom(commandBox);
+    layout.setCenter(centerPane);
+    layout.setBottom(textInputBox);
     layout.setRight(variablesPane);
-    layout.setTop(testButton);
+    layout.setTop(commandsHistory);
     root.getChildren().add(layout);
 
     animation.play();

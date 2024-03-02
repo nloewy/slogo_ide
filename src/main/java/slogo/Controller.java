@@ -37,6 +37,7 @@ public class Controller {
 
     public void openBlankIDESession() throws IOException {
         Stage newStage = new Stage();
+        newStage.setMaximized(true);
         View view = new View(this, stage);
         Model model = new SlogoModel(view);
         windows.add(view);

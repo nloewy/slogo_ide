@@ -108,8 +108,12 @@ public class View implements SlogoListener {
 
     public void pushCommand(String s) {
         commandString = s;
-        System.out.println(commandString);
+        commandHistory.push(s);
         parse.accept(commandString);
+    }
+
+    public Stack<String> getCommandHistory() {
+        return commandHistory;
     }
 
     @Override
@@ -117,7 +121,6 @@ public class View implements SlogoListener {
         //new Variable display class
         //commandHistory.peek()
         variables.put(variableName, newValue);
-
     }
 
     @Override
