@@ -48,7 +48,7 @@ public class View implements SlogoListener {
             throw new RuntimeException(e);
         }
 
-        turtles.add(new FrontEndTurtle(1, new Double[]{0.0,0.0}, Color.BLUE, true, 0, defaultImage));
+        turtles.add(new FrontEndTurtle(1, new Double[]{100.0, 100.0}, Color.BLUE, true, 0, defaultImage));
     }
 
     public void run(Consumer<String> parseMethod) throws FileNotFoundException {
@@ -122,7 +122,7 @@ public class View implements SlogoListener {
         for (FrontEndTurtle turtle : getTurtles()) {
             if (turtle.getId() == turtleState.id()) {
                 turtle.setIsPenDisplayed(turtleState.pen());
-                turtle.setPosition(new Double[]{turtleState.x(), turtleState.y()}, turtleState.heading());
+                turtle.setPosition(new Double[]{turtleState.x() + 100, turtleState.y() + 100}, turtleState.heading());
                 return;
             }
         }

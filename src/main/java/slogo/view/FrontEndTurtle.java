@@ -2,11 +2,13 @@ package slogo.view;
 
 import java.util.Stack;
 
-import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.util.Duration;
 
 public class FrontEndTurtle {
     ImageView display;
@@ -18,9 +20,11 @@ public class FrontEndTurtle {
     int myId;
     boolean isPenDisplayed = false;
 
-    private Stack<Line> pathHistory = new Stack<Line>();
+    private static final double FRAME_RATE = 4.0;
+    private final Timeline animation = new Timeline();
+    private final double speed = 0.75;
 
-    public static Double[] ORIGIN = { 200.0, 200.0 };
+    private Stack<Line> pathHistory = new Stack<Line>();
 
     public FrontEndTurtle(int id, Double[] position, Color color, boolean isPenVisible, double heading, Image image) {
         myId = id;
@@ -30,7 +34,8 @@ public class FrontEndTurtle {
                                  // FrontEndTurtle objects
         display.setPreserveRatio(true);
         display.setFitWidth(50);
-        setPosition(position, heading);
+        display.setLayoutX(position[0]);
+        display.setLayoutY(position[1]);
         penColor = color;
         isPenDisplayed = isPenVisible;
         this.heading = heading;
@@ -40,9 +45,9 @@ public class FrontEndTurtle {
         return myId;
     }
 
-    public Line getLastPath() {
-        return pathHistory.peek();
-    }
+    // public Line getLastPath() {
+    // return pathHistory.pop();
+    // }
 
     public Color getPenColor() {
         return penColor;
@@ -79,22 +84,29 @@ public class FrontEndTurtle {
         return myPosition;
     }
 
-    // Figure out a way
-    // To handle animation here
     public void setPosition(Double[] newPosition, double heading) {
-        Line line = new Line(
-            //fix the line stuff its lagging behind
-                display.getLayoutX() + 25,
-                display.getLayoutY() + 25,
-                ORIGIN[0] + newPosition[0] + 25,
-                ORIGIN[1] + newPosition[1] + 25);
-        line.setStroke(penColor);
+        // Double[] oldPosition = {display.getLayoutX(), display.getLayoutY()};
 
-        pathHistory.push(line);
+        // Timeline animation = new Timeline();
+        // animation.setCycleCount(100);
+        // animation.getKeyFrames()
+        // .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> stepTurtle(oldPosition, newPosition, display.getRotate(), heading)));
+        // animation.play();
 
-        Animation animation = AnimationUtil.makeAnimation(display, ORIGIN[0] + newPosition[0], ORIGIN[1] + newPosition[1], heading);
-        animation.play();
+        display.setLayoutX(newPosition[0]);
+        display.setLayoutY(newPosition[0]);
+        display.setRotate(heading);
     }
+
+    // public void stepTurtle(Double[] oldPosition, Double[] newPosition, double oldHeading, double newHeading) {
+    //     double xStep = (newPosition[0] - oldPosition[0])/5;
+    //     double yStep = (newPosition[1] - oldPosition[1])/5;
+    //     double rotStep = (newHeading - oldHeading)/5;
+
+    //     display.setLayoutX(display.getLayoutX() + xStep);
+    //     display.setLayoutX(display.getLayoutY() + yStep);
+    //     display.setRotate(display.getRotate() + rotStep);
+    // }
 
     public ImageView getDisplay() {
         return display;

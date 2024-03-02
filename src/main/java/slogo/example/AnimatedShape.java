@@ -65,13 +65,13 @@ public class AnimatedShape extends Application {
   public void start(Stage primaryStage) {
     primaryStage.setTitle(TITLE);
     primaryStage.setScene(
-        makeScene(getResourceNumber("ScreenWidth"), getResourceNumber("ScreenHeight")));
+        makeScene(1000, 600));
     primaryStage.show();
 
     // create and start animation, could be used in separate contexts
-    Animation animation = makeAnimation(myActor, getResourceNumber("EndX"),
-        getResourceNumber("EndY"),
-        getResourceNumber("RotateDegrees"));
+    Animation animation = makeAnimation(myActor, 500,
+        300,
+        90);
     animation.play();
   }
 
@@ -89,9 +89,9 @@ public class AnimatedShape extends Application {
   // create a simple scene
   Scene makeScene(int width, int height) {
     Group root = new Group();
-    myActor = makeActor(getResourceNumber("StartX"), getResourceNumber("StartY"),
-        getResourceNumber("ShapeWidth"), getResourceNumber("ShapeHeight"),
-        getResourceColor("ShapeColor"));
+    myActor = makeActor(0, 0,
+        50, 50,
+        Color.PINK);
     root.getChildren().add(myActor);
     return new Scene(root, width, height);
   }
@@ -121,30 +121,6 @@ public class AnimatedShape extends Application {
     return new SequentialTransition(agent, pt, rt);
   }
 
-  // helper methods that error check resource value
-  int getResourceNumber(String key) throws InputMismatchException {
-    // regular expression that matches a complete string containing one or more digits
-    final String POSITIVE_NUMBER_PATTERN = "^\\d+$";
-
-    String value = myResources.getString(key).trim();
-    if (value.matches(POSITIVE_NUMBER_PATTERN)) {
-      return Integer.parseInt(value);
-    } else {
-      throw new InputMismatchException(
-          String.format("Property %s is not a number: %s", key, value));
-    }
-  }
-
-  Paint getResourceColor(String key) throws InputMismatchException {
-    String color = myResources.getString(key).trim();
-    try {
-      // note, get() parameter is null because it is a static value (no instance needed)
-      return (Paint) Color.class.getField(color).get(null);
-    } catch (NoSuchFieldException | IllegalAccessException e) {
-      throw new InputMismatchException(String.format("Property %s is not a color: %s", key, color));
-    }
-  }
-
   Shape getResourceShape(String key, int x, int y, int width, int height)
       throws InputMismatchException {
     String shape = myResources.getString(key).trim();
@@ -160,4 +136,12 @@ public class AnimatedShape extends Application {
       throw new InputMismatchException(String.format("Property %s is not a shape: %s", key, shape));
     }
   }
+
+public Integer getResourceNumber(String string) {
+    return null;
+}
+
+public Object getResourceColor(String string) {
+    return null;
+}
 }

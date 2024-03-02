@@ -97,17 +97,17 @@ public class MainScreen implements ViewInternal {
   }
 
   public void update() {
-    for (FrontEndTurtle turtle : view.getTurtles()) {
+    // for (FrontEndTurtle turtle : view.getTurtles()) {
 
-      if (
-        turtle.isPenDisplayed() && 
-        !root.getChildren().contains(turtle.getLastPath()
-        )) {
-        root.getChildren().add(turtle.getLastPath());
-      }
+    //   if (
+    //     turtle.isPenDisplayed() && 
+    //     !root.getChildren().contains(turtle.getLastPath()
+    //     )) {
+    //     root.getChildren().add(turtle.getLastPath());
+    //   }
 
-      updateVariables();
-    }
+    // }
+    updateVariables();
   }
 
   private void updateVariables() {
@@ -117,35 +117,6 @@ public class MainScreen implements ViewInternal {
       variablesBox.getChildren().add(new Label(key + view.getVariables().get(key)));
     }
   }
-
-  // public void handleTurtleAnimation(Map<FrontEndTurtle, Double[]> deltas) {
-  // animation.stop();
-
-  // Timeline localAnimation = new Timeline();
-  // localAnimation.setCycleCount(5);
-  // localAnimation.getKeyFrames()
-  // .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e ->
-  // animateMovement(deltas)));
-
-  // animation.play();
-  // }
-
-  // public void animateMovement(Map<FrontEndTurtle, Double[]> deltas) {
-  // for (FrontEndTurtle turtle : deltas.keySet()) {
-  // double xStep = deltas.get(turtle)[0] / 5;
-  // double yStep = deltas.get(turtle)[1] / 5;
-
-  // turtle.getDisplay().setLayoutX(turtle.getPosition()[0] + xStep);
-  // turtle.getDisplay().setLayoutY(turtle.getPosition()[1] + yStep);
-  // }
-  // }
-
-  // public void syncTurtlesWithView() {
-  // for (FrontEndTurtle turtle : view.getTurtles()) {
-  // myTurtlePositions.remove(turtle);
-  // myTurtlePositions.put(turtle, turtle.getPosition());
-  // }
-  // }
 
   @Override
   public void setUp() {
