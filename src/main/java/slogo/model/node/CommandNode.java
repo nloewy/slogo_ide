@@ -36,11 +36,11 @@ public class CommandNode extends Node {
              NoSuchMethodException | IllegalAccessException e) {
       throw new InvalidCommandException("Command Class Not Found");
     }
+    List<Node> children = getChildren();
     try {
-      List<Node> children = getChildren();
       return (double) m.invoke(command, children);
-    } catch (InvocationTargetException | IllegalAccessException e) {
-      throw new InvalidOperandException(e.getMessage());
+    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+      throw new InvalidOperandException(e.getCause().getMessage());
     }
   }
 

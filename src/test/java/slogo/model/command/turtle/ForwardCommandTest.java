@@ -28,8 +28,6 @@ public class ForwardCommandTest extends CommandTest {
     myTurtle = model.getTurtles().get(0);
     node = new CommandNode("turtle.Forward", model);
     dfsAddListener(node);
-
-
   }
 
   @Test

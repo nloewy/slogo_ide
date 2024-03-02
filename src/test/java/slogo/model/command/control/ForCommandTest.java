@@ -23,8 +23,7 @@ public class ForCommandTest extends CommandTest {
   private ModelState model;
 
   @BeforeEach
-  void setUp()
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+  void setUp() {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().add(myTurtle);
