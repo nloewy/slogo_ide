@@ -1,5 +1,6 @@
 package slogo;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -22,14 +23,19 @@ public class Controller {
     private String currentLanguage = "English";
     private Consumer<String> parse;
     private List<View> windows = new ArrayList<>();
+    private File turtleImage;
 
     public Controller(Stage stage) throws IOException {
         this.stage = stage;
         openStartScreen();
     }
 
+    public void setTurtleImage(File i) {
+        turtleImage = i;
+    }
+
     public void openStartScreen() throws FileNotFoundException {
-        StartScreen startScreen = new StartScreen(this);
+        StartScreen startScreen = new StartScreen(stage, this);
         startScreen.setUp();
         stage.setScene(startScreen.getScene());
         stage.show();
@@ -39,6 +45,9 @@ public class Controller {
         Stage newStage = new Stage();
         newStage.setMaximized(true);
         View view = new View(this, stage);
+        if (turtleImage != null) {
+            view.setTurtleImage(turtleImage);
+        }
         Model model = new SlogoModel(view);
         windows.add(view);
 

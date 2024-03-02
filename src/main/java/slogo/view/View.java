@@ -1,5 +1,16 @@
 package slogo.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Stack;
+import java.util.function.Consumer;
+
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -8,10 +19,6 @@ import slogo.Controller;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.view.pages.MainScreen;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.*;
-import java.util.function.Consumer;
 
 /*
 Represents one IDE session.
@@ -22,7 +29,7 @@ public class View implements SlogoListener {
     private static final int height = 600;
     private static final int width = 1000;
     private final Map<String, Number> variables;
-    private final Image defaultImage;
+    private Image defaultImage;
     private final Stage stage;
     private final List<FrontEndTurtle> turtles;
     private final Stack<String> commandHistory;
@@ -65,6 +72,17 @@ public class View implements SlogoListener {
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
+    }
+
+    public void setTurtleImage(File f) {
+        try {
+            defaultImage = new Image(new FileInputStream(f));
+            for (FrontEndTurtle t : getTurtles()) {
+                t.setImage(defaultImage);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<FrontEndTurtle> getTurtles() {

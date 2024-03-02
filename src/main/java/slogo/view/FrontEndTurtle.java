@@ -68,7 +68,7 @@ public class FrontEndTurtle {
 
     public void setImage(Image newImage) {
         displayImage = newImage;
-        display = new ImageView(displayImage);
+        display.setImage(displayImage);
         display.setPreserveRatio(true);
         display.setFitWidth(50);
     }
