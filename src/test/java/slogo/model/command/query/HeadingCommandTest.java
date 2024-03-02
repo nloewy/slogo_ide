@@ -27,7 +27,7 @@ public class HeadingCommandTest extends CommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("query.Heading", model, myListener);
+    node = new CommandNode("query.Heading", model);
 
   }
 
@@ -47,7 +47,7 @@ public class HeadingCommandTest extends CommandTest {
   void testHeadingBasic(String heading)
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setHeading(-393993);
-    node.addChild(new ConstantNode(heading, null, myListener));
+    node.addChild(new ConstantNode(heading, null));
     assertEquals(myTurtle.getHeading(), node.getValue(), DELTA);
   }
 

@@ -9,7 +9,7 @@ public class ConstantNode extends Node {
   private final double myConstant;
   private final String myToken;
 
-  public ConstantNode(String token, ModelState modelState, SlogoListener listener) {
+  public ConstantNode(String token, ModelState modelState) {
     super();
     myToken = token;
     myConstant = Double.parseDouble(token);

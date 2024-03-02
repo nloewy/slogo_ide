@@ -23,7 +23,7 @@ public class IsShowingCommandTest extends CommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("query.IsShowing", model, myListener);
+    node = new CommandNode("query.IsShowing", model);
   }
 
   @Test

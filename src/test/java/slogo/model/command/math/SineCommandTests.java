@@ -25,7 +25,7 @@ public class SineCommandTests extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.Sine", model, myListener);
+    node = new CommandNode("math.Sine", model);
   }
 
   @ParameterizedTest
@@ -50,7 +50,7 @@ public class SineCommandTests extends CommandTest {
   })
   void testSineBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 }

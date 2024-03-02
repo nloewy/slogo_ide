@@ -30,7 +30,7 @@ public class QuotientCommandTest extends CommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.Quotient", model, myListener);
+    node = new CommandNode("math.Quotient", model);
 
   }
 
@@ -49,16 +49,16 @@ public class QuotientCommandTest extends CommandTest {
   })
   void testQuotientBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
-    node.addChild(new ConstantNode(op2, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op2, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
   @Test
   void testDivideByZero() throws InvocationTargetException, IllegalAccessException {
     {
-      node.addChild(new ConstantNode("50", null, myListener));
-      node.addChild(new ConstantNode("0", null, myListener));
+      node.addChild(new ConstantNode("50", null));
+      node.addChild(new ConstantNode("0", null));
       assertThrows(InvalidOperandException.class, () -> {
         node.getValue();
       });

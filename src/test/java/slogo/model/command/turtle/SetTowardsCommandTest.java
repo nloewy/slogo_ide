@@ -28,7 +28,8 @@ public class SetTowardsCommandTest extends CommandTest {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.SetTowards", model, myListener);
+    node = new CommandNode("turtle.SetTowards", model);
+    node.addListener(myListener);
   }
 
   @ParameterizedTest
@@ -62,8 +63,8 @@ public class SetTowardsCommandTest extends CommandTest {
   })
   void testBasicToward(String x, String y, String expectedValue, String expectedHeading)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(x, model, myListener));
-    node.addChild(new ConstantNode(y, model, myListener));
+    node.addChild(new ConstantNode(x, model));
+    node.addChild(new ConstantNode(y, model));
     assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
   }
@@ -84,8 +85,8 @@ public class SetTowardsCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setX(50);
     myTurtle.setY(-50);
-    node.addChild(new ConstantNode(x, model, myListener));
-    node.addChild(new ConstantNode(y, model, myListener));
+    node.addChild(new ConstantNode(x, model));
+    node.addChild(new ConstantNode(y, model));
     assertEquals(Double.parseDouble(expectedValue), node.getValue(), DELTA);
     assertEquals(Double.parseDouble(expectedHeading), myTurtle.getHeading(), DELTA);
   }

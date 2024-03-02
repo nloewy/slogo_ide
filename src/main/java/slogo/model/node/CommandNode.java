@@ -5,34 +5,37 @@ import java.lang.reflect.Method;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.IncompleteClassException;
+import slogo.model.api.InvalidCommandException;
 import slogo.model.api.InvalidOperandException;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 
 public class CommandNode extends Node {
 
-  private final Command command;
-  private final Method m;
+  private Command command;
+  private Method m;
   private final String myToken;
+  private ModelState myModelState;
 
-  public CommandNode(String token, ModelState modelState, SlogoListener listener)
+  public CommandNode(String token, ModelState modelState)
       throws ClassNotFoundException {
     super();
-    try {
-      myToken = "slogo.model.command." + token + "Command";
-      Class<?> clazz = Class.forName(myToken);
-      command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
-          .newInstance(modelState, listener);
-      m = clazz.getDeclaredMethod("execute", List.class);
-    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
-             NoSuchMethodException | IllegalAccessException e) {
-      throw new ClassNotFoundException("Command Class Not Found");
-    }
+    myToken = "slogo.model.command." + token + "Command";
+    myModelState = modelState;
   }
 
 
   @Override
   public double getValue() throws InvocationTargetException, IllegalAccessException {
+    try {
+      Class<?> clazz = Class.forName(myToken);
+      command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
+          .newInstance(myModelState, getListener());
+      m = clazz.getDeclaredMethod("execute", List.class);
+    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
+             NoSuchMethodException | IllegalAccessException e) {
+      throw new InvalidCommandException("Command Class Not Found");
+    }
     try {
       List<Node> children = getChildren();
       return (double) m.invoke(command, children);

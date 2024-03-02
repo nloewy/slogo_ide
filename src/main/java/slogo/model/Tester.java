@@ -39,9 +39,9 @@ public class Tester {
 
       }
     };
-    Node node = new CommandNode("math.RandomRange", model, myListener);
-    node.addChild(new ConstantNode("-90.00000", null, myListener));
-    node.addChild(new ConstantNode("-90.00100", null, myListener));
+    Node node = new CommandNode("math.RandomRange", model);
+    node.addChild(new ConstantNode("-90.00000", null));
+    node.addChild(new ConstantNode("-90.00100", null));
     try {
       node.getValue();
     } catch (InvalidOperandException e) {

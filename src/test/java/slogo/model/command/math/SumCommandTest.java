@@ -27,7 +27,7 @@ public class SumCommandTest extends CommandTest {
 
     myTurtle = null;
     model = new ModelState();
-    node = new CommandNode("math.Sum", model, myListener);
+    node = new CommandNode("math.Sum", model);
 
   }
 
@@ -46,8 +46,8 @@ public class SumCommandTest extends CommandTest {
   })
   void testSumBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, model, myListener));
-    node.addChild(new ConstantNode(op2, model, myListener));
+    node.addChild(new ConstantNode(op1, model));
+    node.addChild(new ConstantNode(op2, model));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 

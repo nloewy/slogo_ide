@@ -27,7 +27,7 @@ public class YcoordinateCommandTest extends CommandTest {
     ModelState model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("query.Ycoordinate", model, myListener);
+    node = new CommandNode("query.Ycoordinate", model);
 
   }
 
@@ -45,7 +45,7 @@ public class YcoordinateCommandTest extends CommandTest {
   })
   void testYCorrBasic(String y)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(y, null, myListener));
+    node.addChild(new ConstantNode(y, null));
     assertEquals(myTurtle.getY(), node.getValue(), DELTA);
   }
 

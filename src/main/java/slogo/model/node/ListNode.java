@@ -9,7 +9,7 @@ public class ListNode extends Node {
 
   private final String myToken;
 
-  public ListNode(String token, ModelState model, SlogoListener listener) {
+  public ListNode(String token, ModelState model) {
     myToken = token;
   }
 

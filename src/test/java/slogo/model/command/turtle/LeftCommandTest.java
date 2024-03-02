@@ -29,7 +29,8 @@ public class LeftCommandTest extends CommandTest {
     model = new ModelState();
     model.getTurtles().add(new Turtle(1));
     myTurtle = model.getTurtles().get(0);
-    node = new CommandNode("turtle.Left", model, myListener);
+    node = new CommandNode("turtle.Left", model);
+    node.addListener(myListener);
 
   }
 
@@ -37,7 +38,7 @@ public class LeftCommandTest extends CommandTest {
   void testBasicLeft()
       throws InvocationTargetException, IllegalAccessException {
     String rot = "75";
-    node.addChild(new ConstantNode(rot, model, myListener));
+    node.addChild(new ConstantNode(rot, model));
     assertEquals(75, node.getValue(), DELTA);
     assertEquals(285, myTurtle.getHeading(), DELTA);
 
@@ -48,7 +49,7 @@ public class LeftCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setHeading(60);
     String rot = "20";
-    node.addChild(new ConstantNode(rot, model, myListener));
+    node.addChild(new ConstantNode(rot, model));
     assertEquals(20, node.getValue(), DELTA);
     assertEquals(40, myTurtle.getHeading(), DELTA);
   }
@@ -58,7 +59,7 @@ public class LeftCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     String rot = "0";
     myTurtle.setHeading(500);
-    node.addChild(new ConstantNode(rot, model, myListener));
+    node.addChild(new ConstantNode(rot, model));
     assertEquals(0, node.getValue(), DELTA);
     assertEquals(140, myTurtle.getHeading(), DELTA);
 
@@ -68,7 +69,7 @@ public class LeftCommandTest extends CommandTest {
   void testLeftNegativeHeading()
       throws InvocationTargetException, IllegalAccessException {
     String rot = "-75";
-    node.addChild(new ConstantNode(rot, model, myListener));
+    node.addChild(new ConstantNode(rot, model));
     assertEquals(-75, node.getValue(), DELTA);
     assertEquals(75, myTurtle.getHeading(), DELTA);
   }
@@ -77,7 +78,7 @@ public class LeftCommandTest extends CommandTest {
   void testLeftHeadingOver360()
       throws InvocationTargetException, IllegalAccessException {
     String rot = "900";
-    node.addChild(new ConstantNode(rot, model, myListener));
+    node.addChild(new ConstantNode(rot, model));
     assertEquals(900, node.getValue(), DELTA);
     assertEquals(180, myTurtle.getHeading(), DELTA);
   }

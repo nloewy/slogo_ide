@@ -4,10 +4,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import slogo.model.api.IncompleteClassException;
+import slogo.model.api.SlogoListener;
 
 public abstract class Node {
 
   private final List<Node> myChildren = new ArrayList<>();
+  private SlogoListener myListener;
 
   public abstract double getValue() throws InvocationTargetException, IllegalAccessException;
 
@@ -29,6 +31,14 @@ public abstract class Node {
       sb.append(toStringHelper(child, 0));
     }
     return sb.toString();
+  }
+
+  public void addListener(SlogoListener myListener) {
+    this.myListener = myListener;
+  }
+
+  protected SlogoListener getListener() {
+    return myListener;
   }
 
   private String toStringHelper(Node node, int indent) {

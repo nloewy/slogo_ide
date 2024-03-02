@@ -30,21 +30,21 @@ public class LogCommandTest extends CommandTest {
 
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.NaturalLog", model, myListener);
+    node = new CommandNode("math.NaturalLog", model);
 
   }
 
   @Test
   void testLogBasicE()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(Double.toString(Math.E), null, myListener));
+    node.addChild(new ConstantNode(Double.toString(Math.E), null));
     assertEquals(1, node.getValue(), DELTA);
   }
 
   @Test
   void testLogBasicOne()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("1", null, myListener));
+    node.addChild(new ConstantNode("1", null));
     assertEquals(0, node.getValue(), DELTA);
   }
 
@@ -71,7 +71,7 @@ public class LogCommandTest extends CommandTest {
   })
   void testLogFloats(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.getValue(), DELTA);
   }
 
@@ -86,7 +86,7 @@ public class LogCommandTest extends CommandTest {
   })
   void testLogNonPositive(String op1)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null, myListener));
+    node.addChild(new ConstantNode(op1, null));
     assertThrows(InvalidOperandException.class, () -> {
       node.getValue();
     });

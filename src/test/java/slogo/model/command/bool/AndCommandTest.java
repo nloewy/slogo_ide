@@ -27,7 +27,7 @@ public class AndCommandTest extends CommandTest {
     myTurtle = null;
     model = new ModelState();
 
-    node = new CommandNode("bool.And", model, myListener);
+    node = new CommandNode("bool.And", model);
 
   }
 
@@ -55,8 +55,8 @@ public class AndCommandTest extends CommandTest {
   })
   void testAnd(String op1, String op2, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, model, myListener));
-    node.addChild(new ConstantNode(op2, model, myListener));
+    node.addChild(new ConstantNode(op1, model));
+    node.addChild(new ConstantNode(op2, model));
     assertEquals(result, node.getValue(), DELTA);
   }
 }

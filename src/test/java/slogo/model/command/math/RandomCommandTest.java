@@ -30,7 +30,7 @@ public class RandomCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
-    node = new CommandNode("math.Random", model, myListener);
+    node = new CommandNode("math.Random", model);
 
   }
 
@@ -44,7 +44,7 @@ public class RandomCommandTest extends CommandTest {
   })
   void testBasicRandom(String positiveValue)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(positiveValue, null, myListener));
+    node.addChild(new ConstantNode(positiveValue, null));
     double val = node.getValue();
     assertTrue(0 <= val);
     assertTrue(Double.parseDouble(positiveValue) > val);
@@ -54,14 +54,14 @@ public class RandomCommandTest extends CommandTest {
   @Test
   void testRandomZero()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("0.00000", null, myListener));
+    node.addChild(new ConstantNode("0.00000", null));
     assertEquals(0, node.getValue(), DELTA);
   }
 
   @Test
   void testRandomNegative()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("-90.00000", null, myListener));
+    node.addChild(new ConstantNode("-90.00000", null));
     assertThrows(InvalidOperandException.class, () -> {
       node.getValue();
     });
