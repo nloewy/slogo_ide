@@ -105,7 +105,6 @@ public class MainScreen implements ViewInternal {
         )) {
         root.getChildren().add(turtle.getLastPath());
       }
-
     }
     updateVariables();
   }
@@ -154,6 +153,7 @@ public class MainScreen implements ViewInternal {
     initializeTurtleDisplays();
 
     layout.setPrefSize(1400, 650);
+
     layout.setCenter(testpane);
     layout.setBottom(commandBox);
     layout.setRight(variablesPane);

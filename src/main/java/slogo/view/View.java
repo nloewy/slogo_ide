@@ -25,11 +25,12 @@ public class View implements SlogoListener {
     private final Image defaultImage;
     private final Stage stage;
     private final List<FrontEndTurtle> turtles;
-    private final List<String> commandList;
+    private final Stack<String> commandHistory;
     private String commandString;
     private String lang;
     private Controller controller;
     private Consumer<String> parse;
+    private static final Double[] ORIGIN = new Double[]{600.0, 200.0};
 
     public View(Controller controller, Stage stage) {
         this.stage = stage;
@@ -40,7 +41,7 @@ public class View implements SlogoListener {
 
         variables = new LinkedHashMap<>();
         turtles = new ArrayList<>();
-        commandList = new ArrayList<>();
+        commandHistory = new Stack<String>();
 
         try {
             defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
@@ -48,7 +49,7 @@ public class View implements SlogoListener {
             throw new RuntimeException(e);
         }
 
-        turtles.add(new FrontEndTurtle(1, new Double[]{100.0, 100.0}, Color.BLUE, true, 0, defaultImage));
+        turtles.add(new FrontEndTurtle(1, ORIGIN, Color.BLUE, true, 0, defaultImage));
     }
 
     public void run(Consumer<String> parseMethod) throws FileNotFoundException {
@@ -98,7 +99,7 @@ public class View implements SlogoListener {
         if (hasCommandString()) {
             String temp = commandString;
             commandString = "";
-            commandList.add(temp);
+            commandHistory.push(temp);
             return temp;
         }
 
@@ -111,10 +112,12 @@ public class View implements SlogoListener {
         parse.accept(commandString);
     }
 
-    //display with command assigned???
     @Override
     public void onUpdateValue(String variableName, Number newValue) {
+        //new Variable display class
+        //commandHistory.peek()
         variables.put(variableName, newValue);
+
     }
 
     @Override
@@ -123,13 +126,13 @@ public class View implements SlogoListener {
         for (FrontEndTurtle turtle : getTurtles()) {
             if (turtle.getId() == turtleState.id()) {
                 turtle.setIsPenDisplayed(turtleState.pen());
-                turtle.setPosition(new Double[]{turtleState.x() + 100, turtleState.y() + 100}, turtleState.heading());
+                turtle.setPosition(new Double[]{turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1]}, turtleState.heading());
                 return;
             }
         }
         turtles.add(new FrontEndTurtle(
             turtleState.id(), 
-            new Double[]{turtleState.x(), turtleState.y()}, 
+            new Double[]{turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1]}, 
             Color.BLACK, 
             true, 
             turtleState.heading(), 
