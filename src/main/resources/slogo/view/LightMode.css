@@ -9,6 +9,11 @@
     -fx-font-weight: bold;
 }
 
+#variable {
+    -fx-font-size: 10;
+
+}
+
 .logo {
 }
 

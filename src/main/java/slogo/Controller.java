@@ -1,18 +1,22 @@
 package slogo;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import slogo.model.SlogoModel;
 import slogo.model.api.InvalidCommandException;
 import slogo.model.api.InvalidTokenException;
 import slogo.model.api.Model;
 import slogo.view.View;
+import slogo.view.pages.MainScreen;
 import slogo.view.pages.StartScreen;
 
 //TODO add method to add user
@@ -22,14 +26,19 @@ public class Controller {
     private String currentLanguage = "English";
     private Consumer<String> parse;
     private List<View> windows = new ArrayList<>();
+    private File turtleImage;
 
     public Controller(Stage stage) throws IOException {
         this.stage = stage;
         openStartScreen();
     }
 
+    public void setTurtleImage(File i) {
+        turtleImage = i;
+    }
+
     public void openStartScreen() throws FileNotFoundException {
-        StartScreen startScreen = new StartScreen(this);
+        StartScreen startScreen = new StartScreen(stage, this);
         startScreen.setUp();
         stage.setScene(startScreen.getScene());
         stage.show();
@@ -37,7 +46,11 @@ public class Controller {
 
     public void openBlankIDESession() throws IOException {
         Stage newStage = new Stage();
+        newStage.setMaximized(true);
         View view = new View(this, stage);
+        if (turtleImage != null) {
+            view.setTurtleImage(turtleImage);
+        }
         Model model = new SlogoModel(view);
         windows.add(view);
 
@@ -71,15 +84,6 @@ public class Controller {
         view.run(parse);
     }
 
-    public void handleCommand(String command) {
-//         Here, implement command handling logic
-//        if ("MOVE UP".equalsIgnoreCase(command)) {
-//            view.moveTurtleUp(); If it was in view
-//        But for otherwise it run another class that will get from model side
-
-//        }
-    }
-
     public void setCurrentLanguage(String language) {
         this.currentLanguage = language;
         for (View view : windows) {
@@ -93,7 +97,7 @@ public class Controller {
 
     public void loadSession() {
         System.out.println("To Be Implemented! Need to figure out how to move "
-            + "file choosing from screen to controller");
+                + "file choosing from screen to controller");
     }
 
     public void openNewXMLSession() {

@@ -2,25 +2,33 @@
 package slogo.view.pages;
 
 import java.io.FileNotFoundException;
+import java.util.EmptyStackException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import slogo.Controller;
@@ -42,23 +50,29 @@ public class MainScreen implements ViewInternal {
   private javafx.scene.Scene scene;
   private BorderPane layout;
   private ScrollPane variablesPane;
+  private ScrollPane commandsHistory;
+  private ScrollPane userDefinedCommandsPane;
   private VBox variablesBox;
-  private HBox commandBox;
-  // private Controller controller;
+  private HBox textInputBox;
+  private HBox commandHistoryBox;
+  private VBox userDefinedCommandsBox;
   private View view;
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
   private ResourceBundle myResources;
   Group root;
   Stage stage;
   TextField field;
+  Text variablesBoxLabel = new Text("Variables");
+  Text commandHistoryLabel = new Text("History");
+  Text userDefinedCommandsLabel = new Text("My Commands");
   Map<FrontEndTurtle, Double[]> myTurtlePositions = new HashMap<>();
   private static final double FRAME_RATE = 4.0;
   private final Timeline animation = new Timeline();
   private final double speed = 0.75;
   Button submitField;
-
-  // TEST
-  Pane testpane = new Pane();
+  Button play;
+  Button pause;
+  Pane centerPane = new Pane();
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
@@ -81,7 +95,7 @@ public class MainScreen implements ViewInternal {
       // root.getChildren().add(turtle.getDisplay());
 
       // TEST
-      testpane.getChildren().add(turtle.getDisplay());
+      centerPane.getChildren().add(turtle.getDisplay());
     }
   }
 
@@ -99,82 +113,114 @@ public class MainScreen implements ViewInternal {
   public void update() {
     for (FrontEndTurtle turtle : view.getTurtles()) {
 
-      if (
-        turtle.isPenDisplayed() && 
-        !root.getChildren().contains(turtle.getLastPath()
-        )) {
-        root.getChildren().add(turtle.getLastPath());
+      try {
+        if (turtle.isPenDisplayed() &&
+            !root.getChildren().contains(turtle.getLastPath())) {
+          root.getChildren().add(turtle.getLastPath());
+        }
+      } catch (EmptyStackException e) {
+        continue;
       }
 
       updateVariables();
+      updateCommands();
     }
   }
 
   private void updateVariables() {
     variablesBox.getChildren().clear();
+    variablesBox.getChildren().add(variablesBoxLabel);
 
     for (String key : view.getVariables().keySet()) {
-      variablesBox.getChildren().add(new Label(key + view.getVariables().get(key)));
+      List<String> relatedCommands = view.getVariables().get(key);
+      Button openRelatedCommands = new Button(key);
+      openRelatedCommands.setId("variable");
+
+      openRelatedCommands.setOnAction((event) -> {
+        String commands = "";
+        for (String command : relatedCommands) {
+          commands = commands + "\n" + command;
+        }
+        new Alert(AlertType.NONE, "RELATED COMMANDS\n" + commands).showAndWait();
+      });
+
+      variablesBox.getChildren().add(openRelatedCommands);
     }
   }
 
-  // public void handleTurtleAnimation(Map<FrontEndTurtle, Double[]> deltas) {
-  // animation.stop();
+  private void updateCommands() {
+    commandHistoryBox.getChildren().clear();
+    commandHistoryBox.getChildren().add(commandHistoryLabel);
+    for (String s : view.getCommandHistory()) {
+      commandHistoryBox.getChildren().add(new Label(s));
+    }
 
-  // Timeline localAnimation = new Timeline();
-  // localAnimation.setCycleCount(5);
-  // localAnimation.getKeyFrames()
-  // .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e ->
-  // animateMovement(deltas)));
-
-  // animation.play();
-  // }
-
-  // public void animateMovement(Map<FrontEndTurtle, Double[]> deltas) {
-  // for (FrontEndTurtle turtle : deltas.keySet()) {
-  // double xStep = deltas.get(turtle)[0] / 5;
-  // double yStep = deltas.get(turtle)[1] / 5;
-
-  // turtle.getDisplay().setLayoutX(turtle.getPosition()[0] + xStep);
-  // turtle.getDisplay().setLayoutY(turtle.getPosition()[1] + yStep);
-  // }
-  // }
-
-  // public void syncTurtlesWithView() {
-  // for (FrontEndTurtle turtle : view.getTurtles()) {
-  // myTurtlePositions.remove(turtle);
-  // myTurtlePositions.put(turtle, turtle.getPosition());
-  // }
-  // }
+    userDefinedCommandsBox.getChildren().clear();
+    userDefinedCommandsBox.getChildren().add(userDefinedCommandsLabel);
+    for (String s : view.getUserDefinedCommandHistory()) {
+      userDefinedCommandsBox.getChildren().add(new Label(s));
+    }
+  }
 
   @Override
   public void setUp() {
 
     layout = new BorderPane();
 
-    Button testButton = ButtonUtil.generateButton("test", 0, 0, (event) -> {
-      view.onUpdateValue("" + new Random().nextDouble(), new Random().nextDouble());
-    });
-
     variablesBox = new VBox();
     variablesBox.setSpacing(10);
     variablesBox.setAlignment(javafx.geometry.Pos.CENTER);
     variablesPane = new ScrollPane(variablesBox);
     variablesPane.setPrefSize(200, 200);
+    variablesBox.getChildren().add(variablesBoxLabel);
+
+    commandHistoryBox = new HBox();
+    commandHistoryBox.setSpacing(10);
+    commandHistoryBox.setAlignment(javafx.geometry.Pos.CENTER);
+    commandsHistory = new ScrollPane(commandHistoryBox);
+    commandsHistory.setPrefSize(1000, 100);
+    commandHistoryBox.getChildren().add(commandHistoryLabel);
+
+    userDefinedCommandsBox = new VBox();
+    userDefinedCommandsBox.setSpacing(10);
+    userDefinedCommandsBox.setAlignment(javafx.geometry.Pos.CENTER);
+    userDefinedCommandsPane = new ScrollPane(userDefinedCommandsBox);
+    userDefinedCommandsPane.setPrefSize(200, 200);
+    userDefinedCommandsBox.getChildren().add(userDefinedCommandsLabel);
 
     field = new TextField();
     field.setPrefWidth(1000);
     field.setPrefHeight(100);
     field.setAlignment(Pos.TOP_LEFT);
 
+    variablesBoxLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+    commandHistoryLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+    userDefinedCommandsLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+
     submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
       sendCommandStringToView();
     });
 
-    commandBox = new HBox();
-    commandBox.setSpacing(10);
-    commandBox.getChildren().addAll(field, submitField);
-    commandBox.setAlignment(javafx.geometry.Pos.CENTER);
+    play = ButtonUtil.generateButton("Play", 300, 300, (event) -> {
+      for (FrontEndTurtle t : view.getTurtles()) {
+        if (t.getAnimation() != null) {
+          t.getAnimation().play();
+        }
+      }
+    });
+
+    pause = ButtonUtil.generateButton("Pause", 300, 400, (event) -> {
+      for (FrontEndTurtle t : view.getTurtles()) {
+        if (t.getAnimation() != null) {
+          t.getAnimation().pause();
+        }
+      }
+    });
+
+    textInputBox = new HBox();
+    textInputBox.setSpacing(10);
+    textInputBox.getChildren().addAll(field, submitField, play, pause);
+    textInputBox.setAlignment(javafx.geometry.Pos.CENTER);
 
     root = new Group();
     // root.getChildren().add(variablesPane);
@@ -183,10 +229,13 @@ public class MainScreen implements ViewInternal {
     initializeTurtleDisplays();
 
     layout.setPrefSize(1400, 650);
-    layout.setCenter(testpane);
-    layout.setBottom(commandBox);
+
+    centerPane.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, null, null)));
+    layout.setCenter(centerPane);
+    layout.setBottom(textInputBox);
     layout.setRight(variablesPane);
-    layout.setTop(testButton);
+    layout.setTop(commandsHistory);
+    layout.setLeft(userDefinedCommandsPane);
     root.getChildren().add(layout);
 
     animation.play();

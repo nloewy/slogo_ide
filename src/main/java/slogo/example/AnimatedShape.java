@@ -18,6 +18,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -45,7 +46,6 @@ public class AnimatedShape extends Application {
 
   public AnimatedShape() {
     super();
-    setResources(CONFIGURATION_RESOURCE_PATH + "Animation");
   }
 
   /**
@@ -65,33 +65,22 @@ public class AnimatedShape extends Application {
   public void start(Stage primaryStage) {
     primaryStage.setTitle(TITLE);
     primaryStage.setScene(
-        makeScene(getResourceNumber("ScreenWidth"), getResourceNumber("ScreenHeight")));
+        makeScene(1000, 600));
     primaryStage.show();
 
     // create and start animation, could be used in separate contexts
-    Animation animation = makeAnimation(myActor, getResourceNumber("EndX"),
-        getResourceNumber("EndY"),
-        getResourceNumber("RotateDegrees"));
+    Animation animation = makeAnimation(myActor, 1000,
+        300,
+        90);
     animation.play();
-  }
-
-  /**
-   * Allow different animations based on settings
-   */
-  public void setResources(String filename) throws IllegalArgumentException {
-    try {
-      myResources = ResourceBundle.getBundle(filename);
-    } catch (NullPointerException | MissingResourceException e) {
-      throw new IllegalArgumentException(String.format("Invalid resource file: %s", filename));
-    }
   }
 
   // create a simple scene
   Scene makeScene(int width, int height) {
     Group root = new Group();
-    myActor = makeActor(getResourceNumber("StartX"), getResourceNumber("StartY"),
-        getResourceNumber("ShapeWidth"), getResourceNumber("ShapeHeight"),
-        getResourceColor("ShapeColor"));
+    myActor = makeActor(0, 0,
+        50, 50,
+        Color.BLACK);
     root.getChildren().add(myActor);
     return new Scene(root, width, height);
   }
@@ -99,7 +88,9 @@ public class AnimatedShape extends Application {
   // create something to animate
   Node makeActor(int x, int y, int width, int height, Paint color) {
 //        Shape result = new Rectangle(x, y, width, height);
-    Shape result = getResourceShape("ShapeClass", x, y, width, height);
+    Shape result = new Rectangle(width, height);
+    result.setLayoutX(x);
+    result.setLayoutY(y);
     result.setFill(color);
     result.setId("actor");
     return result;
@@ -108,6 +99,7 @@ public class AnimatedShape extends Application {
   // create sequence of animations
   Animation makeAnimation(Node agent, int endX, int endY, int rotateDegrees) {
     // create something to follow
+    agent = myActor;
     Path path = new Path();
     path.getElements().addAll(
         new MoveTo(agent.getBoundsInParent().getMinX(), agent.getBoundsInParent().getMinY()),
@@ -119,45 +111,5 @@ public class AnimatedShape extends Application {
     rt.setByAngle(rotateDegrees);
     // put them together in order
     return new SequentialTransition(agent, pt, rt);
-  }
-
-  // helper methods that error check resource value
-  int getResourceNumber(String key) throws InputMismatchException {
-    // regular expression that matches a complete string containing one or more digits
-    final String POSITIVE_NUMBER_PATTERN = "^\\d+$";
-
-    String value = myResources.getString(key).trim();
-    if (value.matches(POSITIVE_NUMBER_PATTERN)) {
-      return Integer.parseInt(value);
-    } else {
-      throw new InputMismatchException(
-          String.format("Property %s is not a number: %s", key, value));
-    }
-  }
-
-  Paint getResourceColor(String key) throws InputMismatchException {
-    String color = myResources.getString(key).trim();
-    try {
-      // note, get() parameter is null because it is a static value (no instance needed)
-      return (Paint) Color.class.getField(color).get(null);
-    } catch (NoSuchFieldException | IllegalAccessException e) {
-      throw new InputMismatchException(String.format("Property %s is not a color: %s", key, color));
-    }
-  }
-
-  Shape getResourceShape(String key, int x, int y, int width, int height)
-      throws InputMismatchException {
-    String shape = myResources.getString(key).trim();
-    try {
-      Class<?> clazz = Class.forName(shape);
-      Constructor<?> ctor = clazz.getDeclaredConstructor(Double.TYPE, Double.TYPE, Double.TYPE,
-          Double.TYPE);
-      return (Shape) ctor.newInstance(x, y, width, height);
-    } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException |
-             InstantiationException | IllegalAccessException e) {
-      // for debugging
-      e.printStackTrace();
-      throw new InputMismatchException(String.format("Property %s is not a shape: %s", key, shape));
-    }
   }
 }
