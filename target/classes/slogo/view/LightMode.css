@@ -1,0 +1,19 @@
+.button {
+    -fx-text-fill: blue;
+    -fx-background-color: darkorange;
+    -fx-border-color: orange;
+    -fx-border-style: solid;
+
+    -fx-font-family: "Courier New";
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+}
+
+.logo {
+}
+
+#vbox {
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}

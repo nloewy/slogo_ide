@@ -1,6 +1,0 @@
-repete 9 [
-  repete 180 [
-    dev 3 dr 2
-  ]
-  droite 40
-]

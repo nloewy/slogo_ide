@@ -1,4 +1,0 @@
-repeat 16 [
-  fd random 500
-  rt random 360
-]
