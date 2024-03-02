@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.api.InsufficientArgumentsException;
 import slogo.model.api.InvalidCommandException;
+import slogo.model.api.InvalidOperandException;
 import slogo.model.api.InvalidTokenException;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
@@ -87,9 +88,22 @@ public class ParseTest {
   }
 
   @Test
+  void mathErrorHalfwayThrough()
+      throws InvocationTargetException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException, InvalidCommandException {
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
+    assertThrows(InvalidOperandException.class, () -> {
+      slogo.parse("FD SUM 10 10 FD QUOTIENT 5 0 FD SUM 10 10");
+    });
+    assertEquals(20.0, myTurtle.getY(), DELTA);
+  }
+
+
+  @Test
   void constantWithNoCommandBetweenProperCommands()
       throws InvocationTargetException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException, InvalidCommandException {
+    Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
     assertThrows(InsufficientArgumentsException.class, () -> slogo.parse("FD 10 10 RT 30"));
+    assertEquals(10.0, myTurtle.getY(), DELTA);
 
   }
 
