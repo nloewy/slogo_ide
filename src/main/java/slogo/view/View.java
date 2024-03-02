@@ -28,7 +28,7 @@ public class View implements SlogoListener {
 
     private static final int height = 600;
     private static final int width = 1000;
-    private final Map<String, Number> variables;
+    private final Map<String, List<String>> variables;
     private Image defaultImage;
     private final Stage stage;
     private final List<FrontEndTurtle> turtles;
@@ -89,7 +89,7 @@ public class View implements SlogoListener {
         return turtles;
     }
 
-    public Map<String, Number> getVariables() {
+    public Map<String, List<String>> getVariables() {
         return variables;
     }
 
@@ -144,7 +144,12 @@ public class View implements SlogoListener {
     public void onUpdateValue(String variableName, Number newValue) {
         //new Variable display class
         //commandHistory.peek()
-        variables.put(variableName, newValue);
+        if (variables.get(variableName) != null) {
+            List<String> commands = variables.get(variableName);
+            commands.add(commandHistory.peek());
+            return;
+        }
+        variables.put(variableName + " :: " + newValue, List.of(commandHistory.peek()));
     }
 
     @Override

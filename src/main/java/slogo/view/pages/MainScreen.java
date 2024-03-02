@@ -2,7 +2,10 @@
 package slogo.view.pages;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.EmptyStackException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -10,14 +13,22 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -105,15 +116,18 @@ public class MainScreen implements ViewInternal {
   public void update() {
     for (FrontEndTurtle turtle : view.getTurtles()) {
 
-      if (
-        turtle.isPenDisplayed() && 
-        !root.getChildren().contains(turtle.getLastPath()
-        )) {
-        root.getChildren().add(turtle.getLastPath());
+      try {
+        if (turtle.isPenDisplayed() &&
+            !root.getChildren().contains(turtle.getLastPath())) {
+          root.getChildren().add(turtle.getLastPath());
+        }
+      } catch (EmptyStackException e) {
+        continue;
       }
+
+      updateVariables();
+      updateCommands();
     }
-    updateVariables();
-    updateCommands();
   }
 
   private void updateVariables() {
@@ -121,7 +135,18 @@ public class MainScreen implements ViewInternal {
     variablesBox.getChildren().add(variablesBoxLabel);
 
     for (String key : view.getVariables().keySet()) {
-      variablesBox.getChildren().add(new Label(key + view.getVariables().get(key)));
+      List<String> relatedCommands = view.getVariables().get(key);
+      Button openRelatedCommands = new Button(key);
+
+      openRelatedCommands.setOnAction((event) -> {
+        String commands = "";
+        for (String command : relatedCommands) {
+          commands = commands + "\n" + command;
+        }
+        new Alert(AlertType.ERROR, commands).showAndWait();
+      });
+
+      variablesBox.getChildren().add(new Label(key));
     }
   }
 
@@ -207,6 +232,7 @@ public class MainScreen implements ViewInternal {
 
     layout.setPrefSize(1400, 650);
 
+    centerPane.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, null, null)));
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
     layout.setRight(variablesPane);

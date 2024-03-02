@@ -1,5 +1,6 @@
 package slogo.view;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
@@ -49,7 +50,10 @@ public class FrontEndTurtle {
     }
 
     public Line getLastPath() {
-    return pathHistory.peek();
+        if (!pathHistory.isEmpty()) {
+            return pathHistory.peek();
+        }
+        throw new EmptyStackException();
     }
 
     public Color getPenColor() {
