@@ -68,14 +68,6 @@ public class FrontEndTurtle {
         isPenDisplayed = state;
     }
 
-    public double getHeading() {
-        return heading;
-    }
-
-    public void setHeading(double newValue) {
-        display.setRotate(newValue);
-    }
-
     public void setImage(Image newImage) {
         displayImage = newImage;
         display = new ImageView(displayImage);
@@ -89,11 +81,12 @@ public class FrontEndTurtle {
 
     public void setPosition(Double[] newPosition, double newHeading) {
         Double[] oldPosition = {display.getLayoutX(), display.getLayoutY()};
+        double oldHeading = display.getRotate();
 
         Timeline animation = new Timeline();
         animation.setCycleCount(3);
         animation.getKeyFrames()
-                .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> stepTurtle(oldPosition, newPosition, heading, newHeading)));
+                .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> stepTurtle(oldPosition, newPosition, oldHeading, newHeading)));
 
         // create and start new Thread, so we don't block the UI
 new Thread(() -> {
@@ -114,13 +107,20 @@ new Thread(() -> {
 
     public void stepTurtle(Double[] oldPosition, Double[] newPosition, double
     oldHeading, double newHeading) {
+        
+
     double xStep = (newPosition[0] - oldPosition[0])/3;
     double yStep = (newPosition[1] - oldPosition[1])/3;
     double rotStep = (newHeading - oldHeading)/3;
 
+    System.out.println(oldHeading);
+    System.out.println(newHeading);
+    System.out.println("TEST, rotStep =" + rotStep);
+
     display.setLayoutX(display.getLayoutX() + xStep);
     display.setLayoutY(display.getLayoutY() + yStep);
     display.setRotate(display.getRotate() + rotStep);
+
     }
 
     public ImageView getDisplay() {

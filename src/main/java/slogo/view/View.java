@@ -119,6 +119,7 @@ public class View implements SlogoListener {
 
     @Override
     public void onUpdateTurtleState(TurtleRecord turtleState) {
+        System.out.println(turtleState.heading());
         for (FrontEndTurtle turtle : getTurtles()) {
             if (turtle.getId() == turtleState.id()) {
                 turtle.setIsPenDisplayed(turtleState.pen());
