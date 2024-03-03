@@ -79,7 +79,9 @@ public class Controller {
                 new Alert(AlertType.ERROR, "Invalid Token Entered").show();
             }
             catch (Exception e) {
+                e.printStackTrace();
                 new Alert(AlertType.ERROR, "Invalid or Insufficient Arguments Entered").show();
+
             }
         };
 
