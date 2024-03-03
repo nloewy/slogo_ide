@@ -165,6 +165,7 @@ public class View implements SlogoListener {
     }
 
 
+
     public void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading) {
         double oldX = turtle.getX();
         double oldY = turtle.getY();
@@ -225,6 +226,7 @@ public class View implements SlogoListener {
     //add it to history next to the command
     @Override
     public void onReturn(double value, String string) {
+
 
     }
 
