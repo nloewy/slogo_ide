@@ -57,7 +57,6 @@
 
 .input-box {
   -fx-background-color: #666666;
-  -fx-padding: 0 0 0 200;
   -fx-spacing: 10;
 }
 
@@ -67,8 +66,13 @@
   -fx-text-fill: white;
 }
 
-#Submit {
-  -fx-font-size: 20;
-  -fx-translate-y: 20;
-  -fx-translate-x: 20;
+.input-box .slider {
+  -fx-alignment: left;
+  -fx-pref-width: 400;
+}
+
+.main-screen-button {
+  -fx-font-size: 15;
+  -fx-translate-y: -5;
+  -fx-translate-x: 10;
 }

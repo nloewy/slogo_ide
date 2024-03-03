@@ -52,19 +52,29 @@
 
 .input-box {
     -fx-border-color: black;
-    -fx-padding: 0 0 0 200;
     -fx-spacing: 10;
+}
+
+.input-box .slider {
+    -fx-alignment: left;
+    -fx-pref-width: 400;
 }
 
 .input-box .text-field {
     -fx-alignment: center-left;
 }
 
-#Submit {
-    -fx-font-size: 20;
-    -fx-translate-y: 20;
-    -fx-translate-x: 20;
+.main-screen-button {
+    -fx-font-size: 15;
+    -fx-translate-y: -5;
+    -fx-translate-x: 10;
 }
+
+/*#Submit {*/
+/*    -fx-font-size: 20;*/
+/*    -fx-translate-y: 20;*/
+/*    -fx-translate-x: 20;*/
+/*}*/
 
 /*#variable {*/
 /*    -fx-font-size: 10;*/

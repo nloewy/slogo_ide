@@ -222,6 +222,10 @@ public class MainScreen implements ViewInternal {
       pause = UserInterfaceUtil.generateButton("Pause", event -> {
         paused = true;
       });
+
+      List<Button> mainButtons = List.of(submitField, play, pause);
+      mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
+
       speedSlider.setMin(10);
       speedSlider.setMax(300);
       speedSlider.setValue(mySpeed);
@@ -235,10 +239,6 @@ public class MainScreen implements ViewInternal {
         }
       });
 
-      // Create an HBox for the buttons
-      HBox buttonBox = new HBox();
-      buttonBox.getChildren().addAll(submitField, play, pause);
-
       controller.addLanguageObserver((s) -> {
         ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
         submitField.setText(newLang.getString("Submit"));
@@ -249,7 +249,8 @@ public class MainScreen implements ViewInternal {
         pause.setText(newLang.getString("Pause"));
       });
 
-      textInputBox.getChildren().addAll(field, buttonBox, speedSlider);
+      textInputBox.getChildren().addAll(speedSlider, field);
+      textInputBox.getChildren().addAll(mainButtons);
       textInputBox.setAlignment(Pos.CENTER);
 
       layout.setCenter(centerPane);
