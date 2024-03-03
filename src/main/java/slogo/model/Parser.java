@@ -97,7 +97,8 @@ public class Parser {
     if (!tokens.get(myIndex).matches(patternLoader.getPattern("Command")) && nodeStack.peek()
         .equals(rootNode)) {
       throw new InvalidTokenException(
-          "Command Expected. Cannot use " + tokens.get(myIndex) + " here. Commands executed up until this point");
+          "Command Expected. Cannot use " + tokens.get(myIndex)
+              + " here. Commands executed up until this point");
     }
     nodeStack.peek().addChild(currentNode);
     nodeStack.push(currentNode);
@@ -133,10 +134,10 @@ public class Parser {
       }
     }
     if (invalidToken) {
-      throw new InvalidTokenException("Invalid Token : " + "'" + token + "'. Commands executed up until this point");
+      throw new InvalidTokenException(
+          "Invalid Token : " + "'" + token + "'. Commands executed up until this point");
     }
   }
-
 
 
   private void makeCommandCreatorNode(List<String> tokens) {
@@ -144,7 +145,8 @@ public class Parser {
     while (index < tokens.size() && !tokens.get(index).equals(CLOSED_BRACKET)) {
       index++;
     }
-    currentNode = new CommandCreatorNode(tokens.get(myIndex + 1).toLowerCase(), modelState, index - myIndex - 1);
+    currentNode = new CommandCreatorNode(tokens.get(myIndex + 1).toLowerCase(), modelState,
+        index - myIndex - 1);
     myIndex++;
   }
 
@@ -187,12 +189,14 @@ public class Parser {
           try {
             currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
                 modelState);
-          } catch (ClassNotFoundException e) {}
+          } catch (ClassNotFoundException e) {
+          }
         }));
 
     nodeHandler.add(new SimpleEntry<>(
         token -> tokenMatched(token, "Command") && isUserDefinedCommand(token),
-        tokens -> currentNode = new UserCommandNode(tokens.get(myIndex).toLowerCase(), modelState)));
+        tokens -> currentNode = new UserCommandNode(tokens.get(myIndex).toLowerCase(),
+            modelState)));
   }
 
   private boolean isToCommand(String token) {
@@ -216,7 +220,6 @@ public class Parser {
     tokenHandlers.put(OPEN_BRACKET, this::handleOpenBracket);
     tokenHandlers.put(CLOSED_BRACKET, this::handleClosedBracket);
   }
-
 
 
 }

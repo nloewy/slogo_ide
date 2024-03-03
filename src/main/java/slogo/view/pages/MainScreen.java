@@ -1,18 +1,12 @@
-
 package slogo.view.pages;
 
 import java.io.FileNotFoundException;
-import java.util.EmptyStackException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -23,28 +17,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import slogo.Controller;
-import slogo.view.UserInterfaceUtil;
 import slogo.view.FrontEndTurtle;
+import slogo.view.UserInterfaceUtil;
 import slogo.view.View;
 import slogo.view.ViewInternal;
 
@@ -56,9 +41,25 @@ animation keyframes.
  */
 
 public class MainScreen implements ViewInternal {
+
+  public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
   private static final double WINDOW_WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
   private static final double WINDOW_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
+  private static final double FRAME_RATE = 4.0;
   private final Controller controller;
+  private final Timeline timeline = new Timeline();
+  private final double speed = 1;
+  Pane root;
+  Stage stage;
+  TextField field;
+  Text variablesBoxLabel = new Text();
+  Text commandHistoryLabel = new Text();
+  Text userDefinedCommandsLabel = new Text();
+  Button submitField;
+  Button play;
+  Button pause;
+  Button step;
+  Pane centerPane = new Pane();
   private Scene scene;
   private boolean paused;
   private BorderPane layout;
@@ -70,31 +71,12 @@ public class MainScreen implements ViewInternal {
   private HBox commandHistoryBox;
   private VBox userDefinedCommandsBox;
   private double mySpeed;
-  private View view;
-  public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
+  private final View view;
   private ResourceBundle myResources;
-  private final Timeline timeline = new Timeline();
-
-
-  Pane root;
-  Stage stage;
-  TextField field;
-  Text variablesBoxLabel = new Text();
-  Text commandHistoryLabel = new Text();
-  Text userDefinedCommandsLabel = new Text();
-  private static final double FRAME_RATE = 4.0;
-  private final double speed = 1;
-  Button submitField;
-  Button play;
-  Button pause;
-  Button step;
   private boolean animationPlaying;
-  private Slider speedSlider;
+  private final Slider speedSlider;
   private Duration pausedTime;
-
-
   private Animation currAnimation;
-  Pane centerPane = new Pane();
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
@@ -105,7 +87,8 @@ public class MainScreen implements ViewInternal {
     mySpeed = 50;
     animationPlaying = false;
     timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> playAnimation()));
+    timeline.getKeyFrames()
+        .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> playAnimation()));
     paused = false;
     initResources();
     timeline.play();
@@ -120,17 +103,16 @@ public class MainScreen implements ViewInternal {
   }
 
   private void playSingleAnimation() {
-    if(!view.getAnimation().isEmpty()) {
+    if (!view.getAnimation().isEmpty()) {
       Animation animation = view.getAnimation().poll();
       animation.setOnFinished(event -> {
-          animationPlaying = false;
-          playAnimation(); // Continue playing other animations after finishing this one
-        });
-        animationPlaying = true;
-        animation.play();
-      }
+        animationPlaying = false;
+        playAnimation(); // Continue playing other animations after finishing this one
+      });
+      animationPlaying = true;
+      animation.play();
     }
-
+  }
 
 
   private void playAnimation() {
@@ -214,99 +196,97 @@ public class MainScreen implements ViewInternal {
     speedSlider.valueProperty().addListener(speedSliderHandler);
   }
 
-    @Override
-    public void setUp() {
-      layout = new BorderPane();
-      layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+  @Override
+  public void setUp() {
+    layout = new BorderPane();
+    layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-      variablesBox = new VBox();
-      variablesBox.getStyleClass().add("variable-box");
-      variablesBox.setPrefSize(200, WINDOW_HEIGHT - 200);
-      variablesPane = new ScrollPane(variablesBox);
-      variablesBox.getChildren().add(variablesBoxLabel);
+    variablesBox = new VBox();
+    variablesBox.getStyleClass().add("variable-box");
+    variablesBox.setPrefSize(200, WINDOW_HEIGHT - 200);
+    variablesPane = new ScrollPane(variablesBox);
+    variablesBox.getChildren().add(variablesBoxLabel);
 
-      commandHistoryBox = new HBox();
-      commandHistoryBox.getStyleClass().add("history-box");
-      commandHistoryBox.setPrefSize(WINDOW_WIDTH, 100);
-      commandsHistory = new ScrollPane(commandHistoryBox);
-      commandHistoryBox.getChildren().add(commandHistoryLabel);
+    commandHistoryBox = new HBox();
+    commandHistoryBox.getStyleClass().add("history-box");
+    commandHistoryBox.setPrefSize(WINDOW_WIDTH, 100);
+    commandsHistory = new ScrollPane(commandHistoryBox);
+    commandHistoryBox.getChildren().add(commandHistoryLabel);
 
-      userDefinedCommandsBox = new VBox();
-      userDefinedCommandsBox.getStyleClass().add("command-box");
-      userDefinedCommandsBox.setPrefSize(200, WINDOW_HEIGHT - 200);
-      userDefinedCommandsPane = new ScrollPane(userDefinedCommandsBox);
-      userDefinedCommandsBox.getChildren().add(userDefinedCommandsLabel);
+    userDefinedCommandsBox = new VBox();
+    userDefinedCommandsBox.getStyleClass().add("command-box");
+    userDefinedCommandsBox.setPrefSize(200, WINDOW_HEIGHT - 200);
+    userDefinedCommandsPane = new ScrollPane(userDefinedCommandsBox);
+    userDefinedCommandsBox.getChildren().add(userDefinedCommandsLabel);
 
-      textInputBox = new HBox();
-      textInputBox.getStyleClass().add("input-box");
-      textInputBox.setMaxSize(WINDOW_WIDTH, 100);
+    textInputBox = new HBox();
+    textInputBox.getStyleClass().add("input-box");
+    textInputBox.setMaxSize(WINDOW_WIDTH, 100);
 
-      field = new TextField();
-      field.setPrefSize(WINDOW_WIDTH - 700, 200);
+    field = new TextField();
+    field.setPrefSize(WINDOW_WIDTH - 700, 200);
 
+    submitField = UserInterfaceUtil.generateButton("Submit", event -> {
+      sendCommandStringToView();
+    });
 
-      submitField = UserInterfaceUtil.generateButton("Submit", event -> {
-        sendCommandStringToView();
-      });
+    play = UserInterfaceUtil.generateButton("Play", event -> {
+      paused = false;
+    });
 
-      play = UserInterfaceUtil.generateButton("Play", event -> {
-        paused = false;
-      });
+    pause = UserInterfaceUtil.generateButton("Pause", event -> {
+      paused = true;
+    });
 
-      pause = UserInterfaceUtil.generateButton("Pause", event -> {
-        paused = true;
-      });
+    step = UserInterfaceUtil.generateButton("Step", event -> {
+      if (currAnimation == null) {
+        playSingleAnimation();
+      } else {
+        finishCurrAnimation();
+      }
+    });
+    speedSlider.setMin(10);
+    speedSlider.setMax(300);
+    speedSlider.setValue(mySpeed);
+    speedSlider.setShowTickLabels(true);
+    speedSlider.setShowTickMarks(true);
+    speedSlider.setMajorTickUnit(10);
+    setSpeedSliderHandler((observable, oldValue, newValue) -> {
+      mySpeed = newValue.intValue();
+      if (mySpeed == speedSlider.getMax()) {
+        mySpeed = 10000;
+      }
+    });
 
-      step = UserInterfaceUtil.generateButton("Step", event -> {
-        if(currAnimation==null) {
-          playSingleAnimation();
-        }
-        else{
-          finishCurrAnimation();
-        }
-      });
-      speedSlider.setMin(10);
-      speedSlider.setMax(300);
-      speedSlider.setValue(mySpeed);
-      speedSlider.setShowTickLabels(true);
-      speedSlider.setShowTickMarks(true);
-      speedSlider.setMajorTickUnit(10);
-      setSpeedSliderHandler((observable, oldValue, newValue) -> {
-        mySpeed = newValue.intValue();
-        if(mySpeed == speedSlider.getMax()) {
-          mySpeed = 10000;
-        }
-      });
+    // Create an HBox for the buttons
+    HBox buttonBox = new HBox();
+    buttonBox.getChildren().addAll(submitField, play, pause, step);
 
-      // Create an HBox for the buttons
-      HBox buttonBox = new HBox();
-      buttonBox.getChildren().addAll(submitField, play, pause, step);
+    controller.addLanguageObserver((s) -> {
+      ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
+      submitField.setText(newLang.getString("Submit"));
+      variablesBoxLabel.setText(newLang.getString("varBox"));
+      commandHistoryLabel.setText(newLang.getString("histBox"));
+      userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
+      play.setText(newLang.getString("Play"));
+      pause.setText(newLang.getString("Pause"));
+      step.setText(newLang.getString("Step"));
+    });
 
-      controller.addLanguageObserver((s) -> {
-        ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
-        submitField.setText(newLang.getString("Submit"));
-        variablesBoxLabel.setText(newLang.getString("varBox"));
-        commandHistoryLabel.setText(newLang.getString("histBox"));
-        userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
-        play.setText(newLang.getString("Play"));
-        pause.setText(newLang.getString("Pause"));
-        step.setText(newLang.getString("Step"));
-      });
+    textInputBox.getChildren().addAll(field, buttonBox, speedSlider);
+    textInputBox.setAlignment(Pos.CENTER);
 
-      textInputBox.getChildren().addAll(field, buttonBox, speedSlider);
-      textInputBox.setAlignment(Pos.CENTER);
+    layout.setCenter(centerPane);
+    layout.setBottom(textInputBox);
+    layout.setRight(variablesPane);
+    layout.setTop(commandsHistory);
+    layout.setLeft(userDefinedCommandsPane);
 
-      layout.setCenter(centerPane);
-      layout.setBottom(textInputBox);
-      layout.setRight(variablesPane);
-      layout.setTop(commandsHistory);
-      layout.setLeft(userDefinedCommandsPane);
+    root = new Pane();
+    initializeTurtleDisplays();
 
-      root = new Pane();
-      initializeTurtleDisplays();
-
-      root.getChildren().add(layout);
-    }
+    root.getChildren().add(layout);
+  }
 
 
   @Override
@@ -318,12 +298,13 @@ public class MainScreen implements ViewInternal {
   public Group getGroup() {
     return null;
   }
+
   public Region getRegion() {
     return root;
   }
 
   public void addLine(Line line) {
-    if(!root.getChildren().contains(line)) {
+    if (!root.getChildren().contains(line)) {
       root.getChildren().add(line);
     }
   }

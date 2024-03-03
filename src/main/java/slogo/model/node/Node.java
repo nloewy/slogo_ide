@@ -23,11 +23,13 @@ public abstract class Node implements Cloneable {
 
   public abstract String getToken();
 
-  public int getNumArgs() throws IncompleteClassException {return 0;}
+  public int getNumArgs() throws IncompleteClassException {
+    return 0;
+  }
 
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    for(Node child : getChildren()) {
+    for (Node child : getChildren()) {
       sb.append(toStringHelper(child, 0));
     }
     return sb.toString();
