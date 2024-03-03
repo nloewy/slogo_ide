@@ -213,24 +213,12 @@ public class MainScreen implements ViewInternal {
     });
 
 
-   // play = UserInterfaceUtil.generateButton("Play", 300, 300, (event) -> {
-   //   for (FrontEndTurtle t : view.getTurtles()) {
-    //    if (view.getAnimation() != null) {
-    //      view.getAnimation().play();
-    //    }
-    //  }
-    //});
-
-   // pause = UserInterfaceUtil.generateButton("Pause", 300, 400, (event) -> {
-    //  for (FrontEndTurtle t : view.getTurtles()) {
-    //    if (view.getAnimation() != null) {
-    //      view.getAnimation().pause();
-    //    }
-    //  }
-   // });
+    play = UserInterfaceUtil.generateButton("Play", 300, 300, (event) -> {paused = false;});
+    pause = UserInterfaceUtil.generateButton("Play", 300, 400, (event) -> {paused = true;});
 
 
-    textInputBox.getChildren().addAll(field, submitField);//, play, pause);
+
+    textInputBox.getChildren().addAll(field, submitField, play, pause);
     root = new Pane();
 
     initializeTurtleDisplays();
