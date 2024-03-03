@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Stack;
 import java.util.function.Consumer;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
@@ -40,6 +41,7 @@ public class View implements SlogoListener {
     private final List<FrontEndTurtle> turtles;
     private final Stack<String> commandHistory;
     private final Stack<String> userDefinedCommandHistory;
+    private Animation myAnimation;
     private String commandString;
     private String lang;
     private Controller controller;
@@ -183,6 +185,7 @@ public class View implements SlogoListener {
             animation.getKeyFrames().add(keyFrame);
         }
 
+        myAnimation = animation;
         animation.play();
         turtle.setPosition(x, y, newHeading);
     }
@@ -229,6 +232,10 @@ public class View implements SlogoListener {
             userDefinedCommandHistory.add(string);
         }
         page.updateCommands();
+    }
+
+    public Animation getAnimation() {
+        return myAnimation;
     }
 }
 

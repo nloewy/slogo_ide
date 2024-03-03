@@ -108,8 +108,6 @@ public class FrontEndTurtle {
         return line;
     }
 
-
-
     public ImageView getDisplay() {
         return display;
     }

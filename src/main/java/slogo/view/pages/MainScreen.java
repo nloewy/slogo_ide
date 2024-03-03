@@ -191,25 +191,25 @@ public class MainScreen implements ViewInternal {
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
     });
 
-    /**
-    play = ButtonUtil.generateButton("Play", 300, 300, (event) -> {
+
+    play = UserInterfaceUtil.generateButton("Play", 300, 300, (event) -> {
       for (FrontEndTurtle t : view.getTurtles()) {
-        if (t.getAnimation() != null) {
-          t.getAnimation().play();
+        if (view.getAnimation() != null) {
+          view.getAnimation().play();
         }
       }
     });
 
-    pause = ButtonUtil.generateButton("Pause", 300, 400, (event) -> {
+    pause = UserInterfaceUtil.generateButton("Pause", 300, 400, (event) -> {
       for (FrontEndTurtle t : view.getTurtles()) {
-        if (t.getAnimation() != null) {
-          t.getAnimation().pause();
+        if (view.getAnimation() != null) {
+          view.getAnimation().pause();
         }
       }
     });
 
-     */
-    textInputBox.getChildren().addAll(field, submitField);//, play, pause);
+
+    textInputBox.getChildren().addAll(field, submitField, play, pause);
     root = new Pane();
 
     initializeTurtleDisplays();
