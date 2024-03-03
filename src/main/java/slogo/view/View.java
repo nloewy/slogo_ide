@@ -177,13 +177,14 @@ public class View implements SlogoListener {
         double rotation = Math.abs(newHeading - oldHeading);
 
         // Calculate duration based on distance and rotation
-        double duration = (distance + rotation * 2) / PIXELS_PER_SECOND;
+        double duration = (distance + rotation * 2) / page.getSpeed();
 
         // Calculate number of intermediate steps based on duration
         int numSteps = (int) (duration / 0.005);
 
         Timeline animation = new Timeline();
         animation.setCycleCount(1);
+
 
         for (int i = 1; i <= numSteps; i++) {
             double progress = (double) i / numSteps;

@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -20,6 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -67,6 +69,7 @@ public class MainScreen implements ViewInternal {
   private HBox textInputBox;
   private HBox commandHistoryBox;
   private VBox userDefinedCommandsBox;
+  private double mySpeed;
   private View view;
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
   private ResourceBundle myResources;
@@ -85,6 +88,8 @@ public class MainScreen implements ViewInternal {
   Button play;
   Button pause;
   private boolean animationPlaying;
+  private Slider speedSlider;
+
 
   Pane centerPane = new Pane();
 
@@ -101,6 +106,7 @@ public class MainScreen implements ViewInternal {
     paused = false;
     initResources();
     timeline.play();
+    speedSlider = new Slider();
   }
 
   private void playAnimation() {
@@ -169,6 +175,9 @@ public class MainScreen implements ViewInternal {
   }
 
 
+  public void setSpeedSliderHandler(ChangeListener<Number> speedSliderHandler) {
+    speedSlider.valueProperty().addListener(speedSliderHandler);
+  }
 
     @Override
     public void setUp() {
@@ -198,7 +207,7 @@ public class MainScreen implements ViewInternal {
       textInputBox.setMaxSize(WINDOW_WIDTH, 100);
 
       field = new TextField();
-      field.setPrefSize(WINDOW_WIDTH - 500, 100);
+      field.setPrefSize(WINDOW_WIDTH - 700, 200);
 
 
       submitField = UserInterfaceUtil.generateButton("Submit", event -> {
@@ -207,11 +216,20 @@ public class MainScreen implements ViewInternal {
 
       play = UserInterfaceUtil.generateButton("Play", event -> {
         paused = false;
-        playAnimation(); // Start playing animations when "Play" is clicked
+        playAnimation();
       });
 
       pause = UserInterfaceUtil.generateButton("Pause", event -> {
         paused = true;
+      });
+      speedSlider.setMin(10);
+      speedSlider.setMax(300);
+      speedSlider.setValue(mySpeed);
+      speedSlider.setShowTickLabels(true);
+      speedSlider.setShowTickMarks(true);
+      speedSlider.setMajorTickUnit(10);
+      setSpeedSliderHandler((observable, oldValue, newValue) -> {
+        mySpeed = newValue.intValue();
       });
 
       // Create an HBox for the buttons
@@ -228,7 +246,7 @@ public class MainScreen implements ViewInternal {
         pause.setText(newLang.getString("Pause"));
       });
 
-      textInputBox.getChildren().addAll(field, buttonBox);
+      textInputBox.getChildren().addAll(field, buttonBox, speedSlider);
       textInputBox.setAlignment(Pos.CENTER);
 
       layout.setCenter(centerPane);
@@ -259,5 +277,9 @@ public class MainScreen implements ViewInternal {
 
   public void addLine(Line line) {
     root.getChildren().add(line);
+  }
+
+  public double getSpeed() {
+    return mySpeed;
   }
 }
