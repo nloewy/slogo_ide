@@ -14,8 +14,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import slogo.model.SlogoModel;
 import slogo.model.api.InsufficientArgumentsException;
+import slogo.model.api.InvalidOperandException;
 import slogo.model.api.InvalidTokenException;
 import slogo.model.api.Model;
+import slogo.model.api.SlogoException;
 import slogo.view.View;
 import slogo.view.pages.StartScreen;
 
@@ -61,9 +63,10 @@ public class Controller {
     parse = t -> {
       try {
         model.parse(t);
-      } catch (ClassNotFoundException | InvocationTargetException | InvalidTokenException |
+      } catch (ClassNotFoundException | InvocationTargetException |
                NoSuchMethodException | InstantiationException | IllegalAccessException |
-               NoSuchFieldException | InsufficientArgumentsException e) {
+               NoSuchFieldException | InvalidOperandException |
+               SlogoException e) {
         new Alert(AlertType.ERROR, e.getMessage()).show();
       }
     };

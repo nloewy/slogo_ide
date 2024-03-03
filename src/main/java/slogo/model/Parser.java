@@ -14,6 +14,7 @@ import java.util.Properties;
 import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import slogo.model.api.InvalidCommandException;
 import slogo.model.api.InvalidTokenException;
 import slogo.model.node.CommandCreatorNode;
 import slogo.model.node.CommandNode;
@@ -97,9 +98,8 @@ public class Parser {
     }
     if (!tokens.get(myIndex).matches(patternLoader.getPattern("Command")) && nodeStack.peek()
         .equals(rootNode)) {
-      throw new InvalidTokenException(
-          "Command Expected. Cannot use " + tokens.get(myIndex)
-              + " here. Commands executed up until this point");
+      throw new InvalidCommandException(
+          "Command Expected. Commands executed up to your input : " + tokens.get(myIndex), tokens.get(myIndex));
     }
     nodeStack.peek().addChild(currentNode);
     nodeStack.push(currentNode);
@@ -146,8 +146,9 @@ public class Parser {
         }
       }
       throw new InvalidTokenException(
-          "Invalid Token : " + "'" + token + "'. Commands executed up until this point");
+          "Invalid Token. Commands Executed up until your input : ", tokens.get(myIndex));
     }
+
   }
 
 
@@ -176,6 +177,7 @@ public class Parser {
     } catch (IOException e) {
       throw new FileNotFoundException("Cannot find file " + filePath);
     }
+
     return commandMap;
   }
 
