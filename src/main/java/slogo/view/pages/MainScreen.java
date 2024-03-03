@@ -14,6 +14,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -36,6 +37,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -80,6 +82,7 @@ public class MainScreen implements ViewInternal {
   private final double speed = 0.75;
   Button submitField;
   Button newSim;
+  Button help;
   Button play;
   Button pause;
   Pane centerPane = new Pane();
@@ -177,6 +180,11 @@ public class MainScreen implements ViewInternal {
     commandsHistory = new ScrollPane(commandHistoryBox);
     commandHistoryBox.getChildren().add(commandHistoryLabel);
 
+    help = UserInterfaceUtil.generateButton("Help", event -> {
+      showHelpPopup();
+    });
+    commandHistoryBox.getChildren().add(help);
+
     userDefinedCommandsBox = new VBox();
     userDefinedCommandsBox.getStyleClass().add("command-box");
     userDefinedCommandsBox.setPrefSize(200, WINDOW_HEIGHT - 200);
@@ -207,6 +215,7 @@ public class MainScreen implements ViewInternal {
       newSim.setText(newLang.getString("Upload"));
       variablesBoxLabel.setText(newLang.getString("varBox"));
       commandHistoryLabel.setText(newLang.getString("histBox"));
+      help.setText(newLang.getString("Help"));
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
     });
 
@@ -244,6 +253,42 @@ public class MainScreen implements ViewInternal {
     animation.play();
   }
 
+  private void showHelpPopup() {
+    Popup popup = new Popup();
+    VBox content = new VBox(10);
+    content.setStyle("-fx-background-color: white; -fx-padding: 10;");
+
+    Button closeButton = new Button("Close");
+    closeButton.setOnAction(e -> popup.hide());
+
+    Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML();
+    for (String command : commandDetails.keySet()) {
+      Button commandButton = new Button(command);
+      commandButton.setOnAction(e -> showCommandDetailsPopup(command, commandDetails.get(command)));
+      content.getChildren().add(commandButton);
+    }
+
+    content.getChildren().add(closeButton);
+    popup.getContent().add(content);
+    popup.show(root.getScene().getWindow());
+  }
+
+  private void showCommandDetailsPopup(String command, Map<String, String> details) {
+    Popup popup = new Popup();
+    VBox content = new VBox(10);
+    content.setStyle("-fx-background-color: white; -fx-padding: 10;");
+
+    Label commandLabel = new Label("Command: " + command);
+    Label descriptionLabel = new Label("Description: " + details.get("description"));
+    Label exampleLabel = new Label("Example: " + details.get("example"));
+
+    Button closeButton = new Button("Close");
+    closeButton.setOnAction(e -> popup.hide());
+
+    content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, closeButton);
+    popup.getContent().add(content);
+    popup.show(root.getScene().getWindow());
+  }
   @Override
   public javafx.scene.Scene getScene() {
     return scene;

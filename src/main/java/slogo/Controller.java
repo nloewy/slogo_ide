@@ -7,13 +7,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import slogo.model.SlogoModel;
 import slogo.model.api.InvalidTokenException;
 import slogo.model.api.Model;
@@ -205,4 +213,31 @@ public class Controller {
         setCurrentLanguage(currentLanguage);
     }
 
+    public Map<String, Map<String, String>> getCommandDetailsFromXML() {
+        Map<String, Map<String, String>> commandDetails = new HashMap<>();
+        try {
+            File inputFile = new File("data/helpXml/commands.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("command");
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    String commandName = eElement.getElementsByTagName("canonicalName").item(0).getTextContent();
+                    String description = eElement.getElementsByTagName("description").item(0).getTextContent();
+                    String example = eElement.getElementsByTagName("example").item(0).getTextContent();
+                    Map<String, String> details = new HashMap<>();
+                    details.put("description", description);
+                    details.put("example", example);
+                    commandDetails.put(commandName, details);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return commandDetails;
+    }
 }
