@@ -150,14 +150,6 @@ public class View implements SlogoListener {
 
     @Override
     public void onUpdateValue(String variableName, Number newValue) {
-        if (variableCommands.get(variableName) != null && variableValues.get(variableName) != null) {
-            List<String> commands = variableCommands.get(variableName);
-            commands.add(commandHistory.peek());
-            variableValues.remove(variableName);
-            variableValues.put(variableName, newValue);
-            return;
-        }
-        variableCommands.put(variableName, List.of(commandHistory.peek()));
         variableValues.put(variableName, newValue);
         page.updateVariables();
     }
