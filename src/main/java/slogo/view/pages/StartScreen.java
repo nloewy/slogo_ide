@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.io.InputStream;
 import java.util.Objects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,57 +22,17 @@ import slogo.view.View;
 import slogo.view.ViewInternal;
 
 public class StartScreen implements ViewInternal {
+    private static final ObservableList<String> SUPPORTED_LANGUAGES = FXCollections.observableArrayList("English", "Spanish", "French");
+    private static final ObservableList<String> SUPPORTED_THEMES = FXCollections.observableArrayList("Light Mode", "Dark Mode");
+    private static final String LOGO_IMAGE_PATH = "SlogoLOGO.png";
     private Scene scene;
     private Pane root = new Pane();
     private final Controller controller;
     private Stage stage;
 
-    public StartScreen(Stage stage, Controller controller) throws FileNotFoundException {
+    public StartScreen(Stage stage, Controller controller){
         this.controller = controller;
         this.stage = stage;
-
-        Image logo = new Image(new FileInputStream("src/main/resources/SlogoLOGO.png"));
-        ImageView logoView = new ImageView(logo);
-        logoView.setPreserveRatio(true);
-        logoView.setFitWidth(400);
-        logoView.setLayoutX(100);
-        logoView.setLayoutY(50);
-
-        ObservableList<String> langOptions = FXCollections.observableArrayList("English",
-            "Spanish", "French");
-        ComboBox<String> langBox = new ComboBox<>(langOptions);
-        langBox.setLayoutX(100);
-        langBox.setLayoutY(200);
-
-        // Controller gets language
-        langBox.setOnAction(e -> {
-            String selectedLanguage = langBox.getValue();
-            controller.setCurrentLanguage(selectedLanguage);
-        });
-
-        root.getChildren().addAll(
-            UserInterfaceUtil.generateButton("Load New XML Session", 100, 300, e -> {
-              controller.openNewXMLSession();
-            }),
-            UserInterfaceUtil.generateButton("Load New General Session", 100, 330, e -> {
-                try {
-                    controller.openBlankIDESession();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }),
-            UserInterfaceUtil.generateButton("Load Old Session", 100, 360,
-                e -> controller.loadSession()),
-            UserInterfaceUtil.generateButton("Upload Turtle Image", 400, 300, (event) -> {
-                handleLoadTurtleImage();
-            }),
-            UserInterfaceUtil.generateComboBox(FXCollections.observableArrayList("Light Mode", "Dark Mode"), 400, 330, (event) -> {
-                controller.setCurrentTheme(event, scene);
-            }),
-            logoView,
-            langBox
-        );
-        scene = new Scene(root, 600, 400);
     }
     private void handleLoadTurtleImage() {
         File dataFile = Screen.IMAGE_CHOOSER.showOpenDialog(stage);
@@ -90,6 +51,32 @@ public class StartScreen implements ViewInternal {
 
     @Override
     public void setUp() {
+        root.getChildren().addAll(
+            UserInterfaceUtil.generateImageView(LOGO_IMAGE_PATH, 100, 50),
+            UserInterfaceUtil.generateComboBox(SUPPORTED_LANGUAGES, 100, 200,
+                controller::setCurrentLanguage),
+            UserInterfaceUtil.generateButton("Load New XML Session", 100, 300, e -> {
+                controller.openNewXMLSession();
+            }),
+            UserInterfaceUtil.generateButton("Load New General Session", 100, 330, e -> {
+                try {
+                    controller.openBlankIDESession();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }),
+            UserInterfaceUtil.generateButton("Load Old Session", 100, 360,
+                e -> controller.loadSession()),
+            UserInterfaceUtil.generateButton("Upload Turtle Image", 400, 300, (event) -> {
+                handleLoadTurtleImage();
+            }),
+            UserInterfaceUtil.generateComboBox(SUPPORTED_THEMES, 400, 330, (event) -> {
+                controller.setCurrentTheme(event, scene);
+            })
+        );
+        scene = new Scene(root, 600, 400);
+
+        controller.updateCurrentTheme(scene);
     }
 
 }

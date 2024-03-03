@@ -1,3 +1,26 @@
 .root {
   -fx-background-color: BLACK;
 }
+
+.button {
+  -fx-text-fill: blue;
+  -fx-background-color: darkorange;
+  -fx-border-color: orange;
+  -fx-border-style: solid;
+
+  -fx-font-family: "Courier New";
+  -fx-font-size: 10px;
+  -fx-font-weight: bold;
+}
+
+.combo-box {
+  -fx-background-color: darkorange;
+}
+
+.combo-box .cell {
+  -fx-text-fill: blue;
+
+  -fx-font-family: "Courier New";
+  -fx-font-size: 10px;
+  -fx-font-weight: bold;
+}
