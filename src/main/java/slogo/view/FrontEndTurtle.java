@@ -99,38 +99,46 @@ public class FrontEndTurtle {
   //  }
 
     public void setPosition(double x, double y, double newHeading) {
-        myX = x;
-        myY = y;
+        double oldHeading = myHeading;
+
         myHeading = newHeading;
 
         display.setLayoutX(x);
         display.setLayoutY(y);
         display.setRotate(newHeading);
-        /**
 
-        animation = new Timeline();
-        animation.setCycleCount(3);
-        animation.getKeyFrames()
-                .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)),
-                        e -> stepTurtle(oldPosition, newPosition, oldHeading, newHeading)));
-        animation.setOnFinished((event) -> {
-            pathHistory.add(drawLine(oldPosition[0], oldPosition[1], newPosition[0], newPosition[1]));
-        });
+        Timeline animation = new Timeline();
+        animation.setCycleCount(5);
 
-        new Thread(() -> {
-            try {
-                TimeUnit.MILLISECONDS.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Platform.runLater(() -> {
-                animation.play();
-            });
-        }).start();
-         */
+        for (int i = 1; i <= 5; i++) {
+            double intermediateX = myX + (x - myX) / 5 * i;
+            double intermediateY = myY + (y - myY) / 5 * i;
+            double intermediateHeading = oldHeading + (newHeading - oldHeading) / 5 * i;
+
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * 1.0),
+                e -> {
+                    stepTurtle(myX, x, myY, y, oldHeading, intermediateHeading, finalI);
+                    drawLine(myX, myY, intermediateX, intermediateY);
+                });
+            animation.getKeyFrames().add(keyFrame);
+        }
+        animation.play();
+        myX = x;
+        myY = y;
+    }
+
+    public void stepTurtle(double oldX, double newX, double oldY,double  newY, double oldHeading, double newHeading , int stepNumber) {
+        double intermediateX = oldX + (newX - oldX) / 5 * stepNumber;
+        double intermediateY = oldY + (newY - oldY) / 5 * stepNumber;
+        double intermediateHeading = oldHeading + (newHeading - oldHeading) / 5 * stepNumber;
+        display.setLayoutX(intermediateX);
+        display.setLayoutY(intermediateY);
+        display.setRotate(intermediateHeading);
     }
 
     public Line drawLine(Double oldPosition, Double oldPosition2, Double newPosition, Double newPosition2) {
+
         Line line = new Line(oldPosition + 225, oldPosition2 + 125, newPosition + 225, newPosition2 + 125);
         line.setStroke(penColor);
         line.setVisible(isPenDisplayed);

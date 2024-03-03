@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import slogo.Controller;
+import slogo.Main;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.view.pages.MainScreen;
@@ -40,6 +41,8 @@ public class View implements SlogoListener {
     private Controller controller;
     private Consumer<String> parse;
     private Scene scene;
+    private MainScreen page;
+
     public static final Double[] ORIGIN = new Double[]{width/2.0, height/2.0};
 
     public View(Controller controller, Stage stage) {
@@ -64,7 +67,7 @@ public class View implements SlogoListener {
     }
 
     public void run(Consumer<String> parseMethod) throws FileNotFoundException {
-        MainScreen page = new MainScreen(this, stage, controller);
+        page = new MainScreen(this, stage, controller);
         parse = parseMethod;
 
         page.setUp();
@@ -148,6 +151,8 @@ public class View implements SlogoListener {
             return;
         }
         variables.put(variableName + " :: " + newValue, List.of(commandHistory.peek()));
+        page.updateVariables();
+        page.updateCommands();
     }
     private void drawLine(double x1, double y1, double x2, double y2) {
         Line line = new Line(x1 , y1 , x2, y2);
@@ -156,21 +161,21 @@ public class View implements SlogoListener {
     }
     @Override
     public void onUpdateTurtleState(TurtleRecord turtleState) {
-        System.out.println(turtleState.heading());
         for (FrontEndTurtle turtle : getTurtles()) {
             if (turtle.getId() == turtleState.id()) {
                 turtle.setIsPenDisplayed(turtleState.pen());
-                turtle.drawLine(turtle.getX(),turtle.getY(), turtleState.x()+ORIGIN[0], turtleState.y() + ORIGIN[1]);
+                Line line= turtle.drawLine(turtle.getX(),turtle.getY(), turtleState.x()+ORIGIN[0], turtleState.y() + ORIGIN[1]);
+                page.addLine(line);
                 turtle.setPosition(turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1], turtleState.heading());
                 return;
             }
         }
         turtles.add(new FrontEndTurtle(
-            turtleState.id(), 
-            new Double[]{turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1]}, 
-            Color.BLACK, 
-            true, 
-            turtleState.heading(), 
+            turtleState.id(),
+            new Double[]{turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1]},
+            Color.BLACK,
+            true,
+            turtleState.heading(),
             defaultImage));
     }
 
