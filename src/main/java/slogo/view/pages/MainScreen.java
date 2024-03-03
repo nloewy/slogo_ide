@@ -228,6 +228,7 @@ public class MainScreen implements ViewInternal {
 
     submitField = UserInterfaceUtil.generateButton("Submit", event -> {
       sendCommandStringToView();
+      paused = false;
     });
 
     play = UserInterfaceUtil.generateButton("Play", event -> {
