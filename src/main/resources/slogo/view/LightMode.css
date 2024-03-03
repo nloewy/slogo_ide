@@ -5,13 +5,24 @@
     -fx-border-style: solid;
 
     -fx-font-family: "Courier New";
-    -fx-font-size: 25px;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.combo-box {
+    -fx-background-color: darkorange;
+}
+
+.combo-box .cell {
+    -fx-text-fill: blue;
+
+    -fx-font-family: "Courier New";
+    -fx-font-size: 10px;
     -fx-font-weight: bold;
 }
 
 #variable {
     -fx-font-size: 10;
-
 }
 
 .logo {

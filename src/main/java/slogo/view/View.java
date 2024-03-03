@@ -68,22 +68,13 @@ public class View implements SlogoListener {
         parse = parseMethod;
 
         page.setUp();
-        scene = new Scene(page.getGroup(), width, height);
-        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
+        scene = new Scene(page.getRegion(), width, height);
+        controller.updateCurrentTheme(scene);
 
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
-    }
 
-    public void switchToLightMode() {
-        scene.getStylesheets().remove(Objects.requireNonNull(View.class.getResource("DarkMode.css")).toExternalForm());
-        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
-    }
-
-    public void switchToDarkMode() {
-        scene.getStylesheets().remove(Objects.requireNonNull(View.class.getResource("LightMode.css")).toExternalForm());
-        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("DarkMode.css")).toExternalForm());
     }
 
     public void setTurtleImage(File f) {
@@ -116,9 +107,6 @@ public class View implements SlogoListener {
     /*
      * Handles the user switching background color.
      */ //TODO Test
-    public void setColor(Color color) {
-        stage.getScene().setFill(color);
-    }
 
     private boolean hasCommandString() {
         return !commandString.isEmpty();

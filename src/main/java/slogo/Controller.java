@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import slogo.model.SlogoModel;
@@ -24,6 +25,7 @@ import slogo.view.pages.StartScreen;
 public class Controller {
     private Stage stage;
     private String currentLanguage = "English";
+    private String currentTheme = "LightMode.css";
     private Consumer<String> parse;
     private List<View> windows = new ArrayList<>();
     private File turtleImage;
@@ -93,6 +95,14 @@ public class Controller {
 
     public String getCurrentLanguage() {
         return currentLanguage;
+    }
+    public void updateCurrentTheme(Scene scene) {
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource(currentTheme)).toExternalForm());
+    }
+    public void setCurrentTheme(String theme, Scene scene) {
+        this.currentTheme = theme;
+        updateCurrentTheme(scene);
     }
 
     public void loadSession() {
