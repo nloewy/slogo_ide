@@ -89,8 +89,10 @@ public class MainScreen implements ViewInternal {
   Button pause;
   private boolean animationPlaying;
   private Slider speedSlider;
+  private Duration pausedTime;
 
 
+  private Animation currAnimation;
   Pane centerPane = new Pane();
 
   // Add an XMLFile object to this when Model adds one
@@ -99,7 +101,7 @@ public class MainScreen implements ViewInternal {
     this.stage = stage;
     this.view = view;
     this.controller = controller;
-
+    mySpeed = 50;
     animationPlaying = false;
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> playAnimation()));
@@ -109,15 +111,28 @@ public class MainScreen implements ViewInternal {
     speedSlider = new Slider();
   }
 
+
   private void playAnimation() {
     if (!animationPlaying && !view.getAnimation().isEmpty() && !paused) {
-      Animation animation = view.getAnimation().poll();
-      animation.setOnFinished(event -> {
+      currAnimation = view.getAnimation().poll();
+      currAnimation.setOnFinished(event -> {
         animationPlaying = false;
+        currAnimation = null;
         playAnimation();
       });
       animationPlaying = true;
-      animation.play();
+      currAnimation.play();
+    } else if (animationPlaying && paused) {
+      if (currAnimation != null) {
+        pausedTime = currAnimation.getCurrentTime(); // Store the current time when animation is paused
+        currAnimation.pause();
+      }
+    } else if (animationPlaying && !paused && pausedTime != null) {
+      // If animation was paused and now unpaused, resume from the paused time
+      if (currAnimation != null) {
+        currAnimation.playFrom(pausedTime);
+        pausedTime = null; // Reset paused time
+      }
     }
   }
 
@@ -137,7 +152,6 @@ public class MainScreen implements ViewInternal {
     String currentLanguage = controller.getCurrentLanguage();
     myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + currentLanguage);
   }
-
 
   public void updateVariables() {
     variablesBox.getChildren().clear();
@@ -216,7 +230,6 @@ public class MainScreen implements ViewInternal {
 
       play = UserInterfaceUtil.generateButton("Play", event -> {
         paused = false;
-        playAnimation();
       });
 
       pause = UserInterfaceUtil.generateButton("Pause", event -> {
