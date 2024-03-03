@@ -8,7 +8,7 @@ import slogo.model.api.SlogoListener;
 
 public abstract class Node implements Cloneable {
 
-  private final List<Node> myChildren = new ArrayList<>();
+  private List<Node> myChildren = new ArrayList<>();
   private SlogoListener myListener;
 
   public abstract double evaluate() throws InvocationTargetException, IllegalAccessException;
@@ -54,6 +54,9 @@ public abstract class Node implements Cloneable {
   }
 
 
+  public void removeChildren() {
+    myChildren = new ArrayList<>();
+  }
 }
 
 

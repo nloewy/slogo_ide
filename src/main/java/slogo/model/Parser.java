@@ -36,12 +36,13 @@ public class Parser {
   private int myIndex;
   private List<Map.Entry<Predicate<String>, Consumer<List<String>>>> nodeHandler;
   private Map<String, Consumer<Stack<Node>>> tokenHandlers;
+  private static final String RESOURCE_PATH = "src/main/resources/slogo/example/languages/";
 
-  public Parser(ModelState modelState) throws IOException {
+  public Parser(ModelState modelState, String currentLanguage) throws IOException {
     this.modelState = modelState;
-    commandMap = loadCommandMap("src/main/resources/slogo/example/languages/English.properties");
+    commandMap = loadCommandMap(RESOURCE_PATH + currentLanguage + ".properties");
     patternLoader = new PatternLoader(
-        "src/main/resources/slogo/example/languages/Syntax.properties");
+        RESOURCE_PATH+"Syntax.properties");
     initializeNodeHandler();
     initializeTokenMap();
   }
@@ -90,7 +91,7 @@ public class Parser {
   }
 
   private void createTokenAndUpdateStack(List<String> tokens, Stack<Node> nodeStack) {
-    createNode(tokens);
+    createNode(tokens, nodeStack);
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
     }
@@ -123,7 +124,7 @@ public class Parser {
     nodeStack.push(newNode);
   }
 
-  private void createNode(List<String> tokens) {
+  private void createNode(List<String> tokens, Stack<Node> nodeStack) {
     String token = tokens.get(myIndex);
     boolean invalidToken = true;
     for (Map.Entry<Predicate<String>, Consumer<List<String>>> entry : nodeHandler) {
@@ -134,6 +135,16 @@ public class Parser {
       }
     }
     if (invalidToken) {
+      while (nodeStack.size()>1)  {
+        boolean flag = false;
+        if(topNodeSatisfied(nodeStack)) {
+          flag = true;
+        }
+        nodeStack.pop();
+        if(!flag) {
+          nodeStack.peek().removeChildren();
+        }
+      }
       throw new InvalidTokenException(
           "Invalid Token : " + "'" + token + "'. Commands executed up until this point");
     }

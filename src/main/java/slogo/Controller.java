@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import slogo.model.SlogoModel;
+import slogo.model.api.InsufficientArgumentsException;
 import slogo.model.api.InvalidTokenException;
 import slogo.model.api.Model;
 import slogo.view.View;
@@ -54,7 +55,7 @@ public class Controller {
     if (turtleImage != null) {
       view.setTurtleImage(turtleImage);
     }
-    Model model = new SlogoModel(view);
+    Model model = new SlogoModel(view, currentLanguage);
     windows.add(view);
 
     parse = t -> {
@@ -62,7 +63,7 @@ public class Controller {
         model.parse(t);
       } catch (ClassNotFoundException | InvocationTargetException | InvalidTokenException |
                NoSuchMethodException | InstantiationException | IllegalAccessException |
-               NoSuchFieldException e) {
+               NoSuchFieldException | InsufficientArgumentsException e) {
         new Alert(AlertType.ERROR, e.getMessage()).show();
       }
     };

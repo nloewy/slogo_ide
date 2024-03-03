@@ -20,11 +20,11 @@ public class SlogoModel implements Model {
   private ModelState modelState;
   private final Stack<String> myCommands;
 
-  public SlogoModel(SlogoListener listener) throws IOException {
+  public SlogoModel(SlogoListener listener, String currentLanguage) throws IOException {
     modelState = new ModelState();
     modelState.getTurtles().add(new Turtle(1));
     myListener = listener;
-    parser = new Parser(modelState);
+    parser = new Parser(modelState, currentLanguage);
     myCommands = new Stack<>();
 
   }
