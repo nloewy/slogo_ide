@@ -45,7 +45,6 @@ public class SlogoModel implements Model {
       throws InvocationTargetException, IllegalAccessException {
     dfsAddListener(root);
     double val = -1;
-    System.out.println(root);
     for(Node node : root.getChildren()) {
       val = node.evaluate();
     }
