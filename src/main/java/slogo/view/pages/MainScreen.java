@@ -12,6 +12,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -24,6 +25,7 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -33,7 +35,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import slogo.Controller;
-import slogo.view.ButtonUtil;
+import slogo.view.UserInterfaceUtil;
 import slogo.view.FrontEndTurtle;
 import slogo.view.View;
 import slogo.view.ViewInternal;
@@ -48,7 +50,7 @@ animation keyframes.
 public class MainScreen implements ViewInternal {
 
   private final Controller controller;
-  private javafx.scene.Scene scene;
+  private Scene scene;
   private BorderPane layout;
   private ScrollPane variablesPane;
   private ScrollPane commandsHistory;
@@ -60,7 +62,7 @@ public class MainScreen implements ViewInternal {
   private View view;
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
   private ResourceBundle myResources;
-  Group root;
+  Pane root;
   Stage stage;
   TextField field;
   Text variablesBoxLabel = new Text("Variables");
@@ -78,7 +80,6 @@ public class MainScreen implements ViewInternal {
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
   public MainScreen(View view, Stage stage, Controller controller) throws FileNotFoundException {
-    super();
     this.stage = stage;
 
     this.view = view;
@@ -163,7 +164,6 @@ public class MainScreen implements ViewInternal {
 
   @Override
   public void setUp() {
-
     layout = new BorderPane();
 
     variablesBox = new VBox();
@@ -196,7 +196,7 @@ public class MainScreen implements ViewInternal {
     commandHistoryLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
     userDefinedCommandsLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
 
-    submitField = ButtonUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
+    submitField = UserInterfaceUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
       sendCommandStringToView();
     });
 
@@ -223,7 +223,7 @@ public class MainScreen implements ViewInternal {
     textInputBox.getChildren().addAll(field, submitField);//, play, pause);
     textInputBox.setAlignment(javafx.geometry.Pos.CENTER);
 
-    root = new Group();
+    root = new Pane();
 
     // root.getChildren().add(variablesPane);
     // root.getChildren().add(commandBox);
@@ -239,7 +239,6 @@ public class MainScreen implements ViewInternal {
     layout.setTop(commandsHistory);
     layout.setLeft(userDefinedCommandsPane);
     root.getChildren().add(layout);
-
     animation.play();
   }
 
@@ -250,6 +249,9 @@ public class MainScreen implements ViewInternal {
 
   @Override
   public Group getGroup() {
+    return null;
+  }
+  public Region getRegion() {
     return root;
   }
 

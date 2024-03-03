@@ -5,20 +5,24 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.util.Objects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import slogo.Controller;
-import slogo.view.ButtonUtil;
+import slogo.view.UserInterfaceUtil;
+import slogo.view.View;
 import slogo.view.ViewInternal;
 
 public class StartScreen implements ViewInternal {
-    private javafx.scene.Scene scene;
-    private Group root = new Group();
+    private Scene scene;
+    private Pane root = new Pane();
     private final Controller controller;
     private Stage stage;
 
@@ -46,34 +50,29 @@ public class StartScreen implements ViewInternal {
         });
 
         root.getChildren().addAll(
-            ButtonUtil.generateButton("Load New XML Session", 100, 300, e -> {
+            UserInterfaceUtil.generateButton("Load New XML Session", 100, 300, e -> {
               controller.openNewXMLSession();
             }),
-            ButtonUtil.generateButton("Load New General Session", 100, 330, e -> {
+            UserInterfaceUtil.generateButton("Load New General Session", 100, 330, e -> {
                 try {
                     controller.openBlankIDESession();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }),
-            ButtonUtil.generateButton("Load Old Session", 100, 360,
+            UserInterfaceUtil.generateButton("Load Old Session", 100, 360,
                 e -> controller.loadSession()),
-            ButtonUtil.generateButton("Upload Turtle Image", 400, 300, (event) -> {
+            UserInterfaceUtil.generateButton("Upload Turtle Image", 400, 300, (event) -> {
                 handleLoadTurtleImage();
             }),
-            ButtonUtil.generateButton("Light Mode", 400, 330, (event) -> {
-                handleLoadTurtleImage();
-            }),
-            ButtonUtil.generateButton("Dark Mode", 400, 360, (event) -> {
-                handleLoadTurtleImage();
+            UserInterfaceUtil.generateComboBox(FXCollections.observableArrayList("Light Mode", "Dark Mode"), 400, 330, (event) -> {
+                controller.setCurrentTheme(event, scene);
             }),
             logoView,
             langBox
         );
-
-        scene = new javafx.scene.Scene(root, 600, 400);
+        scene = new Scene(root, 600, 400);
     }
-
     private void handleLoadTurtleImage() {
         File dataFile = Screen.IMAGE_CHOOSER.showOpenDialog(stage);
         controller.setTurtleImage(dataFile);
@@ -86,7 +85,7 @@ public class StartScreen implements ViewInternal {
 
     @Override
     public Group getGroup() {
-        return root;
+        return null;
     }
 
     @Override
