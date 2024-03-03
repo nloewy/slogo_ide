@@ -11,11 +11,14 @@ import java.util.Objects;
 import java.util.Stack;
 import java.util.function.Consumer;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import slogo.Controller;
 import slogo.Main;
 import slogo.model.api.SlogoListener;
@@ -150,23 +153,46 @@ public class View implements SlogoListener {
 
     @Override
     public void onUpdateValue(String variableName, Number newValue) {
+        variableCommands.put(variableName, List.of(commandHistory.peek()));
         variableValues.put(variableName, newValue);
         page.updateVariables();
     }
 
-    private void drawLine(double x1, double y1, double x2, double y2) {
-        Line line = new Line(x1 , y1 , x2, y2);
-        line.setStroke(Color.BLACK);
 
+    public void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading) {
+        double oldX = turtle.getX();
+        double oldY = turtle.getY();
+        double oldHeading = turtle.getHeading();
+        Timeline animation = new Timeline();
+        animation.setCycleCount(1);
+
+        for (int i = 1; i <= 50; i++) {
+            double intermediateX = oldX + (x - oldX) / 50 * i;
+            double intermediateY = oldY + (y - oldY) / 50 * i;
+            double intermediateHeading = oldHeading + (newHeading - oldHeading) / 50 * i;
+
+            Line line = turtle.drawLine(oldX, oldY, intermediateX, intermediateY);
+
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * 0.10),
+                e -> {
+                    turtle.getDisplay().setLayoutX(intermediateX);
+                    turtle.getDisplay().setLayoutY(intermediateY);
+                    turtle.getDisplay().setRotate(intermediateHeading);
+                    page.addLine(line);
+                });
+            animation.getKeyFrames().add(keyFrame);
+        }
+
+        animation.play();
+        turtle.setPosition(x, y, newHeading);
     }
+
     @Override
     public void onUpdateTurtleState(TurtleRecord turtleState) {
         for (FrontEndTurtle turtle : getTurtles()) {
             if (turtle.getId() == turtleState.id()) {
                 turtle.setIsPenDisplayed(turtleState.pen());
-                Line line= turtle.drawLine(turtle.getX(),turtle.getY(), turtleState.x()+ORIGIN[0], turtleState.y() + ORIGIN[1]);
-                page.addLine(line);
-                turtle.setPosition(turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1], turtleState.heading());
+                setPosition(turtle, turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1], turtleState.heading());
                 return;
             }
         }

@@ -74,9 +74,7 @@ public class MainScreen implements ViewInternal {
   Text variablesBoxLabel = new Text();
   Text commandHistoryLabel = new Text();
   Text userDefinedCommandsLabel = new Text();
-  Map<FrontEndTurtle, Double[]> myTurtlePositions = new HashMap<>();
   private static final double FRAME_RATE = 4.0;
-  private final Timeline animation = new Timeline();
   private final double speed = 0.75;
   Button submitField;
   Button play;
@@ -92,17 +90,10 @@ public class MainScreen implements ViewInternal {
     this.controller = controller;
 
     initResources();
-
-    animation.setCycleCount(Timeline.INDEFINITE);
-    animation.getKeyFrames()
-        .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> update()));
   }
 
   public void initializeTurtleDisplays() {
     for (FrontEndTurtle turtle : view.getTurtles()) {
-      // root.getChildren().add(turtle.getDisplay());
-
-      // TEST
       centerPane.getChildren().add(turtle.getDisplay());
     }
   }
@@ -231,7 +222,6 @@ public class MainScreen implements ViewInternal {
     layout.setTop(commandsHistory);
     layout.setLeft(userDefinedCommandsPane);
     root.getChildren().add(layout);
-    animation.play();
   }
 
   @Override
