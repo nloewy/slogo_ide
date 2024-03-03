@@ -79,6 +79,7 @@ public class MainScreen implements ViewInternal {
   private final Timeline animation = new Timeline();
   private final double speed = 0.75;
   Button submitField;
+  Button newSim;
   Button play;
   Button pause;
   Pane centerPane = new Pane();
@@ -159,6 +160,8 @@ public class MainScreen implements ViewInternal {
 
   @Override
   public void setUp() {
+    root = new Pane();
+
     layout = new BorderPane();
     layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -192,9 +195,16 @@ public class MainScreen implements ViewInternal {
       sendCommandStringToView();
     });
 
+    newSim = UserInterfaceUtil.generateButton("Upload", event -> {
+      controller.loadSession("add");
+      String newSlogoContent = controller.getSlogoContent();
+      view.pushCommand(newSlogoContent);
+    });
+
     controller.addLanguageObserver((s) -> {
       ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
       submitField.setText(newLang.getString("Submit"));
+      newSim.setText(newLang.getString("Upload"));
       variablesBoxLabel.setText(newLang.getString("varBox"));
       commandHistoryLabel.setText(newLang.getString("histBox"));
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
@@ -218,8 +228,8 @@ public class MainScreen implements ViewInternal {
     });
 
      */
-    textInputBox.getChildren().addAll(field, submitField);//, play, pause);
-    root = new Pane();
+    textInputBox.getChildren().addAll(field, submitField, newSim);//, play, pause);
+
 
     initializeTurtleDisplays();
 

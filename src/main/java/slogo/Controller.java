@@ -1,7 +1,9 @@
 package slogo;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -9,15 +11,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import slogo.model.SlogoModel;
-import slogo.model.api.InvalidCommandException;
 import slogo.model.api.InvalidTokenException;
 import slogo.model.api.Model;
 import slogo.view.View;
-import slogo.view.pages.MainScreen;
 import slogo.view.pages.StartScreen;
 
 //TODO add method to add user
@@ -30,6 +30,7 @@ public class Controller {
     private Consumer<String> parse;
     private List<View> windows = new ArrayList<>();
     private File turtleImage;
+    private String uploadedCommand;
 
     public Controller(Stage stage) throws IOException {
         this.stage = stage;
@@ -85,7 +86,7 @@ public class Controller {
             }
         };
 
-        view.run(parse);
+        view.run(parse, null);
         setCurrentLanguage(currentLanguage);
     }
 
@@ -121,13 +122,87 @@ public class Controller {
         updateCurrentTheme(scene);
     }
 
-    public void loadSession() {
-        System.out.println("To Be Implemented! Need to figure out how to move "
-                + "file choosing from screen to controller");
+    public void loadSession(String type) {
+        // This method may need to use the Model api -- loadXML and others
+        // This opens a file chooser. Once the file is chosen, it opens a new session
+        // The file is not currently used for anything
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open SLogo File");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("SLogo Files", "*.slogo"));
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        if (selectedFile != null) {
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            try {
+                StringBuilder contentBuilder = new StringBuilder();
+                try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        contentBuilder.append(line).append("\n");
+                    }
+                }
+                String slogoContent = contentBuilder.toString();
+                System.out.println(slogoContent);
+
+                if (type.equals("new")) {
+                    openFileIDESession(slogoContent);
+                } else {
+                    setSlogoContent(slogoContent);
+                }
+//                openFileIDESession(slogoContent);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void openNewXMLSession() {
-        System.out.println("To Be Implemented!");
+    private void setSlogoContent(String slogoContent) {
+        uploadedCommand = slogoContent;
+    }
+    public String getSlogoContent() {
+        return uploadedCommand;
+    }
+
+    public void openFileIDESession(String slogoContent) throws IOException {
+        Stage newStage = new Stage();
+        newStage.setMaximized(true);
+        View view = new View(this, stage);
+        if (turtleImage != null) {
+            view.setTurtleImage(turtleImage);
+        }
+        Model model = new SlogoModel(view);
+        windows.add(view);
+
+        parse = t -> {
+            try {
+                model.parse(t);
+            } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (InvalidTokenException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        };
+
+        view.run(parse, slogoContent);
+        setCurrentLanguage(currentLanguage);
     }
 
 }

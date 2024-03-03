@@ -59,7 +59,7 @@ public class StartScreen implements ViewInternal {
     public void setUp() {
         ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + controller.getCurrentLanguage());
         Button loadSlogo = generateButton("LoadSlogo", 100, 300, e -> {
-            controller.openNewXMLSession();
+            controller.loadSession("new");
         });
         Button loadGen = generateButton("LoadGen", 100, 330, e -> {
             try {
@@ -68,7 +68,7 @@ public class StartScreen implements ViewInternal {
                 throw new RuntimeException(ex);
             }
         });
-        Button loadOld = generateButton("LoadOld", 100, 360, e -> controller.loadSession());
+//        Button loadOld = generateButton("LoadOld", 100, 360, e -> controller.loadSession());
         Button uploadTurtle = generateButton("UploadTurtle", 400, 300, (event) -> {
             handleLoadTurtleImage();
         });
@@ -82,7 +82,7 @@ public class StartScreen implements ViewInternal {
             ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
             loadSlogo.setText(newLang.getString("LoadSlogo"));
             loadGen.setText(newLang.getString("LoadGen"));
-            loadOld.setText(newLang.getString("LoadOld"));
+//            loadOld.setText(newLang.getString("LoadOld"));
             uploadTurtle.setText(newLang.getString("UploadTurtle"));
 //            themeComboBox.setItems(FXCollections.observableArrayList(newLang.getString("ColorThemes").split(",")));
         });
@@ -97,11 +97,13 @@ public class StartScreen implements ViewInternal {
                 (s) -> {return LANG_OPT_BUNDLE.keySet().stream()
                     .filter(key -> LANG_OPT_BUNDLE.getString(key).equals(s)).findFirst().get();},
                 controller::setCurrentLanguage),
+
             loadSlogo,
             loadGen,
-            loadOld,
+//            loadOld,
             uploadTurtle,
             themeComboBox
+
         );
         scene = new Scene(root, 600, 400);
 

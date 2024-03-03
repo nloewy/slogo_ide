@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.Stack;
 import java.util.function.Consumer;
 
@@ -66,9 +67,9 @@ public class View implements SlogoListener {
         turtles.add(new FrontEndTurtle(1, ORIGIN, Color.BLUE, true, 0, defaultImage));
     }
 
-    public void run(Consumer<String> parseMethod) throws FileNotFoundException {
+    public void run(Consumer<String> parseMethod, String slogoContent) throws FileNotFoundException {
         page = new MainScreen(this, stage, controller);
-        parse = parseMethod;
+        parse = parseMethod; // Assign the parse method to the instance variable
         page.setUp();
         scene = new Scene(page.getRegion(), width, height);
         controller.updateCurrentTheme(scene);
@@ -77,7 +78,12 @@ public class View implements SlogoListener {
         stage.setMaximized(true);
         stage.show();
 
+        if (slogoContent != null) {
+            pushCommand(slogoContent);
+        }
+
     }
+
 
     public void setTurtleImage(File f) {
         try {
