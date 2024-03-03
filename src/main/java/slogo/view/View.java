@@ -3,11 +3,15 @@ package slogo.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.AbstractQueue;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.function.Consumer;
 
@@ -41,7 +45,7 @@ public class View implements SlogoListener {
     private final List<FrontEndTurtle> turtles;
     private final Stack<String> commandHistory;
     private final Stack<String> userDefinedCommandHistory;
-    private Animation myAnimation;
+    private Queue<Animation> myAnimation;
     private String commandString;
     private String lang;
     private Controller controller;
@@ -54,7 +58,7 @@ public class View implements SlogoListener {
     public View(Controller controller, Stage stage) {
         this.stage = stage;
         this. controller = controller;
-
+        myAnimation = new ArrayDeque<>();
         lang = "EG";
         commandString = "";
 
@@ -168,14 +172,14 @@ public class View implements SlogoListener {
         Timeline animation = new Timeline();
         animation.setCycleCount(1);
 
-        for (int i = 1; i <= 50; i++) {
-            double intermediateX = oldX + (x - oldX) / 50 * i;
-            double intermediateY = oldY + (y - oldY) / 50 * i;
-            double intermediateHeading = oldHeading + (newHeading - oldHeading) / 50 * i;
+        for (int i = 1; i <= 20; i++) {
+            double intermediateX = oldX + (x - oldX) / 20 * i;
+            double intermediateY = oldY + (y - oldY) / 20 * i;
+            double intermediateHeading = oldHeading + (newHeading - oldHeading) / 20 * i;
 
             Line line = turtle.drawLine(oldX, oldY, intermediateX, intermediateY);
 
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * 0.10),
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * 0.005),
                 e -> {
                     turtle.getDisplay().setLayoutX(intermediateX);
                     turtle.getDisplay().setLayoutY(intermediateY);
@@ -183,11 +187,9 @@ public class View implements SlogoListener {
                     page.addLine(line);
                 });
             animation.getKeyFrames().add(keyFrame);
+            turtle.setPosition(x,y,newHeading);
         }
-
-        myAnimation = animation;
-        animation.play();
-        turtle.setPosition(x, y, newHeading);
+        myAnimation.add(animation);
     }
 
     @Override
@@ -234,7 +236,7 @@ public class View implements SlogoListener {
         page.updateCommands();
     }
 
-    public Animation getAnimation() {
+    public Queue<Animation> getAnimation() {
         return myAnimation;
     }
 }

@@ -93,13 +93,6 @@ public class FrontEndTurtle {
         display.setFitWidth(50);
     }
 
-
-   // public Timeline getAnimation() {
-     //   return animation;
-  //  }
-
-
-
     public Line drawLine(Double oldPosition, Double oldPosition2, Double newPosition, Double newPosition2) {
         Line line = new Line(oldPosition + 225, oldPosition2 + 125, newPosition + 225, newPosition2 + 125);
         line.setStroke(penColor);

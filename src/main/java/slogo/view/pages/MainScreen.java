@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -57,6 +58,7 @@ public class MainScreen implements ViewInternal {
   private static final double WINDOW_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
   private final Controller controller;
   private Scene scene;
+  private boolean paused;
   private BorderPane layout;
   private ScrollPane variablesPane;
   private ScrollPane commandsHistory;
@@ -68,6 +70,9 @@ public class MainScreen implements ViewInternal {
   private View view;
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
   private ResourceBundle myResources;
+  private final Timeline timeline = new Timeline();
+
+
   Pane root;
   Stage stage;
   TextField field;
@@ -75,21 +80,40 @@ public class MainScreen implements ViewInternal {
   Text commandHistoryLabel = new Text();
   Text userDefinedCommandsLabel = new Text();
   private static final double FRAME_RATE = 4.0;
-  private final double speed = 0.75;
+  private final double speed = 4;
   Button submitField;
   Button play;
   Button pause;
+  private boolean animationPlaying;
+
   Pane centerPane = new Pane();
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
   public MainScreen(View view, Stage stage, Controller controller) throws FileNotFoundException {
     this.stage = stage;
-
     this.view = view;
     this.controller = controller;
 
+    animationPlaying = false;
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> playAnimation()));
+    paused = false;
     initResources();
+    timeline.play();
+  }
+
+  private void playAnimation() {
+    if (!animationPlaying && !view.getAnimation().isEmpty() && !paused) {
+      System.out.println(view.getAnimation());
+      Animation animation = view.getAnimation().poll();
+      animation.setOnFinished(event -> {
+        animationPlaying = false;
+        playAnimation();
+      });
+      animationPlaying = true;
+      animation.play();
+    }
   }
 
   public void initializeTurtleDisplays() {
@@ -109,9 +133,6 @@ public class MainScreen implements ViewInternal {
     myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + currentLanguage);
   }
 
-  public void update() {
-
-  }
 
   public void updateVariables() {
     variablesBox.getChildren().clear();
@@ -192,24 +213,24 @@ public class MainScreen implements ViewInternal {
     });
 
 
-    play = UserInterfaceUtil.generateButton("Play", 300, 300, (event) -> {
-      for (FrontEndTurtle t : view.getTurtles()) {
-        if (view.getAnimation() != null) {
-          view.getAnimation().play();
-        }
-      }
-    });
+   // play = UserInterfaceUtil.generateButton("Play", 300, 300, (event) -> {
+   //   for (FrontEndTurtle t : view.getTurtles()) {
+    //    if (view.getAnimation() != null) {
+    //      view.getAnimation().play();
+    //    }
+    //  }
+    //});
 
-    pause = UserInterfaceUtil.generateButton("Pause", 300, 400, (event) -> {
-      for (FrontEndTurtle t : view.getTurtles()) {
-        if (view.getAnimation() != null) {
-          view.getAnimation().pause();
-        }
-      }
-    });
+   // pause = UserInterfaceUtil.generateButton("Pause", 300, 400, (event) -> {
+    //  for (FrontEndTurtle t : view.getTurtles()) {
+    //    if (view.getAnimation() != null) {
+    //      view.getAnimation().pause();
+    //    }
+    //  }
+   // });
 
 
-    textInputBox.getChildren().addAll(field, submitField, play, pause);
+    textInputBox.getChildren().addAll(field, submitField);//, play, pause);
     root = new Pane();
 
     initializeTurtleDisplays();
