@@ -17,7 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import slogo.Controller;
-import slogo.view.UserInterfaceUtil;
+import static slogo.view.UserInterfaceUtil.*;
 import slogo.view.View;
 import slogo.view.ViewInternal;
 
@@ -52,25 +52,25 @@ public class StartScreen implements ViewInternal {
     @Override
     public void setUp() {
         root.getChildren().addAll(
-            UserInterfaceUtil.generateImageView(LOGO_IMAGE_PATH, 100, 50),
-            UserInterfaceUtil.generateComboBox(SUPPORTED_LANGUAGES, 100, 200,
+            generateImageView(LOGO_IMAGE_PATH, 100, 50),
+            generateComboBox(SUPPORTED_LANGUAGES, 100, 200,
                 controller::setCurrentLanguage),
-            UserInterfaceUtil.generateButton("Load New XML Session", 100, 300, e -> {
+            generateButton("Load New XML Session", 100, 300, e -> {
                 controller.openNewXMLSession();
             }),
-            UserInterfaceUtil.generateButton("Load New General Session", 100, 330, e -> {
+            generateButton("Load New General Session", 100, 330, e -> {
                 try {
                     controller.openBlankIDESession();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }),
-            UserInterfaceUtil.generateButton("Load Old Session", 100, 360,
+            generateButton("Load Old Session", 100, 360,
                 e -> controller.loadSession()),
-            UserInterfaceUtil.generateButton("Upload Turtle Image", 400, 300, (event) -> {
+            generateButton("Upload Turtle Image", 400, 300, (event) -> {
                 handleLoadTurtleImage();
             }),
-            UserInterfaceUtil.generateComboBox(SUPPORTED_THEMES, 400, 330, (event) -> {
+            generateComboBox(SUPPORTED_THEMES, 400, 330, (event) -> {
                 controller.setCurrentTheme(event, scene);
             })
         );

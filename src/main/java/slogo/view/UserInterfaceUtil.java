@@ -11,6 +11,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class UserInterfaceUtil {
+    public static Button generateButton(String text,
+        EventHandler<ActionEvent> consumer) {
+        Button ret = new Button(text);
+        ret.setId(text);
+        ret.setOnAction(consumer);
+
+        return ret;
+    }
 
     public static Button generateButton(String text,
                                         int x,
