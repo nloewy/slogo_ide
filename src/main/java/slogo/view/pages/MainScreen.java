@@ -105,7 +105,6 @@ public class MainScreen implements ViewInternal {
 
   private void playAnimation() {
     if (!animationPlaying && !view.getAnimation().isEmpty() && !paused) {
-      System.out.println(view.getAnimation());
       Animation animation = view.getAnimation().poll();
       animation.setOnFinished(event -> {
         animationPlaying = false;
