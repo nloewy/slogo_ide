@@ -26,6 +26,7 @@ public class Controller {
     private Stage stage;
     private String currentLanguage = "English";
     private String currentTheme = "LightMode.css";
+    private List<Consumer<String>> languageObservers = new ArrayList<>();
     private Consumer<String> parse;
     private List<View> windows = new ArrayList<>();
     private File turtleImage;
@@ -42,6 +43,7 @@ public class Controller {
     public void openStartScreen() throws FileNotFoundException {
         StartScreen startScreen = new StartScreen(stage, this);
         startScreen.setUp();
+        setCurrentLanguage(currentLanguage);
         stage.setScene(startScreen.getScene());
         stage.show();
     }
@@ -84,14 +86,28 @@ public class Controller {
         };
 
         view.run(parse);
+        setCurrentLanguage(currentLanguage);
     }
 
     public void setCurrentLanguage(String language) {
         this.currentLanguage = language;
-        for (View view : windows) {
-            view.setLanguage(currentLanguage);
+        updateLanguageObservers();
+    }
+
+    public void addLanguageObserver (Consumer<String> observer) {
+        if (observer != null) {
+            languageObservers.add(observer);
         }
     }
+
+
+    private void updateLanguageObservers() {
+        for (Consumer<String> observer : languageObservers) {
+            observer.accept(currentLanguage);
+        }
+    }
+
+
 
     public String getCurrentLanguage() {
         return currentLanguage;

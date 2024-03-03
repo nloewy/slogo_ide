@@ -71,9 +71,9 @@ public class MainScreen implements ViewInternal {
   Pane root;
   Stage stage;
   TextField field;
-  Text variablesBoxLabel = new Text("Variables");
-  Text commandHistoryLabel = new Text("History");
-  Text userDefinedCommandsLabel = new Text("My Commands");
+  Text variablesBoxLabel = new Text();
+  Text commandHistoryLabel = new Text();
+  Text userDefinedCommandsLabel = new Text();
   Map<FrontEndTurtle, Double[]> myTurtlePositions = new HashMap<>();
   private static final double FRAME_RATE = 4.0;
   private final Timeline animation = new Timeline();
@@ -188,8 +188,16 @@ public class MainScreen implements ViewInternal {
     field = new TextField();
     field.setPrefSize(WINDOW_WIDTH - 400, 100);
 
-    submitField = UserInterfaceUtil.generateButton(myResources.getString("Submit"), event -> {
+    submitField = UserInterfaceUtil.generateButton("Submit", event -> {
       sendCommandStringToView();
+    });
+
+    controller.addLanguageObserver((s) -> {
+      ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
+      submitField.setText(newLang.getString("Submit"));
+      variablesBoxLabel.setText(newLang.getString("varBox"));
+      commandHistoryLabel.setText(newLang.getString("histBox"));
+      userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
     });
 
     /**
