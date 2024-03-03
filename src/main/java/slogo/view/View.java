@@ -171,30 +171,18 @@ public class View implements SlogoListener {
         double oldX = turtle.getX();
         double oldY = turtle.getY();
         double oldHeading = turtle.getHeading();
-
-        // Calculate distance and rotation
         double distance = Math.sqrt(Math.pow((y - oldY), 2) + Math.pow((x - oldX), 2));
         double rotation = Math.abs(newHeading - oldHeading);
-
-        // Calculate duration based on distance and rotation
-        double duration = (distance + rotation * 2) / page.getSpeed();
-
-        // Calculate number of intermediate steps based on duration
+        double duration = (distance + rotation) / page.getSpeed();
         int numSteps = (int) (duration / 0.005);
-
         Timeline animation = new Timeline();
         animation.setCycleCount(1);
-
-
-
         for (int i = 1; i <= numSteps; i++) {
             double progress = (double) i / numSteps;
             double intermediateX = oldX + (x - oldX) * progress;
             double intermediateY = oldY + (y - oldY) * progress;
             double intermediateHeading = oldHeading + (newHeading - oldHeading) * progress;
-
             Line line = turtle.drawLine(oldX, oldY, intermediateX, intermediateY);
-
             KeyFrame keyFrame = new KeyFrame(Duration.seconds(duration * progress),
                 e -> {
                     turtle.getDisplay().setLayoutX(intermediateX);
@@ -204,11 +192,7 @@ public class View implements SlogoListener {
                 });
             animation.getKeyFrames().add(keyFrame);
         }
-
-        // Set final position and heading
         turtle.setPosition(x, y, newHeading);
-
-        // Add the animation to the animation queue
         myAnimation.add(animation);
     }
 

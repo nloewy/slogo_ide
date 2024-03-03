@@ -87,10 +87,13 @@ public class MainScreen implements ViewInternal {
   Button submitField;
   Button play;
   Button pause;
+  Button step;
   private boolean animationPlaying;
   private Slider speedSlider;
+  private Duration pausedTime;
 
 
+  private Animation currAnimation;
   Pane centerPane = new Pane();
 
   // Add an XMLFile object to this when Model adds one
@@ -99,7 +102,7 @@ public class MainScreen implements ViewInternal {
     this.stage = stage;
     this.view = view;
     this.controller = controller;
-
+    mySpeed = 50;
     animationPlaying = false;
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> playAnimation()));
@@ -109,15 +112,48 @@ public class MainScreen implements ViewInternal {
     speedSlider = new Slider();
   }
 
-  private void playAnimation() {
-    if (!animationPlaying && !view.getAnimation().isEmpty() && !paused) {
+  private void finishCurrAnimation() {
+    if (currAnimation != null) {
+      currAnimation.play();
+      paused = true;
+    }
+  }
+
+  private void playSingleAnimation() {
+    if(!view.getAnimation().isEmpty()) {
       Animation animation = view.getAnimation().poll();
       animation.setOnFinished(event -> {
+          animationPlaying = false;
+          playAnimation(); // Continue playing other animations after finishing this one
+        });
+        animationPlaying = true;
+        animation.play();
+      }
+    }
+
+
+
+  private void playAnimation() {
+    if (!animationPlaying && !view.getAnimation().isEmpty() && !paused) {
+      currAnimation = view.getAnimation().poll();
+      currAnimation.setOnFinished(event -> {
         animationPlaying = false;
+        currAnimation = null;
         playAnimation();
       });
       animationPlaying = true;
-      animation.play();
+      currAnimation.play();
+    } else if (animationPlaying && paused) {
+      if (currAnimation != null) {
+        pausedTime = currAnimation.getCurrentTime(); // Store the current time when animation is paused
+        currAnimation.pause();
+      }
+    } else if (animationPlaying && !paused && pausedTime != null) {
+      // If animation was paused and now unpaused, resume from the paused time
+      if (currAnimation != null) {
+        currAnimation.playFrom(pausedTime);
+        pausedTime = null; // Reset paused time
+      }
     }
   }
 
@@ -137,7 +173,6 @@ public class MainScreen implements ViewInternal {
     String currentLanguage = controller.getCurrentLanguage();
     myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + currentLanguage);
   }
-
 
   public void updateVariables() {
     variablesBox.getChildren().clear();
@@ -216,11 +251,19 @@ public class MainScreen implements ViewInternal {
 
       play = UserInterfaceUtil.generateButton("Play", event -> {
         paused = false;
-        playAnimation();
       });
 
       pause = UserInterfaceUtil.generateButton("Pause", event -> {
         paused = true;
+      });
+
+      step = UserInterfaceUtil.generateButton("Step", event -> {
+        if(currAnimation==null) {
+          playSingleAnimation();
+        }
+        else{
+          finishCurrAnimation();
+        }
       });
       speedSlider.setMin(10);
       speedSlider.setMax(300);
@@ -231,13 +274,13 @@ public class MainScreen implements ViewInternal {
       setSpeedSliderHandler((observable, oldValue, newValue) -> {
         mySpeed = newValue.intValue();
         if(mySpeed == speedSlider.getMax()) {
-          mySpeed = 100000;
+          mySpeed = 10000;
         }
       });
 
       // Create an HBox for the buttons
       HBox buttonBox = new HBox();
-      buttonBox.getChildren().addAll(submitField, play, pause);
+      buttonBox.getChildren().addAll(submitField, play, pause, step);
 
       controller.addLanguageObserver((s) -> {
         ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
@@ -247,6 +290,7 @@ public class MainScreen implements ViewInternal {
         userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
         play.setText(newLang.getString("Play"));
         pause.setText(newLang.getString("Pause"));
+        step.setText(newLang.getString("Step"));
       });
 
       textInputBox.getChildren().addAll(field, buttonBox, speedSlider);
@@ -279,7 +323,9 @@ public class MainScreen implements ViewInternal {
   }
 
   public void addLine(Line line) {
-    root.getChildren().add(line);
+    if(!root.getChildren().contains(line)) {
+      root.getChildren().add(line);
+    }
   }
 
   public double getSpeed() {
