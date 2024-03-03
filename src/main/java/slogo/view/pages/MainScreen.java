@@ -46,6 +46,9 @@ import slogo.view.UserInterfaceUtil;
 import slogo.view.FrontEndTurtle;
 import slogo.view.View;
 import slogo.view.ViewInternal;
+import javafx.scene.control.Hyperlink;
+import javafx.stage.StageStyle;
+import javafx.stage.Modality;
 
 /*
 The View will already know the XMLFile data when
@@ -174,6 +177,7 @@ public class MainScreen implements ViewInternal {
     variablesPane = new ScrollPane(variablesBox);
     variablesBox.getChildren().add(variablesBoxLabel);
 
+
     commandHistoryBox = new HBox();
     commandHistoryBox.getStyleClass().add("history-box");
     commandHistoryBox.setPrefSize(WINDOW_WIDTH, 100);
@@ -183,7 +187,14 @@ public class MainScreen implements ViewInternal {
     help = UserInterfaceUtil.generateButton("Help", event -> {
       showHelpPopup();
     });
-    commandHistoryBox.getChildren().add(help);
+
+    newSim = UserInterfaceUtil.generateButton("Upload", event -> {
+      controller.loadSession("add");
+      String newSlogoContent = controller.getSlogoContent();
+      view.pushCommand(newSlogoContent);
+    });
+
+    commandHistoryBox.getChildren().addAll(help, newSim);
 
     userDefinedCommandsBox = new VBox();
     userDefinedCommandsBox.getStyleClass().add("command-box");
@@ -199,14 +210,14 @@ public class MainScreen implements ViewInternal {
     field = new TextField();
     field.setPrefSize(WINDOW_WIDTH - 400, 100);
 
+    // Enter key listener
+    field.setOnAction(event -> {
+      if (!field.getText().isEmpty()) {
+        sendCommandStringToView();
+      }
+    });
     submitField = UserInterfaceUtil.generateButton("Submit", event -> {
       sendCommandStringToView();
-    });
-
-    newSim = UserInterfaceUtil.generateButton("Upload", event -> {
-      controller.loadSession("add");
-      String newSlogoContent = controller.getSlogoContent();
-      view.pushCommand(newSlogoContent);
     });
 
     controller.addLanguageObserver((s) -> {
@@ -220,24 +231,24 @@ public class MainScreen implements ViewInternal {
     });
 
     /**
-    play = ButtonUtil.generateButton("Play", 300, 300, (event) -> {
-      for (FrontEndTurtle t : view.getTurtles()) {
-        if (t.getAnimation() != null) {
-          t.getAnimation().play();
-        }
-      }
-    });
+     play = ButtonUtil.generateButton("Play", 300, 300, (event) -> {
+     for (FrontEndTurtle t : view.getTurtles()) {
+     if (t.getAnimation() != null) {
+     t.getAnimation().play();
+     }
+     }
+     });
 
-    pause = ButtonUtil.generateButton("Pause", 300, 400, (event) -> {
-      for (FrontEndTurtle t : view.getTurtles()) {
-        if (t.getAnimation() != null) {
-          t.getAnimation().pause();
-        }
-      }
-    });
+     pause = ButtonUtil.generateButton("Pause", 300, 400, (event) -> {
+     for (FrontEndTurtle t : view.getTurtles()) {
+     if (t.getAnimation() != null) {
+     t.getAnimation().pause();
+     }
+     }
+     });
 
      */
-    textInputBox.getChildren().addAll(field, submitField, newSim);//, play, pause);
+    textInputBox.getChildren().addAll(field, submitField);//, play, pause);
 
 
     initializeTurtleDisplays();
@@ -253,8 +264,14 @@ public class MainScreen implements ViewInternal {
     animation.play();
   }
 
+
   private void showHelpPopup() {
-    Popup popup = new Popup();
+//    Popup popup = new Popup();
+
+    Stage popup = new Stage();
+
+    popup.initStyle(StageStyle.UTILITY);
+    popup.initModality(Modality.APPLICATION_MODAL);
     VBox content = new VBox(10);
     content.setStyle("-fx-background-color: white; -fx-padding: 10;");
 
@@ -263,18 +280,23 @@ public class MainScreen implements ViewInternal {
 
     Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML();
     for (String command : commandDetails.keySet()) {
-      Button commandButton = new Button(command);
-      commandButton.setOnAction(e -> showCommandDetailsPopup(command, commandDetails.get(command)));
-      content.getChildren().add(commandButton);
+      Hyperlink commandLink = new Hyperlink(command);
+      commandLink.setOnAction(e -> showCommandDetailsPopup(command, commandDetails.get(command)));
+      content.getChildren().add(commandLink);
     }
 
     content.getChildren().add(closeButton);
-    popup.getContent().add(content);
-    popup.show(root.getScene().getWindow());
+//    popup.getContent().add(content);
+
+    helpPopupModality(popup, content);
+//    popup.show(root.getScene().getWindow());
   }
 
   private void showCommandDetailsPopup(String command, Map<String, String> details) {
-    Popup popup = new Popup();
+    Stage popup = new Stage();
+    popup.initStyle(StageStyle.UTILITY);
+    popup.initModality(Modality.APPLICATION_MODAL);
+
     VBox content = new VBox(10);
     content.setStyle("-fx-background-color: white; -fx-padding: 10;");
 
@@ -286,9 +308,28 @@ public class MainScreen implements ViewInternal {
     closeButton.setOnAction(e -> popup.hide());
 
     content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, closeButton);
-    popup.getContent().add(content);
-    popup.show(root.getScene().getWindow());
+//    popup.getContent().add(content);
+
+    helpPopupModality(popup, content);
   }
+
+  private void helpPopupModality(Stage popup, VBox content) {
+    final Delta dragDelta = new Delta();
+    content.setOnMousePressed(mouseEvent -> {
+      dragDelta.x = popup.getX() - mouseEvent.getScreenX();
+      dragDelta.y = popup.getY() - mouseEvent.getScreenY();
+    });
+    content.setOnMouseDragged(mouseEvent -> {
+      popup.setX(mouseEvent.getScreenX() + dragDelta.x);
+      popup.setY(mouseEvent.getScreenY() + dragDelta.y);
+    });
+    Scene scene = new Scene(content);
+    popup.setScene(scene);
+    popup.show();
+  }
+
+  // Delta class to hold the x and y offset
+  class Delta { double x, y; }
   @Override
   public javafx.scene.Scene getScene() {
     return scene;
