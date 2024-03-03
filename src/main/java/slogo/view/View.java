@@ -3,11 +3,15 @@ package slogo.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.AbstractQueue;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.function.Consumer;
 
@@ -34,6 +38,7 @@ public class View implements SlogoListener {
 
     private static final int height = 600;
     private static final int width = 1000;
+    private static final double PIXELS_PER_SECOND = 25;
     private final Map<String, List<String>> variableCommands;
     private final Map<String, Number> variableValues;
     private Image defaultImage;
@@ -41,7 +46,7 @@ public class View implements SlogoListener {
     private final List<FrontEndTurtle> turtles;
     private final Stack<String> commandHistory;
     private final Stack<String> userDefinedCommandHistory;
-    private Animation myAnimation;
+    private Queue<Animation> myAnimation;
     private String commandString;
     private String lang;
     private Controller controller;
@@ -54,7 +59,7 @@ public class View implements SlogoListener {
     public View(Controller controller, Stage stage) {
         this.stage = stage;
         this. controller = controller;
-
+        myAnimation = new ArrayDeque<>();
         lang = "EG";
         commandString = "";
 
@@ -161,21 +166,36 @@ public class View implements SlogoListener {
     }
 
 
+
     public void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading) {
         double oldX = turtle.getX();
         double oldY = turtle.getY();
         double oldHeading = turtle.getHeading();
+
+        // Calculate distance and rotation
+        double distance = Math.sqrt(Math.pow((y - oldY), 2) + Math.pow((x - oldX), 2));
+        double rotation = Math.abs(newHeading - oldHeading);
+
+        // Calculate duration based on distance and rotation
+        double duration = (distance + rotation * 2) / page.getSpeed();
+
+        // Calculate number of intermediate steps based on duration
+        int numSteps = (int) (duration / 0.005);
+
         Timeline animation = new Timeline();
         animation.setCycleCount(1);
 
-        for (int i = 1; i <= 50; i++) {
-            double intermediateX = oldX + (x - oldX) / 50 * i;
-            double intermediateY = oldY + (y - oldY) / 50 * i;
-            double intermediateHeading = oldHeading + (newHeading - oldHeading) / 50 * i;
+
+
+        for (int i = 1; i <= numSteps; i++) {
+            double progress = (double) i / numSteps;
+            double intermediateX = oldX + (x - oldX) * progress;
+            double intermediateY = oldY + (y - oldY) * progress;
+            double intermediateHeading = oldHeading + (newHeading - oldHeading) * progress;
 
             Line line = turtle.drawLine(oldX, oldY, intermediateX, intermediateY);
 
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * 0.10),
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(duration * progress),
                 e -> {
                     turtle.getDisplay().setLayoutX(intermediateX);
                     turtle.getDisplay().setLayoutY(intermediateY);
@@ -185,10 +205,13 @@ public class View implements SlogoListener {
             animation.getKeyFrames().add(keyFrame);
         }
 
-        myAnimation = animation;
-        animation.play();
+        // Set final position and heading
         turtle.setPosition(x, y, newHeading);
+
+        // Add the animation to the animation queue
+        myAnimation.add(animation);
     }
+
 
     @Override
     public void onUpdateTurtleState(TurtleRecord turtleState) {
@@ -224,6 +247,7 @@ public class View implements SlogoListener {
     @Override
     public void onReturn(double value, String string) {
 
+
     }
 
     @Override
@@ -234,7 +258,7 @@ public class View implements SlogoListener {
         page.updateCommands();
     }
 
-    public Animation getAnimation() {
+    public Queue<Animation> getAnimation() {
         return myAnimation;
     }
 }
