@@ -60,24 +60,10 @@ public class Controller {
     parse = t -> {
       try {
         model.parse(t);
-      } catch (ClassNotFoundException e) {
-        new Alert(AlertType.ERROR, "Invalid Command Entered").show();
-      } catch (InvocationTargetException e) {
-        new Alert(AlertType.ERROR, "Invalid Target Entered").show();
-      } catch (NoSuchMethodException e) {
-        new Alert(AlertType.ERROR, "Invalid Command Entered").show();
-      } catch (InstantiationException e) {
-        new Alert(AlertType.ERROR, "Object Not Instantiated").show();
-      } catch (IllegalAccessException e) {
-        new Alert(AlertType.ERROR, "Access Not Granted").show();
-      } catch (NoSuchFieldException e) {
-        new Alert(AlertType.ERROR, "Invalid Field Entered").show();
-      } catch (InvalidTokenException e) {
-        new Alert(AlertType.ERROR, "Invalid Token Entered").show();
-      } catch (Exception e) {
-        e.printStackTrace();
-        new Alert(AlertType.ERROR, "Invalid or Insufficient Arguments Entered").show();
-
+      } catch (ClassNotFoundException | InvocationTargetException | InvalidTokenException |
+               NoSuchMethodException | InstantiationException | IllegalAccessException |
+               NoSuchFieldException e) {
+        new Alert(AlertType.ERROR, e.getMessage()).show();
       }
     };
 
