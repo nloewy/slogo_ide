@@ -31,6 +31,7 @@ public class SlogoModel implements Model {
   @Override
   public void parse(String input)
       throws InvocationTargetException, IllegalAccessException, InvalidCommandException, InvalidTokenException {
+    if(input.isEmpty()) {return;}
     Node root = new ListNode("[", modelState);
     try { parser.parse(input, root); }
     catch (InvalidCommandException | InvalidTokenException | InsufficientArgumentsException e ) {
