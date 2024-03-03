@@ -87,6 +87,7 @@ public class MainScreen implements ViewInternal {
   Button submitField;
   Button play;
   Button pause;
+  Button step;
   private boolean animationPlaying;
   private Slider speedSlider;
   private Duration pausedTime;
@@ -110,6 +111,26 @@ public class MainScreen implements ViewInternal {
     timeline.play();
     speedSlider = new Slider();
   }
+
+  private void finishCurrAnimation() {
+    if (currAnimation != null) {
+      currAnimation.play();
+      paused = true;
+    }
+  }
+
+  private void playSingleAnimation() {
+    if(!view.getAnimation().isEmpty()) {
+      Animation animation = view.getAnimation().poll();
+      animation.setOnFinished(event -> {
+          animationPlaying = false;
+          playAnimation(); // Continue playing other animations after finishing this one
+        });
+        animationPlaying = true;
+        animation.play();
+      }
+    }
+
 
 
   private void playAnimation() {
@@ -235,6 +256,15 @@ public class MainScreen implements ViewInternal {
       pause = UserInterfaceUtil.generateButton("Pause", event -> {
         paused = true;
       });
+
+      step = UserInterfaceUtil.generateButton("Step", event -> {
+        if(currAnimation==null) {
+          playSingleAnimation();
+        }
+        else{
+          finishCurrAnimation();
+        }
+      });
       speedSlider.setMin(10);
       speedSlider.setMax(300);
       speedSlider.setValue(mySpeed);
@@ -244,13 +274,13 @@ public class MainScreen implements ViewInternal {
       setSpeedSliderHandler((observable, oldValue, newValue) -> {
         mySpeed = newValue.intValue();
         if(mySpeed == speedSlider.getMax()) {
-          mySpeed = 100000;
+          mySpeed = 10000;
         }
       });
 
       // Create an HBox for the buttons
       HBox buttonBox = new HBox();
-      buttonBox.getChildren().addAll(submitField, play, pause);
+      buttonBox.getChildren().addAll(submitField, play, pause, step);
 
       controller.addLanguageObserver((s) -> {
         ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
@@ -260,6 +290,7 @@ public class MainScreen implements ViewInternal {
         userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
         play.setText(newLang.getString("Play"));
         pause.setText(newLang.getString("Pause"));
+        step.setText(newLang.getString("Step"));
       });
 
       textInputBox.getChildren().addAll(field, buttonBox, speedSlider);
@@ -292,7 +323,9 @@ public class MainScreen implements ViewInternal {
   }
 
   public void addLine(Line line) {
-    root.getChildren().add(line);
+    if(!root.getChildren().contains(line)) {
+      root.getChildren().add(line);
+    }
   }
 
   public double getSpeed() {
