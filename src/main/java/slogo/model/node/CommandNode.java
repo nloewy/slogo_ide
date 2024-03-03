@@ -4,10 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import slogo.model.ModelState;
-import slogo.model.api.IncompleteClassException;
-import slogo.model.api.InsufficientArgumentsException;
-import slogo.model.api.InvalidCommandException;
-import slogo.model.api.InvalidOperandException;
+import slogo.model.exceptions.IncompleteClassException;
+import slogo.model.exceptions.InsufficientArgumentsException;
+import slogo.model.exceptions.InvalidCommandException;
+import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 
@@ -15,9 +15,9 @@ public class CommandNode extends Node {
 
   private static final String BASE_PACKAGE = "slogo.model.command.";
   private final String myToken;
+  private final ModelState myModelState;
   private Command command;
   private Method m;
-  private final ModelState myModelState;
   private String myFullToken;
 
   public CommandNode(String token, ModelState modelState)
@@ -38,13 +38,12 @@ public class CommandNode extends Node {
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
       throw new InvalidCommandException(
-          "Command Class Not Found. Previous Commands successfully executed", getToken());
+          "", getToken());
     }
     List<Node> children = getChildren();
     if (getNumArgs() != getChildren().size()) {
-      throw new InsufficientArgumentsException("Command " + getToken() + " did not receive sufficient number of arguments.", getToken());
+      throw new InsufficientArgumentsException("", getToken());
     }
-
     try {
       return (double) m.invoke(command, children);
 

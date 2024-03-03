@@ -1,4 +1,4 @@
-package slogo.model.api;
+package slogo.model.exceptions;
 
 public class IncompleteClassException extends RuntimeException {
 

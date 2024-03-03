@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 import java.util.Stack;
-import slogo.model.api.InsufficientArgumentsException;
-import slogo.model.api.InvalidCommandException;
-import slogo.model.api.InvalidTokenException;
 import slogo.model.api.Model;
 import slogo.model.api.SlogoException;
 import slogo.model.api.SlogoListener;
+import slogo.model.exceptions.InsufficientArgumentsException;
+import slogo.model.exceptions.InvalidCommandException;
+import slogo.model.exceptions.InvalidTokenException;
 import slogo.model.node.ListNode;
 import slogo.model.node.Node;
 
@@ -21,9 +21,9 @@ public class SlogoModel implements Model {
   public static final String RESOURCE_PATH = "src/main/resources/slogo/example/languages/";
   private final SlogoListener myListener;
   private final Parser parser;
-  private ModelState modelState;
   private final Stack<String> myCommands;
-  private Properties prop;
+  private ModelState modelState;
+  private final Properties prop;
 
   public SlogoModel(SlogoListener listener, String currentLanguage) throws IOException {
     modelState = new ModelState();
@@ -49,8 +49,7 @@ public class SlogoModel implements Model {
       parser.parse(input, root);
     } catch (InvalidCommandException | InvalidTokenException | InsufficientArgumentsException e) {
       handleParseResult(input, root);
-      SlogoException e2 = (SlogoException) e;
-      System.out.println(prop.get("InvalidCommandToken"));
+      SlogoException e2 = e;
       String template = (String) prop.getOrDefault(e.getClass().getSimpleName(), e.getMessage());
       String message = String.format(template, e2.getToken());
       throw new SlogoException(message, "");
