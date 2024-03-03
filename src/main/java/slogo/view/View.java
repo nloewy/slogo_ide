@@ -69,7 +69,6 @@ public class View implements SlogoListener {
     public void run(Consumer<String> parseMethod) throws FileNotFoundException {
         page = new MainScreen(this, stage, controller);
         parse = parseMethod;
-
         page.setUp();
         scene = new Scene(page.getRegion(), width, height);
         controller.updateCurrentTheme(scene);

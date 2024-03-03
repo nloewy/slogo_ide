@@ -188,8 +188,14 @@ public class MainScreen implements ViewInternal {
     field = new TextField();
     field.setPrefSize(WINDOW_WIDTH - 400, 100);
 
-    submitField = UserInterfaceUtil.generateButton(myResources.getString("Submit"), event -> {
+    submitField = UserInterfaceUtil.generateButton("Submit", event -> {
       sendCommandStringToView();
+    });
+
+    controller.addLanguageObserver((s) -> {
+      ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
+      System.out.println(newLang.getString("Submit"));
+      submitField.setText(newLang.getString("Submit"));
     });
 
     /**

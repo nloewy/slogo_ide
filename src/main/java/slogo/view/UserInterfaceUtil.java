@@ -1,7 +1,9 @@
 package slogo.view;
 
 import java.io.InputStream;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +15,7 @@ import javafx.scene.image.ImageView;
 public class UserInterfaceUtil {
     public static Button generateButton(String text,
         EventHandler<ActionEvent> consumer) {
-        Button ret = new Button(text);
+        Button ret = new Button();
         ret.setId(text);
         ret.setOnAction(consumer);
 
@@ -24,7 +26,7 @@ public class UserInterfaceUtil {
                                         int x,
                                         int y,
                                         EventHandler<ActionEvent> consumer) {
-        Button ret = new Button(text);
+        Button ret = new Button();
         ret.setId(text);
         ret.setLayoutX(x);
         ret.setLayoutY(y);
@@ -36,14 +38,16 @@ public class UserInterfaceUtil {
     public static ComboBox<String> generateComboBox(ObservableList<String> options,
         int x,
         int y,
+        Function<String, String> fixString,
         Consumer<String> consumer) {
         ComboBox<String> comboBox = new ComboBox<>(options);
         comboBox.setValue(options.get(0));
+        comboBox.setId("themeBox");
         comboBox.setLayoutX(x);
         comboBox.setLayoutY(y);
         comboBox.setOnAction(e -> {
             String selectedOption = comboBox.getValue();
-            consumer.accept(selectedOption.replace(" ", "") + ".css");
+            consumer.accept(fixString.apply(selectedOption));
         });
 
         return comboBox;
