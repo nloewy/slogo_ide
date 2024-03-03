@@ -13,8 +13,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import slogo.model.SlogoModel;
+import slogo.model.api.InsufficientArgumentsException;
+import slogo.model.api.InvalidOperandException;
 import slogo.model.api.InvalidTokenException;
 import slogo.model.api.Model;
+import slogo.model.api.SlogoException;
 import slogo.view.View;
 import slogo.view.pages.StartScreen;
 
@@ -54,30 +57,17 @@ public class Controller {
     if (turtleImage != null) {
       view.setTurtleImage(turtleImage);
     }
-    Model model = new SlogoModel(view);
+    Model model = new SlogoModel(view, currentLanguage);
     windows.add(view);
 
     parse = t -> {
       try {
         model.parse(t);
-      } catch (ClassNotFoundException e) {
-        new Alert(AlertType.ERROR, "Invalid Command Entered").show();
-      } catch (InvocationTargetException e) {
-        new Alert(AlertType.ERROR, "Invalid Target Entered").show();
-      } catch (NoSuchMethodException e) {
-        new Alert(AlertType.ERROR, "Invalid Command Entered").show();
-      } catch (InstantiationException e) {
-        new Alert(AlertType.ERROR, "Object Not Instantiated").show();
-      } catch (IllegalAccessException e) {
-        new Alert(AlertType.ERROR, "Access Not Granted").show();
-      } catch (NoSuchFieldException e) {
-        new Alert(AlertType.ERROR, "Invalid Field Entered").show();
-      } catch (InvalidTokenException e) {
-        new Alert(AlertType.ERROR, "Invalid Token Entered").show();
-      } catch (Exception e) {
-        e.printStackTrace();
-        new Alert(AlertType.ERROR, "Invalid or Insufficient Arguments Entered").show();
-
+      } catch (ClassNotFoundException | InvocationTargetException |
+               NoSuchMethodException | InstantiationException | IllegalAccessException |
+               NoSuchFieldException | InvalidOperandException |
+               SlogoException e) {
+        new Alert(AlertType.ERROR, e.getMessage()).show();
       }
     };
 

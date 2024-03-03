@@ -44,7 +44,7 @@ public class ParseTest {
       @Override
       public void onCommand(String s, boolean b) {
       }
-    });
+    }, "English");
 
   }
 
@@ -141,7 +141,7 @@ public class ParseTest {
   void testNestedError()
       throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
-    assertThrows(InsufficientArgumentsException.class, () -> {
+    assertThrows(InvalidTokenException.class, () -> {
       slogo.parse(
           "BK 10 REPEAT 5 [ IFELSE PENDOWN? [ FD 10 FD 10R ] FD 50 ]");
       assertEquals(-10.0, myTurtle.getY(), DELTA);

@@ -38,13 +38,13 @@ public class CommandNode extends Node {
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
       throw new InvalidCommandException(
-          "Command Class Not Found. Previous Commands successfully executed");
+          "Command Class Not Found. Previous Commands successfully executed", getToken());
     }
     List<Node> children = getChildren();
     if (getNumArgs() != getChildren().size()) {
-      throw new InsufficientArgumentsException(getToken() + " expected " + getNumArgs()
-          + " arguments. Previous (non-nested) commands executed successfully");
+      throw new InsufficientArgumentsException("Command " + getToken() + " did not receive sufficient number of arguments.", getToken());
     }
+
     try {
       return (double) m.invoke(command, children);
 
@@ -52,7 +52,7 @@ public class CommandNode extends Node {
       Class<? extends RuntimeException> causeClass = (Class<? extends RuntimeException>) e.getCause()
           .getClass();
       if (causeClass.equals(InsufficientArgumentsException.class)) {
-        throw new InsufficientArgumentsException(e.getCause().getMessage());
+        throw new InsufficientArgumentsException(e.getCause().getMessage(), getToken());
       }
       throw new InvalidOperandException(e.getCause().getMessage());
     }
