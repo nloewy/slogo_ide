@@ -27,8 +27,6 @@ public class UserCommandNode extends Node {
   }
 
 
-
-
   private void replaceNodesWithTokenHelper(Node node, String tokenToReplace, Node constantNode) {
     List<Node> children = node.getChildren(); // Get the children of the current node
     for (Node child : children) {
@@ -42,6 +40,7 @@ public class UserCommandNode extends Node {
       }
     }
   }
+
   private void replaceTokensWithNodes(Node node, Map<Node, String> nodeToVar) {
     for (Node child : node.getChildren()) {
       replaceTokensWithNodesHelper(child, nodeToVar);
@@ -78,7 +77,7 @@ public class UserCommandNode extends Node {
     }
     double val = rootOfSubtree.evaluate();
     replaceTokensWithNodes(rootOfSubtree, constantNodeToVariable);
-    modelState.getUserDefinedCommandNodes().put(myToken, children.subList(0,2));
+    modelState.getUserDefinedCommandNodes().put(myToken, children.subList(0, 2));
     return val;
   }
 

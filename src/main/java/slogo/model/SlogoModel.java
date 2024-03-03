@@ -18,7 +18,8 @@ public class SlogoModel implements Model {
   private final SlogoListener myListener;
   private final Parser parser;
   private ModelState modelState;
-  private Stack<String> myCommands;
+  private final Stack<String> myCommands;
+
   public SlogoModel(SlogoListener listener) throws IOException {
     modelState = new ModelState();
     modelState.getTurtles().add(new Turtle(1));
@@ -31,10 +32,13 @@ public class SlogoModel implements Model {
   @Override
   public void parse(String input)
       throws InvocationTargetException, IllegalAccessException, InvalidCommandException, InvalidTokenException {
-    if(input.isEmpty()) {return;}
+    if (input.isEmpty()) {
+      return;
+    }
     Node root = new ListNode("[", modelState);
-    try { parser.parse(input, root); }
-    catch (InvalidCommandException | InvalidTokenException | InsufficientArgumentsException e ) {
+    try {
+      parser.parse(input, root);
+    } catch (InvalidCommandException | InvalidTokenException | InsufficientArgumentsException e) {
       handleParseResult(input, root);
       throw e;
     }
@@ -45,7 +49,7 @@ public class SlogoModel implements Model {
       throws InvocationTargetException, IllegalAccessException {
     dfsAddListener(root);
     double val = -1;
-    for(Node node : root.getChildren()) {
+    for (Node node : root.getChildren()) {
       val = node.evaluate();
     }
     myCommands.push(input);
@@ -53,13 +57,14 @@ public class SlogoModel implements Model {
   }
 
   private void dfsAddListener(Node node) {
-    if(node != null) {
+    if (node != null) {
       node.addListener(myListener);
-      for(Node child : node.getChildren()) {
+      for (Node child : node.getChildren()) {
         dfsAddListener(child);
-     }
+      }
     }
-   }
+  }
+
   @Override
   public File loadXml(String path) {
     return null;

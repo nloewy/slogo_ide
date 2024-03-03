@@ -13,17 +13,17 @@ import slogo.model.command.Command;
 
 public class CommandNode extends Node {
 
+  private static final String BASE_PACKAGE = "slogo.model.command.";
+  private final String myToken;
   private Command command;
   private Method m;
-  private final String myToken;
-  private ModelState myModelState;
+  private final ModelState myModelState;
   private String myFullToken;
 
-  private static final String BASE_PACKAGE = "slogo.model.command.";
   public CommandNode(String token, ModelState modelState)
       throws ClassNotFoundException {
     super();
-    myToken =  token ;
+    myToken = token;
     myModelState = modelState;
   }
 
@@ -37,17 +37,20 @@ public class CommandNode extends Node {
       m = clazz.getDeclaredMethod("execute", List.class);
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
-      throw new InvalidCommandException("Command Class Not Found. Previous Commands successfully executed");
+      throw new InvalidCommandException(
+          "Command Class Not Found. Previous Commands successfully executed");
     }
     List<Node> children = getChildren();
-    if(getNumArgs() != getChildren().size()) {
-      throw new InsufficientArgumentsException(getToken() + " expected " + getNumArgs() + " arguments. Previous (non-nested) commands executed successfully");
+    if (getNumArgs() != getChildren().size()) {
+      throw new InsufficientArgumentsException(getToken() + " expected " + getNumArgs()
+          + " arguments. Previous (non-nested) commands executed successfully");
     }
     try {
       return (double) m.invoke(command, children);
 
     } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-      Class<? extends RuntimeException> causeClass = (Class<? extends RuntimeException>) e.getCause().getClass();
+      Class<? extends RuntimeException> causeClass = (Class<? extends RuntimeException>) e.getCause()
+          .getClass();
       if (causeClass.equals(InsufficientArgumentsException.class)) {
         throw new InsufficientArgumentsException(e.getCause().getMessage());
       }

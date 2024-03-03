@@ -3,7 +3,6 @@ package slogo.model.node;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
-import slogo.model.api.SlogoListener;
 
 public class CommandCreatorNode extends Node {
 
@@ -52,12 +51,14 @@ public class CommandCreatorNode extends Node {
 
   private String toStringHelper(Node node, int indent, boolean firstLevel) {
     StringBuilder sb = new StringBuilder();
-    if(!firstLevel) {
+    if (!firstLevel) {
       sb.append("\n");
       sb.append("\t".repeat(indent)).append(node.getToken());
     }
     for (int i = 0; i < node.getChildren().size(); i++) {
-      if(firstLevel && i==0) {continue;}
+      if (firstLevel && i == 0) {
+        continue;
+      }
       sb.append(toStringHelper(node.getChildren().get(i), indent + 1, false));
     }
     return sb.toString();

@@ -23,7 +23,7 @@ public class IfElseCommand implements Command {
     if (arg1 != 0.0) {
       return toExecuteIfTrue.evaluate();
     } else {
-        return toExecuteIfFalse.evaluate();
+      return toExecuteIfFalse.evaluate();
     }
   }
 }
