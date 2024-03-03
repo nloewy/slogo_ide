@@ -23,7 +23,7 @@ import slogo.view.ViewInternal;
 
 public class StartScreen implements ViewInternal {
     private static final ObservableList<String> SUPPORTED_LANGUAGES = FXCollections.observableArrayList("English", "Spanish", "French");
-    private static final ObservableList<String> SUPPORTED_THEMES = FXCollections.observableArrayList("Light Mode", "Dark Mode");
+    private static final ObservableList<String> SUPPORTED_THEMES = FXCollections.observableArrayList("Light Mode", "Dark Mode", "Duke Mode");
     private static final String LOGO_IMAGE_PATH = "SlogoLOGO.png";
     private Scene scene;
     private Pane root = new Pane();
