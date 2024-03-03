@@ -1,7 +1,11 @@
 
 package slogo.view.pages;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +41,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -86,6 +91,7 @@ public class MainScreen implements ViewInternal {
   Button submitField;
   Button newSim;
   Button help;
+  Button save;
   Button play;
   Button pause;
   Pane centerPane = new Pane();
@@ -154,6 +160,7 @@ public class MainScreen implements ViewInternal {
     commandHistoryBox.getChildren().clear();
     commandHistoryBox.getChildren().add(commandHistoryLabel);
     for (String s : view.getCommandHistory()) {
+      System.out.println(s);
       commandHistoryBox.getChildren().add(new Label(s));
     }
 
@@ -194,7 +201,27 @@ public class MainScreen implements ViewInternal {
       view.pushCommand(newSlogoContent);
     });
 
-    commandHistoryBox.getChildren().addAll(help, newSim);
+    save = UserInterfaceUtil.generateButton("Save", event -> {
+      for (String s : view.getCommandHistory()) {
+        System.out.println(s);
+      }
+
+      FileChooser fileChooser = new FileChooser();
+      fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SLogo files (*.slogo)", "*.slogo"));
+      File file = fileChooser.showSaveDialog(stage);
+      if (file != null) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+          for (String command : view.getCommandHistory()) {
+            writer.write(command);
+            writer.newLine();
+          }
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    });
+
+    commandHistoryBox.getChildren().addAll(help, newSim, save);
 
     userDefinedCommandsBox = new VBox();
     userDefinedCommandsBox.getStyleClass().add("command-box");
@@ -227,6 +254,7 @@ public class MainScreen implements ViewInternal {
       variablesBoxLabel.setText(newLang.getString("varBox"));
       commandHistoryLabel.setText(newLang.getString("histBox"));
       help.setText(newLang.getString("Help"));
+      save.setText(newLang.getString("Save"));
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
     });
 
