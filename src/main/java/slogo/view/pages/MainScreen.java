@@ -113,21 +113,10 @@ public class MainScreen implements ViewInternal {
   }
 
   public void update() {
-    for (FrontEndTurtle turtle : view.getTurtles()) {
 
-      List<Line> pathHistory = turtle.getPathHistory();
-      int i = pathHistory.size()-1;
-      while(i>=0 && !root.getChildren().contains(pathHistory.get(i))) {
-        root.getChildren().add(pathHistory.get(i));
-        i--;
-      }
-
-      updateVariables();
-      updateCommands();
-    }
   }
 
-  private void updateVariables() {
+  public void updateVariables() {
     variablesBox.getChildren().clear();
     variablesBox.getChildren().add(variablesBoxLabel);
 
@@ -148,7 +137,7 @@ public class MainScreen implements ViewInternal {
     }
   }
 
-  private void updateCommands() {
+  public void updateCommands() {
     commandHistoryBox.getChildren().clear();
     commandHistoryBox.getChildren().add(commandHistoryLabel);
     for (String s : view.getCommandHistory()) {
@@ -255,4 +244,7 @@ public class MainScreen implements ViewInternal {
     return root;
   }
 
+  public void addLine(Line line) {
+    root.getChildren().add(line);
+  }
 }
