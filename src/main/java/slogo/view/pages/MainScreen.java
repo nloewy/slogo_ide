@@ -230,6 +230,9 @@ public class MainScreen implements ViewInternal {
       speedSlider.setMajorTickUnit(10);
       setSpeedSliderHandler((observable, oldValue, newValue) -> {
         mySpeed = newValue.intValue();
+        if(mySpeed == speedSlider.getMax()) {
+          mySpeed = 100000;
+        }
       });
 
       // Create an HBox for the buttons

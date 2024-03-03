@@ -186,6 +186,7 @@ public class View implements SlogoListener {
         animation.setCycleCount(1);
 
 
+
         for (int i = 1; i <= numSteps; i++) {
             double progress = (double) i / numSteps;
             double intermediateX = oldX + (x - oldX) * progress;
