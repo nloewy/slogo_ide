@@ -126,9 +126,9 @@ public class MainScreen implements ViewInternal {
     variablesBox.getChildren().clear();
     variablesBox.getChildren().add(variablesBoxLabel);
 
-    for (String key : view.getVariables().keySet()) {
-      List<String> relatedCommands = view.getVariables().get(key);
-      Button openRelatedCommands = new Button(key);
+    for (String key : view.getVariableValues().keySet()) {
+      List<String> relatedCommands = view.getVariableCommands().get(key);
+      Button openRelatedCommands = new Button(key + " :: " + view.getVariableValues().get(key));
       openRelatedCommands.setId("variable");
 
       openRelatedCommands.setOnAction((event) -> {
@@ -136,7 +136,7 @@ public class MainScreen implements ViewInternal {
         for (String command : relatedCommands) {
           commands = commands + "\n" + command;
         }
-        new Alert(AlertType.NONE, "RELATED COMMANDS\n" + commands).showAndWait();
+        new Alert(AlertType.CONFIRMATION, "RELATED COMMANDS\n" + commands).show();
       });
 
       variablesBox.getChildren().add(openRelatedCommands);

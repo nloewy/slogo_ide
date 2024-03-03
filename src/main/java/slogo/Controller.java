@@ -11,6 +11,8 @@ import java.util.function.Consumer;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import slogo.model.SlogoModel;
 import slogo.model.api.InvalidCommandException;
@@ -62,26 +64,22 @@ public class Controller {
             try {
                 model.parse(t);
             } catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                new Alert(AlertType.ERROR, "Invalid Command Entered").show();
             } catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                new Alert(AlertType.ERROR, "Invalid Target Entered").show();
             } catch (NoSuchMethodException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                new Alert(AlertType.ERROR, "Invalid Command Entered").show();
             } catch (InstantiationException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                new Alert(AlertType.ERROR, "Object Not Instantiated").show();
             } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                new Alert(AlertType.ERROR, "Access Not Granted").show();
             } catch (NoSuchFieldException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                new Alert(AlertType.ERROR, "Invalid Field Entered").show();
             } catch (InvalidTokenException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                new Alert(AlertType.ERROR, "Invalid Token Entered").show();
+            }
+            catch (Exception e) {
+                new Alert(AlertType.ERROR, "Invalid or Insufficient Arguments Entered").show();
             }
         };
 

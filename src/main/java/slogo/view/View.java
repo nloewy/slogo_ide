@@ -30,7 +30,8 @@ public class View implements SlogoListener {
 
     private static final int height = 600;
     private static final int width = 1000;
-    private final Map<String, List<String>> variables;
+    private final Map<String, List<String>> variableCommands;
+    private final Map<String, Number> variableValues;
     private Image defaultImage;
     private final Stage stage;
     private final List<FrontEndTurtle> turtles;
@@ -52,7 +53,8 @@ public class View implements SlogoListener {
         lang = "EG";
         commandString = "";
 
-        variables = new LinkedHashMap<>();
+        variableCommands = new LinkedHashMap<>();
+        variableValues = new LinkedHashMap<>();
         turtles = new ArrayList<>();
         commandHistory = new Stack<String>();
         userDefinedCommandHistory = new Stack<String>();
@@ -94,8 +96,11 @@ public class View implements SlogoListener {
         return turtles;
     }
 
-    public Map<String, List<String>> getVariables() {
-        return variables;
+    public Map<String, List<String>> getVariableCommands() {
+        return variableCommands;
+    }
+    public Map<String, Number> getVariableValues() {
+        return variableValues;
     }
 
     /*
@@ -132,6 +137,7 @@ public class View implements SlogoListener {
         commandString = s;
         commandHistory.push(s);
         parse.accept(commandString);
+        page.updateCommands();
     }
 
     public Stack<String> getCommandHistory() {
@@ -144,15 +150,18 @@ public class View implements SlogoListener {
 
     @Override
     public void onUpdateValue(String variableName, Number newValue) {
-        if (variables.get(variableName) != null) {
-            List<String> commands = variables.get(variableName);
+        if (variableCommands.get(variableName) != null && variableValues.get(variableName) != null) {
+            List<String> commands = variableCommands.get(variableName);
             commands.add(commandHistory.peek());
+            variableValues.remove(variableName);
+            variableValues.put(variableName, newValue);
             return;
         }
-        variables.put(variableName + " :: " + newValue, List.of(commandHistory.peek()));
+        variableCommands.put(variableName, List.of(commandHistory.peek()));
+        variableValues.put(variableName, newValue);
         page.updateVariables();
-        page.updateCommands();
     }
+
     private void drawLine(double x1, double y1, double x2, double y2) {
         Line line = new Line(x1 , y1 , x2, y2);
         line.setStroke(Color.BLACK);
@@ -201,6 +210,7 @@ public class View implements SlogoListener {
         if (userDefined) {
             userDefinedCommandHistory.add(string);
         }
+        page.updateCommands();
     }
 }
 
