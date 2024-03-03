@@ -5,7 +5,7 @@
     -fx-border-style: solid;
 
     -fx-font-family: "Courier New";
-    -fx-font-size: 10px;
+    -fx-font-size: 10;
     -fx-font-weight: bold;
 }
 
@@ -17,19 +17,64 @@
     -fx-text-fill: blue;
 
     -fx-font-family: "Courier New";
-    -fx-font-size: 10px;
+    -fx-font-size: 10;
     -fx-font-weight: bold;
 }
 
-#variable {
-    -fx-font-size: 10;
-}
-
-.logo {
-}
-
-#vbox {
+.variable-box {
+    -fx-spacing: 10;
+    -fx-padding: 10;
     -fx-border-color: black;
-    -fx-border-width: 1px;
-    -fx-border-style: solid;
+    -fx-alignment: top-left;
+
+    -fx-font-family: "Arial";
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
 }
+
+.command-box {
+    -fx-font-family: "Arial";
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+
+    -fx-spacing: 10;
+    -fx-alignment: top-left;
+}
+
+.history-box {
+    -fx-font-family: "Arial";
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+
+    -fx-spacing: 10;
+    -fx-alignment: top-left;
+}
+
+.input-box {
+    -fx-border-color: black;
+    -fx-padding: 0 0 0 200;
+    -fx-spacing: 10;
+}
+
+.input-box .text-field {
+    -fx-alignment: center-left;
+}
+
+#Submit {
+    -fx-font-size: 20;
+    -fx-translate-y: 20;
+    -fx-translate-x: 20;
+}
+
+/*#variable {*/
+/*    -fx-font-size: 10;*/
+/*}*/
+
+/*.logo {*/
+/*}*/
+
+/*#vbox {*/
+/*    -fx-border-color: black;*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-border-style: solid;*/
+/*}*/

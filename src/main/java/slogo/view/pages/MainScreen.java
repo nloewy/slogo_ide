@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -19,12 +20,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -32,6 +36,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import slogo.Controller;
@@ -48,7 +53,8 @@ animation keyframes.
  */
 
 public class MainScreen implements ViewInternal {
-
+  private static final double WINDOW_WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
+  private static final double WINDOW_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
   private final Controller controller;
   private Scene scene;
   private BorderPane layout;
@@ -154,38 +160,35 @@ public class MainScreen implements ViewInternal {
   @Override
   public void setUp() {
     layout = new BorderPane();
+    layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     variablesBox = new VBox();
-    variablesBox.setSpacing(10);
-    variablesBox.setAlignment(javafx.geometry.Pos.CENTER);
+    variablesBox.getStyleClass().add("variable-box");
+    variablesBox.setPrefSize(200, WINDOW_HEIGHT - 200);
     variablesPane = new ScrollPane(variablesBox);
-    variablesPane.setPrefSize(200, 200);
     variablesBox.getChildren().add(variablesBoxLabel);
 
     commandHistoryBox = new HBox();
-    commandHistoryBox.setSpacing(10);
-    commandHistoryBox.setAlignment(javafx.geometry.Pos.CENTER);
+    commandHistoryBox.getStyleClass().add("history-box");
+    commandHistoryBox.setPrefSize(WINDOW_WIDTH, 100);
     commandsHistory = new ScrollPane(commandHistoryBox);
-    commandsHistory.setPrefSize(1000, 100);
     commandHistoryBox.getChildren().add(commandHistoryLabel);
 
     userDefinedCommandsBox = new VBox();
-    userDefinedCommandsBox.setSpacing(10);
-    userDefinedCommandsBox.setAlignment(javafx.geometry.Pos.CENTER);
+    userDefinedCommandsBox.getStyleClass().add("command-box");
+    userDefinedCommandsBox.setPrefSize(200, WINDOW_HEIGHT - 200);
     userDefinedCommandsPane = new ScrollPane(userDefinedCommandsBox);
-    userDefinedCommandsPane.setPrefSize(200, 200);
     userDefinedCommandsBox.getChildren().add(userDefinedCommandsLabel);
 
+
+    textInputBox = new HBox();
+    textInputBox.getStyleClass().add("input-box");
+    textInputBox.setMaxSize(WINDOW_WIDTH, 100);
+
     field = new TextField();
-    field.setPrefWidth(1000);
-    field.setPrefHeight(100);
-    field.setAlignment(Pos.TOP_LEFT);
+    field.setPrefSize(WINDOW_WIDTH - 400, 100);
 
-    variablesBoxLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-    commandHistoryLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-    userDefinedCommandsLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-
-    submitField = UserInterfaceUtil.generateButton(myResources.getString("Submit"), 251, 100, event -> {
+    submitField = UserInterfaceUtil.generateButton(myResources.getString("Submit"), event -> {
       sendCommandStringToView();
     });
 
@@ -207,21 +210,13 @@ public class MainScreen implements ViewInternal {
     });
 
      */
-    textInputBox = new HBox();
-    textInputBox.setSpacing(10);
     textInputBox.getChildren().addAll(field, submitField);//, play, pause);
-    textInputBox.setAlignment(javafx.geometry.Pos.CENTER);
-
     root = new Pane();
-
-    // root.getChildren().add(variablesPane);
-    // root.getChildren().add(commandBox);
 
     initializeTurtleDisplays();
 
-    layout.setPrefSize(1400, 650);
 
-    centerPane.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, null, null)));
+//    centerPane.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, null, null)));
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
     layout.setRight(variablesPane);
