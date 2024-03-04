@@ -18,11 +18,9 @@ public class QuotientCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double arg1 = arguments.get(0).evaluate();
-    double arg2 = arguments.get(1).evaluate();
-    if (arg2 == 0) {
-      throw new InvalidOperandException("Divisor must be non-zero");
+    try { return arguments.get(0).evaluate() / arguments.get(1).evaluate(); }
+    catch(ArithmeticException e) {
+      throw new InvalidOperandException("Divisor must be Non-Zero");
     }
-    return arg1 / arg2;
   }
 }
