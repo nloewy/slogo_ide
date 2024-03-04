@@ -27,7 +27,7 @@ public class RepeatCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     myTurtle = new Turtle(1);
-    model.getTurtles().add(myTurtle);
+    model.getTurtles().put(1, myTurtle);
   }
 
   @Test

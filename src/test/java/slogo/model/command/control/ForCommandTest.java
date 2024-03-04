@@ -26,7 +26,7 @@ public class ForCommandTest extends CommandTest {
   void setUp() {
     model = new ModelState();
     myTurtle = new Turtle(1);
-    model.getTurtles().add(myTurtle);
+    model.getTurtles().put(1, myTurtle);
   }
 
   @Test

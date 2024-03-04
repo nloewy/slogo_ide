@@ -51,7 +51,7 @@ public class SetTowardsCommand implements Command {
       throws InvocationTargetException, IllegalAccessException {
     double locationX = arguments.get(0).evaluate();
     double locationY = arguments.get(1).evaluate();
-    Turtle turtle = modelState.getTurtles().get(0);
+    Turtle turtle = modelState.getTurtles().get(1);
     double dx = locationX - turtle.getX();
     double dy = locationY - turtle.getY();
     double targetHeading = MathUtils.toDegrees(Math.atan2(dx, dy));
@@ -60,7 +60,7 @@ public class SetTowardsCommand implements Command {
     double counterclockwiseTurn = Math.abs((currentHeading - targetHeading + 360) % 360);
     double minTurn = Math.min(clockwiseTurn, counterclockwiseTurn);
     turtle.setHeading(targetHeading);
-    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
+    listener.onUpdateTurtleState(modelState.getTurtles().get(1).getImmutableTurtle());
     return minTurn;
   }
 }

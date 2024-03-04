@@ -25,8 +25,8 @@ public class YcoordinateCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
     ModelState model = new ModelState();
-    model.getTurtles().add(new Turtle(1));
-    myTurtle = model.getTurtles().get(0);
+    model.getTurtles().put(1, new Turtle(1));
+    myTurtle = model.getTurtles().get(1);
     node = new CommandNode("query.Ycoordinate", model);
 
   }

@@ -48,8 +48,8 @@ public class HomeCommandTest extends CommandTest {
   void testBasicHome(String originalX, String originalY)
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
     ModelState model = new ModelState();
-    model.getTurtles().add(new Turtle(1));
-    myTurtle = model.getTurtles().get(0);
+    model.getTurtles().put(1, new Turtle(1));
+    myTurtle = model.getTurtles().get(1);
     node = new CommandNode("turtle.Home", model);
     node.addListener(myListener);
     myTurtle.setX(Double.parseDouble(originalX));

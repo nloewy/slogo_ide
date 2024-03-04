@@ -43,6 +43,6 @@ public class XcoordinateCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return modelState.getTurtles().get(0).getX();
+    return modelState.getTurtles().get(1).getX();
   }
 }

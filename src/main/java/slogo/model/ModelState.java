@@ -23,9 +23,9 @@ import slogo.model.node.Node;
 public class ModelState {
 
   /**
-   * A list of Turtle objects representing the turtles currently present in the simulation.
+   * A map of Turtle ids to Turtle objects representing the turtles in the simulation.
    */
-  private final List<Turtle> myTurtles;
+  private final Map<Integer, Turtle> myTurtles;
   /**
    * A map from variable names (lowercase) to the current value of the variable.
    */
@@ -41,10 +41,10 @@ public class ModelState {
   private final Map<String, List<Node>> myUserDefinedCommandNodes;
 
   /**
-   * Initializes turtles, variables, commands to default values (empty lists / maps)
+   * Initializes turtles, variables, commands to default values (empty maps)
    */
   public ModelState() {
-    myTurtles = new ArrayList<>();
+    myTurtles = new HashMap<>();
     myVariables = new HashMap<>();
     myUserDefinedCommands = new HashMap<>();
     myUserDefinedCommandNodes = new HashMap<>();
@@ -55,7 +55,7 @@ public class ModelState {
    *
    * @return a list of Turtle objects representing the turtles in the simulation
    */
-  public List<Turtle> getTurtles() {
+  public Map<Integer, Turtle> getTurtles() {
     return myTurtles;
   }
 

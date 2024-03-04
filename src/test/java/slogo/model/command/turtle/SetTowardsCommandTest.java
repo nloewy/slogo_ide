@@ -26,8 +26,8 @@ public class SetTowardsCommandTest extends CommandTest {
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
-    model.getTurtles().add(new Turtle(1));
-    myTurtle = model.getTurtles().get(0);
+    model.getTurtles().put(1, new Turtle(1));
+    myTurtle = model.getTurtles().get(1);
     node = new CommandNode("turtle.SetTowards", model);
     node.addListener(myListener);
   }

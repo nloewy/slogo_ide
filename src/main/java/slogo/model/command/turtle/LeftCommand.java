@@ -48,7 +48,7 @@ public class LeftCommand implements Command {
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
     double degrees = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(0);
+    Turtle turtle = modelState.getTurtles().get(1);
     turtle.setHeading(turtle.getHeading() - degrees);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return degrees;

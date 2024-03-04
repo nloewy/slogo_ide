@@ -27,7 +27,7 @@ public class IfElseCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     myTurtle = new Turtle(1);
-    model.getTurtles().add(myTurtle);
+    model.getTurtles().put(1, myTurtle);
     node = new CommandNode("control.IfElse", model);
     Node nodeTwo = new CommandNode("math.Sum", model);
     Node nodeThree = new ConstantNode("-5", model);
@@ -61,7 +61,7 @@ public class IfElseCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     myTurtle = new Turtle(1);
-    model.getTurtles().add(myTurtle);
+    model.getTurtles().put(1, myTurtle);
     node = new CommandNode("control.IfElse", model);
     Node nodeTwo = new CommandNode("math.Sum", model);
     Node nodeThree = new ConstantNode("-5", model);

@@ -48,7 +48,7 @@ public class SlogoModel implements Model {
 
   public SlogoModel(SlogoListener listener, String currentLanguage) throws IOException {
     modelState = new ModelState();
-    modelState.getTurtles().add(new Turtle(1));
+    modelState.getTurtles().put(1, new Turtle(1));
     myListener = listener;
     parser = new Parser(modelState, currentLanguage);
     myCommands = new Stack<>();

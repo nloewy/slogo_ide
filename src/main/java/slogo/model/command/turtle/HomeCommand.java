@@ -44,12 +44,12 @@ public class HomeCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments) {
-    Turtle turtle = modelState.getTurtles().get(0);
+    Turtle turtle = modelState.getTurtles().get(1);
     double currentX = turtle.getX();
     double currentY = turtle.getY();
     turtle.setX(0);
     turtle.setY(0);
-    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
+    listener.onUpdateTurtleState(modelState.getTurtles().get(1).getImmutableTurtle());
     return MathUtils.dist(0, 0, currentX, currentY);
   }
 }

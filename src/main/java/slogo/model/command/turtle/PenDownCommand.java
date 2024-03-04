@@ -48,9 +48,9 @@ public class PenDownCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    Turtle turtle = modelState.getTurtles().get(0);
+    Turtle turtle = modelState.getTurtles().get(1);
     turtle.setPen(true);
-    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
+    listener.onUpdateTurtleState(modelState.getTurtles().get(1).getImmutableTurtle());
     return 1.0;
   }
 }
