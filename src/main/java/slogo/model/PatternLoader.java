@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * The PatternLoader class accesses and matches Strings to regex patterns obtained from a properites file.
- * The primary purpose of this class is to obtain regex patterns for token matching during parsing.
+ * The PatternLoader class accesses and matches Strings to regex patterns obtained from a properites
+ * file. The primary purpose of this class is to obtain regex patterns for token matching during
+ * parsing.
+ *
+ * @author Noah Loewy
  */
 
 public class PatternLoader {
