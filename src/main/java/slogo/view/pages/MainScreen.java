@@ -278,13 +278,9 @@ public class MainScreen implements ViewInternal {
       paused = true;
     });
 
-    step = UserInterfaceUtil.generateButton("Step", event -> {
-      if (currAnimation == null) {
-        playSingleAnimation();
-      } else {
-        finishCurrAnimation();
-      }
-    });
+    List<Button> mainButtons = List.of(submitField, play, pause);
+    mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
+
     speedSlider.setMin(10);
     speedSlider.setMax(300);
     speedSlider.setValue(mySpeed);
@@ -293,14 +289,10 @@ public class MainScreen implements ViewInternal {
     speedSlider.setMajorTickUnit(10);
     setSpeedSliderHandler((observable, oldValue, newValue) -> {
       mySpeed = newValue.intValue();
-      if (mySpeed == speedSlider.getMax()) {
-        mySpeed = 10000;
+      if(mySpeed == speedSlider.getMax()) {
+        mySpeed = 100000;
       }
     });
-
-    // Create an HBox for the buttons
-    HBox buttonBox = new HBox();
-    buttonBox.getChildren().addAll(submitField, play, pause, step);
 
     controller.addLanguageObserver((s) -> {
       ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
@@ -310,11 +302,19 @@ public class MainScreen implements ViewInternal {
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
       play.setText(newLang.getString("Play"));
       pause.setText(newLang.getString("Pause"));
-      step.setText(newLang.getString("Step"));
     });
 
-    textInputBox.getChildren().addAll(field, buttonBox, speedSlider);
+    textInputBox.getChildren().addAll(speedSlider, field);
+    textInputBox.getChildren().addAll(mainButtons);
     textInputBox.setAlignment(Pos.CENTER);
+
+    step = UserInterfaceUtil.generateButton("Step", event -> {
+      if (currAnimation == null) {
+        playSingleAnimation();
+      } else {
+        finishCurrAnimation();
+      }
+    });
 
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
