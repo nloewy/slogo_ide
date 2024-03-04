@@ -2,11 +2,13 @@ package slogo.view.pages;
 
 import static slogo.view.UserInterfaceUtil.generateButton;
 import static slogo.view.UserInterfaceUtil.generateComboBox;
+import static slogo.view.UserInterfaceUtil.generateComboStringBox;
 import static slogo.view.UserInterfaceUtil.generateImageView;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
+import java.util.stream.IntStream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -16,6 +18,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import slogo.Controller;
+import slogo.view.ComboChoice;
 import slogo.view.ViewInternal;
 
 public class StartScreen implements ViewInternal {
@@ -71,9 +74,12 @@ public class StartScreen implements ViewInternal {
       handleLoadTurtleImage();
     });
 
-    ObservableList<String> supportedThemes = FXCollections.observableArrayList(
-        myResources.getString("ColorThemes").split(","));
-    ComboBox themeComboBox = generateComboBox(supportedThemes, 400, 330, (s) -> {
+    ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "English");
+    ObservableList<ComboChoice> supportedThemes = FXCollections.observableArrayList();
+    for (String theme : defaultResources.getString("ColorThemes").split(",")) {
+      supportedThemes.add(new ComboChoice(theme, theme));
+    }
+    ComboBox<ComboChoice> themeComboBox = generateComboBox(supportedThemes, 400, 330, (s) -> {
       return s.replace(" ", "") + ".css";
     }, (event) -> {
       controller.setCurrentTheme(event, scene);
@@ -85,12 +91,20 @@ public class StartScreen implements ViewInternal {
       loadGen.setText(newLang.getString("LoadGen"));
       loadOld.setText(newLang.getString("LoadOld"));
       uploadTurtle.setText(newLang.getString("UploadTurtle"));
-//            themeComboBox.setItems(FXCollections.observableArrayList(newLang.getString("ColorThemes").split(",")));
+
+      String[] themes = newLang.getString("ColorThemes").split(",");
+      ObservableList<ComboChoice> comboBoxItems = themeComboBox.getItems();
+      for (int i = 0; i < themes.length; i++) {
+        comboBoxItems.set(i, new ComboChoice(themes[i], comboBoxItems.get(i).getValue()));
+        if(comboBoxItems.get(i).getValue().equals(themeComboBox.getValue().toString())) {
+          themeComboBox.setValue(comboBoxItems.get(i));
+        }
+      }
     });
 
     root.getChildren().addAll(
         generateImageView(LOGO_IMAGE_PATH, 100, 50),
-        generateComboBox(SUPPORTED_LANGUAGES, 100, 200,
+        generateComboStringBox(SUPPORTED_LANGUAGES, 100, 200,
             (s) -> {
               return LANG_OPT_BUNDLE.keySet().stream()
                   .filter(key -> LANG_OPT_BUNDLE.getString(key).equals(s)).findFirst().get();

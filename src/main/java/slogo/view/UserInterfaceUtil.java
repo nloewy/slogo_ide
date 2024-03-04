@@ -1,8 +1,11 @@
 package slogo.view;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,7 +38,7 @@ public class UserInterfaceUtil {
     return ret;
   }
 
-  public static ComboBox<String> generateComboBox(ObservableList<String> options,
+  public static ComboBox<String> generateComboStringBox(ObservableList<String> options,
       int x,
       int y,
       Function<String, String> fixString,
@@ -52,6 +55,28 @@ public class UserInterfaceUtil {
 
     return comboBox;
   }
+
+  public static ComboBox<ComboChoice> generateComboBox(ObservableList<ComboChoice> options,
+      int x,
+      int y,
+      Function<String, String> fixString,
+      Consumer<String> consumer) {
+    ComboBox<ComboChoice> comboBox = new ComboBox<>();
+    comboBox.setItems(options);
+    comboBox.setValue(options.get(0));
+    comboBox.setId("themeBox");
+    comboBox.setLayoutX(x);
+    comboBox.setLayoutY(y);
+    comboBox.setOnAction(e -> {
+      ComboChoice selectedOption = comboBox.getValue();
+      if(selectedOption != null) {
+        consumer.accept(fixString.apply(selectedOption.getValue()));
+      }
+    });
+
+    return comboBox;
+  }
+
 
   public static ImageView generateImageView(String imagePath, int x, int y) {
     InputStream imageStream = UserInterfaceUtil.class.getClassLoader()
