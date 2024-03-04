@@ -329,9 +329,6 @@ public class MainScreen implements ViewInternal {
         if(colorItems.get(i).getValue().equals(colorDropDown.getValue().toString())) {
           colorDropDown.setValue(colorItems.get(i));
         }
-        if(backgroundItems.get(i).getValue().equals(backgroundDropDown.getValue().toString())) {
-          backgroundDropDown.setValue(backgroundItems.get(i));
-        }
       }
       step.setText(newLang.getString("Step"));
     });
