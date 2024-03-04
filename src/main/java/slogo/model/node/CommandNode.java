@@ -61,33 +61,22 @@ public class CommandNode extends Node {
    */
 
   @Override
-  public double evaluate()
-      throws InvalidCommandException, InsufficientArgumentsException, InvalidOperandException {
+  public double evaluate() //masked under factory
+      throws InvalidCommandException, InsufficientArgumentsException, InvalidOperandException, InvocationTargetException, IllegalAccessException {
     try {
       Class<?> clazz = Class.forName(BASE_PACKAGE + myToken + "Command");
       command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
           .newInstance(myModelState, getListener());
-      method = clazz.getDeclaredMethod("execute", List.class);
+      method= clazz.getDeclaredMethod("execute", List.class);
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
       throw new InvalidCommandException(
           "", getToken());
     }
-    List<Node> children = getChildren();
     if (getNumArgs() != getChildren().size()) {
       throw new InsufficientArgumentsException("", getToken());
     }
-    try {
-      return (double) method.invoke(command, children);
-
-    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-      Class<? extends RuntimeException> causeClass = (Class<? extends RuntimeException>) e.getCause()
-          .getClass();
-      if (causeClass.equals(InsufficientArgumentsException.class)) {
-        throw new InsufficientArgumentsException(e.getCause().getMessage(), getToken());
-      }
-      throw new InvalidOperandException(e.getCause().getMessage());
-    }
+    return command.execute(getChildren());
   }
 
   /**

@@ -118,7 +118,7 @@ public class Parser {
     skipCommentsAndWhitespace(tokens);
     Consumer<Stack<Node>> handler = tokenHandlers.getOrDefault(
         tokens.get(myIndex), (stack) -> createTokenAndUpdateStack(tokens, stack));
-    handler.accept(nodeStack);
+    handler.accept(nodeStack); //updates currentNode
   }
 
   /**

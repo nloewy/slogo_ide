@@ -84,7 +84,7 @@ public class SlogoModel implements Model {
     } catch (InvalidCommandException | InvalidTokenException | InsufficientArgumentsException |
              InvalidVariableException e) {
       handleParseResult(input, root);
-      SlogoException e2 = e;
+      SlogoException e2 = e; //shouldnt be in model
       String template = (String) prop.getOrDefault(e.getClass().getSimpleName(), e.getMessage());
       String message = String.format(template, e2.getToken());
       throw new SlogoException(message, "");
@@ -127,34 +127,6 @@ public class SlogoModel implements Model {
       }
     }
   }
-
-  /**
-   * Loads a Slogo file containing commands.
-   *
-   * @param path The path to the Slogo file.
-   * @return The loaded Slogo file.
-   */
-
-  @Override
-  public File loadSlogo(String path) {
-    return null;
-  }
-
-  /**
-   * Saves the current Slogo model history to a Slogo file.
-   *
-   * @param path The path to save the Slogo file.
-   * @return The saved Slogo file.
-   */
-
-  @Override
-  public File saveSlogo(String path) {
-    return null;
-  }
-
-  /**
-   * Resets the Slogo model to its initial state.
-   */
 
   @Override
   public void resetModel() {
