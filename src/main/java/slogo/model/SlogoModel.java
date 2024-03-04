@@ -28,19 +28,20 @@ import slogo.model.node.Node;
  */
 
 public class SlogoModel implements Model {
+
   public static final String RESOURCE_PATH = "src/main/resources/slogo/example/languages/";
   private final SlogoListener myListener;
   private final Parser parser;
   private final Stack<String> myCommands;
-  private ModelState modelState;
   private final Properties prop;
+  private ModelState modelState;
 
   /**
    * Constructs and initializes SlogoModel object with the specified listener and current language.
    * For the purposes of this project, the listener will always be a MainScreen, which will update
    * based on the executed commands. Creates a parser object.
    *
-   * @param listener The SlogoListener object to receive event notifications.
+   * @param listener        The SlogoListener object to receive event notifications.
    * @param currentLanguage The current language used in the interpreter.
    * @throws IOException If an I/O error occurs while loading language properties.
    */
@@ -57,17 +58,18 @@ public class SlogoModel implements Model {
   }
 
   /**
-   * Sends the input string obtained from the view to the parser for parsing. The parser updates
-   * the rootNode by turning it into a tree. Then, calls handleParseResult to execute the command(s)
+   * Sends the input string obtained from the view to the parser for parsing. The parser updates the
+   * rootNode by turning it into a tree. Then, calls handleParseResult to execute the command(s)
    * (until either all comamnds are exhausted or an error is thrown), and alerts listener of final
    * value returned
    *
    * @param input The Slogo command to be parsed and executed.
    * @throws InvocationTargetException If an error occurs during command execution.
-   * @throws IllegalAccessException If access is not allowed to the invoked method.
-   * @throws InvalidCommandException If a non-command token is placed where a command is expected,
-   *                                 or if command token not recognized.
-   * @throws InvalidTokenException If a token in the input string does not match an expected pattern.
+   * @throws IllegalAccessException    If access is not allowed to the invoked method.
+   * @throws InvalidCommandException   If a non-command token is placed where a command is expected,
+   *                                   or if command token not recognized.
+   * @throws InvalidTokenException     If a token in the input string does not match an expected
+   *                                   pattern.
    */
 
   @Override
@@ -92,10 +94,11 @@ public class SlogoModel implements Model {
 
   /**
    * Handles the result of parsing by evaluating the command and notifying the listener.
+   *
    * @param input The input command string.
-   * @param root The root node of the parsed command.
+   * @param root  The root node of the parsed command.
    * @throws InvocationTargetException If an error occurs during command execution.
-   * @throws IllegalAccessException If access is not allowed to the invoked method.
+   * @throws IllegalAccessException    If access is not allowed to the invoked method.
    */
 
   private void handleParseResult(String input, Node root)
@@ -112,6 +115,7 @@ public class SlogoModel implements Model {
 
   /**
    * Performs a depth-first traversal of the node tree and adds the listener to each node.
+   *
    * @param node The root node of the tree to traverse.
    */
 
@@ -126,6 +130,7 @@ public class SlogoModel implements Model {
 
   /**
    * Loads a Slogo file containing commands.
+   *
    * @param path The path to the Slogo file.
    * @return The loaded Slogo file.
    */
@@ -137,6 +142,7 @@ public class SlogoModel implements Model {
 
   /**
    * Saves the current Slogo model history to a Slogo file.
+   *
    * @param path The path to save the Slogo file.
    * @return The saved Slogo file.
    */
@@ -156,7 +162,7 @@ public class SlogoModel implements Model {
   }
 
   @Deprecated
-  //FOR TESTING PURPOSES ONLY
+    //FOR TESTING PURPOSES ONLY
   ModelState getModelstate() {
     return modelState;
   }

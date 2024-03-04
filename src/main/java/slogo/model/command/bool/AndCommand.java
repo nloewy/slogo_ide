@@ -2,15 +2,14 @@ package slogo.model.command.bool;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The AndCommand class represents the logical AND operation.
- * It evaluates two nodes and returns 1.0 if both are true (non-zero), otherwise returns 0.0.
+ * The AndCommand class represents the logical AND operation. It evaluates two nodes and returns 1.0
+ * if both are true (non-zero), otherwise returns 0.0.
  *
  * @author Noah Loewy
  */
@@ -27,7 +26,7 @@ public class AndCommand implements Command {
    * does not actually do anything, and exists for the sake of consistency across commands
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public AndCommand(ModelState modelState, SlogoListener listener) {
   }
@@ -38,7 +37,7 @@ public class AndCommand implements Command {
    * @param arguments a list of nodes, which can each be evaluated
    * @return 1.0 if both expressions are non-zero, otherwise returns 0.0
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

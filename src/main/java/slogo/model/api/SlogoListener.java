@@ -2,10 +2,10 @@ package slogo.model.api;
 
 
 /**
- * The SlogoListener interface defines a set of methods to be implemented by classes
- * that wish to receive notifications about events in the Slogo Model.
- * These events include variable value updates, turtle state changes, turtle resets,
- * parse operation results, and user-defined command notifications.
+ * The SlogoListener interface defines a set of methods to be implemented by classes that wish to
+ * receive notifications about events in the Slogo Model. These events include variable value
+ * updates, turtle state changes, turtle resets, parse operation results, and user-defined command
+ * notifications.
  *
  * @author Noah Loewy
  */
@@ -16,7 +16,7 @@ public interface SlogoListener {
    * Invoked when a variable value is updated.
    *
    * @param variableName The name of the updated variable.
-   * @param newValue The new value of the variable.
+   * @param newValue     The new value of the variable.
    */
   void onUpdateValue(String variableName, Number newValue);
 
@@ -37,7 +37,7 @@ public interface SlogoListener {
   /**
    * Invoked at the end of a parse operation to relay the result.
    *
-   * @param value The numerical result of the parse operation.
+   * @param value  The numerical result of the parse operation.
    * @param string The formatted string representing the parse operation.
    */
   void onReturn(double value, String string);
@@ -47,5 +47,6 @@ public interface SlogoListener {
    *
    * @param string The formatted user-defined command.
    */
-  void onUserDefinedCommand(String string); // Highlights if it is a user-defined command or a history command.
+  void onUserDefinedCommand(
+      String string); // Highlights if it is a user-defined command or a history command.
 }

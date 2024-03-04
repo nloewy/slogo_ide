@@ -23,11 +23,11 @@ import slogo.model.node.Node;
 public class ModelState {
 
   /**
-  A list of Turtle objects representing the turtles currently present in the simulation.
+   * A list of Turtle objects representing the turtles currently present in the simulation.
    */
   private final List<Turtle> myTurtles;
   /**
-   A map from variable names (lowercase) to the current value of the variable.
+   * A map from variable names (lowercase) to the current value of the variable.
    */
   private final Map<String, Double> myVariables;
   /**

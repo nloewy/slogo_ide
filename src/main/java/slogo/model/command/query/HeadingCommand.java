@@ -26,7 +26,7 @@ public class HeadingCommand implements Command {
    * Constructs an instance of HeadingCommand with the given model state and listener.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public HeadingCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
@@ -38,7 +38,7 @@ public class HeadingCommand implements Command {
    * @param arguments a list of nodes representing arguments (not used in this command)
    * @return the heading of the active turtle
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

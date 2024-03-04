@@ -9,8 +9,8 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The ArcTangentCommand class represents the arctangent mathematical operation.
- * It calculates the arctangent (inverse tangent) of a given number and returns the result in degrees.
+ * The ArcTangentCommand class represents the arctangent mathematical operation. It calculates the
+ * arctangent (inverse tangent) of a given number and returns the result in degrees.
  *
  * @author Noah Loewy
  */
@@ -26,7 +26,7 @@ public class ArcTangentCommand implements Command {
    * Constructs an instance of ArcTangentCommand with the given model state and listener.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
 
   public ArcTangentCommand(ModelState modelState, SlogoListener listener) {
@@ -35,10 +35,11 @@ public class ArcTangentCommand implements Command {
   /**
    * Executes the arctangent mathematical operation.
    *
-   * @param arguments a list containing a single node representing the number to calculate the arctangent of
+   * @param arguments a list containing a single node representing the number to calculate the
+   *                  arctangent of
    * @return the arctangent of the input number in degrees
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

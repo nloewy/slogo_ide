@@ -8,8 +8,8 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The YcoordinateCommand class represents a command that retrieves the Y coordinate of the requested turtle.
- * It returns the Y coordinate of the requested turtle.
+ * The YcoordinateCommand class represents a command that retrieves the Y coordinate of the
+ * requested turtle. It returns the Y coordinate of the requested turtle.
  *
  * @author Noah Loewy
  */
@@ -26,7 +26,7 @@ public class YcoordinateCommand implements Command {
    * Constructs an instance of YcoordinateCommand with the given model state and listener.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public YcoordinateCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
@@ -38,7 +38,7 @@ public class YcoordinateCommand implements Command {
    * @param arguments a list of nodes representing arguments (not used in this command)
    * @return the Y coordinate of the requested turtle
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

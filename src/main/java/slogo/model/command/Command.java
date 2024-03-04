@@ -24,7 +24,7 @@ import slogo.model.node.Node;
  * exceptions. These exceptions often come in the form of InvocationTargetExceptions (through the
  * reflection), but are often IllegalOperandExceptions or InsufficientArgumentExceptions that were
  * not caught during parsing.
- *
+ * <p>
  * To use the Command interface, you can create concrete implementations for specific commands. For
  * example:
  * <pre>{@code
@@ -46,7 +46,7 @@ public interface Command {
    * @param arguments a list of nodes representing the arguments for the command
    * @return the result of executing the command
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
 
   double execute(List<Node> arguments) throws InvocationTargetException, IllegalAccessException;

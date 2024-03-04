@@ -4,12 +4,14 @@ import java.lang.reflect.InvocationTargetException;
 import slogo.model.ModelState;
 
 /**
- * Represents a list node in the syntax tree.
- * This node serves as a container for other nodes and does not perform any evaluation itself.
+ * Represents a list node in the syntax tree. This node serves as a container for other nodes and
+ * does not perform any evaluation itself.
  */
 public class ListNode extends Node {
 
-  /** The token representing the list node. */
+  /**
+   * The token representing the list node.
+   */
   private final String myToken;
 
   /**
@@ -23,8 +25,8 @@ public class ListNode extends Node {
   }
 
   /**
-   * Evaluates the list node by recursively evaluating its children nodes.
-   * Returns the result of the last evaluated child node.
+   * Evaluates the list node by recursively evaluating its children nodes. Returns the result of the
+   * last evaluated child node.
    *
    * @return the result of the last evaluated child node
    * @throws InvocationTargetException if the list node encounters an invocation target exception

@@ -2,7 +2,6 @@ package slogo.model.command.control;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
@@ -10,7 +9,7 @@ import slogo.model.node.Node;
 
 /**
  * The DoTimesCommand class represents the "do.times" control structure.
- *
+ * <p>
  * It repeats a set of commands a specified number of times, each time setting a variable to the
  * current iteration count.
  *
@@ -28,7 +27,7 @@ public class DoTimesCommand implements Command {
    * Constructs an instance of DoTimesCommand with the given model state and listener.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public DoTimesCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
@@ -37,11 +36,12 @@ public class DoTimesCommand implements Command {
   /**
    * Executes the "do.times" control structure.
    *
-   * @param arguments a list containing two nodes: the first list node contains the variable name and
-   *                  the number of iterations, and the second list node contains the command nodes that should be executed
+   * @param arguments a list containing two nodes: the first list node contains the variable name
+   *                  and the number of iterations, and the second list node contains the command
+   *                  nodes that should be executed
    * @return the result of the last evaluated command in the loop
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

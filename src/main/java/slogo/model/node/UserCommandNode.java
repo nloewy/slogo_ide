@@ -7,9 +7,9 @@ import java.util.Map;
 import slogo.model.ModelState;
 
 /**
- * Represents a user-defined command node in the syntax tree.
- * This node evaluates a user-defined command by replacing its parameters with their corresponding values,
- * then evaluates the resulting subtree.
+ * Represents a user-defined command node in the syntax tree. This node evaluates a user-defined
+ * command by replacing its parameters with their corresponding values, then evaluates the resulting
+ * subtree.
  *
  * @author Noah Loewy
  */
@@ -36,9 +36,9 @@ public class UserCommandNode extends Node {
   }
 
   /**
-   * Evaluates the user-defined command node.
-   * It calls helper methods to replace the parameters with their corresponding values, evaluates
-   * the children nodes, and updates the model state with the evaluated command.
+   * Evaluates the user-defined command node. It calls helper methods to replace the parameters with
+   * their corresponding values, evaluates the children nodes, and updates the model state with the
+   * evaluated command.
    *
    * @return the result of evaluating the user-defined command
    * @throws InvocationTargetException if the user-defined command node encounters an invocation
@@ -91,9 +91,9 @@ public class UserCommandNode extends Node {
   /**
    * Replaces nodes in the subtree rooted at the given node with a constant node.
    *
-   * @param node          The root node of the subtree to search.
+   * @param node           The root node of the subtree to search.
    * @param tokenToReplace The token to search for and replace.
-   * @param constantNode  The constant node to replace the matching tokens with.
+   * @param constantNode   The constant node to replace the matching tokens with.
    */
   private void replaceNodesWithToken(Node node, String tokenToReplace, Node constantNode) {
     for (Node child : node.getChildren()) {
@@ -102,12 +102,12 @@ public class UserCommandNode extends Node {
   }
 
   /**
-   * Helper method for replacing nodes in the subtree with a constant node.
-   * Recursively searches through the subtree and replaces matching tokens with the constant node.
+   * Helper method for replacing nodes in the subtree with a constant node. Recursively searches
+   * through the subtree and replaces matching tokens with the constant node.
    *
-   * @param node          The current node being examined.
+   * @param node           The current node being examined.
    * @param tokenToReplace The token to search for and replace.
-   * @param constantNode  The constant node to replace the matching tokens with.
+   * @param constantNode   The constant node to replace the matching tokens with.
    */
   private void replaceNodesWithTokenHelper(Node node, String tokenToReplace, Node constantNode) {
     List<Node> children = node.getChildren(); // Get the children of the current node
@@ -136,8 +136,8 @@ public class UserCommandNode extends Node {
   }
 
   /**
-   * Helper method for replacing tokens with variable nodes in the subtree.
-   * Recursively searches through the subtree and replaces matching tokens with variable nodes.
+   * Helper method for replacing tokens with variable nodes in the subtree. Recursively searches
+   * through the subtree and replaces matching tokens with variable nodes.
    *
    * @param node      The current node being examined.
    * @param nodeToVar A mapping of nodes to their corresponding variable tokens.

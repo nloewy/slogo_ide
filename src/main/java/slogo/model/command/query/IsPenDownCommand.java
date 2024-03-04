@@ -9,8 +9,8 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The IsPenDownCommand class represents a command that checks whether the pen of the requested turtle is down.
- * It returns 1 if the pen of the requested turtle is down, and 0 otherwise.
+ * The IsPenDownCommand class represents a command that checks whether the pen of the requested
+ * turtle is down. It returns 1 if the pen of the requested turtle is down, and 0 otherwise.
  *
  * @author Noah Loewy
  */
@@ -27,7 +27,7 @@ public class IsPenDownCommand implements Command {
    * Constructs an instance of IsPenDownCommand with the given model state and listener.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public IsPenDownCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
@@ -39,7 +39,7 @@ public class IsPenDownCommand implements Command {
    * @param arguments a list of nodes representing arguments (not used in this command)
    * @return 1 if the pen of the requested turtle is down, 0 otherwise
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

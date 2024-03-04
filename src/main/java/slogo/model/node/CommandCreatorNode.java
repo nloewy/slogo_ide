@@ -24,9 +24,9 @@ public class CommandCreatorNode extends Node {
    * support user-defined commands properly. Adds the new user defined command to the map in model
    * state from user-defined command names to the number of arguments they take
    *
-   * @param token     the token representing the command
+   * @param token      the token representing the command
    * @param modelState the model state of the application
-   * @param numArgs   the number of arguments of the user-defined command to be created
+   * @param numArgs    the number of arguments of the user-defined command to be created
    */
 
   public CommandCreatorNode(String token, ModelState modelState, int numArgs) {
@@ -39,8 +39,8 @@ public class CommandCreatorNode extends Node {
 
   /**
    * Adds the children of the node (the variables and instructions for executing the User Defined
-   * Command) to the map from user defined command names to nodes. Also provides the listener with
-   * a string representation of the command definition
+   * Command) to the map from user defined command names to nodes. Also provides the listener with a
+   * string representation of the command definition
    *
    * @return 1.0, indicating command successfully declined
    * @throws InvocationTargetException if an error occurs during invocation
@@ -57,9 +57,8 @@ public class CommandCreatorNode extends Node {
   }
 
   /**
-   * Gets the number of arguments required by this node.
-   * Always returns 2, with the first argument a list node of variables, and the second argument a
-   * list node of commands
+   * Gets the number of arguments required by this node. Always returns 2, with the first argument a
+   * list node of variables, and the second argument a list node of commands
    *
    * @return the number of arguments
    */

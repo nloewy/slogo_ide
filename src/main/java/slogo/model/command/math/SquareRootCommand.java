@@ -2,16 +2,15 @@ package slogo.model.command.math;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
 import slogo.model.ModelState;
-import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
+import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.node.Node;
 
 /**
- * The SquareRootCommand class represents the square root mathematical operation.
- * It calculates the square root of a given number.
+ * The SquareRootCommand class represents the square root mathematical operation. It calculates the
+ * square root of a given number.
  *
  * @author Noah Loewy
  */
@@ -23,11 +22,12 @@ public class SquareRootCommand implements Command {
   public static final int NUM_ARGS = 1;
 
   /**
-   * Constructs an instance of SquareRootCommand with the given model state and listener. This constructor
-   * does not actually do anything, and exists for the sake of consistency across commands.
+   * Constructs an instance of SquareRootCommand with the given model state and listener. This
+   * constructor does not actually do anything, and exists for the sake of consistency across
+   * commands.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public SquareRootCommand(ModelState modelState, SlogoListener listener) {
   }
@@ -35,10 +35,11 @@ public class SquareRootCommand implements Command {
   /**
    * Executes the square root mathematical operation.
    *
-   * @param arguments a list containing a single node representing the number to calculate the square root of
+   * @param arguments a list containing a single node representing the number to calculate the
+   *                  square root of
    * @return the square root of the input number
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

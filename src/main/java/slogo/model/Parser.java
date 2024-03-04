@@ -26,9 +26,9 @@ import slogo.model.node.UserCommandNode;
 import slogo.model.node.VariableNode;
 
 /**
- * The Parser class is responsible for parsing Slogo commands and generating syntax trees
- * from the input strings. It takes a ModelState object and the current language as inputs,
- * then uses these to parse the input string into a syntax tree.
+ * The Parser class is responsible for parsing Slogo commands and generating syntax trees from the
+ * input strings. It takes a ModelState object and the current language as inputs, then uses these
+ * to parse the input string into a syntax tree.
  *
  * @author Noah Loewy
  */
@@ -51,7 +51,7 @@ public class Parser {
   /**
    * Constructs a Parser object with the given model state and current language.
    *
-   * @param modelState     the model state containing information about the simulation
+   * @param modelState      the model state containing information about the simulation
    * @param currentLanguage the current language used for parsing commands
    * @throws IOException if an I/O error occurs while loading language properties
    */
@@ -96,7 +96,7 @@ public class Parser {
   }
 
   /**
-   *  Pops nodes that are saturated (have received all their arguments) from the node stack.
+   * Pops nodes that are saturated (have received all their arguments) from the node stack.
    */
   private void checkForExtraneousArguments(Stack<Node> nodeStack) {
     while (!nodeStack.isEmpty() && topNodeSatisfied(nodeStack)) {
@@ -105,7 +105,7 @@ public class Parser {
   }
 
   /**
-   *  Checks if the node at the top of the node stack has received all of its arguments.
+   * Checks if the node at the top of the node stack has received all of its arguments.
    */
   private boolean topNodeSatisfied(Stack<Node> nodeStack) {
     return nodeStack.peek().getNumArgs() <= nodeStack.peek().getChildren().size();
@@ -120,6 +120,7 @@ public class Parser {
         tokens.get(myIndex), (stack) -> createTokenAndUpdateStack(tokens, stack));
     handler.accept(nodeStack);
   }
+
   /**
    * Skips comments and whitespace tokens in the input string
    */
@@ -130,11 +131,12 @@ public class Parser {
     }
   }
 
-/**
- * Creates a new node for current token and adds to stack. Handles bracket matching for list nodes.
- */
+  /**
+   * Creates a new node for current token and adds to stack. Handles bracket matching for list
+   * nodes.
+   */
 
- private void createTokenAndUpdateStack(List<String> tokens, Stack<Node> nodeStack) {
+  private void createTokenAndUpdateStack(List<String> tokens, Stack<Node> nodeStack) {
     createNode(tokens, nodeStack);
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
@@ -147,9 +149,9 @@ public class Parser {
     nodeStack.push(currentNode);
   }
 
-/**
- * Updates node stack to match closing brackets with corresponding open brackets.
- */
+  /**
+   * Updates node stack to match closing brackets with corresponding open brackets.
+   */
   private void handleClosedBracket(Stack<Node> nodeStack) {
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET)) {
       nodeStack.pop();
@@ -160,10 +162,10 @@ public class Parser {
     }
   }
 
-/**
- * Creates new ListNode when open bracket is parsed.
- */
- private void handleOpenBracket(Stack<Node> nodeStack) {
+  /**
+   * Creates new ListNode when open bracket is parsed.
+   */
+  private void handleOpenBracket(Stack<Node> nodeStack) {
     while (!nodeStack.peek().equals(rootNode) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
     }
@@ -172,12 +174,12 @@ public class Parser {
     nodeStack.push(newNode);
   }
 
-/**
- * Creates a node based on the current token, if it is valid, and updates the node stack. Throws
- * exception if token is not valid
- */
+  /**
+   * Creates a node based on the current token, if it is valid, and updates the node stack. Throws
+   * exception if token is not valid
+   */
 
- private void createNode(List<String> tokens, Stack<Node> nodeStack) {
+  private void createNode(List<String> tokens, Stack<Node> nodeStack) {
     String token = tokens.get(myIndex);
     boolean invalidToken = true;
     for (Map.Entry<Predicate<String>, Consumer<List<String>>> entry : nodeHandler) {
@@ -207,7 +209,7 @@ public class Parser {
   private void makeCommandCreatorNode(List<String> tokens) {
     int index = myIndex + 3;
     while (index < tokens.size() && !tokens.get(index).equals(CLOSED_BRACKET)) {
-      if (!tokenMatched(tokens.get(index), "Variable"))  {
+      if (!tokenMatched(tokens.get(index), "Variable")) {
         throw new InvalidVariableException("", tokens.get(index));
       }
       index++;
@@ -219,7 +221,8 @@ public class Parser {
 
 
   /**
-   * Loads the command map from the specified file path. The command map maps command canonical names and aliases to the actual Command class used.
+   * Loads the command map from the specified file path. The command map maps command canonical
+   * names and aliases to the actual Command class used.
    */
   private Map<String, String> loadCommandMap(String filePath) throws FileNotFoundException {
     Properties properties = new Properties();
@@ -241,8 +244,8 @@ public class Parser {
   }
 
   /**
-   * Initializes the node handler, which maps token patterns to node creation functions.
-   * The node handler is used during parsing to create appropriate nodes based on the tokens encountered.
+   * Initializes the node handler, which maps token patterns to node creation functions. The node
+   * handler is used during parsing to create appropriate nodes based on the tokens encountered.
    */
 
   private void initializeNodeHandler() {
@@ -307,8 +310,8 @@ public class Parser {
   }
 
   /**
-   * Initializes the token map, which maps token strings to handling functions.
-   * The token map is used during parsing to determine how to handle each token.
+   * Initializes the token map, which maps token strings to handling functions. The token map is
+   * used during parsing to determine how to handle each token.
    */
 
   private void initializeTokenMap() {

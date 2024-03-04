@@ -2,7 +2,6 @@ package slogo.model.command.control;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
@@ -10,7 +9,7 @@ import slogo.model.node.Node;
 
 /**
  * The ForCommand class represents the "for" control structure.
- *
+ * <p>
  * It iterates over a range of values, executing a set of commands for each value.
  *
  * @author Noah Loewy
@@ -27,7 +26,7 @@ public class ForCommand implements Command {
    * Constructs an instance of ForCommand with the given model state and listener.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public ForCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
@@ -36,11 +35,12 @@ public class ForCommand implements Command {
   /**
    * Executes the "for" control structure.
    *
-   * @param arguments a list containing two nodes: the first list node contains the variable name, start value, end value,
-   *                  and increment value, and the second list node contains the command nodes to execute
+   * @param arguments a list containing two nodes: the first list node contains the variable name,
+   *                  start value, end value, and increment value, and the second list node contains
+   *                  the command nodes to execute
    * @return the result of the last evaluated command in the loop
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

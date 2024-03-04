@@ -18,6 +18,7 @@ public class PatternLoader {
 
   /**
    * Constructs a PatternLoader object with the specified properties file path.
+   *
    * @param filePath the file path of the properties file containing regex patterns
    * @throws IOException if an I/O error occurs while reading the properties file
    */
@@ -31,6 +32,7 @@ public class PatternLoader {
 
   /**
    * Retrieves the regex pattern associated with the specified key.
+   *
    * @param key the key for the regex pattern in the properties file
    * @return the regex pattern associated with the key, or null if the key is not found
    */

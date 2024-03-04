@@ -18,6 +18,7 @@ public class Turtle {
 
   /**
    * Constructs a Turtle object with specified ID at the origin with the pen down, facing 0 degrees
+   *
    * @param id The unique identifier for the turtle.
    */
   public Turtle(int id) {
@@ -31,10 +32,11 @@ public class Turtle {
 
   /**
    * Constructs a Turtle object with the specified properties.
-   * @param id The unique identifier for the turtle.
-   * @param x The x-coordinate of the turtle's position.
-   * @param y The y-coordinate of the turtle's position.
-   * @param pen The pen status (true for down, false for up).
+   *
+   * @param id      The unique identifier for the turtle.
+   * @param x       The x-coordinate of the turtle's position.
+   * @param y       The y-coordinate of the turtle's position.
+   * @param pen     The pen status (true for down, false for up).
    * @param visible The visibility status (true for visible, false for hidden).
    * @param heading The heading angle of the turtle.
    */
@@ -50,6 +52,7 @@ public class Turtle {
 
   /**
    * Retrieves the y-coordinate of the turtle's position.
+   *
    * @return The y-coordinate.
    */
 
@@ -59,6 +62,7 @@ public class Turtle {
 
   /**
    * Sets the y-coordinate of the turtle's position.
+   *
    * @param myY The new y-coordinate.
    */
 
@@ -68,6 +72,7 @@ public class Turtle {
 
   /**
    * Retrieves the x-coordinate of the turtle's position.
+   *
    * @return The x-coordinate.
    */
 
@@ -77,6 +82,7 @@ public class Turtle {
 
   /**
    * Sets the x-coordinate of the turtle's position.
+   *
    * @param myX The new x-coordinate.
    */
 
@@ -86,6 +92,7 @@ public class Turtle {
 
   /**
    * Retrieves the heading of the turtle (direction it is facing).
+   *
    * @return The heading.
    */
 
@@ -95,6 +102,7 @@ public class Turtle {
 
   /**
    * Sets the heading of the turtle (direction it is facing).
+   *
    * @param myHeading The new heading.
    */
 
@@ -104,6 +112,7 @@ public class Turtle {
 
   /**
    * Retrieves an immutable record representing the current properties of the turtle.
+   *
    * @return A TurtleRecord object representing the turtle's state.
    */
 
@@ -113,6 +122,7 @@ public class Turtle {
 
   /**
    * Retrieves whether pen is up or down.
+   *
    * @return true iff pen is down
    */
 
@@ -122,6 +132,7 @@ public class Turtle {
 
   /**
    * Sets the pen status of the turtle.
+   *
    * @param b The new pen status (true for down, false for up).
    */
 
@@ -131,6 +142,7 @@ public class Turtle {
 
   /**
    * Retrieves whether the turtle is visible.
+   *
    * @return true iff turtle is visible
    */
 
@@ -140,6 +152,7 @@ public class Turtle {
 
   /**
    * Sets the visibility status of the turtle.
+   *
    * @param b The new visibility status
    */
 
@@ -149,6 +162,7 @@ public class Turtle {
 
   /**
    * Retrieves the id of the turtle.
+   *
    * @return id The id of the turtle
    */
 

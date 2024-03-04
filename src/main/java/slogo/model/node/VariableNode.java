@@ -4,8 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import slogo.model.ModelState;
 
 /**
- * Represents a variable node in the syntax tree.
- * This node retrieves the value associated with a variable from the model state during evaluation.
+ * Represents a variable node in the syntax tree. This node retrieves the value associated with a
+ * variable from the model state during evaluation.
  *
  * @author Noah Loewy
  */
@@ -27,11 +27,12 @@ public class VariableNode extends Node {
   }
 
   /**
-   * Evaluates the variable node by retrieving the value associated with the variable
-   * from the model state. If the variable does not exist, it is initialized with a value of 0.0.
+   * Evaluates the variable node by retrieving the value associated with the variable from the model
+   * state. If the variable does not exist, it is initialized with a value of 0.0.
    *
    * @return the value associated with the variable
-   * @throws InvocationTargetException if the variable node encounters an invocation target exception
+   * @throws InvocationTargetException if the variable node encounters an invocation target
+   *                                   exception
    * @throws IllegalAccessException    if the variable node encounters an illegal access exception
    */
 

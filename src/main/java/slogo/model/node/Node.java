@@ -3,12 +3,12 @@ package slogo.model.node;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import slogo.model.exceptions.IncompleteClassException;
 import slogo.model.api.SlogoListener;
+import slogo.model.exceptions.IncompleteClassException;
 
 /**
- * The abstract class Node represents a node in the syntax tree of a Slogo expression.
- * It provides common functionality for different types of nodes.
+ * The abstract class Node represents a node in the syntax tree of a Slogo expression. It provides
+ * common functionality for different types of nodes.
  *
  * @author Noah Loewy
  */
@@ -19,7 +19,8 @@ public abstract class Node {
   private SlogoListener myListener;
 
   /**
-   * Abstract method to evaluate the node. We assume every Slogo node/command evaluates to a double.
+   * Abstract method to evaluate the node. We assume every Slogo node/command evaluates to a
+   * double.
    *
    * @return the result of evaluating the node
    * @throws InvocationTargetException if an error occurs during invocation
@@ -29,8 +30,8 @@ public abstract class Node {
   public abstract double evaluate() throws InvocationTargetException, IllegalAccessException;
 
   /**
-   * Retrieves myChildren instance variable of the node, which is later passed in as an argument
-   * to the evaluate function
+   * Retrieves myChildren instance variable of the node, which is later passed in as an argument to
+   * the evaluate function
    *
    * @return the list of children nodes
    */
