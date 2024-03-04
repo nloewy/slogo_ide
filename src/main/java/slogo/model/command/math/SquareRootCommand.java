@@ -42,7 +42,7 @@ public class SquareRootCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments)
-      throws InvocationTargetException, IllegalAccessException {
+      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {
       throw new InvalidOperandException("Operand must be non-negative");

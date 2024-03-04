@@ -43,7 +43,7 @@ public class RandomRangeCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments)
-      throws InvocationTargetException, IllegalAccessException {
+      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
     if (arg1 > arg2) {

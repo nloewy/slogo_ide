@@ -39,10 +39,11 @@ public class TangentCommand implements Command {
    * @return the tangent of the input angle
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException if access is denied during execution
+   * @throws InvalidOperandException if the tangent function is undefined
    */
   @Override
   public double execute(List<Node> arguments)
-      throws InvocationTargetException, IllegalAccessException {
+      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     double arg1 = arguments.get(0).evaluate();
     if (Math.abs(arg1 % 180) == 90) {
       throw new InvalidOperandException("Illegal Value for Tangent Function");

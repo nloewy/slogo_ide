@@ -43,7 +43,7 @@ public class PowerCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments)
-      throws InvocationTargetException, IllegalAccessException {
+      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
     double result = Math.pow(arg1, arg2);

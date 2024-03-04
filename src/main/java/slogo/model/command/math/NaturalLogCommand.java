@@ -43,7 +43,7 @@ public class NaturalLogCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments)
-      throws InvocationTargetException, IllegalAccessException {
+      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     double arg1 = arguments.get(0).evaluate();
     if (arg1 <= 0) {
       throw new InvalidOperandException("Input to log function must be non-negative");

@@ -44,7 +44,7 @@ public class RemainderCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments)
-      throws InvocationTargetException, IllegalAccessException {
+      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     if (arguments.get(1).evaluate() == 0) {
       throw new InvalidOperandException("Divisor must be Non-Zero");
     }
