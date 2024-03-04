@@ -1,9 +1,5 @@
 package slogo.example;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.InputMismatchException;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.PathTransition;

@@ -3,12 +3,12 @@ package slogo.model.node;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import slogo.model.api.IncompleteClassException;
+import slogo.model.exceptions.IncompleteClassException;
 import slogo.model.api.SlogoListener;
 
 public abstract class Node implements Cloneable {
 
-  private final List<Node> myChildren = new ArrayList<>();
+  private List<Node> myChildren = new ArrayList<>();
   private SlogoListener myListener;
 
   public abstract double evaluate() throws InvocationTargetException, IllegalAccessException;
@@ -23,11 +23,13 @@ public abstract class Node implements Cloneable {
 
   public abstract String getToken();
 
-  public int getNumArgs() throws IncompleteClassException {return 0;}
+  public int getNumArgs() throws IncompleteClassException {
+    return 0;
+  }
 
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    for(Node child : getChildren()) {
+    for (Node child : getChildren()) {
       sb.append(toStringHelper(child, 0));
     }
     return sb.toString();
@@ -44,7 +46,7 @@ public abstract class Node implements Cloneable {
   private String toStringHelper(Node node, int indent) {
     StringBuilder sb = new StringBuilder();
     sb.append("\n");
-    sb.append("\t".repeat(indent)).append(node.getToken());
+    sb.append(" ".repeat(indent)).append(node.getToken());
     for (int i = 0; i < node.getChildren().size(); i++) {
       sb.append(toStringHelper(node.getChildren().get(i), indent + 1));
     }
@@ -52,6 +54,9 @@ public abstract class Node implements Cloneable {
   }
 
 
+  public void removeChildren() {
+    myChildren = new ArrayList<>();
+  }
 }
 
 

@@ -20,5 +20,6 @@ public interface SlogoListener {
 
   void onReturn(double value, String string);
 
-  void onCommand(String string, boolean userDefined); //highlights if it is userDefined command, or history command
+  void onCommand(String string,
+      boolean userDefined); //highlights if it is userDefined command, or history command
 }

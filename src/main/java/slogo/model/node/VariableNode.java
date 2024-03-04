@@ -2,7 +2,6 @@ package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
 import slogo.model.ModelState;
-import slogo.model.api.SlogoListener;
 
 public class VariableNode extends Node {
 

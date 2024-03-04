@@ -9,12 +9,13 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import slogo.model.api.InsufficientArgumentsException;
-import slogo.model.api.InvalidCommandException;
-import slogo.model.api.InvalidOperandException;
-import slogo.model.api.InvalidTokenException;
+import slogo.model.api.SlogoException;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
+import slogo.model.exceptions.InsufficientArgumentsException;
+import slogo.model.exceptions.InvalidCommandException;
+import slogo.model.exceptions.InvalidOperandException;
+import slogo.model.exceptions.InvalidTokenException;
 
 public class ParseTest {
 
@@ -44,7 +45,7 @@ public class ParseTest {
       @Override
       public void onCommand(String s, boolean b) {
       }
-    });
+    }, "English");
 
   }
 
@@ -81,7 +82,7 @@ public class ParseTest {
   @Test
   void valueWithNoCommandAlone()
       throws InvocationTargetException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException, InvalidCommandException {
-    assertThrows(InvalidTokenException.class, () -> {
+    assertThrows(SlogoException.class, () -> {
       slogo.parse(
           "50");
     });
@@ -102,7 +103,7 @@ public class ParseTest {
   void constantWithNoCommandBetweenProperCommands()
       throws InvocationTargetException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException, InvalidCommandException {
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
-    assertThrows(InvalidTokenException.class, () -> {
+    assertThrows(SlogoException.class, () -> {
       slogo.parse("FD 10 10 RT 30");
       assertEquals(10.0,myTurtle.getY(),DELTA);
     });
@@ -113,7 +114,7 @@ public class ParseTest {
   void variableWithNoCommandBetweenProperCommands()
       throws InvocationTargetException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException, InvalidCommandException {
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
-     assertThrows(InvalidTokenException.class, () -> {
+     assertThrows(SlogoException.class, () -> {
        slogo.parse("FD 10 :C RT 30");
       assertEquals(10.0,myTurtle.getY(),DELTA);
      });
@@ -141,7 +142,7 @@ public class ParseTest {
   void testNestedError()
       throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
-    assertThrows(InsufficientArgumentsException.class, () -> {
+    assertThrows(SlogoException.class, () -> {
       slogo.parse(
           "BK 10 REPEAT 5 [ IFELSE PENDOWN? [ FD 10 FD 10R ] FD 50 ]");
       assertEquals(-10.0, myTurtle.getY(), DELTA);
@@ -168,7 +169,7 @@ public class ParseTest {
   void testInvalidCommand()
       throws InvalidCommandException, InvalidTokenException, InvocationTargetException, IllegalAccessException {
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(0);
-     assertThrows(InvalidTokenException.class, () -> {
+     assertThrows(SlogoException.class, () -> {
       slogo.parse(
           "MAKE :CLASS 10 RANDOMTEXT DIFFERENCE :CLASS 5 [ RIGHT :CLASS ] RIGHT 50");
     assertEquals(10.0, slogo.getModelstate().getVariables().get(":class"), DELTA);
@@ -181,7 +182,7 @@ public class ParseTest {
   void testInvalidToken()
       throws InvalidCommandException, InvalidTokenException, InvocationTargetException, IllegalAccessException {
 
-    assertThrows(InvalidTokenException.class, () -> {
+    assertThrows(SlogoException.class, () -> {
       slogo.parse("MAKE :CLASS 10 FD :CLaSs REPEAT DIFFERENCE :CLASS 5 [ RIGHT4 :CLASS ] RIGHT 50");
       assertEquals(10.0, slogo.getModelstate().getVariables().get(":class"), DELTA);
       assertEquals(10.0, slogo.getModelstate().getTurtles().get(0).getY(), DELTA);

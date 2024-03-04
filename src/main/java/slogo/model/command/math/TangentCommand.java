@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
-import slogo.model.api.InvalidOperandException;
+import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
