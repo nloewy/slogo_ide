@@ -53,11 +53,12 @@
 .input-box {
     -fx-border-color: black;
     -fx-spacing: 10;
+    -fx-alignment: center;
 }
 
 .input-box .slider {
     -fx-alignment: left;
-    -fx-pref-width: 400;
+    -fx-pref-width: 300;
 }
 
 .input-box .text-field {
@@ -65,7 +66,7 @@
 }
 
 .main-screen-button {
-    -fx-font-size: 15;
+    -fx-font-size: 13;
     -fx-translate-y: -5;
     -fx-translate-x: 10;
 }
