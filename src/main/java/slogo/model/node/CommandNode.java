@@ -96,6 +96,7 @@ public class CommandNode extends Node {
  * @throws IncompleteClassException if the NUM_ARGS field is not found for the Command class
  */
 
+@Override
   public int getNumArgs() throws IncompleteClassException {
     try {
       return (int) Class.forName(BASE_PACKAGE + myToken + "Command").getField("NUM_ARGS").get(null);
@@ -111,6 +112,7 @@ public class CommandNode extends Node {
    * @return the token (name) of the command
    */
 
+  @Override
   public String getToken() {
     return myToken;
   }
