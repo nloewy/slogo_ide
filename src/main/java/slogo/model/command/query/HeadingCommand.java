@@ -11,7 +11,7 @@ import slogo.model.node.Node;
  * The HeadingCommand class represents a command that retrieves the heading of the requested turtle.
  * It returns the heading of the requested turtle in the model state.
  *
- * @author [Author Name]
+ * @author Noah Loewy
  */
 public class HeadingCommand implements Command {
 
