@@ -140,7 +140,6 @@ public class View implements SlogoListener {
 
   public void pushCommand(String s) {
     commandString = s;
-    commandHistory.push(s);
     parse.accept(commandString);
     page.updateCommands();
   }
@@ -225,15 +224,16 @@ public class View implements SlogoListener {
   //add it to history next to the command
   @Override
   public void onReturn(double value, String string) {
-
+    commandHistory.add(string);
+    page.updateCommands();
   }
 
   @Override
   public void onCommand(String string, boolean userDefined) {
+
     if (userDefined) {
       userDefinedCommandHistory.add(string);
     }
-    page.updateCommands();
   }
 
   public Queue<Animation> getAnimation() {

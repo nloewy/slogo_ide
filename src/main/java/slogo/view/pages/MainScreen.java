@@ -1,6 +1,7 @@
 package slogo.view.pages;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
@@ -17,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -68,7 +70,7 @@ public class MainScreen implements ViewInternal {
   private ScrollPane userDefinedCommandsPane;
   private VBox variablesBox;
   private HBox textInputBox;
-  private HBox commandHistoryBox;
+  private VBox commandHistoryBox;
   private VBox userDefinedCommandsBox;
   private double mySpeed;
   private final View view;
@@ -174,21 +176,57 @@ public class MainScreen implements ViewInternal {
       });
 
       variablesBox.getChildren().add(openRelatedCommands);
+
     }
   }
 
   public void updateCommands() {
+    System.out.println(view.getCommandHistory().get(0));
     commandHistoryBox.getChildren().clear();
     commandHistoryBox.getChildren().add(commandHistoryLabel);
+
     for (String s : view.getCommandHistory()) {
-      commandHistoryBox.getChildren().add(new Label(s));
+      String[] lines = s.split("\n");
+      TitledPane titledPane = new TitledPane();
+      titledPane.setText(lines[0]);
+      titledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue) {
+          String fullText = String.join("\n", Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the first one
+          titledPane.setContent(new Label(fullText)); // Set the full command content when expanded
+          titledPane.setText(lines[0]); // Display the first line when expanded
+        } else {
+          titledPane.setContent(null); // Remove content when collapsed
+          titledPane.setText(lines[0]);
+        }
+      });
+      VBox vbox = new VBox();
+      titledPane.setContent(vbox); // Set initial content as empty VBox
+      titledPane.setExpanded(false); // Start collapsed
+      commandHistoryBox.getChildren().add(titledPane);
     }
 
     userDefinedCommandsBox.getChildren().clear();
     userDefinedCommandsBox.getChildren().add(userDefinedCommandsLabel);
     for (String s : view.getUserDefinedCommandHistory()) {
-      userDefinedCommandsBox.getChildren().add(new Label(s));
+      String[] lines = s.split("\n");
+      TitledPane titledPane = new TitledPane();
+      titledPane.setText(lines[0]);
+      titledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue) {
+          String fullText = String.join("\n", Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the first one
+          titledPane.setContent(new Label(fullText)); // Set the full command content when expanded
+          titledPane.setText(lines[0]); // Display the first line when expanded
+        } else {
+          titledPane.setContent(null); // Remove content when collapsed
+          titledPane.setText(lines[0]);
+        }
+      });
+      VBox vbox = new VBox();
+      titledPane.setContent(vbox); // Set initial content as empty VBox
+      titledPane.setExpanded(false); // Start collapsed
+      userDefinedCommandsBox.getChildren().add(titledPane);
     }
+
   }
 
 
@@ -207,11 +245,12 @@ public class MainScreen implements ViewInternal {
     variablesPane = new ScrollPane(variablesBox);
     variablesBox.getChildren().add(variablesBoxLabel);
 
-    commandHistoryBox = new HBox();
+    commandHistoryBox = new VBox();
     commandHistoryBox.getStyleClass().add("history-box");
-    commandHistoryBox.setPrefSize(WINDOW_WIDTH, 100);
+    commandHistoryBox.setPrefSize(WINDOW_WIDTH, 300);
     commandsHistory = new ScrollPane(commandHistoryBox);
     commandHistoryBox.getChildren().add(commandHistoryLabel);
+
 
     userDefinedCommandsBox = new VBox();
     userDefinedCommandsBox.getStyleClass().add("command-box");
