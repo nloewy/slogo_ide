@@ -12,7 +12,7 @@ import slogo.model.node.Node;
  * The EqualCommand class represents the equality comparison operation.
  * It evaluates two nodes and returns 1.0 if they are equal, otherwise returns 0.0.
  *
- * @author [Your Name]
+ * @author Noah Loewy
  */
 public class EqualCommand implements Command {
 
