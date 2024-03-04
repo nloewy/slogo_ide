@@ -13,7 +13,7 @@ import slogo.model.node.Node;
  * It evaluates two nodes and returns 1.0 if the first node's value is greater than the second node's value,
  * otherwise returns 0.0.
  *
- * Constructs an instance of GreaterEqualCommand with the given model state and listener. This constructor
+ * Constructs an instance of GreaterThanCommand with the given model state and listener. This constructor
  * does not actually do anything, and exists for the sake of consistency across commands.
  *
  * @author Noah Loewy
@@ -26,7 +26,7 @@ public class GreaterThanCommand implements Command {
   public static final int NUM_ARGS = 2;
 
   /**
-   * Constructs an instance of GreaterEqualCommand with the given model state and listener. This constructor
+   * Constructs an instance of GreaterThanCommand with the given model state and listener. This constructor
    * does not actually do anything, and exists for the sake of consistency across commands.
    */
   public GreaterThanCommand(ModelState modelState, SlogoListener listener) {

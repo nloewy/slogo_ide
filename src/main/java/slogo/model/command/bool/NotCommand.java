@@ -12,9 +12,6 @@ import slogo.model.node.Node;
  * The NotCommand class represents the logical NOT operation.
  * It evaluates a node and returns 1.0 if the node's value is 0, otherwise returns 0.0.
  *
- * Constructs an instance of NotCommand with the given model state and listener. This constructor
- * does not actually do anything, and exists for the sake of consistency across commands.
- *
  * @author Noah Loewy
  */
 public class NotCommand implements Command {
@@ -25,7 +22,8 @@ public class NotCommand implements Command {
   public static final int NUM_ARGS = 1;
 
   /**
-   * Constructs an instance of NotCommand with the given model state and listener.
+   * Constructs an instance of NotCommand with the given model state and listener. This constructor
+   * does not actually do anything, and exists for the sake of consistency across commands.
    */
   public NotCommand(ModelState modelState, SlogoListener listener) {
   }

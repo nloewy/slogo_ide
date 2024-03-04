@@ -13,9 +13,6 @@ import slogo.model.node.Node;
  * It evaluates two nodes and returns 1.0 if the first node's value is not equal to the second node's value,
  * otherwise returns 0.0.
  *
- * Constructs an instance of NotEqualCommand with the given model state and listener. This constructor
- * does not actually do anything, and exists for the sake of consistency across commands.
- *
  * @author Noah Loewy
  */
 public class NotEqualCommand implements Command {
@@ -26,7 +23,8 @@ public class NotEqualCommand implements Command {
   public static final int NUM_ARGS = 2;
 
   /**
-   * Constructs an instance of NotEqualCommand with the given model state and listener.
+   * Constructs an instance of NotEqualCommand with the given model state and listener. This constructor
+   * does not actually do anything, and exists for the sake of consistency across commands.
    */
   public NotEqualCommand(ModelState modelState, SlogoListener listener) {
   }
