@@ -88,10 +88,6 @@ public class StartScreen implements ViewInternal {
 //            themeComboBox.setItems(FXCollections.observableArrayList(newLang.getString("ColorThemes").split(",")));
     });
 
-    controller.addLanguageObserver((s) -> {
-
-    });
-
     root.getChildren().addAll(
         generateImageView(LOGO_IMAGE_PATH, 100, 50),
         generateComboBox(SUPPORTED_LANGUAGES, 100, 200,

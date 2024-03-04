@@ -58,6 +58,7 @@
 .input-box {
   -fx-background-color: #666666;
   -fx-spacing: 10;
+  -fx-alignment: center;
 }
 
 .input-box .text-field {
@@ -68,7 +69,7 @@
 
 .input-box .slider {
   -fx-alignment: left;
-  -fx-pref-width: 400;
+  -fx-pref-width: 300;
 }
 
 .main-screen-button {

@@ -8,12 +8,17 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
@@ -24,6 +29,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -236,6 +242,9 @@ public class MainScreen implements ViewInternal {
 
   @Override
   public void setUp() {
+    ResourceBundle myResources = ResourceBundle.getBundle(
+        DEFAULT_RESOURCE_PACKAGE + controller.getCurrentLanguage());
+
     layout = new BorderPane();
     layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -247,7 +256,7 @@ public class MainScreen implements ViewInternal {
 
     commandHistoryBox = new VBox();
     commandHistoryBox.getStyleClass().add("history-box");
-    commandHistoryBox.setPrefSize(WINDOW_WIDTH, 300);
+    commandHistoryBox.setPrefSize(WINDOW_WIDTH, 100);
     commandsHistory = new ScrollPane(commandHistoryBox);
     commandHistoryBox.getChildren().add(commandHistoryLabel);
 
@@ -278,7 +287,16 @@ public class MainScreen implements ViewInternal {
       paused = true;
     });
 
-    List<Button> mainButtons = List.of(submitField, play, pause);
+    ObservableList<String> penColors = FXCollections.observableArrayList(
+        myResources.getString("PenColors").split(","));
+
+    ComboBox<String> colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 200, (s) -> s, (event) -> {
+          view.getTurtles().forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
+        });
+
+    colorDropDown.getOnAction().handle(new ActionEvent());
+
+    List<Control> mainButtons = List.of(submitField, play, pause, colorDropDown);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
 
     speedSlider.setMin(10);
@@ -306,7 +324,6 @@ public class MainScreen implements ViewInternal {
 
     textInputBox.getChildren().addAll(speedSlider, field);
     textInputBox.getChildren().addAll(mainButtons);
-    textInputBox.setAlignment(Pos.CENTER);
 
     step = UserInterfaceUtil.generateButton("Step", event -> {
       if (currAnimation == null) {
