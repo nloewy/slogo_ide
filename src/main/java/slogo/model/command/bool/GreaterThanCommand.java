@@ -30,7 +30,6 @@ public class GreaterThanCommand implements Command {
    * does not actually do anything, and exists for the sake of consistency across commands.
    */
   public GreaterThanCommand(ModelState modelState, SlogoListener listener) {
-    // Constructor body can be left empty if it doesn't perform any actions.
   }
 
   /**

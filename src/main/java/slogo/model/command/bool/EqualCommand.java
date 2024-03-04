@@ -29,7 +29,6 @@ public class EqualCommand implements Command {
    * @param listener the listener for state change events
    */
   public EqualCommand(ModelState modelState, SlogoListener listener) {
-    // Constructor body can be left empty if it doesn't perform any actions.
   }
 
   /**
