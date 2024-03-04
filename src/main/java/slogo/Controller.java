@@ -57,46 +57,46 @@ public class Controller {
         stage.show();
     }
 
-    public void openBlankIDESession() throws IOException {
-        Stage newStage = new Stage();
-        newStage.setMaximized(true);
-        View view = new View(this, stage);
-        if (turtleImage != null) {
-            view.setTurtleImage(turtleImage);
-        }
-        Model model = new SlogoModel(view);
-        windows.add(view);
-
-        parse = t -> {
-            try {
-                model.parse(t);
-            } catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (NoSuchFieldException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (InvalidTokenException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        };
-
-        view.run(parse, null);
-        setCurrentLanguage(currentLanguage);
-    }
+//    public void openBlankIDESession() throws IOException {
+//        Stage newStage = new Stage();
+//        newStage.setMaximized(true);
+//        View view = new View(this, stage);
+//        if (turtleImage != null) {
+//            view.setTurtleImage(turtleImage);
+//        }
+//        Model model = new SlogoModel(view);
+//        windows.add(view);
+//
+//        parse = t -> {
+//            try {
+//                model.parse(t);
+//            } catch (ClassNotFoundException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            } catch (InvocationTargetException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            } catch (NoSuchMethodException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            } catch (InstantiationException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            } catch (IllegalAccessException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            } catch (NoSuchFieldException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            } catch (InvalidTokenException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//        };
+//
+//        view.run(parse, null);
+//        setCurrentLanguage(currentLanguage);
+//    }
 
     public void setCurrentLanguage(String language) {
         this.currentLanguage = language;

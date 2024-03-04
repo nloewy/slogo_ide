@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -201,25 +202,8 @@ public class MainScreen implements ViewInternal {
       view.pushCommand(newSlogoContent);
     });
 
-    save = UserInterfaceUtil.generateButton("Save", event -> {
-      for (String s : view.getCommandHistory()) {
-        System.out.println(s);
-      }
+    save = UserInterfaceUtil.generateButton("Save", event -> saveToFile());
 
-      FileChooser fileChooser = new FileChooser();
-      fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SLogo files (*.slogo)", "*.slogo"));
-      File file = fileChooser.showSaveDialog(stage);
-      if (file != null) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-          for (String command : view.getCommandHistory()) {
-            writer.write(command);
-            writer.newLine();
-          }
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
-    });
 
     commandHistoryBox.getChildren().addAll(help, newSim, save);
 
@@ -258,7 +242,7 @@ public class MainScreen implements ViewInternal {
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
     });
 
-    /**
+    /*
      play = ButtonUtil.generateButton("Play", 300, 300, (event) -> {
      for (FrontEndTurtle t : view.getTurtles()) {
      if (t.getAnimation() != null) {
@@ -290,6 +274,23 @@ public class MainScreen implements ViewInternal {
     layout.setLeft(userDefinedCommandsPane);
     root.getChildren().add(layout);
     animation.play();
+  }
+
+  private void saveToFile() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
+        "SLogo files (*.slogo)", "*.slogo"));
+    File file = fileChooser.showSaveDialog(stage);
+    if (file != null) {
+      try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+        for (String command : view.getCommandHistory()) {
+          writer.write(command);
+          writer.newLine();
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
 

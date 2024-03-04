@@ -63,7 +63,7 @@ public class StartScreen implements ViewInternal {
         });
         Button loadGen = generateButton("LoadGen", 100, 330, e -> {
             try {
-                controller.openBlankIDESession();
+                controller.openFileIDESession(null);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
