@@ -1,6 +1,7 @@
 package slogo.view;
 
-import static slogo.view.View.ORIGIN;
+
+import static slogo.view.pages.MainScreen.ORIGIN;
 
 import java.util.List;
 import java.util.Stack;

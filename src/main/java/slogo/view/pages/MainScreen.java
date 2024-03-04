@@ -1,9 +1,18 @@
 package slogo.view.pages;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.ResourceBundle;
+import java.util.Stack;
+import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -24,6 +33,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -36,10 +46,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import slogo.Controller;
+import slogo.model.api.SlogoListener;
+import slogo.model.api.TurtleRecord;
 import slogo.view.ComboChoice;
 import slogo.view.FrontEndTurtle;
 import slogo.view.UserInterfaceUtil;
-import slogo.view.View;
+
 import slogo.view.ViewInternal;
 
 /*
@@ -49,7 +61,7 @@ call View for updates and to schedule
 animation keyframes.
  */
 
-public class MainScreen implements ViewInternal {
+public class MainScreen implements ViewInternal, SlogoListener {
 
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
   private static final double WINDOW_WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
@@ -80,21 +92,50 @@ public class MainScreen implements ViewInternal {
   private VBox commandHistoryBox;
   private VBox userDefinedCommandsBox;
   private double mySpeed;
-  private final View view;
   private ResourceBundle myResources;
   private boolean animationPlaying;
   private final Slider speedSlider;
   private Duration pausedTime;
   private Animation currAnimation;
 
+  private static final int height = 600;
+  private static final int width = 1000;
+  public static final Double[] ORIGIN = new Double[]{width / 2.0, height / 2.0};
+  private static final double PIXELS_PER_SECOND = 25;
+  private Map<String, List<String>> variableCommands;
+  private Map<String, Number> variableValues;
+  private List<FrontEndTurtle> turtles;
+  private Stack<String> commandHistory;
+  private Stack<String> userDefinedCommandHistory;
+  private Image defaultImage;
+  private Queue<Animation> myAnimation;
+  private String commandString;
+  private String lang;
+  private Consumer<String> parse;
+
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
-  public MainScreen(View view, Stage stage, Controller controller) throws FileNotFoundException {
+  public MainScreen(Stage stage, Controller controller) throws FileNotFoundException {
     this.stage = stage;
-    this.view = view;
     this.controller = controller;
     mySpeed = 50;
     animationPlaying = false;
+    myAnimation = new ArrayDeque<>();
+    lang = "EG";
+    commandString = "";
+    variableCommands = new LinkedHashMap<>();
+    variableValues = new LinkedHashMap<>();
+    turtles = new ArrayList<>();
+    commandHistory = new Stack<String>();
+    userDefinedCommandHistory = new Stack<String>();
+
+    try {
+      defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+
+    turtles.add(new FrontEndTurtle(1, ORIGIN, Color.BLUE, true, 0, defaultImage));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.getKeyFrames()
         .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> playAnimation()));
@@ -102,6 +143,16 @@ public class MainScreen implements ViewInternal {
     initResources();
     timeline.play();
     speedSlider = new Slider();
+  }
+
+  public void run(Consumer<String> parseMethod) throws FileNotFoundException {
+    parse = parseMethod;
+    setUp();
+    scene = new Scene(getRegion(), width, height);
+    controller.updateCurrentTheme(scene);
+    stage.setScene(scene);
+    stage.setMaximized(true);
+    stage.show();
   }
 
   private void finishCurrAnimation() {
@@ -112,8 +163,8 @@ public class MainScreen implements ViewInternal {
   }
 
   private void playSingleAnimation() {
-    if (!view.getAnimation().isEmpty()) {
-      Animation animation = view.getAnimation().poll();
+    if (!getAnimation().isEmpty()) {
+      Animation animation = getAnimation().poll();
       animation.setOnFinished(event -> {
         animationPlaying = false;
         playAnimation(); // Continue playing other animations after finishing this one
@@ -125,8 +176,8 @@ public class MainScreen implements ViewInternal {
 
 
   private void playAnimation() {
-    if (!animationPlaying && !view.getAnimation().isEmpty() && !paused) {
-      currAnimation = view.getAnimation().poll();
+    if (!animationPlaying && !getAnimation().isEmpty() && !paused) {
+      currAnimation = getAnimation().poll();
       currAnimation.setOnFinished(event -> {
         animationPlaying = false;
         currAnimation = null;
@@ -149,13 +200,13 @@ public class MainScreen implements ViewInternal {
   }
 
   public void initializeTurtleDisplays() {
-    for (FrontEndTurtle turtle : view.getTurtles()) {
+    for (FrontEndTurtle turtle : getTurtles()) {
       centerPane.getChildren().add(turtle.getDisplay());
     }
   }
 
   public void sendCommandStringToView() {
-    view.pushCommand(field.getText());
+    pushCommand(field.getText());
     field.clear();
   }
 
@@ -169,9 +220,9 @@ public class MainScreen implements ViewInternal {
     variablesBox.getChildren().clear();
     variablesBox.getChildren().add(variablesBoxLabel);
 
-    for (String key : view.getVariableValues().keySet()) {
-      List<String> relatedCommands = view.getVariableCommands().get(key);
-      Button openRelatedCommands = new Button(key + " :: " + view.getVariableValues().get(key));
+    for (String key : getVariableValues().keySet()) {
+      List<String> relatedCommands = getVariableCommands().get(key);
+      Button openRelatedCommands = new Button(key + " :: " + getVariableValues().get(key));
       openRelatedCommands.setId("variable");
 
       openRelatedCommands.setOnAction((event) -> {
@@ -188,8 +239,8 @@ public class MainScreen implements ViewInternal {
   }
 
   public void updateCommands() {
-    updateCommandBox(commandHistoryBox, commandHistoryLabel, view.getCommandHistory() );
-    updateCommandBox(userDefinedCommandsBox, userDefinedCommandsLabel, view.getUserDefinedCommandHistory());
+    updateCommandBox(commandHistoryBox, commandHistoryLabel, getCommandHistory() );
+    updateCommandBox(userDefinedCommandsBox, userDefinedCommandsLabel, getUserDefinedCommandHistory());
   }
 
 
@@ -285,7 +336,7 @@ public class MainScreen implements ViewInternal {
     }
 
     ComboBox<ComboChoice> colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
-          view.getTurtles().forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
+          getTurtles().forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
         });
     colorDropDown.getOnAction().handle(new ActionEvent());
 
@@ -372,5 +423,162 @@ public class MainScreen implements ViewInternal {
 
   public double getSpeed() {
     return mySpeed;
+  }
+
+
+
+  public void setTurtleImage(File f) {
+    try {
+      defaultImage = new Image(new FileInputStream(f));
+      for (FrontEndTurtle t : getTurtles()) {
+        t.setImage(defaultImage);
+      }
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public List<FrontEndTurtle> getTurtles() {
+    return turtles;
+  }
+
+  public Map<String, List<String>> getVariableCommands() {
+    return variableCommands;
+  }
+
+  public Map<String, Number> getVariableValues() {
+    return variableValues;
+  }
+
+  /*
+   * Handles the user switching languages.
+   * //TODO
+   */
+  public void setLanguage(String lang) {
+    this.lang = lang;
+  }
+
+  /*
+   * Handles the user switching background color.
+   */ //TODO Test
+
+  private boolean hasCommandString() {
+    return !commandString.isEmpty();
+  }
+
+  /*
+   * Returns the current text field body.
+   */
+  public String getCommandString() throws Exception {
+    if (hasCommandString()) {
+      String temp = commandString;
+      commandString = "";
+      commandHistory.push(temp);
+      return temp;
+    }
+
+    throw new Exception("No Command String Found!");
+  }
+
+  public void pushCommand(String s) {
+    commandString = s;
+    parse.accept(commandString);
+    updateCommands();
+  }
+
+  public Stack<String> getCommandHistory() {
+    return commandHistory;
+  }
+
+  public Stack<String> getUserDefinedCommandHistory() {
+    return userDefinedCommandHistory;
+  }
+
+  @Override
+  public void onUpdateValue(String variableName, Number newValue) {
+    variableCommands.put(variableName, List.of(commandHistory.peek()));
+    variableValues.put(variableName, newValue);
+    updateVariables();
+  }
+
+
+  public void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading) {
+    double oldX = turtle.getX();
+    double oldY = turtle.getY();
+    double oldHeading = turtle.getHeading();
+    double distance = Math.sqrt(Math.pow((y - oldY), 2) + Math.pow((x - oldX), 2));
+    double rotation = Math.abs(newHeading - oldHeading);
+    double duration = (distance + rotation) / getSpeed();
+    int numSteps = (int) (duration / 0.005);
+    Timeline animation = new Timeline();
+    animation.setCycleCount(1);
+    for (int i = 1; i <= numSteps; i++) {
+      double progress = (double) i / numSteps;
+      double intermediateX = oldX + (x - oldX) * progress;
+      double intermediateY = oldY + (y - oldY) * progress;
+      double intermediateHeading = oldHeading + (newHeading - oldHeading) * progress;
+      Line line = turtle.drawLine(oldX, oldY, intermediateX, intermediateY);
+      KeyFrame keyFrame = new KeyFrame(Duration.seconds(duration * progress),
+          e -> {
+            turtle.getDisplay().setLayoutX(intermediateX);
+            turtle.getDisplay().setLayoutY(intermediateY);
+            turtle.getDisplay().setRotate(intermediateHeading);
+            addLine(line);
+          });
+      animation.getKeyFrames().add(keyFrame);
+    }
+    turtle.setPosition(x, y, newHeading);
+    myAnimation.add(animation);
+  }
+
+
+  @Override
+  public void onUpdateTurtleState(TurtleRecord turtleState) {
+    for (FrontEndTurtle turtle : getTurtles()) {
+      if (turtle.getId() == turtleState.id()) {
+        turtle.setIsPenDisplayed(turtleState.pen());
+        setPosition(turtle, turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1],
+            turtleState.heading());
+        return;
+      }
+    }
+    turtles.add(new FrontEndTurtle(
+        turtleState.id(),
+        new Double[]{turtleState.x() + ORIGIN[0], turtleState.y() + ORIGIN[1]},
+        Color.BLACK,
+        true,
+        turtleState.heading(),
+        defaultImage));
+  }
+
+  @Override
+  public void onResetTurtle(int id) {
+    for (FrontEndTurtle turtle : turtles) {
+      if (turtle.getId() == id) {
+        turtle.setIsPenDisplayed(false);
+        turtle.setPosition(ORIGIN[0], ORIGIN[1], 0);
+        turtle.setImage(defaultImage);
+      }
+    }
+  }
+
+  //val returned by last command
+  //add it to history next to the command
+  @Override
+  public void onReturn(double value, String string) {
+    commandHistory.add(string);
+    updateCommands();
+  }
+
+  @Override
+  public void onCommand(String string, boolean userDefined) {
+
+    if (userDefined) {
+      userDefinedCommandHistory.add(string);
+    }
+  }
+
+  public Queue<Animation> getAnimation() {
+    return myAnimation;
   }
 }
