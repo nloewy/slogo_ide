@@ -16,6 +16,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import slogo.model.exceptions.InvalidCommandException;
 import slogo.model.exceptions.InvalidTokenException;
+import slogo.model.exceptions.InvalidVariableException;
 import slogo.model.node.CommandCreatorNode;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
@@ -204,14 +205,18 @@ public class Parser {
    */
 
   private void makeCommandCreatorNode(List<String> tokens) {
-    int index = myIndex + 2;
+    int index = myIndex + 3;
     while (index < tokens.size() && !tokens.get(index).equals(CLOSED_BRACKET)) {
+      if (!tokenMatched(tokens.get(index), "Variable"))  {
+        throw new InvalidVariableException("", tokens.get(index));
+      }
       index++;
     }
     currentNode = new CommandCreatorNode(tokens.get(myIndex + 1).toLowerCase(), modelState,
         index - myIndex - 1);
     myIndex++;
   }
+
 
   /**
    * Loads the command map from the specified file path. The command map maps command canonical names and aliases to the actual Command class used.
