@@ -7,6 +7,8 @@ import slogo.model.api.SlogoException;
  * that is not recognized as a valid command in the Slogo environment. This exception may occur if
  * the token entered to the parser does not conform to the syntax or format of a valid command, or
  * if the properly formatted command is not recognized as a valid Slogo or user-defined command.
+ *
+ * @author Noah Loewy
  */
 
 public class InvalidCommandException extends SlogoException {
