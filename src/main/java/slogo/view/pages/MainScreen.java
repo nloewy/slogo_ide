@@ -331,11 +331,14 @@ public class MainScreen implements ViewInternal {
     Label commandLabel = new Label("Command: " + command);
     Label descriptionLabel = new Label("Description: " + details.get("description"));
     Label exampleLabel = new Label("Example: " + details.get("example"));
+    Label parametersLabel = new Label("Parameters: " + details.get("parameters"));
+    Label returnValueLabel = new Label("Return Value: " + details.get("returnValue"));
 
     Button closeButton = new Button("Close");
     closeButton.setOnAction(e -> popup.hide());
 
-    content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, closeButton);
+    content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, parametersLabel,
+        returnValueLabel, closeButton);
 //    popup.getContent().add(content);
 
     helpPopupModality(popup, content);

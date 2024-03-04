@@ -229,9 +229,14 @@ public class Controller {
                     String commandName = eElement.getElementsByTagName("canonicalName").item(0).getTextContent();
                     String description = eElement.getElementsByTagName("description").item(0).getTextContent();
                     String example = eElement.getElementsByTagName("example").item(0).getTextContent();
+                    Element helpDocumentation = (Element) eElement.getElementsByTagName("helpDocumentation").item(0);
+                    String parameters = helpDocumentation.getElementsByTagName("parameters").item(0).getTextContent();
+                    String returnValue = helpDocumentation.getElementsByTagName("returnValue").item(0).getTextContent();
                     Map<String, String> details = new HashMap<>();
                     details.put("description", description);
                     details.put("example", example);
+                    details.put("parameters", parameters);
+                    details.put("returnValue", returnValue);
                     commandDetails.put(commandName, details);
                 }
             }
