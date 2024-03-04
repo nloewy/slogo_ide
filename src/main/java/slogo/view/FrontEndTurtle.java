@@ -12,17 +12,15 @@ import javafx.scene.shape.Line;
 
 public class FrontEndTurtle {
 
-  private static final double FRAME_RATE = 4.0;
-  private final double speed = 0.75;
-  ImageView display;
-  Image displayImage;
-  Color penColor;
-  double myX;
-  double myHeading;
-  double myY;
-  double heading = 0;
-  int myId;
-  boolean isPenDisplayed = false;
+  private ImageView display;
+  private Image displayImage;
+  private Color penColor;
+  private double myX;
+  private double myHeading;
+  private double myY;
+  private double heading = 0;
+  private int myId;
+  private boolean isPenDisplayed = false;
   private Timeline animation;
   private final Stack<Line> pathHistory = new Stack<Line>();
 

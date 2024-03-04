@@ -354,8 +354,8 @@ public class MainScreen implements ViewInternal {
   }
 
   public void addLine(Line line) {
-    if (!centerPane.getChildren().contains(line)) {
-      centerPane.getChildren().add(line);
+    if (!root.getChildren().contains(line)) {
+      root.getChildren().add(line);
     }
   }
 

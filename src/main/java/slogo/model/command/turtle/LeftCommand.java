@@ -25,7 +25,7 @@ public class LeftCommand implements Command {
     double degrees = arguments.get(0).evaluate();
     Turtle turtle = modelState.getTurtles().get(0);
     turtle.setHeading(turtle.getHeading() - degrees);
-    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return degrees;
   }
 }
