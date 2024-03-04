@@ -275,19 +275,28 @@ public class MainScreen implements ViewInternal {
       }
     });
 
+    VBox dropdowns = new VBox();
+    dropdowns.getStyleClass().add("main-dropdowns");
+
     ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "English");
     ObservableList<ComboChoice> penColors = FXCollections.observableArrayList();
     for (String color : defaultResources.getString("PenColors").split(",")) {
       penColors.add(new ComboChoice(color, color));
     }
 
-    ComboBox<ComboChoice> colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 200, (s) -> s, (event) -> {
+    ComboBox<ComboChoice> colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
           view.getTurtles().forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
         });
-
     colorDropDown.getOnAction().handle(new ActionEvent());
 
-    List<Control> mainButtons = List.of(submitField, play, pause, step,  colorDropDown);
+    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
+          centerPane.setStyle("-fx-background-color: " + event);
+        });
+    backgroundDropDown.setValue(null);
+
+    dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
+
+    List<Region> mainButtons = List.of(submitField, play, pause, step, dropdowns);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
 
     speedSlider.setMin(10);
