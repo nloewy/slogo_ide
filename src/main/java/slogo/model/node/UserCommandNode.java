@@ -6,12 +6,27 @@ import java.util.List;
 import java.util.Map;
 import slogo.model.ModelState;
 
+/**
+ * Represents a user-defined command node in the syntax tree.
+ * This node evaluates a user-defined command by replacing its parameters with their corresponding values,
+ * then evaluates the resulting subtree.
+ *
+ * @author Noah Loewy
+ */
+
 public class UserCommandNode extends Node {
 
   private final String myToken;
   private final int numArgs;
   private final ModelState modelState;
 
+
+  /**
+   * Constructs a UserCommandNode with the specified token and model state.
+   *
+   * @param token      the token representing the user-defined command node (name of command)
+   * @param modelState the model state associated with this node
+   */
 
   public UserCommandNode(String token, ModelState modelState) {
     super();
@@ -20,48 +35,17 @@ public class UserCommandNode extends Node {
     this.modelState = modelState;
   }
 
-  private void replaceNodesWithToken(Node node, String tokenToReplace, Node constantNode) {
-    for (Node child : node.getChildren()) {
-      replaceNodesWithTokenHelper(child, tokenToReplace, constantNode);
-    }
-  }
-
-
-  private void replaceNodesWithTokenHelper(Node node, String tokenToReplace, Node constantNode) {
-    List<Node> children = node.getChildren(); // Get the children of the current node
-    for (Node child : children) {
-      if (child.getToken().equals(tokenToReplace)) {
-        int index = children.indexOf(child);
-        if (index != -1) {
-          children.set(index, constantNode);
-        }
-      } else {
-        replaceNodesWithTokenHelper(child, tokenToReplace, constantNode);
-      }
-    }
-  }
-
-  private void replaceTokensWithNodes(Node node, Map<Node, String> nodeToVar) {
-    for (Node child : node.getChildren()) {
-      replaceTokensWithNodesHelper(child, nodeToVar);
-    }
-  }
-
-  private void replaceTokensWithNodesHelper(Node node, Map<Node, String> nodeToVar) {
-    List<Node> children = node.getChildren(); // Get the children of the current node
-    for (Node child : children) {
-      if (nodeToVar.containsKey(child)) {
-        int index = children.indexOf(child);
-        if (index != -1) {
-          children.set(index, new VariableNode(nodeToVar.get(child), modelState));
-          children.get(index).addListener(getListener());
-        }
-      } else {
-        replaceTokensWithNodesHelper(child, nodeToVar);
-      }
-    }
-  }
-
+  /**
+   * Evaluates the user-defined command node.
+   * It calls helper methods to replace the parameters with their corresponding values, evaluates
+   * the children nodes, and updates the model state with the evaluated command.
+   *
+   * @return the result of evaluating the user-defined command
+   * @throws InvocationTargetException if the user-defined command node encounters an invocation
+   *                                   target exception
+   * @throws IllegalAccessException    if the user-defined command node encounters an illegal access
+   *                                   exception
+   */
   @Override
   public double evaluate() throws InvocationTargetException, IllegalAccessException {
     List<Node> children = modelState.getUserDefinedCommandNodes().get(myToken);
@@ -81,13 +65,96 @@ public class UserCommandNode extends Node {
     return val;
   }
 
+  /**
+   * Retrieves the number of arguments expected by the user-defined command.
+   *
+   * @return the number of arguments expected by the user-defined command, which is obtained from
+   * the map in model state from command names to arguments expected
+   */
+
   @Override
   public int getNumArgs() {
     return numArgs;
   }
 
+  /**
+   * Retrieves the token associated with this user-defined command node.
+   *
+   * @return the token representing the name of the user-defined command node
+   */
+
   @Override
   public String getToken() {
     return myToken;
   }
+
+  /**
+   * Replaces nodes in the subtree rooted at the given node with a constant node.
+   *
+   * @param node          The root node of the subtree to search.
+   * @param tokenToReplace The token to search for and replace.
+   * @param constantNode  The constant node to replace the matching tokens with.
+   */
+  private void replaceNodesWithToken(Node node, String tokenToReplace, Node constantNode) {
+    for (Node child : node.getChildren()) {
+      replaceNodesWithTokenHelper(child, tokenToReplace, constantNode);
+    }
+  }
+
+  /**
+   * Helper method for replacing nodes in the subtree with a constant node.
+   * Recursively searches through the subtree and replaces matching tokens with the constant node.
+   *
+   * @param node          The current node being examined.
+   * @param tokenToReplace The token to search for and replace.
+   * @param constantNode  The constant node to replace the matching tokens with.
+   */
+  private void replaceNodesWithTokenHelper(Node node, String tokenToReplace, Node constantNode) {
+    List<Node> children = node.getChildren(); // Get the children of the current node
+    for (Node child : children) {
+      if (child.getToken().equals(tokenToReplace)) {
+        int index = children.indexOf(child);
+        if (index != -1) {
+          children.set(index, constantNode);
+        }
+      } else {
+        replaceNodesWithTokenHelper(child, tokenToReplace, constantNode);
+      }
+    }
+  }
+
+  /**
+   * Replaces tokens in the subtree rooted at the given node with variable nodes.
+   *
+   * @param node      The root node of the subtree to search.
+   * @param nodeToVar A mapping of nodes to their corresponding variable tokens.
+   */
+  private void replaceTokensWithNodes(Node node, Map<Node, String> nodeToVar) {
+    for (Node child : node.getChildren()) {
+      replaceTokensWithNodesHelper(child, nodeToVar);
+    }
+  }
+
+  /**
+   * Helper method for replacing tokens with variable nodes in the subtree.
+   * Recursively searches through the subtree and replaces matching tokens with variable nodes.
+   *
+   * @param node      The current node being examined.
+   * @param nodeToVar A mapping of nodes to their corresponding variable tokens.
+   */
+  private void replaceTokensWithNodesHelper(Node node, Map<Node, String> nodeToVar) {
+    List<Node> children = node.getChildren(); // Get the children of the current node
+    for (Node child : children) {
+      if (nodeToVar.containsKey(child)) {
+        int index = children.indexOf(child);
+        if (index != -1) {
+          children.set(index, new VariableNode(nodeToVar.get(child), modelState));
+          children.get(index).addListener(getListener());
+        }
+      } else {
+        replaceTokensWithNodesHelper(child, nodeToVar);
+      }
+    }
+  }
+
 }
