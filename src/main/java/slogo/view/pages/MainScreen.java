@@ -57,17 +57,17 @@ public class MainScreen implements ViewInternal {
   private final Controller controller;
   private final Timeline timeline = new Timeline();
   private final double speed = 1;
-  Pane root;
-  Stage stage;
-  TextField field;
-  Text variablesBoxLabel = new Text();
-  Text commandHistoryLabel = new Text();
-  Text userDefinedCommandsLabel = new Text();
-  Button submitField;
-  Button play;
-  Button pause;
-  Button step;
-  Pane centerPane = new Pane();
+  private Pane root;
+  private Stage stage;
+  private TextField field;
+  private Text variablesBoxLabel = new Text();
+  private Text commandHistoryLabel = new Text();
+  private Text userDefinedCommandsLabel = new Text();
+  private Button submitField;
+  private Button play;
+  private Button pause;
+  private Button step;
+  private Pane centerPane = new Pane();
   private Scene scene;
   private boolean paused;
   private BorderPane layout;
@@ -287,6 +287,14 @@ public class MainScreen implements ViewInternal {
       paused = true;
     });
 
+    step = UserInterfaceUtil.generateButton("Step", event -> {
+      if (currAnimation == null) {
+        playSingleAnimation();
+      } else {
+        finishCurrAnimation();
+      }
+    });
+
     ObservableList<String> penColors = FXCollections.observableArrayList(
         myResources.getString("PenColors").split(","));
 
@@ -296,7 +304,7 @@ public class MainScreen implements ViewInternal {
 
     colorDropDown.getOnAction().handle(new ActionEvent());
 
-    List<Control> mainButtons = List.of(submitField, play, pause, colorDropDown);
+    List<Control> mainButtons = List.of(submitField, play, pause, step,  colorDropDown);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
 
     speedSlider.setMin(10);
@@ -320,18 +328,12 @@ public class MainScreen implements ViewInternal {
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
       play.setText(newLang.getString("Play"));
       pause.setText(newLang.getString("Pause"));
+      step.setText(newLang.getString("Step"));
     });
 
     textInputBox.getChildren().addAll(speedSlider, field);
     textInputBox.getChildren().addAll(mainButtons);
 
-    step = UserInterfaceUtil.generateButton("Step", event -> {
-      if (currAnimation == null) {
-        playSingleAnimation();
-      } else {
-        finishCurrAnimation();
-      }
-    });
 
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
@@ -361,8 +363,8 @@ public class MainScreen implements ViewInternal {
   }
 
   public void addLine(Line line) {
-    if (!root.getChildren().contains(line)) {
-      root.getChildren().add(line);
+    if (!centerPane.getChildren().contains(line)) {
+      centerPane.getChildren().add(line);
     }
   }
 
