@@ -51,8 +51,8 @@ public class Controller {
 
   public void openBlankIDESession() throws IOException {
     Stage newStage = new Stage();
-    newStage.setMaximized(true);
-    MainScreen mainScreen = new MainScreen(stage, this);
+    newStage.setMaximized(false);
+    MainScreen mainScreen = new MainScreen(newStage, this);
     if (turtleImage != null) {
       mainScreen.setTurtleImage(turtleImage);
     }
