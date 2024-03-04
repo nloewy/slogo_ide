@@ -24,6 +24,14 @@ import slogo.model.node.Node;
 import slogo.model.node.UserCommandNode;
 import slogo.model.node.VariableNode;
 
+/**
+ * The Parser class is responsible for parsing Slogo commands and generating syntax trees
+ * from the input strings. It takes a ModelState object and the current language as inputs,
+ * then uses these to parse the input string into a syntax tree.
+ *
+ * @author Noah Loewy
+ */
+
 public class Parser {
 
   private static final String OPEN_BRACKET = "[";
@@ -39,6 +47,13 @@ public class Parser {
   private List<Map.Entry<Predicate<String>, Consumer<List<String>>>> nodeHandler;
   private Map<String, Consumer<Stack<Node>>> tokenHandlers;
 
+  /**
+   * Constructs a Parser object with the given model state and current language.
+   *
+   * @param modelState     the model state containing information about the simulation
+   * @param currentLanguage the current language used for parsing commands
+   * @throws IOException if an I/O error occurs while loading language properties
+   */
   public Parser(ModelState modelState, String currentLanguage) throws IOException {
     this.modelState = modelState;
     commandMap = loadCommandMap(RESOURCE_PATH + currentLanguage + ".properties");
@@ -48,6 +63,15 @@ public class Parser {
     initializeTokenMap();
   }
 
+  /**
+   * Parses the input string and generates a syntax tree rooted at the given root node. The root
+   * node, which is passed into the Parser from the model, then actually executes the commands by
+   * "evaluating" the nodes. A greedy parsing method is used.
+   *
+   * @param input    the input string to be parsed
+   * @param rootNode the root node of the syntax tree, which is assumed to be a ListNode passed in
+   *                 by the model.
+   */
   public void parse(String input, Node rootNode) {
     resetParsing();
     List<String> tokens = Arrays.asList(input.split("\\s+"));
@@ -61,29 +85,43 @@ public class Parser {
     checkForExtraneousArguments(nodeStack);
   }
 
+  /**
+   * Resets the parsing state by resetting the index, root node, and current node.
+   */
   private void resetParsing() {
     myIndex = 0;
     rootNode = null;
     currentNode = null;
   }
 
+  /**
+   *  Pops nodes that are saturated (have received all their arguments) from the node stack.
+   */
   private void checkForExtraneousArguments(Stack<Node> nodeStack) {
     while (!nodeStack.isEmpty() && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
     }
   }
 
+  /**
+   *  Checks if the node at the top of the node stack has received all of its arguments.
+   */
   private boolean topNodeSatisfied(Stack<Node> nodeStack) {
     return nodeStack.peek().getNumArgs() <= nodeStack.peek().getChildren().size();
   }
 
+  /**
+   * Parses next token in the input and creates a new node, updating the nodeStack accordingly.
+   */
   private void parseNextToken(List<String> tokens, Stack<Node> nodeStack) {
     skipCommentsAndWhitespace(tokens);
     Consumer<Stack<Node>> handler = tokenHandlers.getOrDefault(
         tokens.get(myIndex), (stack) -> createTokenAndUpdateStack(tokens, stack));
     handler.accept(nodeStack);
   }
-
+  /**
+   * Skips comments and whitespace tokens in the input string
+   */
   private void skipCommentsAndWhitespace(List<String> tokens) {
     while (myIndex < tokens.size() && (tokens.get(myIndex).isEmpty() || tokens.get(myIndex)
         .startsWith("#"))) {
@@ -91,7 +129,11 @@ public class Parser {
     }
   }
 
-  private void createTokenAndUpdateStack(List<String> tokens, Stack<Node> nodeStack) {
+/**
+ * Creates a new node for current token and adds to stack. Handles bracket matching for list nodes.
+ */
+
+ private void createTokenAndUpdateStack(List<String> tokens, Stack<Node> nodeStack) {
     createNode(tokens, nodeStack);
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
@@ -104,6 +146,9 @@ public class Parser {
     nodeStack.push(currentNode);
   }
 
+/**
+ * Updates node stack to match closing brackets with corresponding open brackets.
+ */
   private void handleClosedBracket(Stack<Node> nodeStack) {
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET)) {
       nodeStack.pop();
@@ -114,7 +159,10 @@ public class Parser {
     }
   }
 
-  private void handleOpenBracket(Stack<Node> nodeStack) {
+/**
+ * Creates new ListNode when open bracket is parsed.
+ */
+ private void handleOpenBracket(Stack<Node> nodeStack) {
     while (!nodeStack.peek().equals(rootNode) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
     }
@@ -123,7 +171,12 @@ public class Parser {
     nodeStack.push(newNode);
   }
 
-  private void createNode(List<String> tokens, Stack<Node> nodeStack) {
+/**
+ * Creates a node based on the current token, if it is valid, and updates the node stack. Throws
+ * exception if token is not valid
+ */
+
+ private void createNode(List<String> tokens, Stack<Node> nodeStack) {
     String token = tokens.get(myIndex);
     boolean invalidToken = true;
     for (Map.Entry<Predicate<String>, Consumer<List<String>>> entry : nodeHandler) {
@@ -146,6 +199,9 @@ public class Parser {
 
   }
 
+  /**
+   * Creates a command creator node for the "TO" command.
+   */
 
   private void makeCommandCreatorNode(List<String> tokens) {
     int index = myIndex + 2;
@@ -157,6 +213,9 @@ public class Parser {
     myIndex++;
   }
 
+  /**
+   * Loads the command map from the specified file path. The command map maps command canonical names and aliases to the actual Command class used.
+   */
   private Map<String, String> loadCommandMap(String filePath) throws FileNotFoundException {
     Properties properties = new Properties();
     commandMap = new HashMap<>();
@@ -175,6 +234,11 @@ public class Parser {
 
     return commandMap;
   }
+
+  /**
+   * Initializes the node handler, which maps token patterns to node creation functions.
+   * The node handler is used during parsing to create appropriate nodes based on the tokens encountered.
+   */
 
   private void initializeNodeHandler() {
     nodeHandler = new ArrayList<>();
@@ -207,21 +271,40 @@ public class Parser {
             modelState)));
   }
 
+  /**
+   * Checks if alias of token matches to the "TO" command.
+   */
+
   private boolean isToCommand(String token) {
     return commandMap.get(token.toLowerCase()).equals(TO_COMMAND);
   }
 
+  /**
+   * Checks if token is a SLOGO pre-defined command.
+   */
   private boolean isCommand(String token) {
     return commandMap.containsKey(token.toLowerCase());
   }
+
+  /**
+   * Checks if token is a user-defined command.
+   */
 
   private boolean isUserDefinedCommand(String token) {
     return modelState.getUserDefinedCommands().containsKey(token.toLowerCase());
   }
 
+  /**
+   * Checks if token matches the pattern specified by regex key
+   */
   private boolean tokenMatched(String token, String key) {
     return token.matches(patternLoader.getPattern(key));
   }
+
+  /**
+   * Initializes the token map, which maps token strings to handling functions.
+   * The token map is used during parsing to determine how to handle each token.
+   */
 
   private void initializeTokenMap() {
     tokenHandlers = new HashMap<>();
