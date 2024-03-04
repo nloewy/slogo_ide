@@ -16,7 +16,8 @@ import slogo.model.SlogoModel;
 import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.api.Model;
 import slogo.model.api.SlogoException;
-import slogo.view.View;
+import slogo.view.ViewInternal;
+import slogo.view.pages.MainScreen;
 import slogo.view.pages.StartScreen;
 
 //TODO add method to add user
@@ -28,7 +29,7 @@ public class Controller {
   private String currentTheme = "LightMode.css";
   private final List<Consumer<String>> languageObservers = new ArrayList<>();
   private Consumer<String> parse;
-  private final List<View> windows = new ArrayList<>();
+  private final List<MainScreen> windows = new ArrayList<>();
   private File turtleImage;
 
   public Controller(Stage stage) throws IOException {
@@ -51,12 +52,12 @@ public class Controller {
   public void openBlankIDESession() throws IOException {
     Stage newStage = new Stage();
     newStage.setMaximized(true);
-    View view = new View(this, stage);
+    MainScreen mainScreen = new MainScreen(stage, this);
     if (turtleImage != null) {
-      view.setTurtleImage(turtleImage);
+      mainScreen.setTurtleImage(turtleImage);
     }
-    Model model = new SlogoModel(view, currentLanguage);
-    windows.add(view);
+    Model model = new SlogoModel(mainScreen, currentLanguage);
+    windows.add(mainScreen);
 
     parse = t -> {
       try {
@@ -69,7 +70,7 @@ public class Controller {
       }
     };
 
-    view.run(parse);
+    mainScreen.addParser(parse);
     setCurrentLanguage(currentLanguage);
   }
 
@@ -97,7 +98,7 @@ public class Controller {
   public void updateCurrentTheme(Scene scene) {
     scene.getStylesheets().clear();
     scene.getStylesheets()
-        .add(Objects.requireNonNull(View.class.getResource(currentTheme)).toExternalForm());
+        .add(Objects.requireNonNull(ViewInternal.class.getResource(currentTheme)).toExternalForm());
   }
 
   public void setCurrentTheme(String theme, Scene scene) {

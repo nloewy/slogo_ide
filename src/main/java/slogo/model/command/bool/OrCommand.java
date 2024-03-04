@@ -17,7 +17,7 @@ public class OrCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return (arguments.get(0).evaluate() != 0) || !(arguments.get(1).evaluate() != 0) ? 1.0 : 0.0;
+    return (arguments.get(0).evaluate() != 0) || (arguments.get(1).evaluate() != 0) ? 1.0 : 0.0;
   }
 
 }
