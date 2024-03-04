@@ -3,6 +3,7 @@ package slogo.view.pages;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,6 +77,7 @@ public class MainScreen implements  SlogoListener {
   private Button play;
   private Button pause;
   private Button step;
+  private Button openNewWindow;
   private Pane centerPane = new Pane();
   private Scene scene;
   private boolean paused;
@@ -288,6 +290,13 @@ public class MainScreen implements  SlogoListener {
       paused = false;
     });
 
+    openNewWindow = UserInterfaceUtil.generateButton("Open New Window", event -> {try {
+      controller.openBlankIDESession();
+      paused = false;
+    } catch (IOException e) {
+      e.printStackTrace();
+    }});
+
     play = UserInterfaceUtil.generateButton("Play", event -> {paused = false;});
     pause = UserInterfaceUtil.generateButton("Pause", event -> {paused = true;});
 
@@ -317,7 +326,7 @@ public class MainScreen implements  SlogoListener {
     });
     backgroundDropDown.setValue(null);
     dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
-    List<Region> mainButtons = List.of(submitField, play, pause, step, dropdowns);
+    List<Region> mainButtons = List.of(submitField, play, pause, step, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
 
@@ -342,6 +351,7 @@ public class MainScreen implements  SlogoListener {
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
       play.setText(newLang.getString("Play"));
       pause.setText(newLang.getString("Pause"));
+      openNewWindow.setText(newLang.getString("OpenNew"));
       String[] newPenColors = newLang.getString("PenColors").split(",");
       ObservableList<ComboChoice> colorItems = colorDropDown.getItems();
       ObservableList<ComboChoice> backgroundItems = backgroundDropDown.getItems();
