@@ -24,19 +24,19 @@ public class FrontEndTurtle {
   private Timeline animation;
   private final Stack<Line> pathHistory = new Stack<Line>();
 
-  public FrontEndTurtle(int id, Double[] position, Color color, boolean isPenVisible,
+  public FrontEndTurtle(int id, double x, double y, Color color, boolean isPenVisible,
       double heading, Image image) {
     myId = id;
-    myX = position[0];
-    myY = position[1];
+    myX = x;
+    myY = y;
     displayImage = image;
     display = new ImageView(displayImage);
     display.setId("turtle"); // doing this for testing, did not work because it keeps making new
     // FrontEndTurtle objects
     display.setPreserveRatio(true);
     display.setFitWidth(50);
-    display.setLayoutX(position[0]);
-    display.setLayoutY(position[1]);
+    display.setLayoutX(myX);
+    display.setLayoutY(myY);
     penColor = color;
     isPenDisplayed = isPenVisible;
     this.heading = heading;

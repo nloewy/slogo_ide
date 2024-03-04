@@ -21,7 +21,7 @@ public class CommandTest {
     }
 
     @Override
-    public void onCommand(String string, boolean userDefined) {
+    public void onUserDefinedCommand(String string) {
 
     }
   };

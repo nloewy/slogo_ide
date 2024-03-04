@@ -6,7 +6,5 @@ public interface ViewInternal {
 
   javafx.scene.Scene getScene();
 
-  Group getGroup();
-
   void setUp();
 }

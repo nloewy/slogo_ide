@@ -22,7 +22,7 @@ public class CommandCreatorNode extends Node {
   public double evaluate() throws InvocationTargetException, IllegalAccessException {
     List<Node> children = getChildren();
     myModelState.getUserDefinedCommandNodes().put(myToken, children);
-    getListener().onCommand(toString(), true);
+    getListener().onUserDefinedCommand(toString());
     return 1.0;
   }
 
