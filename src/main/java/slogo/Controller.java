@@ -70,7 +70,7 @@ public class Controller {
       }
     };
 
-    mainScreen.run(parse);
+    mainScreen.addParser(parse);
     setCurrentLanguage(currentLanguage);
   }
 

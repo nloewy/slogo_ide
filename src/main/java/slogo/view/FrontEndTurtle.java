@@ -1,7 +1,6 @@
 package slogo.view;
 
 
-import static slogo.view.pages.MainScreen.ORIGIN;
 
 import java.util.List;
 import java.util.Stack;
@@ -28,8 +27,8 @@ public class FrontEndTurtle {
   public FrontEndTurtle(int id, Double[] position, Color color, boolean isPenVisible,
       double heading, Image image) {
     myId = id;
-    myX = ORIGIN[0];
-    myY = ORIGIN[1];
+    myX = position[0];
+    myY = position[1];
     displayImage = image;
     display = new ImageView(displayImage);
     display.setId("turtle"); // doing this for testing, did not work because it keeps making new
@@ -88,8 +87,7 @@ public class FrontEndTurtle {
 
   public Line drawLine(Double oldPosition, Double oldPosition2, Double newPosition,
       Double newPosition2) {
-    Line line = new Line(oldPosition + 225, oldPosition2 + 125, newPosition + 225,
-        newPosition2 + 125);
+    Line line = new Line(oldPosition, oldPosition2, newPosition, newPosition2);
     line.setStroke(penColor);
     line.setVisible(isPenDisplayed);
     pathHistory.push(line);

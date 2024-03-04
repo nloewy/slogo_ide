@@ -13,7 +13,6 @@ import util.DukeApplicationTest;
 
 public class MainScreenTest extends DukeApplicationTest {
   // keep only if needed to call application methods in tests
-  private View myView;
   // not tested yet
   private TextInputControl myTextField;
   private Button mySubmitButton;

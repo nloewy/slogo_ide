@@ -19,9 +19,9 @@ public class RemainderCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    try { return arguments.get(0).evaluate() % arguments.get(1).evaluate(); }
-    catch(ArithmeticException e) {
+    if(arguments.get(1).evaluate()==0) {
       throw new InvalidOperandException("Divisor must be Non-Zero");
     }
+     return arguments.get(0).evaluate() % arguments.get(1).evaluate();
   }
 }
