@@ -1,8 +1,10 @@
 package slogo.view.pages;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
@@ -41,8 +44,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import slogo.Controller;
 import slogo.model.api.SlogoListener;
@@ -78,6 +84,9 @@ public class MainScreen implements  SlogoListener {
   private Button pause;
   private Button step;
   private Button openNewWindow;
+  private Button help;
+  private Button save;
+  private Button upload;
   private Pane centerPane = new Pane();
   private Scene scene;
   private boolean paused;
@@ -118,7 +127,7 @@ public class MainScreen implements  SlogoListener {
   public MainScreen(Stage stage, Controller controller) throws FileNotFoundException {
     this.stage = stage;
     this.controller = controller;
-    mySpeed = 50;
+    mySpeed = 250;
     animationPlaying = false;
     myAnimation = new ArrayDeque<>();
     lang = "EG";
@@ -155,8 +164,13 @@ public class MainScreen implements  SlogoListener {
     initializeTurtleDisplays();
   }
 
-  public void addParser(Consumer<String> parseMethod) throws FileNotFoundException {
+  public void addParser(Consumer<String> parseMethod, String slogoContent) throws FileNotFoundException {
     parse = parseMethod;
+
+    if (slogoContent != null) {
+      pushCommand(slogoContent);
+    }
+
   }
 
   private void finishCurrAnimation() {
@@ -283,7 +297,8 @@ public class MainScreen implements  SlogoListener {
     createSpeedSlider();
 
     field = new TextField();
-    field.setPrefSize(WINDOW_WIDTH - 700, 300);
+//    field.setPrefSize(WINDOW_WIDTH - 700, 300);
+    field.setPrefSize(WINDOW_WIDTH - 1200, 300);
 
     submitField = UserInterfaceUtil.generateButton("Submit", event -> {
       sendCommandStringToView();
@@ -291,7 +306,7 @@ public class MainScreen implements  SlogoListener {
     });
 
     openNewWindow = UserInterfaceUtil.generateButton("Open New Window", event -> {try {
-      controller.openBlankIDESession();
+      controller.openNewIDESession(null);
       paused = false;
     } catch (IOException e) {
       e.printStackTrace();
@@ -307,6 +322,19 @@ public class MainScreen implements  SlogoListener {
         finishCurrAnimation();
       }
     });
+
+    help = UserInterfaceUtil.generateButton("Help", event -> {
+      showHelpPopup();
+    });
+
+    upload = UserInterfaceUtil.generateButton("Upload", event -> {
+      controller.loadSession("add");
+      String newSlogoContent = controller.getSlogoContent();
+      pushCommand(newSlogoContent);
+    });
+
+    save = UserInterfaceUtil.generateButton("Save", event -> saveToFile());
+
 
     VBox dropdowns = new VBox();
     dropdowns.getStyleClass().add("main-dropdowns");
@@ -326,7 +354,7 @@ public class MainScreen implements  SlogoListener {
         });
     backgroundDropDown.setValue(null);
     dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
-    List<Region> mainButtons = List.of(submitField, play, pause, step, dropdowns, openNewWindow);
+    List<Region> mainButtons = List.of(submitField, play, pause, step, help, upload, save, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
 
@@ -340,6 +368,91 @@ public class MainScreen implements  SlogoListener {
     root = new Group();
     root.getChildren().add(layout);
   }
+
+  private void saveToFile() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
+        "SLogo files (*.slogo)", "*.slogo"));
+    File file = fileChooser.showSaveDialog(stage);
+    if (file != null) {
+      try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+        for (String command : userDefinedCommandHistory) {
+          writer.write(command);
+          writer.newLine();
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+
+  private void showHelpPopup() {
+//    Popup popup = new Popup();
+
+    Stage popup = new Stage();
+
+    popup.initStyle(StageStyle.UTILITY);
+    popup.initModality(Modality.APPLICATION_MODAL);
+    VBox content = new VBox(10);
+    content.setStyle("-fx-background-color: white; -fx-padding: 10;");
+
+    Button closeButton = new Button("Close");
+    closeButton.setOnAction(e -> popup.hide());
+
+    Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML();
+    for (String command : commandDetails.keySet()) {
+      Hyperlink commandLink = new Hyperlink(command);
+      commandLink.setOnAction(e -> showCommandDetailsPopup(command, commandDetails.get(command)));
+      content.getChildren().add(commandLink);
+    }
+
+    content.getChildren().add(closeButton);
+//    popup.getContent().add(content);
+
+    helpPopupModality(popup, content);
+//    popup.show(root.getScene().getWindow());
+  }
+
+  private void showCommandDetailsPopup(String command, Map<String, String> details) {
+    Stage popup = new Stage();
+    popup.initStyle(StageStyle.UTILITY);
+    popup.initModality(Modality.APPLICATION_MODAL);
+
+    VBox content = new VBox(10);
+    content.setStyle("-fx-background-color: white; -fx-padding: 10;");
+
+    Label commandLabel = new Label("Command: " + command);
+    Label descriptionLabel = new Label("Description: " + details.get("description"));
+    Label exampleLabel = new Label("Example: " + details.get("example"));
+    Label parametersLabel = new Label("Parameters: " + details.get("parameters"));
+    Label returnValueLabel = new Label("Return Value: " + details.get("returnValue"));
+
+    Button closeButton = new Button("Close");
+    closeButton.setOnAction(e -> popup.hide());
+
+    content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, parametersLabel,
+        returnValueLabel, closeButton);
+//    popup.getContent().add(content);
+
+    helpPopupModality(popup, content);
+  }
+
+  private void helpPopupModality(Stage popup, VBox content) {
+    final Delta dragDelta = new Delta();
+    content.setOnMousePressed(mouseEvent -> {
+      dragDelta.x = popup.getX() - mouseEvent.getScreenX();
+      dragDelta.y = popup.getY() - mouseEvent.getScreenY();
+    });
+    content.setOnMouseDragged(mouseEvent -> {
+      popup.setX(mouseEvent.getScreenX() + dragDelta.x);
+      popup.setY(mouseEvent.getScreenY() + dragDelta.y);
+    });
+    Scene scene = new Scene(content);
+    popup.setScene(scene);
+    popup.show();
+  }
+  class Delta { double x, y; }
 
   private void addLanguageObserver(ComboBox<ComboChoice> colorDropDown,
       ComboBox<ComboChoice> backgroundDropDown) {
@@ -363,12 +476,16 @@ public class MainScreen implements  SlogoListener {
         }
       }
       step.setText(newLang.getString("Step"));
+
+      help.setText(newLang.getString("Help"));
+      save.setText(newLang.getString("Save"));
+      upload.setText(newLang.getString("Upload"));
     });
   }
 
   private void createSpeedSlider() {
     speedSlider.setMin(10);
-    speedSlider.setMax(300);
+    speedSlider.setMax(500);
     speedSlider.setValue(mySpeed);
     speedSlider.setShowTickLabels(true);
     speedSlider.setShowTickMarks(true);

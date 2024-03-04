@@ -1,0 +1,30 @@
+<commands>
+  <command>
+    <canonicalName>forward</canonicalName>
+    <description>Moves the turtle forward this many pixels.</description>
+    <example>fd 50</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="pixels" type="double">The number of pixels to move forward.</parameter>
+      </parameters>
+      <returnValue type="double">The distance moved.</returnValue>
+      <category>Movement</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.ForwardCommand</implementingClass>
+  </command>
+  <command>
+    <canonicalName>Right</canonicalName>
+    <description>Rotates the turtle clockwise by the specific degree.</description>
+    <example>rt 90</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="degrees" type="double">The number of degrees to turn right.</parameter>
+      </parameters>
+      <returnValue type="double">The new direction of the turtle in degrees.</returnValue>
+      <category>Rotation</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.RightCommand</implementingClass>
+  </command>
+</commands>

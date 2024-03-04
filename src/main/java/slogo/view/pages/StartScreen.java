@@ -53,16 +53,16 @@ public class StartScreen  {
     ResourceBundle myResources = ResourceBundle.getBundle(
         DEFAULT_RESOURCE_PACKAGE + controller.getCurrentLanguage());
     Button loadSlogo = generateButton("LoadSlogo", 100, 300, e -> {
-      controller.openNewXMLSession();
+      controller.loadSession("new");
     });
     Button loadGen = generateButton("LoadGen", 100, 330, e -> {
       try {
-        controller.openBlankIDESession();
+        controller.openNewIDESession(null);
       } catch (IOException ex) {
         throw new RuntimeException(ex);
       }
     });
-    Button loadOld = generateButton("LoadOld", 100, 360, e -> controller.loadSession());
+//    Button loadOld = generateButton("LoadOld", 100, 360, e -> controller.loadSession());
     Button uploadTurtle = generateButton("UploadTurtle", 400, 300, (event) -> {
       handleLoadTurtleImage();
     });
@@ -82,7 +82,7 @@ public class StartScreen  {
       ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
       loadSlogo.setText(newLang.getString("LoadSlogo"));
       loadGen.setText(newLang.getString("LoadGen"));
-      loadOld.setText(newLang.getString("LoadOld"));
+//      loadOld.setText(newLang.getString("LoadOld"));
       uploadTurtle.setText(newLang.getString("UploadTurtle"));
 
       String[] themes = newLang.getString("ColorThemes").split(",");
@@ -105,7 +105,7 @@ public class StartScreen  {
             controller::setCurrentLanguage),
         loadSlogo,
         loadGen,
-        loadOld,
+//        loadOld,
         uploadTurtle,
         themeComboBox
     );
