@@ -13,7 +13,6 @@ import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import java.util.function.Consumer;
-import java.util.stream.IntStream;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -21,14 +20,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
@@ -53,8 +50,6 @@ import slogo.view.ComboChoice;
 import slogo.view.FrontEndTurtle;
 import slogo.view.UserInterfaceUtil;
 
-import slogo.view.ViewInternal;
-
 /*
 The View will already know the XMLFile data when
 this is initialized. This will periodically
@@ -62,7 +57,7 @@ call View for updates and to schedule
 animation keyframes.
  */
 
-public class MainScreen implements ViewInternal, SlogoListener {
+public class MainScreen implements  SlogoListener {
 
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
   private static final double WINDOW_WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
@@ -146,22 +141,16 @@ public class MainScreen implements ViewInternal, SlogoListener {
     timeline.play();
     speedSlider = new Slider();
     setUp();
-    scene = new Scene(getRegion(), width, height);
+    scene = new Scene(root, width, height);
     controller.updateCurrentTheme(scene);
     stage.setScene(scene);
     stage.setMaximized(true);
     stage.show();
     centerX =  centerPane.getBoundsInParent().getWidth() / 2;
     centerY =  centerPane.getBoundsInParent().getHeight() / 2;
-    turtles.add(new FrontEndTurtle(1, getCenter(), Color.BLUE, true, 0, defaultImage));
+    turtles.add(new FrontEndTurtle(1, centerX, centerY, Color.BLUE, true, 0, defaultImage));
 
     initializeTurtleDisplays();
-
-
-  }
-
-  private Double[] getCenter() {
-    return new Double[]{centerX, centerY};
   }
 
   public void addParser(Consumer<String> parseMethod) throws FileNotFoundException {
@@ -186,7 +175,6 @@ public class MainScreen implements ViewInternal, SlogoListener {
       animation.play();
     }
   }
-
 
   private void playAnimation() {
     if (!animationPlaying && !myAnimation.isEmpty() && !paused) {
@@ -236,7 +224,6 @@ public class MainScreen implements ViewInternal, SlogoListener {
       List<String> relatedCommands = variableCommands.get(key);
       Button openRelatedCommands = new Button(key + " :: " + variableValues.get(key));
       openRelatedCommands.setId("variable");
-
       openRelatedCommands.setOnAction((event) -> {
         String commands = "";
         for (String command : relatedCommands) {
@@ -283,8 +270,7 @@ public class MainScreen implements ViewInternal, SlogoListener {
     speedSlider.valueProperty().addListener(speedSliderHandler);
   }
 
-  @Override
-  public void setUp() {
+  private void setUp() {
     layout = new BorderPane();
     layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -415,28 +401,6 @@ public class MainScreen implements ViewInternal, SlogoListener {
     variablesBox.getChildren().add(variablesBoxLabel);
   }
 
-
-  @Override
-  public javafx.scene.Scene getScene() {
-    return scene;
-  }
-
-  @Override
-  public Group getGroup() {
-    return null;
-  }
-
-  public Group getRegion() {
-    return root;
-  }
-
-  public void addLine(Line line) {
-    if (!centerPane.getChildren().contains(line)) {
-      centerPane.getChildren().add(line);
-    }
-  }
-
-
   public void setTurtleImage(File f) {
     try {
       defaultImage = new Image(new FileInputStream(f));
@@ -447,18 +411,6 @@ public class MainScreen implements ViewInternal, SlogoListener {
       e.printStackTrace();
     }
   }
-
-  /*
-   * Handles the user switching languages.
-   * //TODO
-   */
-  public void setLanguage(String lang) {
-    this.lang = lang;
-  }
-
-  /*
-   * Handles the user switching background color.
-   */ //TODO Test
 
   private void pushCommand(String s) {
     commandString = s;
@@ -473,7 +425,6 @@ public class MainScreen implements ViewInternal, SlogoListener {
     updateVariables();
   }
 
-
   private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading) {
     double oldX = turtle.getX();
     double oldY = turtle.getY();
@@ -486,26 +437,23 @@ public class MainScreen implements ViewInternal, SlogoListener {
     animation.setCycleCount(1);
     for (int i = 1; i <= numSteps; i++) {
       double progress = (double) i / numSteps;
-      double intermediateX = oldX + (x - oldX) * progress;
-      double intermediateY = oldY + (y - oldY) * progress;
-      double intermediateHeading = oldHeading + (newHeading - oldHeading) * progress;
-
       double offsetx = turtle.getDisplay().getImage().getWidth()/4;
       double offsety = turtle.getDisplay().getImage().getHeight()/4;
-      Line line = turtle.drawLine(oldX+offsetx, oldY+offsety, intermediateX+offsetx, intermediateY+offsety);
+      Line line = turtle.drawLine(oldX+offsetx, oldY+offsety, oldX + (x - oldX) * progress+offsetx, oldY + (y - oldY) * progress+offsety);
       KeyFrame keyFrame = new KeyFrame(Duration.seconds(duration * progress),
           e -> {
-            turtle.getDisplay().setLayoutX(intermediateX);
-            turtle.getDisplay().setLayoutY(intermediateY);
-            turtle.getDisplay().setRotate(intermediateHeading);
-            addLine(line);
-          });
+            turtle.getDisplay().setLayoutX(oldX + (x - oldX) * progress);
+            turtle.getDisplay().setLayoutY(oldY + (y - oldY) * progress);
+            turtle.getDisplay().setRotate(oldHeading + (newHeading - oldHeading) * progress);
+            if (!centerPane.getChildren().contains(line)) {
+              centerPane.getChildren().add(line);
+            }
+            });
       animation.getKeyFrames().add(keyFrame);
     }
     turtle.setPosition(x, y, newHeading);
     myAnimation.add(animation);
   }
-
 
   @Override
   public void onUpdateTurtleState(TurtleRecord turtleState) {
@@ -518,12 +466,8 @@ public class MainScreen implements ViewInternal, SlogoListener {
       }
     }
     turtles.add(new FrontEndTurtle(
-        turtleState.id(),
-        new Double[]{turtleState.x() + centerX, turtleState.y() + centerY},
-        Color.BLACK,
-        true,
-        turtleState.heading(),
-        defaultImage));
+        turtleState.id(), turtleState.x() + centerX, turtleState.y() + centerY,
+        Color.BLACK, true, turtleState.heading(), defaultImage));
   }
 
   @Override
@@ -542,15 +486,13 @@ public class MainScreen implements ViewInternal, SlogoListener {
   @Override
   public void onReturn(double value, String string) {
     commandHistory.add(string);
+    //print val perhaps ext to command?
     updateCommands();
   }
 
   @Override
-  public void onCommand(String string, boolean userDefined) {
-
-    if (userDefined) {
-      userDefinedCommandHistory.add(string);
-    }
+  public void onUserDefinedCommand(String string) {
+    userDefinedCommandHistory.add(string);
+    updateCommands();
   }
-
 }

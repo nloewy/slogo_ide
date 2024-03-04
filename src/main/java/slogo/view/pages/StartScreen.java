@@ -21,7 +21,7 @@ import slogo.Controller;
 import slogo.view.ComboChoice;
 import slogo.view.ViewInternal;
 
-public class StartScreen implements ViewInternal {
+public class StartScreen  {
 
   private static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
   private static final ResourceBundle LANG_OPT_BUNDLE = ResourceBundle.getBundle(
@@ -45,17 +45,10 @@ public class StartScreen implements ViewInternal {
     controller.setTurtleImage(dataFile);
   }
 
-  @Override
   public javafx.scene.Scene getScene() {
     return scene;
   }
 
-  @Override
-  public Group getGroup() {
-    return null;
-  }
-
-  @Override
   public void setUp() {
     ResourceBundle myResources = ResourceBundle.getBundle(
         DEFAULT_RESOURCE_PACKAGE + controller.getCurrentLanguage());

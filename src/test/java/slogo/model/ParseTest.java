@@ -43,7 +43,7 @@ public class ParseTest {
       public void onReturn(double value, String string) {
       }
       @Override
-      public void onCommand(String s, boolean b) {
+      public void onUserDefinedCommand(String s) {
       }
     }, "English");
 
