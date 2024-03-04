@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.IntStream;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,6 +36,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import slogo.Controller;
+import slogo.view.ComboChoice;
 import slogo.view.FrontEndTurtle;
 import slogo.view.UserInterfaceUtil;
 import slogo.view.View;
@@ -223,9 +225,6 @@ public class MainScreen implements ViewInternal {
 
   @Override
   public void setUp() {
-    ResourceBundle myResources = ResourceBundle.getBundle(
-        DEFAULT_RESOURCE_PACKAGE + controller.getCurrentLanguage());
-
     layout = new BorderPane();
     layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -276,10 +275,13 @@ public class MainScreen implements ViewInternal {
       }
     });
 
-    ObservableList<String> penColors = FXCollections.observableArrayList(
-        myResources.getString("PenColors").split(","));
+    ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "English");
+    ObservableList<ComboChoice> penColors = FXCollections.observableArrayList();
+    for (String color : defaultResources.getString("PenColors").split(",")) {
+      penColors.add(new ComboChoice(color, color));
+    }
 
-    ComboBox<String> colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 200, (s) -> s, (event) -> {
+    ComboBox<ComboChoice> colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 200, (s) -> s, (event) -> {
           view.getTurtles().forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
         });
 
@@ -309,6 +311,14 @@ public class MainScreen implements ViewInternal {
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
       play.setText(newLang.getString("Play"));
       pause.setText(newLang.getString("Pause"));
+      String[] newPenColors = newLang.getString("PenColors").split(",");
+      ObservableList<ComboChoice> colorItems = colorDropDown.getItems();
+      for (int i = 0; i < newPenColors.length; i++) {
+        colorItems.set(i, new ComboChoice(newPenColors[i], colorItems.get(i).getValue()));
+        if(colorItems.get(i).getValue().equals(colorDropDown.getValue().toString())) {
+          colorDropDown.setValue(colorItems.get(i));
+        }
+      }
       step.setText(newLang.getString("Step"));
     });
 
