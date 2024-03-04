@@ -11,7 +11,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -187,11 +186,16 @@ public class MainScreen implements ViewInternal {
   }
 
   public void updateCommands() {
-    System.out.println(view.getCommandHistory().get(0));
-    commandHistoryBox.getChildren().clear();
-    commandHistoryBox.getChildren().add(commandHistoryLabel);
+    updateCommandBox(commandHistoryBox, commandHistoryLabel, view.getCommandHistory() );
+    updateCommandBox(userDefinedCommandsBox, userDefinedCommandsLabel, view.getUserDefinedCommandHistory());
+  }
 
-    for (String s : view.getCommandHistory()) {
+
+
+  private void updateCommandBox(VBox box, Text label, List<String> history) {
+    box.getChildren().clear();
+    box.getChildren().add(label);
+    for (String s : history) {
       String[] lines = s.split("\n");
       TitledPane titledPane = new TitledPane();
       titledPane.setText(lines[0]);
@@ -208,31 +212,8 @@ public class MainScreen implements ViewInternal {
       VBox vbox = new VBox();
       titledPane.setContent(vbox); // Set initial content as empty VBox
       titledPane.setExpanded(false); // Start collapsed
-      commandHistoryBox.getChildren().add(titledPane);
+      box.getChildren().add(titledPane);
     }
-
-    userDefinedCommandsBox.getChildren().clear();
-    userDefinedCommandsBox.getChildren().add(userDefinedCommandsLabel);
-    for (String s : view.getUserDefinedCommandHistory()) {
-      String[] lines = s.split("\n");
-      TitledPane titledPane = new TitledPane();
-      titledPane.setText(lines[0]);
-      titledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
-        if (newValue) {
-          String fullText = String.join("\n", Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the first one
-          titledPane.setContent(new Label(fullText)); // Set the full command content when expanded
-          titledPane.setText(lines[0]); // Display the first line when expanded
-        } else {
-          titledPane.setContent(null); // Remove content when collapsed
-          titledPane.setText(lines[0]);
-        }
-      });
-      VBox vbox = new VBox();
-      titledPane.setContent(vbox); // Set initial content as empty VBox
-      titledPane.setExpanded(false); // Start collapsed
-      userDefinedCommandsBox.getChildren().add(titledPane);
-    }
-
   }
 
 
