@@ -13,8 +13,6 @@ import slogo.model.node.Node;
  * The SetTowardsCommand class represents the command to set the turtle's heading towards a specified position.
  * It sets the turtle's heading towards the specified position and calculates the minimum angle of rotation needed to reach that heading.
  *
- * <p>This command requires two arguments: the x-coordinate and the y-coordinate of the target position.</p>
- *
  * @author Noah Loewy
  */
 public class SetTowardsCommand implements Command {
