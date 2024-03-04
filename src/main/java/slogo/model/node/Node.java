@@ -46,7 +46,7 @@ public abstract class Node implements Cloneable {
   private String toStringHelper(Node node, int indent) {
     StringBuilder sb = new StringBuilder();
     sb.append("\n");
-    sb.append("\t".repeat(indent)).append(node.getToken());
+    sb.append(" ".repeat(indent)).append(node.getToken());
     for (int i = 0; i < node.getChildren().size(); i++) {
       sb.append(toStringHelper(node.getChildren().get(i), indent + 1));
     }

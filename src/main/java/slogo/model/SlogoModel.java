@@ -66,6 +66,7 @@ public class SlogoModel implements Model {
     }
     myCommands.push(input);
     myListener.onReturn(val, root.toString());
+
   }
 
   private void dfsAddListener(Node node) {
