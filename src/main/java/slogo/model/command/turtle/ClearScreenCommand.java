@@ -1,17 +1,13 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
-import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
-import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
-import slogo.model.api.TurtleRecord;
-import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The ClearScreenCommand class clears the screen and returns the turtle to its initial position.
- * It inherits from the HomeCommand class and resets the turtle's state to its initial state.
+ * The ClearScreenCommand class clears the screen and returns the turtle to its initial position. It
+ * inherits from the HomeCommand class and resets the turtle's state to its initial state.
  * Additionally, it notifies the listener to reset the turtle's state.
  *
  * @author Noah Loewy
@@ -29,7 +25,7 @@ public class ClearScreenCommand extends HomeCommand {
    * Constructs a ClearScreenCommand with the given model state and listener.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public ClearScreenCommand(ModelState modelState, SlogoListener listener) {
     super(modelState, listener);
@@ -38,10 +34,11 @@ public class ClearScreenCommand extends HomeCommand {
   }
 
   /**
-   * Executes the ClearScreenCommand by calling the HomeCommand class's execute method to return
-   * the turtle to its initial position and then notifies the listener to reset the turtle's state.
+   * Executes the ClearScreenCommand by calling the HomeCommand class's execute method to return the
+   * turtle to its initial position and then notifies the listener to reset the turtle's state.
    *
-   * @param arguments a list of nodes representing the arguments of the command (none for this command)
+   * @param arguments a list of nodes representing the arguments of the command (none for this
+   *                  command)
    * @return the result of executing the super class's execute method
    */
   @Override

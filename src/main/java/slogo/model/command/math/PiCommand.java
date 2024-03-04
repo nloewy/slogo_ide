@@ -2,15 +2,14 @@ package slogo.model.command.math;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The PiCommand class represents the mathematical constant pi.
- * It returns the value of pi when executed.
+ * The PiCommand class represents the mathematical constant pi. It returns the value of pi when
+ * executed.
  *
  * @author Noah Loewy
  */
@@ -26,7 +25,7 @@ public class PiCommand implements Command {
    * does not actually do anything, and exists for the sake of consistency across commands.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public PiCommand(ModelState modelState, SlogoListener listener) {
   }
@@ -37,7 +36,7 @@ public class PiCommand implements Command {
    * @param arguments a list containing no nodes, as PiCommand requires no arguments
    * @return the value of pi
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

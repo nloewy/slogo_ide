@@ -2,15 +2,14 @@ package slogo.model.command.control;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The RepeatCommand class represents the "repeat" control structure.
- * It repeats a set of commands a specified number of times.
+ * The RepeatCommand class represents the "repeat" control structure. It repeats a set of commands a
+ * specified number of times.
  *
  * @author Noah Loewy
  */
@@ -27,21 +26,21 @@ public class RepeatCommand implements Command {
    * Constructs an instance of RepeatCommand with the given model state and listener.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public RepeatCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
   }
 
   /**
-   * Executes the "repeat" control structure, each time setting a special variable ":repcount" to the
-   * current iteration count.
+   * Executes the "repeat" control structure, each time setting a special variable ":repcount" to
+   * the current iteration count.
    *
-   * @param arguments a list containing two nodes: the first node represents the number of times to repeat,
-   *                  and the second node represents the commands to repeat.
+   * @param arguments a list containing two nodes: the first node represents the number of times to
+   *                  repeat, and the second node represents the commands to repeat.
    * @return the result of the last evaluated command in the loop
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

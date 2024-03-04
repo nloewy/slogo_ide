@@ -300,6 +300,12 @@ public class MainScreen implements  SlogoListener {
 //    field.setPrefSize(WINDOW_WIDTH - 700, 300);
     field.setPrefSize(WINDOW_WIDTH - 1200, 300);
 
+    field.setOnAction(event -> {
+      if (!field.getText().isEmpty()) {
+        sendCommandStringToView();
+      }
+    });
+
     submitField = UserInterfaceUtil.generateButton("Submit", event -> {
       sendCommandStringToView();
       paused = false;
@@ -345,13 +351,13 @@ public class MainScreen implements  SlogoListener {
     }
 
     ComboBox<ComboChoice> colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
-          turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
-        });
+      turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
+    });
     colorDropDown.getOnAction().handle(new ActionEvent());
 
     ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
-          centerPane.setStyle("-fx-background-color: " + event);
-        });
+      centerPane.setStyle("-fx-background-color: " + event);
+    });
     backgroundDropDown.setValue(null);
     dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
     List<Region> mainButtons = List.of(submitField, play, pause, step, help, upload, save, dropdowns, openNewWindow);
@@ -575,7 +581,7 @@ public class MainScreen implements  SlogoListener {
             if (!centerPane.getChildren().contains(line)) {
               centerPane.getChildren().add(line);
             }
-            });
+          });
       animation.getKeyFrames().add(keyFrame);
     }
     turtle.setPosition(x, y, newHeading);
@@ -623,3 +629,4 @@ public class MainScreen implements  SlogoListener {
     updateCommands();
   }
 }
+

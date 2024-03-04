@@ -8,8 +8,8 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The XcoordinateCommand class represents a command that retrieves the X coordinate of the requested turtle.
- * It returns the X coordinate of the requested turtle.
+ * The XcoordinateCommand class represents a command that retrieves the X coordinate of the
+ * requested turtle. It returns the X coordinate of the requested turtle.
  *
  * @author Noah Loewy
  */
@@ -26,7 +26,7 @@ public class XcoordinateCommand implements Command {
    * Constructs an instance of XcoordinateCommand with the given model state and listener.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public XcoordinateCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
@@ -38,7 +38,7 @@ public class XcoordinateCommand implements Command {
    * @param arguments a list of nodes representing arguments (not used in this command)
    * @return the X coordinate of the requested turtle
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

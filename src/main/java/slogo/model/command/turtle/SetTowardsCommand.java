@@ -10,8 +10,9 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The SetTowardsCommand class represents the command to set the turtle's heading towards a specified position.
- * It sets the turtle's heading towards the specified position and calculates the minimum angle of rotation needed to reach that heading.
+ * The SetTowardsCommand class represents the command to set the turtle's heading towards a
+ * specified position. It sets the turtle's heading towards the specified position and calculates
+ * the minimum angle of rotation needed to reach that heading.
  *
  * @author Noah Loewy
  */
@@ -29,7 +30,7 @@ public class SetTowardsCommand implements Command {
    * Constructs a SetTowardsCommand with the given model state and listener.
    *
    * @param modelState the model state containing information about the turtle
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public SetTowardsCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
@@ -39,10 +40,11 @@ public class SetTowardsCommand implements Command {
   /**
    * Executes the SetTowardsCommand, setting the turtle's heading towards the specified position.
    *
-   * @param arguments a list of nodes representing the arguments for this command (containing two nodes with the x and y coordinates of the target position)
+   * @param arguments a list of nodes representing the arguments for this command (containing two
+   *                  nodes with the x and y coordinates of the target position)
    * @return the minimum angle of rotation needed to reach the new heading
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
+   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments)

@@ -9,9 +9,9 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The HomeCommand class represents the command to move the turtle to its home position (0, 0).
- * It sets the turtle's position to the origin and notifies the listener of the state change.
- * The distance moved by the turtle from its previous position to the home position is returned.
+ * The HomeCommand class represents the command to move the turtle to its home position (0, 0). It
+ * sets the turtle's position to the origin and notifies the listener of the state change. The
+ * distance moved by the turtle from its previous position to the home position is returned.
  *
  * @author Noah Loewy
  */
@@ -29,7 +29,7 @@ public class HomeCommand implements Command {
    * Constructs a HomeCommand with the given model state and listener.
    *
    * @param modelState the model state containing information about the turtle
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public HomeCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;

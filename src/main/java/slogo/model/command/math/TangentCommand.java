@@ -2,16 +2,15 @@ package slogo.model.command.math;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
 import slogo.model.ModelState;
-import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
+import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.node.Node;
 
 /**
- * The TangentCommand class represents the tangent mathematical operation.
- * It calculates the tangent of a given angle in degrees.
+ * The TangentCommand class represents the tangent mathematical operation. It calculates the tangent
+ * of a given angle in degrees.
  *
  * @author Noah Loewy
  */
@@ -23,11 +22,12 @@ public class TangentCommand implements Command {
   public static final int NUM_ARGS = 1;
 
   /**
-   * Constructs an instance of TangentCommand with the given model state and listener. This constructor
-   * does not actually do anything, and exists for the sake of consistency across commands.
+   * Constructs an instance of TangentCommand with the given model state and listener. This
+   * constructor does not actually do anything, and exists for the sake of consistency across
+   * commands.
    *
    * @param modelState the model state
-   * @param listener the listener for state change events
+   * @param listener   the listener for state change events
    */
   public TangentCommand(ModelState modelState, SlogoListener listener) {
   }
@@ -38,8 +38,8 @@ public class TangentCommand implements Command {
    * @param arguments a list containing a single node representing the angle in degrees
    * @return the tangent of the input angle
    * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException if access is denied during execution
-   * @throws InvalidOperandException if the tangent function is undefined
+   * @throws IllegalAccessException    if access is denied during execution
+   * @throws InvalidOperandException   if the tangent function is undefined
    */
   @Override
   public double execute(List<Node> arguments)

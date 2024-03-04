@@ -10,10 +10,9 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The ForwardCommand class represents the forward movement command for the turtle.
- * It moves the turtle forward by a specified number of pixels.
- * The movement is based on the current heading of the turtle.
- * The new position is calculated using trigonometric functions.
+ * The ForwardCommand class represents the forward movement command for the turtle. It moves the
+ * turtle forward by a specified number of pixels. The movement is based on the current heading of
+ * the turtle. The new position is calculated using trigonometric functions.
  *
  * @author Noah Loewy
  */
@@ -41,7 +40,8 @@ public class ForwardCommand implements Command {
   /**
    * Executes the forward movement command for the turtle.
    *
-   * @param arguments a list containing a single node representing the number of pixels to move forward
+   * @param arguments a list containing a single node representing the number of pixels to move
+   *                  forward
    * @return the number of pixels moved forward
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
