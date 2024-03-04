@@ -322,10 +322,15 @@ public class MainScreen implements ViewInternal {
       pause.setText(newLang.getString("Pause"));
       String[] newPenColors = newLang.getString("PenColors").split(",");
       ObservableList<ComboChoice> colorItems = colorDropDown.getItems();
+      ObservableList<ComboChoice> backgroundItems = backgroundDropDown.getItems();
       for (int i = 0; i < newPenColors.length; i++) {
         colorItems.set(i, new ComboChoice(newPenColors[i], colorItems.get(i).getValue()));
+        backgroundItems.set(i, new ComboChoice(newPenColors[i], backgroundItems.get(i).getValue()));
         if(colorItems.get(i).getValue().equals(colorDropDown.getValue().toString())) {
           colorDropDown.setValue(colorItems.get(i));
+        }
+        if(backgroundItems.get(i).getValue().equals(backgroundDropDown.getValue().toString())) {
+          backgroundDropDown.setValue(backgroundItems.get(i));
         }
       }
       step.setText(newLang.getString("Step"));
