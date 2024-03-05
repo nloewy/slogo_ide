@@ -64,6 +64,7 @@ public class CommandNode extends Node {
   public double evaluate() //masked under factory
       throws InvalidCommandException, InsufficientArgumentsException, InvalidOperandException, InvocationTargetException, IllegalAccessException {
     try {
+
       Class<?> clazz = Class.forName(BASE_PACKAGE + myToken + "Command");
       command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
           .newInstance(myModelState, getListener());

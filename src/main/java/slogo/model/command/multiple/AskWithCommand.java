@@ -4,18 +4,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import slogo.model.ModelState;
-import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The AskCommand class represents a command that given a turtle id(s), marks them as active for a
- * sequence of commands, then goes back to the previously active turtles
- *
  * @author Noah Loewy
  */
-public class AskCommand implements Command {
+public class AskWithCommand implements Command {
 
   /**
    * The number of arguments this command requires.
@@ -26,19 +22,19 @@ public class AskCommand implements Command {
   private final ModelState modelState;
 
   /**
-   * Constructs an instance of AskCommand with the given model state and listener.
+   * Constructs an instance of AskWithCommand with the given model state and listener.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
-  public AskCommand(ModelState modelState, SlogoListener listener) {
+  public AskWithCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
     myListener = listener;
   }
 
   /**
-   * Executes the command to activate turtles with specified IDs, creating new turtles if needed,
-   * runs the given commands, and then goes back to previously active turtle.
+   * Executes the command to activate turtles with specified condition, creating new turtles if
+   * needed, runs the given commands, and then goes back to previously active turtle.
    *
    * @param arguments a list of nodes representing the arguments passed to the command
    * @param index     the index of the command in the list of commands
@@ -50,19 +46,23 @@ public class AskCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    if(index==modelState.getActiveTurtles().peek().size()-1) {
-      List<Integer> tempList = new ArrayList<>();
-      for (Node node : arguments.get(0).getChildren()) {
-       int id = (int) Math.round(node.evaluate());
-        if (!modelState.getTurtles().containsKey(id)) {
-          modelState.getTurtles().put(id, new Turtle(id));
-          myListener.onResetTurtle(id);
-        }
+
+    List<Integer> tempList = new ArrayList<>();
+    for (Integer id : modelState.getTurtles().keySet()) {
+      List<Integer> oneNodeList = new ArrayList<>();
+      oneNodeList.add(id);
+      modelState.getActiveTurtles().add(oneNodeList);
+      if (arguments.get(0).evaluate() != 0) {
         tempList.add(id);
       }
+      modelState.getActiveTurtles().pop();
+    }
+
+    double val = 0;
+    if (index == modelState.getActiveTurtles().peek().size() - 1) {
+
       modelState.getActiveTurtles().add(tempList);
-      myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
-      double val = 0.0;
+
       for (int i = 0; i < modelState.getActiveTurtles().peek().size(); i++) {
         for (Node node : arguments.get(1).getChildren()) {
           List<Integer> oneNodeList = new ArrayList<>();
@@ -75,6 +75,7 @@ public class AskCommand implements Command {
       modelState.getActiveTurtles().pop();
       return val;
     }
+
     return 0;
   }
 }
