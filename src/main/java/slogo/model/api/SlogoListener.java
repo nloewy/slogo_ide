@@ -1,7 +1,7 @@
 package slogo.model.api;
 
 
-/**
+import java.util.List; /**
  * The SlogoListener interface defines a set of methods to be implemented by classes that wish to
  * receive notifications about events in the Slogo Model. These events include variable value
  * updates, turtle state changes, turtle resets, parse operation results, and user-defined command
@@ -49,4 +49,12 @@ public interface SlogoListener {
    */
   void onUserDefinedCommand(
       String string); // Highlights if it is a user-defined command or a history command.
+
+
+  /**
+   * Invoked to provide the listener with ids of active turtles.
+   *
+   * @param ids The list of ids of all active turtles.
+   */
+  void onSetActiveTurtles(List<Integer> ids);
 }

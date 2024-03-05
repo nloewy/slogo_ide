@@ -1,5 +1,6 @@
 package slogo.model.command;
 
+import java.util.List;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.model.node.Node;
@@ -24,6 +25,12 @@ public class CommandTest {
     public void onUserDefinedCommand(String string) {
 
     }
+
+    @Override
+    public void onSetActiveTurtles(List<Integer> ids) {
+
+    }
+
   };
 
 
