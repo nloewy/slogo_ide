@@ -64,7 +64,7 @@ call View for updates and to schedule
 animation keyframes.
  */
 
-public class MainScreen implements  SlogoListener {
+public class MainScreen implements SlogoListener {
 
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
   private static final double WINDOW_WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
@@ -107,7 +107,7 @@ public class MainScreen implements  SlogoListener {
 
   private static final int height = 600;
   private static final int width = 1000;
-  public static final Double[] ORIGIN = new Double[]{width / 2.0, height / 2.0};
+  public static final Double[] ORIGIN = new Double[] { width / 2.0, height / 2.0 };
   private static final double PIXELS_PER_SECOND = 25;
   private Map<String, List<String>> variableCommands;
   private Map<String, Number> variableValues;
@@ -157,8 +157,8 @@ public class MainScreen implements  SlogoListener {
     stage.setScene(scene);
     stage.setMaximized(true);
     stage.show();
-    centerX =  centerPane.getBoundsInParent().getWidth() / 2;
-    centerY =  centerPane.getBoundsInParent().getHeight() / 2;
+    centerX = centerPane.getBoundsInParent().getWidth() / 2;
+    centerY = centerPane.getBoundsInParent().getHeight() / 2;
     turtles.add(new FrontEndTurtle(1, centerX, centerY, Color.BLUE, true, 0, defaultImage, this));
 
     initializeTurtleDisplays();
@@ -232,7 +232,7 @@ public class MainScreen implements  SlogoListener {
     myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + currentLanguage);
   }
 
-  private void updateVariables() {
+  public void updateVariables() {
     variablesBox.getChildren().clear();
     variablesBox.getChildren().add(variablesBoxLabel);
 
@@ -241,6 +241,11 @@ public class MainScreen implements  SlogoListener {
       Button openRelatedCommands = new Button(key + " :: " + variableValues.get(key));
       openRelatedCommands.setId("variable");
       openRelatedCommands.setOnAction((event) -> {
+        VariableDialog dialog = new VariableDialog(this, variableValues);
+        if (dialog.display()) {
+          updateVariables();
+        }
+
         String commands = "";
         for (String command : relatedCommands) {
           commands = commands + "\n" + command;
@@ -254,7 +259,7 @@ public class MainScreen implements  SlogoListener {
   }
 
   private void updateCommands() {
-    updateCommandBox(commandHistoryBox, commandHistoryLabel, commandHistory );
+    updateCommandBox(commandHistoryBox, commandHistoryLabel, commandHistory);
     updateCommandBox(userDefinedCommandsBox, userDefinedCommandsLabel, userDefinedCommandHistory);
   }
 
@@ -267,7 +272,8 @@ public class MainScreen implements  SlogoListener {
       titledPane.setText(lines[0]);
       titledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue) {
-          String fullText = String.join("\n", Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the first one
+          String fullText = String.join("\n", Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the
+                                                                                           // first one
           titledPane.setContent(new Label(fullText)); // Set the full command content when expanded
           titledPane.setText(lines[0]); // Display the first line when expanded
         } else {
@@ -297,7 +303,7 @@ public class MainScreen implements  SlogoListener {
     createSpeedSlider();
 
     field = new TextField();
-//    field.setPrefSize(WINDOW_WIDTH - 700, 300);
+    // field.setPrefSize(WINDOW_WIDTH - 700, 300);
     field.setPrefSize(WINDOW_WIDTH - 1200, 300);
 
     field.setOnAction(event -> {
@@ -311,15 +317,21 @@ public class MainScreen implements  SlogoListener {
       paused = false;
     });
 
-    openNewWindow = UserInterfaceUtil.generateButton("Open New Window", event -> {try {
-      controller.openNewIDESession(null);
-      paused = false;
-    } catch (IOException e) {
-      e.printStackTrace();
-    }});
+    openNewWindow = UserInterfaceUtil.generateButton("Open New Window", event -> {
+      try {
+        controller.openNewIDESession(null);
+        paused = false;
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    });
 
-    play = UserInterfaceUtil.generateButton("Play", event -> {paused = false;});
-    pause = UserInterfaceUtil.generateButton("Pause", event -> {paused = true;});
+    play = UserInterfaceUtil.generateButton("Play", event -> {
+      paused = false;
+    });
+    pause = UserInterfaceUtil.generateButton("Pause", event -> {
+      paused = true;
+    });
 
     step = UserInterfaceUtil.generateButton("Step", event -> {
       if (currAnimation == null) {
@@ -341,7 +353,6 @@ public class MainScreen implements  SlogoListener {
 
     save = UserInterfaceUtil.generateButton("Save", event -> saveToFile());
 
-
     VBox dropdowns = new VBox();
     dropdowns.getStyleClass().add("main-dropdowns");
     ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "English");
@@ -355,21 +366,22 @@ public class MainScreen implements  SlogoListener {
     });
     colorDropDown.getOnAction().handle(new ActionEvent());
 
-    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
-      centerPane.setStyle("-fx-background-color: " + event);
-    });
+    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s,
+        (event) -> {
+          centerPane.setStyle("-fx-background-color: " + event);
+        });
     backgroundDropDown.setValue(null);
     dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
     List<Region> mainButtons = List.of(submitField, play, pause, step, help, upload, save, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
 
-
     textInputBox.getChildren().addAll(speedSlider, field);
     textInputBox.getChildren().addAll(mainButtons);
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
-    layout.setRight(new VBox(variablesPane, userDefinedCommandsPane)); // Stack variablesPane and userDefinedCommandsPane vertically
+    layout.setRight(new VBox(variablesPane, userDefinedCommandsPane)); // Stack variablesPane and
+                                                                       // userDefinedCommandsPane vertically
     layout.setLeft(commandsHistory);
     root = new Group();
     root.getChildren().add(layout);
@@ -392,9 +404,8 @@ public class MainScreen implements  SlogoListener {
     }
   }
 
-
   private void showHelpPopup() {
-//    Popup popup = new Popup();
+    // Popup popup = new Popup();
 
     Stage popup = new Stage();
 
@@ -414,10 +425,10 @@ public class MainScreen implements  SlogoListener {
     }
 
     content.getChildren().add(closeButton);
-//    popup.getContent().add(content);
+    // popup.getContent().add(content);
 
     helpPopupModality(popup, content);
-//    popup.show(root.getScene().getWindow());
+    // popup.show(root.getScene().getWindow());
   }
 
   private void showCommandDetailsPopup(String command, Map<String, String> details) {
@@ -439,7 +450,7 @@ public class MainScreen implements  SlogoListener {
 
     content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, parametersLabel,
         returnValueLabel, closeButton);
-//    popup.getContent().add(content);
+    // popup.getContent().add(content);
 
     helpPopupModality(popup, content);
   }
@@ -458,7 +469,10 @@ public class MainScreen implements  SlogoListener {
     popup.setScene(scene);
     popup.show();
   }
-  class Delta { double x, y; }
+
+  class Delta {
+    double x, y;
+  }
 
   private void addLanguageObserver(ComboBox<ComboChoice> colorDropDown,
       ComboBox<ComboChoice> backgroundDropDown) {
@@ -477,7 +491,7 @@ public class MainScreen implements  SlogoListener {
       for (int i = 0; i < newPenColors.length; i++) {
         colorItems.set(i, new ComboChoice(newPenColors[i], colorItems.get(i).getValue()));
         backgroundItems.set(i, new ComboChoice(newPenColors[i], backgroundItems.get(i).getValue()));
-        if(colorItems.get(i).getValue().equals(colorDropDown.getValue().toString())) {
+        if (colorItems.get(i).getValue().equals(colorDropDown.getValue().toString())) {
           colorDropDown.setValue(colorItems.get(i));
         }
       }
@@ -498,7 +512,7 @@ public class MainScreen implements  SlogoListener {
     speedSlider.setMajorTickUnit(10);
     setSpeedSliderHandler((observable, oldValue, newValue) -> {
       mySpeed = newValue.intValue();
-      if(mySpeed == speedSlider.getMax()) {
+      if (mySpeed == speedSlider.getMax()) {
         mySpeed = 100000;
       }
     });
@@ -547,7 +561,7 @@ public class MainScreen implements  SlogoListener {
 
   public void pushCommand(String s) {
     commandString = s;
-    System.out.println(commandString);
+    commandHistory.push(commandString);
     parse.accept(commandString);
     updateCommands();
   }
@@ -571,9 +585,10 @@ public class MainScreen implements  SlogoListener {
     animation.setCycleCount(1);
     for (int i = 1; i <= numSteps; i++) {
       double progress = (double) i / numSteps;
-      double offsetx = turtle.getDisplay().getImage().getWidth()/4;
-      double offsety = turtle.getDisplay().getImage().getHeight()/4;
-      Line line = turtle.drawLine(oldX+offsetx, oldY+offsety, oldX + (x - oldX) * progress+offsetx, oldY + (y - oldY) * progress+offsety);
+      double offsetx = turtle.getDisplay().getImage().getWidth() / 4;
+      double offsety = turtle.getDisplay().getImage().getHeight() / 4;
+      Line line = turtle.drawLine(oldX + offsetx, oldY + offsety, oldX + (x - oldX) * progress + offsetx,
+          oldY + (y - oldY) * progress + offsety);
       KeyFrame keyFrame = new KeyFrame(Duration.seconds(duration * progress),
           e -> {
             turtle.getDisplay().setLayoutX(oldX + (x - oldX) * progress);
@@ -615,12 +630,12 @@ public class MainScreen implements  SlogoListener {
     }
   }
 
-  //val returned by last command
-  //add it to history next to the command
+  // val returned by last command
+  // add it to history next to the command
   @Override
   public void onReturn(double value, String string) {
     commandHistory.add(string);
-    //print val perhaps ext to command?
+    // print val perhaps ext to command?
     updateCommands();
   }
 
@@ -630,4 +645,3 @@ public class MainScreen implements  SlogoListener {
     updateCommands();
   }
 }
-
