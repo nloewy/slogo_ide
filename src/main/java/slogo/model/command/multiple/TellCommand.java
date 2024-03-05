@@ -51,14 +51,26 @@ public class TellCommand implements Command {
       throws InvocationTargetException, IllegalAccessException {
     List<Integer> tempList = new ArrayList<>();
     int id = 0;
-    for (Node node : arguments.get(0).getChildren()) {
-      id = (int) Math.round(node.evaluate());
+    if(arguments.get(0).getChildren().isEmpty()) {
+      ;
+      id = (int) Math.round(arguments.get(0).evaluate());
       if (!modelState.getTurtles().containsKey(id)) {
         modelState.getTurtles().put(id, new Turtle(id));
-        myListener.onResetTurtle(id);
+        myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
       }
       tempList.add(id);
+    }
+    else {
+      for (Node node : arguments.get(0).getChildren()) {
+        if(node.getToken().equals("]")) {continue;}
 
+        id = (int) Math.round(node.evaluate());
+        if (!modelState.getTurtles().containsKey(id)) {
+          modelState.getTurtles().put(id, new Turtle(id));
+          myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
+        }
+        tempList.add(id);
+      }
     }
     modelState.getActiveTurtles().clear();
     modelState.getActiveTurtles().add(tempList);

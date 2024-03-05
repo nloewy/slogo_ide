@@ -614,9 +614,10 @@ public class MainScreen implements SlogoListener {
         return;
       }
     }
-    turtles.add(new FrontEndTurtle(
-        turtleState.id(), turtleState.x() + centerX, turtleState.y() + centerY,
-        Color.BLACK, true, turtleState.heading(), defaultImage, this));
+    FrontEndTurtle newTurtle = new FrontEndTurtle(turtleState.id(), turtleState.x() + centerX, turtleState.y() + centerY,
+        Color.BLACK, true, turtleState.heading(), defaultImage, this);
+    turtles.add(newTurtle);
+    centerPane.getChildren().add(newTurtle.getDisplay());
   }
 
   @Override
