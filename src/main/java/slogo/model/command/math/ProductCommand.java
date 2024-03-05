@@ -35,7 +35,8 @@ public class ProductCommand implements Command {
    * Executes the product mathematical operation.
    *
    * @param arguments a list containing two nodes representing the numbers to be multiplied
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return the product of the two numbers
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

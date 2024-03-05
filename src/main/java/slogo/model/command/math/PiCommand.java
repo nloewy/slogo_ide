@@ -34,7 +34,8 @@ public class PiCommand implements Command {
    * Executes the PiCommand, returning the mathematical constant pi.
    *
    * @param arguments a list containing no nodes, as PiCommand requires no arguments
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return the value of pi
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

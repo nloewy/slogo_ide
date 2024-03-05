@@ -36,7 +36,8 @@ public class NotCommand implements Command {
    * Executes the logical NOT operation on the provided node.
    *
    * @param arguments a list containing a single node to be evaluated
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return 1.0 if the node's value is 0, otherwise returns 0.0
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

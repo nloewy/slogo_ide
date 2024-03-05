@@ -37,7 +37,8 @@ public class RandomRangeCommand implements Command {
    *
    * @param arguments a list containing two nodes representing the minimum and maximum values of the
    *                  range
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return a random number within the specified range
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

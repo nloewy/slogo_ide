@@ -37,7 +37,8 @@ public class IsShowingCommand implements Command {
    * Checks whether the requested turtle is showing.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return 1 if the requested turtle is showing, 0 otherwise
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

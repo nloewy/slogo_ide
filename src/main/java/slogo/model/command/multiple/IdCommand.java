@@ -1,4 +1,4 @@
-package slogo.model.command.math;
+package slogo.model.command.multiple;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -8,43 +8,43 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The MinusCommand class represents the unary minus mathematical operation. It calculates the
- * negation of a given number.
+ * The TurtlesCommand class represents a command that retrieves the id of the active turtle
  *
  * @author Noah Loewy
  */
-public class MinusCommand implements Command {
+public class IdCommand implements Command {
 
   /**
    * The number of arguments this command requires.
    */
-  public static final int NUM_ARGS = 1;
+  public static final int NUM_ARGS = 0;
+
+  private final ModelState modelState;
 
   /**
-   * Constructs an instance of MinusCommand with the given model state and listener. This
-   * constructor does not actually do anything, and exists for the sake of consistency across
-   * commands.
+   * Constructs an instance of IdCommand with the given model state and listener.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
-  public MinusCommand(ModelState modelState, SlogoListener listener) {
+  public IdCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
-   * Executes the unary minus mathematical operation.
+   * Retrieves the id of active turtle in the current workspace.
    *
-   * @param arguments a list containing a single node representing the number to negate
+   * @param arguments a list of nodes representing arguments (not used in this command)
    * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
-   * @return the negation of the input number
+   * @return the id of currently active turtle
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
+
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    double arg1 = arguments.get(0).evaluate();
-    return -arg1;
+    return modelState.getActiveTurtles().peek().get(index);
   }
 }
+

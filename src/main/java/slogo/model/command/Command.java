@@ -44,7 +44,8 @@ public interface Command {
    * listeners as needed.
    *
    * @param arguments a list of nodes representing the arguments for the command
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return the result of executing the command
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

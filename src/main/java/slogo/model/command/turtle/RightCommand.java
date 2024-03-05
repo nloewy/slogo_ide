@@ -42,7 +42,8 @@ public class RightCommand implements Command {
    * degrees.
    *
    * @param arguments a list of nodes representing the arguments for this command
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return the number of degrees the turtle turned right by
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

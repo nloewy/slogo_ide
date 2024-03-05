@@ -35,7 +35,8 @@ public class DifferenceCommand implements Command {
    * Executes the subtraction mathematical operation.
    *
    * @param arguments a list containing two nodes representing the numbers to subtract
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return the difference between the two input numbers
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

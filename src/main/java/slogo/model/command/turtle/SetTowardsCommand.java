@@ -42,7 +42,8 @@ public class SetTowardsCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (containing two
    *                  nodes with the x and y coordinates of the target position)
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return the minimum angle of rotation needed to reach the new heading
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

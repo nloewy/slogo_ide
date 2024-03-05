@@ -37,7 +37,7 @@ public class RemainderCommand implements Command {
    * Executes the remainder mathematical operation.
    *
    * @param arguments a list containing two nodes representing the dividend and divisor
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the remainder of the division of the dividend by the divisor
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

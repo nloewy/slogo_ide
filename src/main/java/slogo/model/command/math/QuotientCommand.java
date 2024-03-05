@@ -36,7 +36,8 @@ public class QuotientCommand implements Command {
    * Executes the quotient mathematical operation.
    *
    * @param arguments a list containing two nodes representing the dividend and divisor
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return the quotient of the two numbers
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

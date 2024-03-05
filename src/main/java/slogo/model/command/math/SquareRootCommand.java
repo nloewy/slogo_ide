@@ -37,7 +37,7 @@ public class SquareRootCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number to calculate the
    *                  square root of
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the square root of the input number
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

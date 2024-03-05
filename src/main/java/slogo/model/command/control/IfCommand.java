@@ -37,7 +37,8 @@ public class IfCommand implements Command {
    * @param arguments a list containing two nodes: the first node contains the condition to
    *                  evaluate, and the second node contains the command nodes to execute if the
    *                  condition is true
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return the result of the last evaluated command if the condition is true, otherwise 0.0
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

@@ -37,7 +37,8 @@ public class IsPenDownCommand implements Command {
    * Checks whether the pen of the requested turtle is down.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return 1 if the pen of the requested turtle is down, 0 otherwise
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

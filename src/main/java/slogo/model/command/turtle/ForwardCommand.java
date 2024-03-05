@@ -42,7 +42,8 @@ public class ForwardCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number of pixels to move
    *                  forward
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return the number of pixels moved forward
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

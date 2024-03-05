@@ -42,7 +42,8 @@ public class GreaterThanCommand implements Command {
    * Executes the greater than comparison operation on the provided nodes.
    *
    * @param arguments a list of nodes representing values to be compared
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return 1.0 if the first node's value is greater than the second node's value, otherwise
    * returns 0.0
    * @throws InvocationTargetException if an error occurs during execution

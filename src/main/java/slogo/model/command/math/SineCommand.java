@@ -35,7 +35,7 @@ public class SineCommand implements Command {
    * Executes the sine mathematical operation.
    *
    * @param arguments a list containing a single node representing the angle in degrees
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the sine of the input angle
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

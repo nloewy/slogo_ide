@@ -40,7 +40,8 @@ public class HomeCommand implements Command {
    * Executes the HomeCommand, moving the turtle to its home position.
    *
    * @param arguments a list of nodes representing the arguments for this command (none expected)
-   * @param index
+   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+
    * @return the distance moved by the turtle from its previous position to the home position
    */
   @Override
