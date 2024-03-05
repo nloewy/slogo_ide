@@ -58,8 +58,7 @@ public class AskCommand implements Command {
         myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
       }
       tempList.add(id);
-    }
-    else {
+    } else {
       for (Node node : arguments.get(0).getChildren()) {
         if (node.getToken().equals("]")) {
           continue;
@@ -76,12 +75,10 @@ public class AskCommand implements Command {
     modelState.getActiveTurtles().add(tempList);
     myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
     double val = 0.0;
-    for (Node node : arguments.get(1).getChildren()) {
-      for (int i : tempList) {
-        modelState.outer = false;
-        modelState.currTurtle = i;
-        val = node.evaluate();
-      }
+    for (int i : tempList) {
+      modelState.outer = false;
+      modelState.currTurtle = i;
+      val = arguments.get(1).evaluate();
     }
 
     modelState.getActiveTurtles().pop();

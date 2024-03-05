@@ -10,8 +10,8 @@ import slogo.model.api.TurtleRecord;
 public class Turtle {
 
   private final int myId;
-  private boolean myPen;
   private final boolean active;
+  private boolean myPen;
   private double myX;
   private double myY;
   private boolean myVisible;

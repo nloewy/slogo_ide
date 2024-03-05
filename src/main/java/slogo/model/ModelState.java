@@ -39,12 +39,12 @@ public class ModelState {
    * obtain the nodes needed to execute the user defined commands
    */
   private final Map<String, List<Node>> myUserDefinedCommandNodes;
-  public boolean outer;
-  public int currTurtle;
   /**
    * Stack of currently active turtles
    */
   private final Stack<List<Integer>> activeTurtles;
+  public boolean outer;
+  public int currTurtle;
 
   /**
    * Initializes turtles, variables, commands to default values (empty maps)
