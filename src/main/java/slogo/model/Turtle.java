@@ -11,6 +11,7 @@ public class Turtle {
 
   private final int myId;
   private boolean myPen;
+  private boolean active;
   private double myX;
   private double myY;
   private boolean myVisible;
@@ -27,6 +28,7 @@ public class Turtle {
     myY = 0.0;
     myPen = true;
     myVisible = true;
+    active = true;
     myHeading = 0.0;
   }
 
@@ -48,6 +50,7 @@ public class Turtle {
     myPen = pen;
     myVisible = visible;
     myHeading = heading;
+    active = true;
   }
 
   /**
@@ -169,4 +172,27 @@ public class Turtle {
   public int getId() {
     return myId;
   }
+
+  /**
+   * Sets the active status of the turtle.
+   *
+   * @param active, The new active status
+   */
+
+  public void setActive(boolean active) {
+    this.active = active;
+  }
+
+
+  /**
+   * Retrieves the active status of the turtle.
+   *
+   * @return true iff turtle is active
+   */
+
+  public boolean isActive() {
+    return active;
+  }
+
+
 }
