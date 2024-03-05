@@ -43,21 +43,21 @@ public class SetPositionCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (containing two
    *                  nodes with the x and y coordinates)
+   * @param index
    * @return the distance traveled by the turtle
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     double newX = arguments.get(0).evaluate();
     double newY = arguments.get(1).evaluate();
-    Turtle turtle = modelState.getTurtles().get(1);
+    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
     double currentX = turtle.getX();
     double currentY = turtle.getY();
     turtle.setX(newX);
     turtle.setY(newY);
-    listener.onUpdateTurtleState(modelState.getTurtles().get(1).getImmutableTurtle());
-    return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());    return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
   }
 }

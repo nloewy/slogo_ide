@@ -39,12 +39,13 @@ public class MakeCommand implements Command {
    *
    * @param arguments a list containing two nodes: the first node represents the variable name, and
    *                  the second node represents the value to assign to the variable
+   * @param index
    * @return the assigned value
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     String token = arguments.get(0).getToken();
     double variableValue = arguments.get(1).evaluate();

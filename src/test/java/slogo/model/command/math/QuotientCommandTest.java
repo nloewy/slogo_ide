@@ -53,16 +53,16 @@ public class QuotientCommandTest extends CommandTest {
   })
   void testQuotientBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1,model));
-    node.addChild(new ConstantNode(op2,model));
+    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op2, null));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
   @Test
   void testDivideByZero() throws InvocationTargetException, IllegalAccessException {
     {
-      node.addChild(new ConstantNode("50",model));
-      node.addChild(new ConstantNode("0",model));
+      node.addChild(new ConstantNode("50", null));
+      node.addChild(new ConstantNode("0", null));
       assertThrows(InvalidOperandException.class, () -> {
         node.evaluate();
       });

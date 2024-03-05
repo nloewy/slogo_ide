@@ -41,7 +41,7 @@ public class LogCommandTest extends CommandTest {
   @Test
   void testLogBasicE()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(Double.toString(Math.E),model));
+    node.addChild(new ConstantNode(Double.toString(Math.E), null));
     assertEquals(1, node.evaluate(), DELTA);
   }
 

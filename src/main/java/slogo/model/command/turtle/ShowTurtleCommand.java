@@ -42,18 +42,18 @@ public class ShowTurtleCommand implements Command {
    * Executes the command to show the turtle. Sets the visibility of the turtle to true.
    *
    * @param arguments a list containing nodes representing the arguments (none required)
+   * @param index
    * @return 1.0 indicating successful execution
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
 
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    Turtle turtle = modelState.getTurtles().get(1);
+    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
     turtle.setVisible(true);
-    listener.onUpdateTurtleState(modelState.getTurtles().get(1).getImmutableTurtle());
-    return 1.0;
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());    return 1.0;
   }
 }
 

@@ -37,13 +37,14 @@ public class RemainderCommand implements Command {
    * Executes the remainder mathematical operation.
    *
    * @param arguments a list containing two nodes representing the dividend and divisor
+   * @param index
    * @return the remainder of the division of the dividend by the divisor
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    * @throws InvalidOperandException   if the divisor is zero
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     if (arguments.get(1).evaluate() == 0) {
       throw new InvalidOperandException("Divisor must be Non-Zero");

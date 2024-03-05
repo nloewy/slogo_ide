@@ -35,12 +35,13 @@ public class ProductCommand implements Command {
    * Executes the product mathematical operation.
    *
    * @param arguments a list containing two nodes representing the numbers to be multiplied
+   * @param index
    * @return the product of the two numbers
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();

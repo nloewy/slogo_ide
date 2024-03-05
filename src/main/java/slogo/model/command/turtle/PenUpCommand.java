@@ -40,16 +40,16 @@ public class PenUpCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (empty for this
    *                  command)
+   * @param index
    * @return 0.0 to indicate that the pen is up and successful execution
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    Turtle turtle = modelState.getTurtles().get(1);
+    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
     turtle.setPen(false);
-    listener.onUpdateTurtleState(modelState.getTurtles().get(1).getImmutableTurtle());
-    return 0.0;
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());    return 0.0;
   }
 }

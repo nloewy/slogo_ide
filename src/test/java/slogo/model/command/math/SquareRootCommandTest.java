@@ -44,7 +44,7 @@ public class SquareRootCommandTest extends CommandTest {
   })
   void testSquareRootPerfectSquares(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1,model));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
@@ -60,7 +60,7 @@ public class SquareRootCommandTest extends CommandTest {
   })
   void testSquareRootNonPerfectSquares(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1,model));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
@@ -79,7 +79,7 @@ public class SquareRootCommandTest extends CommandTest {
   })
   void testSquareRootFloats(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1,model));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
@@ -92,7 +92,7 @@ public class SquareRootCommandTest extends CommandTest {
   })
   void testSquareRootNegatives(String op1)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1,model));
+    node.addChild(new ConstantNode(op1, null));
     assertThrows(InvalidOperandException.class, () -> {
       node.evaluate();
     });

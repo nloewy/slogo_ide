@@ -40,13 +40,14 @@ public class IfElseCommand implements Command {
    *                  evaluate, the second node contains the command nodes to execute if the
    *                  condition is true, and the third node contains the command nodes to execute if
    *                  the condition is false
+   * @param index
    * @return the result of the last evaluated command if the condition is true, otherwise the result
    * of the last evaluated command in the else branch, or 0.0 if there's no else branch
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     double condition = arguments.get(0).evaluate();
     Node toExecuteIfTrue = arguments.get(1);

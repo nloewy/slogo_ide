@@ -21,6 +21,8 @@ public class LessEqualCommand implements Command {
    */
   public static final int NUM_ARGS = 2;
   private ModelState modelState;
+  private static final double TOLERANCE = .001;
+
 
   /**
    * Constructs an instance of LessEqualCommand with the given model state and listener.
@@ -37,20 +39,15 @@ public class LessEqualCommand implements Command {
    * Executes the less than or equal to comparison operation on the provided nodes.
    *
    * @param arguments a list of nodes representing values to be compared
+   * @param index
    * @return 1.0 if the first node's value is less than or equal to the second node's value,
    * otherwise returns 0.0
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    double val = 0;
-    for (int index = 0; index < modelState.getActiveTurtles().size(); index++) {
-      double arg1 = arguments.get(0).evaluate();
-      double arg2 = arguments.get(1).evaluate();
-      val = (arg1 <= arg2) ? 1.0 : 0.0;
-    }
-    return val;
+    return (arguments.get(0).evaluate() - TOLERANCE <= arguments.get(1).evaluate()) ? 1.0 : 0.0;
   }
 }

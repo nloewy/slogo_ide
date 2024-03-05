@@ -50,8 +50,8 @@ public class PowerCommandTest extends CommandTest {
   })
   void testPowerBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1,model));
-    node.addChild(new ConstantNode(op2,model));
+    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op2, null));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
@@ -65,8 +65,8 @@ public class PowerCommandTest extends CommandTest {
   })
   void testPowerUndefined(String op1, String op2)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1,model));
-    node.addChild(new ConstantNode(op2,model));
+    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op2, null));
     assertThrows(InvalidOperandException.class, () -> {
       node.evaluate();
     });

@@ -37,14 +37,15 @@ public class IsPenDownCommand implements Command {
    * Checks whether the pen of the requested turtle is down.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
+   * @param index
    * @return 1 if the pen of the requested turtle is down, 0 otherwise
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    Turtle turtle = modelState.getTurtles().get(1);
+    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
     if (turtle.getPen()) {
       return 1.0;
     }

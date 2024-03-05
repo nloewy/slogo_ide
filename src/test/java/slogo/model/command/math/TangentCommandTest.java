@@ -53,7 +53,7 @@ public class TangentCommandTest extends CommandTest {
   })
   void testTangentBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1,model));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
@@ -68,7 +68,7 @@ public class TangentCommandTest extends CommandTest {
   })
   void testTangentInvalid(String degrees)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    node.addChild(new ConstantNode(degrees,model));
+    node.addChild(new ConstantNode(degrees, null));
     assertThrows(InvalidOperandException.class, () -> {
       node.evaluate();
     });

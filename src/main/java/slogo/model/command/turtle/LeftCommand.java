@@ -40,15 +40,16 @@ public class LeftCommand implements Command {
    * Executes the LeftCommand, rotating the turtle to the left by the specified number of degrees.
    *
    * @param arguments a list of nodes representing the arguments for this command
+   * @param index
    * @return the number of degrees the turtle turned left by
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     double degrees = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(1);
+    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
     turtle.setHeading(turtle.getHeading() - degrees);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return degrees;

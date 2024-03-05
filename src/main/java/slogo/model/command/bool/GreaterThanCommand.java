@@ -24,6 +24,7 @@ public class GreaterThanCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
+  private static final double TOLERANCE = .001;
 
   private ModelState modelState;
 
@@ -41,20 +42,15 @@ public class GreaterThanCommand implements Command {
    * Executes the greater than comparison operation on the provided nodes.
    *
    * @param arguments a list of nodes representing values to be compared
+   * @param index
    * @return 1.0 if the first node's value is greater than the second node's value, otherwise
    * returns 0.0
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    double val = 0;
-    for (int index = 0; index < modelState.getActiveTurtles().size(); index++) {
-      double arg1 = arguments.get(0).evaluate();
-      double arg2 = arguments.get(1).evaluate();
-      val = (arg1 > arg2) ? 1.0 : 0.0;
-    }
-    return val;
+    return (arguments.get(0).evaluate() + TOLERANCE > arguments.get(1).evaluate()) ? 1.0 : 0.0;
   }
 }

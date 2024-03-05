@@ -37,13 +37,14 @@ public class NaturalLogCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number to calculate the
    *                  natural logarithm of
+   * @param index
    * @return the natural logarithm of the input number
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    * @throws IllegalArgumentException  if the input number is non-positive
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     double arg1 = arguments.get(0).evaluate();
     if (arg1 <= 0) {

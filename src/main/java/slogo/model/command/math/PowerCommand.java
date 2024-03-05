@@ -36,13 +36,14 @@ public class PowerCommand implements Command {
    * Executes the power mathematical operation.
    *
    * @param arguments a list containing two nodes which evaluate to the base and exponent
+   * @param index
    * @return the result of raising the base to the power of the exponent
    * @throws InvalidOperandException   if the result of the operation is undefined
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();

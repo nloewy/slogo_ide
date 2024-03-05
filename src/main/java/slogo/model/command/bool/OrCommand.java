@@ -19,6 +19,7 @@ public class OrCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
+  private static final double TOLERANCE = .001;
 
   private ModelState modelState;
 
@@ -32,20 +33,20 @@ public class OrCommand implements Command {
     this.modelState = modelState;
 
   }
+
   /**
    * Executes the logical OR operation on the provided nodes.
    *
    * @param arguments a list of nodes representing values to be compared
+   * @param index
    * @return 1.0 if at least one of the nodes' values is non-zero, otherwise returns 0.0
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    double val = 0;
-    for(int index = 0; index < modelState.getActiveTurtles().size(); index++) {
-      val = (!(arguments.get(0).evaluate() == 0) || !(arguments.get(1).evaluate() == 0)) ? 1.0 : 0.0;
-    }
-    return val;  }
+    return (!(Math.abs(arguments.get(0).evaluate()) <= TOLERANCE) ||
+        !(Math.abs(arguments.get(1).evaluate()) <= TOLERANCE)) ? 1.0 : 0.0;
+  }
 }

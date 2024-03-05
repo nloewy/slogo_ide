@@ -55,7 +55,7 @@ public class SineCommandTests extends CommandTest {
   })
   void testSineBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1,model));
+    node.addChild(new ConstantNode(op1, null));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 }

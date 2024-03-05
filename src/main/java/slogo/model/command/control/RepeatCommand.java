@@ -38,12 +38,13 @@ public class RepeatCommand implements Command {
    *
    * @param arguments a list containing two nodes: the first node represents the number of times to
    *                  repeat, and the second node represents the commands to repeat.
+   * @param index
    * @return the result of the last evaluated command in the loop
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     String variableName = ":repcount";
     double end = arguments.get(0).evaluate();

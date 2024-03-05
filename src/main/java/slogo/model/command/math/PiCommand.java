@@ -34,12 +34,13 @@ public class PiCommand implements Command {
    * Executes the PiCommand, returning the mathematical constant pi.
    *
    * @param arguments a list containing no nodes, as PiCommand requires no arguments
+   * @param index
    * @return the value of pi
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     return Math.PI;
   }

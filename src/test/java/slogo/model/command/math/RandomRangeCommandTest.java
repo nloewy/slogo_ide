@@ -48,8 +48,8 @@ public class RandomRangeCommandTest extends CommandTest {
   })
   void testBasicRandomRange(String min, String max)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(min,model));
-    node.addChild(new ConstantNode(max,model));
+    node.addChild(new ConstantNode(min, null));
+    node.addChild(new ConstantNode(max, null));
     double val = node.evaluate();
     assertTrue(Double.parseDouble(min) <= val);
     assertTrue(Double.parseDouble(max) >= val);
@@ -59,16 +59,16 @@ public class RandomRangeCommandTest extends CommandTest {
   @Test
   void testRandomRangeSameVal()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("0.00000",model));
-    node.addChild(new ConstantNode("0",model));
+    node.addChild(new ConstantNode("0.00000", null));
+    node.addChild(new ConstantNode("0", null));
     assertEquals(0, node.evaluate(), DELTA);
   }
 
   @Test
   void testRandomRangeIllegal()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("-90.00000",model));
-    node.addChild(new ConstantNode("-90.00100",model));
+    node.addChild(new ConstantNode("-90.00000", null));
+    node.addChild(new ConstantNode("-90.00100", null));
     assertThrows(InvalidOperandException.class, () -> {
       node.evaluate();
     });

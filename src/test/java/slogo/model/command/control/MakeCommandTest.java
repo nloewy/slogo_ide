@@ -44,6 +44,8 @@ public class MakeCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     model.getTurtles().put(1, new Turtle(1));
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().get(0).add(1);
     node = new CommandNode("control.Make", model);
     Node variableNode = new VariableNode("Var", model);
     Node nodeTwo = new CommandNode("math.Sum", model);

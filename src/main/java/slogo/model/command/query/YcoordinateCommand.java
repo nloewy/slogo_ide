@@ -36,13 +36,14 @@ public class YcoordinateCommand implements Command {
    * Retrieves the Y coordinate of the requested turtle.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
+   * @param index
    * @return the Y coordinate of the requested turtle
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    return modelState.getTurtles().get(1).getY();
+    return modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index)).getY();
   }
 }

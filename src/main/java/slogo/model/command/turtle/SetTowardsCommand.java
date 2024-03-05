@@ -42,16 +42,17 @@ public class SetTowardsCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (containing two
    *                  nodes with the x and y coordinates of the target position)
+   * @param index
    * @return the minimum angle of rotation needed to reach the new heading
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     double locationX = arguments.get(0).evaluate();
     double locationY = arguments.get(1).evaluate();
-    Turtle turtle = modelState.getTurtles().get(1);
+    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
     double dx = locationX - turtle.getX();
     double dy = locationY - turtle.getY();
     double targetHeading = MathUtils.toDegrees(Math.atan2(dx, dy));
@@ -60,7 +61,6 @@ public class SetTowardsCommand implements Command {
     double counterclockwiseTurn = Math.abs((currentHeading - targetHeading + 360) % 360);
     double minTurn = Math.min(clockwiseTurn, counterclockwiseTurn);
     turtle.setHeading(targetHeading);
-    listener.onUpdateTurtleState(modelState.getTurtles().get(1).getImmutableTurtle());
-    return minTurn;
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());    return minTurn;
   }
 }

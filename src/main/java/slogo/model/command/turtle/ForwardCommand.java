@@ -42,18 +42,19 @@ public class ForwardCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number of pixels to move
    *                  forward
+   * @param index
    * @return the number of pixels moved forward
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     double pixels = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(1);
+    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
     turtle.setX(turtle.getX() + pixels * Math.sin(MathUtils.toRadians(turtle.getHeading())));
     turtle.setY(turtle.getY() - pixels * Math.cos(MathUtils.toRadians(turtle.getHeading())));
-    listener.onUpdateTurtleState(modelState.getTurtles().get(1).getImmutableTurtle());
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return pixels;
   }
 }

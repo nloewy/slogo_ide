@@ -67,7 +67,6 @@ public class CommandNode extends Node {
       Class<?> clazz = Class.forName(BASE_PACKAGE + myToken + "Command");
       command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
           .newInstance(myModelState, getListener());
-      method= clazz.getDeclaredMethod("execute", List.class);
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
       throw new InvalidCommandException(
@@ -76,8 +75,14 @@ public class CommandNode extends Node {
     if (getNumArgs() != getChildren().size()) {
       throw new InsufficientArgumentsException("", getToken());
     }
-    return command.execute(getChildren());
+    double val = 0;
+    for(int index = 0; index < myModelState.getActiveTurtles().size(); index++) {
+      val = command.execute(getChildren(), index);
+    }
+    return val;
   }
+
+
 
   /**
    * Retrieves the number of arguments expected for the Command corresponding to this CommandNode.

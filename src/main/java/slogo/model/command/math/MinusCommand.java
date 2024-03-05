@@ -35,12 +35,13 @@ public class MinusCommand implements Command {
    * Executes the unary minus mathematical operation.
    *
    * @param arguments a list containing a single node representing the number to negate
+   * @param index
    * @return the negation of the input number
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).evaluate();
     return -arg1;

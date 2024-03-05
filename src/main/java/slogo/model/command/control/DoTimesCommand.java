@@ -39,12 +39,13 @@ public class DoTimesCommand implements Command {
    * @param arguments a list containing two nodes: the first list node contains the variable name
    *                  and the number of iterations, and the second list node contains the command
    *                  nodes that should be executed
+   * @param index
    * @return the result of the last evaluated command in the loop
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     String variableName = arguments.get(0).getChildren().get(0).getToken();
     double end = arguments.get(0).getChildren().get(1).evaluate();

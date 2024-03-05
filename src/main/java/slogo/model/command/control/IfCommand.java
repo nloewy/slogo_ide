@@ -37,13 +37,14 @@ public class IfCommand implements Command {
    * @param arguments a list containing two nodes: the first node contains the condition to
    *                  evaluate, and the second node contains the command nodes to execute if the
    *                  condition is true
+   * @param index
    * @return the result of the last evaluated command if the condition is true, otherwise 0.0
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
 
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     double arg1 = arguments.get(0).evaluate();
     Node toExecute = arguments.get(1);

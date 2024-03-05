@@ -36,13 +36,14 @@ public class RandomCommand implements Command {
    * Executes the random mathematical operation.
    *
    * @param arguments a list containing a single node representing the maximum value
+   * @param index
    * @return a random number between 0 (inclusive) and the specified maximum value (exclusive)
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    * @throws InvalidOperandException   if the maximum value is negative
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {

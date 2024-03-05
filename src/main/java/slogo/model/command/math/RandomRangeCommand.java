@@ -37,13 +37,14 @@ public class RandomRangeCommand implements Command {
    *
    * @param arguments a list containing two nodes representing the minimum and maximum values of the
    *                  range
+   * @param index
    * @return a random number within the specified range
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    * @throws InvalidOperandException   if the minimum value is greater than the maximum value
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();

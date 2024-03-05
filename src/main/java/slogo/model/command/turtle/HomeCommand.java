@@ -40,16 +40,16 @@ public class HomeCommand implements Command {
    * Executes the HomeCommand, moving the turtle to its home position.
    *
    * @param arguments a list of nodes representing the arguments for this command (none expected)
+   * @param index
    * @return the distance moved by the turtle from its previous position to the home position
    */
   @Override
-  public double execute(List<Node> arguments) {
-    Turtle turtle = modelState.getTurtles().get(1);
+  public double execute(List<Node> arguments, int index) {
+    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
     double currentX = turtle.getX();
     double currentY = turtle.getY();
     turtle.setX(0);
     turtle.setY(0);
-    listener.onUpdateTurtleState(modelState.getTurtles().get(1).getImmutableTurtle());
-    return MathUtils.dist(0, 0, currentX, currentY);
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());    return MathUtils.dist(0, 0, currentX, currentY);
   }
 }
