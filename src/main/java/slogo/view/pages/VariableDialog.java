@@ -49,7 +49,7 @@ public class VariableDialog {
 
   public boolean display() {
     stage.initModality(Modality.APPLICATION_MODAL);
-    Scene scene = new Scene(layout, 800, 400);
+    Scene scene = new Scene(layout, 400, 100);
     stage.setTitle("Dialog");
     stage.setScene(scene);
     stage.showAndWait();
@@ -71,8 +71,6 @@ public class VariableDialog {
       i++;
     }
     layout.add(submitButton, 1, i);
-
   }
-
 }
 
