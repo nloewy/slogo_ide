@@ -3,6 +3,7 @@ package slogo.model.command.math;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -24,9 +25,10 @@ public class SumCommandTest extends CommandTest {
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-
     myTurtle = null;
     model = new ModelState();
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
     node = new CommandNode("math.Sum", model);
 
   }

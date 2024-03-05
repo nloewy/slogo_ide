@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Stack;
 import slogo.model.api.Model;
@@ -49,6 +50,8 @@ public class SlogoModel implements Model {
   public SlogoModel(SlogoListener listener, String currentLanguage) throws IOException {
     modelState = new ModelState();
     modelState.getTurtles().put(1, new Turtle(1));
+    modelState.getActiveTurtles().add(new ArrayList<>());
+    modelState.getActiveTurtles().peek().add(1);
     myListener = listener;
     parser = new Parser(modelState, currentLanguage);
     myCommands = new Stack<>();

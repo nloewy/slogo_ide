@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,12 +26,15 @@ public class RandomRangeCommandTest extends CommandTest {
   private Turtle myTurtle;
   private Node node;
 
+  private ModelState model;
+
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-
     myTurtle = null;
-    ModelState model = new ModelState();
+    model = new ModelState();
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
     node = new CommandNode("math.RandomRange", model);
 
   }
@@ -44,8 +48,8 @@ public class RandomRangeCommandTest extends CommandTest {
   })
   void testBasicRandomRange(String min, String max)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(min, null));
-    node.addChild(new ConstantNode(max, null));
+    node.addChild(new ConstantNode(min,model));
+    node.addChild(new ConstantNode(max,model));
     double val = node.evaluate();
     assertTrue(Double.parseDouble(min) <= val);
     assertTrue(Double.parseDouble(max) >= val);
@@ -55,16 +59,16 @@ public class RandomRangeCommandTest extends CommandTest {
   @Test
   void testRandomRangeSameVal()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("0.00000", null));
-    node.addChild(new ConstantNode("0", null));
+    node.addChild(new ConstantNode("0.00000",model));
+    node.addChild(new ConstantNode("0",model));
     assertEquals(0, node.evaluate(), DELTA);
   }
 
   @Test
   void testRandomRangeIllegal()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("-90.00000", null));
-    node.addChild(new ConstantNode("-90.00100", null));
+    node.addChild(new ConstantNode("-90.00000",model));
+    node.addChild(new ConstantNode("-90.00100",model));
     assertThrows(InvalidOperandException.class, () -> {
       node.evaluate();
     });

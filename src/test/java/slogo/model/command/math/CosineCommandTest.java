@@ -3,6 +3,7 @@ package slogo.model.command.math;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,12 +20,15 @@ public class CosineCommandTest extends CommandTest {
 
   private Turtle myTurtle;
   private Node node;
+  private ModelState model;
 
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
-    ModelState model = new ModelState();
+    model = new ModelState();
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
     node = new CommandNode("math.Cosine", model);
   }
 
@@ -50,7 +54,7 @@ public class CosineCommandTest extends CommandTest {
   })
   void testCosineBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, model));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 }

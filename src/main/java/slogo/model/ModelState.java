@@ -56,6 +56,7 @@ public class ModelState {
     myVariables = new HashMap<>();
     myUserDefinedCommands = new HashMap<>();
     myUserDefinedCommandNodes = new HashMap<>();
+    activeTurtles = new Stack<>();
   }
 
   /**

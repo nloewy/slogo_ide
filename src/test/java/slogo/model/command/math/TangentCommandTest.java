@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -22,12 +23,15 @@ public class TangentCommandTest extends CommandTest {
 
   private Turtle myTurtle;
   private Node node;
+  private ModelState model;
 
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
-    ModelState model = new ModelState();
+    model = new ModelState();
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
     node = new CommandNode("math.Tangent", model);
   }
 
@@ -49,7 +53,7 @@ public class TangentCommandTest extends CommandTest {
   })
   void testTangentBasic(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1,model));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
@@ -64,7 +68,7 @@ public class TangentCommandTest extends CommandTest {
   })
   void testTangentInvalid(String degrees)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-    node.addChild(new ConstantNode(degrees, null));
+    node.addChild(new ConstantNode(degrees,model));
     assertThrows(InvalidOperandException.class, () -> {
       node.evaluate();
     });

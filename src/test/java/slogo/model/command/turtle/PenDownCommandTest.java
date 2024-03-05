@@ -1,6 +1,7 @@
 package slogo.model.command.turtle;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,8 @@ public class PenDownCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     ModelState model = new ModelState();
     model.getTurtles().put(1, new Turtle(1));
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
     myTurtle = model.getTurtles().get(1);
     node = new CommandNode("turtle.PenDown", model);
     node.addListener(myListener);

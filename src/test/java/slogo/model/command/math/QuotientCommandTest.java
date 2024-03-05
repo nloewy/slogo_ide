@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,12 +25,15 @@ public class QuotientCommandTest extends CommandTest {
   private Turtle myTurtle;
   private Node node;
 
+  private ModelState model;
+
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-
     myTurtle = null;
-    ModelState model = new ModelState();
+    model = new ModelState();
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
     node = new CommandNode("math.Quotient", model);
 
   }
@@ -49,16 +53,16 @@ public class QuotientCommandTest extends CommandTest {
   })
   void testQuotientBasic(String op1, String op2, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
-    node.addChild(new ConstantNode(op2, null));
+    node.addChild(new ConstantNode(op1,model));
+    node.addChild(new ConstantNode(op2,model));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
   @Test
   void testDivideByZero() throws InvocationTargetException, IllegalAccessException {
     {
-      node.addChild(new ConstantNode("50", null));
-      node.addChild(new ConstantNode("0", null));
+      node.addChild(new ConstantNode("50",model));
+      node.addChild(new ConstantNode("0",model));
       assertThrows(InvalidOperandException.class, () -> {
         node.evaluate();
       });

@@ -3,6 +3,7 @@ package slogo.model.command.bool;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,11 +20,15 @@ public class OrCommandTest extends CommandTest {
   private Turtle myTurtle;
   private Node node;
 
+  private ModelState model;
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
-    ModelState model = new ModelState();
+    model = new ModelState();
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
+
     node = new CommandNode("bool.Or", model);
   }
 
@@ -51,8 +56,8 @@ public class OrCommandTest extends CommandTest {
   })
   void testOr(String op1, String op2, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
-    node.addChild(new ConstantNode(op2, null));
+    node.addChild(new ConstantNode(op1, model));
+    node.addChild(new ConstantNode(op2, model));
     assertEquals(result, node.evaluate(), DELTA);
   }
 }
