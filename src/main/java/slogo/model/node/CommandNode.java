@@ -72,11 +72,12 @@ public class CommandNode extends Node {
       throw new InvalidCommandException(
           "", getToken());
     }
+
     if (getNumArgs() != getChildren().size()) {
       throw new InsufficientArgumentsException("", getToken());
     }
     double val = 0;
-    for(int index = 0; index < myModelState.getActiveTurtles().size(); index++) {
+    for(int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
       val = command.execute(getChildren(), index);
     }
     return val;

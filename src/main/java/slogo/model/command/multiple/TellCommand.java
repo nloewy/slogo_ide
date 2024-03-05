@@ -49,8 +49,7 @@ public class TellCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    modelState.getActiveTurtles().clear();
-    modelState.getActiveTurtles().add(new ArrayList<>());
+    List<Integer> tempList = new ArrayList<>();
     int id = 0;
     for(Node node : arguments.get(0).getChildren()) {
       id = (int) Math.round(node.evaluate());
@@ -58,8 +57,11 @@ public class TellCommand implements Command {
         modelState.getTurtles().put(id, new Turtle(id));
         myListener.onResetTurtle(id);
       }
-      modelState.getActiveTurtles().peek().add(id);
+      tempList.add(id);
+
     }
+    modelState.getActiveTurtles().clear();
+    modelState.getActiveTurtles().add(tempList);
     myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
     return id;
   }

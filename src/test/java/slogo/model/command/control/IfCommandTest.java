@@ -58,6 +58,8 @@ public class IfCommandTest extends CommandTest {
     model = new ModelState();
     myTurtle = new Turtle(1);
     model.getTurtles().put(1, myTurtle);
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(myTurtle.getId());
     node = new CommandNode("control.If", model);
     Node nodeTwo = new CommandNode("math.Sum", model);
     Node nodeThree = new ConstantNode("-5", model);

@@ -34,12 +34,12 @@ public class TurtlesCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException {
     model = new ModelState();
     model.getTurtles().clear();
-    model.getTurtles().put(5, new Turtle(5));
     model.getActiveTurtles().add(new ArrayList<>());
-    model.getActiveTurtles().get(0).add(5);
+    model.getTurtles().put(5, new Turtle(5));
+    model.getActiveTurtles().peek().add(5);
     model.getTurtles().put(4, new Turtle(4));
     model.getActiveTurtles().add(new ArrayList<>());
-    model.getActiveTurtles().get(0).add(4);
+    model.getActiveTurtles().peek().add(4);
     node = new CommandNode("multiple.Turtles", model);
     assertEquals(2.0, node.evaluate(), DELTA);
   }
