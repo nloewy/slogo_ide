@@ -37,13 +37,13 @@ public class TellCommand implements Command {
   }
 
   /**
-   * Retrieves the id of active turtle in the current workspace.
+   * Executes the command to activate turtles with specified IDs, creating new turtles if needed.
    *
-   * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-   * @return the id of currently active turtle
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
+   * @param arguments a list of nodes representing the arguments passed to the command
+   * @param index     the index of the command in the list of commands
+   * @return the ID of the last activated turtle
+   * @throws InvocationTargetException if an error occurs during command execution
+   * @throws IllegalAccessException    if access to the method or field is denied
    */
 
   @Override
