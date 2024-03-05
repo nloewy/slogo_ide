@@ -50,29 +50,31 @@ public class AskCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-      List<Integer> tempList = new ArrayList<>();
-      for (Node node : arguments.get(0).getChildren()) {
-       int id = (int) Math.round(node.evaluate());
-        if (!modelState.getTurtles().containsKey(id)) {
-          modelState.getTurtles().put(id, new Turtle(id));
-          myListener.onResetTurtle(id);
-        }
-        tempList.add(id);
-      }
-      modelState.getActiveTurtles().add(tempList);
-      myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
-      double val = 0.0;
-      for (Node node : arguments.get(1).getChildren()) {
-        for(int i : tempList) {
-          modelState.outer=true;
-          modelState.currTurtle = i;
-          val = node.evaluate();
-        }
-      }
+    List<Integer> tempList = new ArrayList<>();
+    for (Node node : arguments.get(0).getChildren()) {
+      modelState.outer = false;
 
-      modelState.getActiveTurtles().pop();
-      modelState.outer=false;
-      return val;
+      int id = (int) Math.round(node.evaluate());
+      if (!modelState.getTurtles().containsKey(id)) {
+        modelState.getTurtles().put(id, new Turtle(id));
+        myListener.onResetTurtle(id);
+      }
+      tempList.add(id);
+    }
+    modelState.getActiveTurtles().add(tempList);
+    myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
+    double val = 0.0;
+    for (Node node : arguments.get(1).getChildren()) {
+      for (int i : tempList) {
+        modelState.outer = false;
+        modelState.currTurtle = i;
+        val = node.evaluate();
+      }
+    }
+
+    modelState.getActiveTurtles().pop();
+    modelState.outer = false;
+    return val;
 
   }
 }

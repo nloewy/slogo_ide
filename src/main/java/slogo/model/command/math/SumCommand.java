@@ -20,7 +20,8 @@ public class SumCommand implements Command {
    */
   public static final int NUM_ARGS = 2;
 
-  private ModelState modelState;
+  private final ModelState modelState;
+
   /**
    * Constructs an instance of SumCommand with the given model state and listener. This constructor
    * does not actually do anything, and exists for the sake of consistency across commands.
@@ -36,7 +37,7 @@ public class SumCommand implements Command {
    * Executes the sum mathematical operation.
    *
    * @param arguments a list containing two nodes representing the numbers to be added
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the sum of the two input numbers
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

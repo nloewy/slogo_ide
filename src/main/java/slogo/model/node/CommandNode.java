@@ -2,7 +2,6 @@ package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
@@ -78,19 +77,20 @@ public class CommandNode extends Node {
       throw new InsufficientArgumentsException("", getToken());
     }
     double val = 0;
-    if(myToken.equals("control.Make") || !myModelState.outer) {
+    if (myToken.equals("control.Make") || myToken.equals("multiple.Ask") || !myModelState.outer) {
+      System.out.println(myToken + myModelState.currTurtle);
       val = command.execute(getChildren(), myModelState.currTurtle);
-    }
-    else {
-    for(int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
-      myModelState.currTurtle = myModelState.getActiveTurtles().peek().get(index);
-      val = command.execute(getChildren(), myModelState.currTurtle);
-
+    } else {
+      for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
+        myModelState.currTurtle = myModelState.getActiveTurtles().peek().get(index);
+        System.out.println(myToken + myModelState.currTurtle);
+        val = command.execute(getChildren(), myModelState.currTurtle);
+      }
     }
     myModelState.outer = true;
+
     return val;
   }
-
 
 
   /**

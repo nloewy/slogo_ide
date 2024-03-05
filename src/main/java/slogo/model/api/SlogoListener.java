@@ -1,7 +1,9 @@
 package slogo.model.api;
 
 
-import java.util.List; /**
+import java.util.List;
+
+/**
  * The SlogoListener interface defines a set of methods to be implemented by classes that wish to
  * receive notifications about events in the Slogo Model. These events include variable value
  * updates, turtle state changes, turtle resets, parse operation results, and user-defined command

@@ -40,8 +40,7 @@ public class HideTurtleCommand implements Command {
    * Executes the command to hide the turtle. Sets the visibility of the turtle to false.
    *
    * @param arguments a list containing nodes representing the arguments (none required)
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 0.0 indicating successful execution
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
@@ -52,6 +51,7 @@ public class HideTurtleCommand implements Command {
     modelState.outer = false;
     Turtle turtle = modelState.getTurtles().get(index);
     turtle.setVisible(false);
-    listener.onUpdateTurtleState(turtle.getImmutableTurtle());    return 0.0;
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());
+    return 0.0;
   }
 }

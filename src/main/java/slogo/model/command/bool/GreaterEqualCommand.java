@@ -23,7 +23,7 @@ public class GreaterEqualCommand implements Command {
   private static final double TOLERANCE = .001;
 
 
-  private ModelState modelState;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of GreaterEqualCommand with the given model state and listener.
@@ -40,8 +40,7 @@ public class GreaterEqualCommand implements Command {
    * Executes the greater than or equal to comparison operation on the provided nodes.
    *
    * @param arguments a list of nodes representing values to be compared
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 1.0 if the first node's value is greater than or equal to the second node's value,
    * otherwise returns 0.0
    * @throws InvocationTargetException if an error occurs during execution

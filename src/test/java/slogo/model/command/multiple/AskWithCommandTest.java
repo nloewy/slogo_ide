@@ -33,29 +33,25 @@ public class AskWithCommandTest extends CommandTest {
         model.getTurtles().put(i, new Turtle(i));
       }
       Node askWithNode = new CommandNode("multiple.AskWith", model);
-      Node list1 = new CommandNode("control.If", model) ;
       Node equal = new CommandNode("bool.Equal", model) ;
 
       Node remainder = new CommandNode("math.Remainder", model);
       Node dividend = new CommandNode("multiple.Id", model) ;
       Node divisor = new ConstantNode("3", model) ;
-      Node zero = new ConstantNode("0", model);
-      askWithNode.addChild(list1);
-      list1.addChild(equal);
-      list1.addChild(new ConstantNode("1", model));
+      askWithNode.addChild(equal);
+      equal.addChild(new ConstantNode("0", model));
       equal.addChild(remainder);
       remainder.addChild(dividend);
       remainder.addChild(divisor);
-      equal.addChild(zero);
       Node list2 = new ListNode("[", model) ;
       askWithNode.getChildren().add(list2);
-      list1.addListener(myListener);
       list2.addListener(myListener);
       Node rightNode = new CommandNode("turtle.Right", model);
       rightNode.addListener(myListener);
       Node nodeNinty = new ConstantNode("90", model);
       list2.getChildren().add(rightNode);
       rightNode.getChildren().add(nodeNinty);
+      askWithNode.addListener(myListener);
       assertEquals(90.0, askWithNode.evaluate(), DELTA);
       assertTrue(model.getActiveTurtles().peek().contains(17));
       assertEquals(1,model.getActiveTurtles().size());
@@ -66,6 +62,7 @@ public class AskWithCommandTest extends CommandTest {
       r.addChild(n90);
       r.evaluate();
       for(int i = 0; i< 16; i++) {
+
         if(i%3==0) {
           assertEquals(90, model.getTurtles().get(i).getHeading(), DELTA);
         }
@@ -74,9 +71,6 @@ public class AskWithCommandTest extends CommandTest {
         }
       }
       assertEquals(60, model.getTurtles().get(17).getHeading(), DELTA);
-
-
-
     }
 
 }

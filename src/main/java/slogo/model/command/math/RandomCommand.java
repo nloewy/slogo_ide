@@ -20,7 +20,8 @@ public class RandomCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
-  private ModelState modelState;
+  private final ModelState modelState;
+
   /**
    * Constructs an instance of RandomCommand with the given model state and listener. This
    * constructor does not actually do anything, and exists for the sake of consistency across
@@ -37,8 +38,7 @@ public class RandomCommand implements Command {
    * Executes the random mathematical operation.
    *
    * @param arguments a list containing a single node representing the maximum value
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return a random number between 0 (inclusive) and the specified maximum value (exclusive)
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

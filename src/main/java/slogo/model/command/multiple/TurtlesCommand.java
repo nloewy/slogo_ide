@@ -8,8 +8,8 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The TurtlesCommand class represents a command that retrieves the number of turtles in the
- * current workspace.
+ * The TurtlesCommand class represents a command that retrieves the number of turtles in the current
+ * workspace.
  *
  * @author Noah Loewy
  */
@@ -36,7 +36,7 @@ public class TurtlesCommand implements Command {
    * Retrieves the number of active turtles in the current workspace.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the number of active turtles in the current workspace
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

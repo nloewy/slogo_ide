@@ -39,8 +39,7 @@ public class ClearScreenCommand extends HomeCommand {
    *
    * @param arguments a list of nodes representing the arguments of the command (none for this
    *                  command)
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of executing the super class's execute method
    */
   @Override

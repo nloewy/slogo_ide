@@ -19,7 +19,7 @@ public class DifferenceCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-  private ModelState modelState;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of DifferenceCommand with the given model state and listener. This
@@ -37,8 +37,7 @@ public class DifferenceCommand implements Command {
    * Executes the subtraction mathematical operation.
    *
    * @param arguments a list containing two nodes representing the numbers to subtract
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the difference between the two input numbers
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

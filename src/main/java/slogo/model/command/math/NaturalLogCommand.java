@@ -20,7 +20,7 @@ public class NaturalLogCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
-  private ModelState modelState;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of NaturalLogCommand with the given model state and listener. This
@@ -39,8 +39,7 @@ public class NaturalLogCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number to calculate the
    *                  natural logarithm of
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the natural logarithm of the input number
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

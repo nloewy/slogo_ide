@@ -42,8 +42,7 @@ public class ShowTurtleCommand implements Command {
    * Executes the command to show the turtle. Sets the visibility of the turtle to true.
    *
    * @param arguments a list containing nodes representing the arguments (none required)
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 1.0 indicating successful execution
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

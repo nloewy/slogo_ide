@@ -19,7 +19,7 @@ public class MinusCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
-  private ModelState modelState;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of MinusCommand with the given model state and listener. This
@@ -37,8 +37,7 @@ public class MinusCommand implements Command {
    * Executes the unary minus mathematical operation.
    *
    * @param arguments a list containing a single node representing the number to negate
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the negation of the input number
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

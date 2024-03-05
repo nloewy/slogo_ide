@@ -20,8 +20,8 @@ public class LessEqualCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-  private ModelState modelState;
   private static final double TOLERANCE = .001;
+  private final ModelState modelState;
 
 
   /**
@@ -39,8 +39,7 @@ public class LessEqualCommand implements Command {
    * Executes the less than or equal to comparison operation on the provided nodes.
    *
    * @param arguments a list of nodes representing values to be compared
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 1.0 if the first node's value is less than or equal to the second node's value,
    * otherwise returns 0.0
    * @throws InvocationTargetException if an error occurs during execution

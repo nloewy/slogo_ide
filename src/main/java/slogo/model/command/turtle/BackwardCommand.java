@@ -41,8 +41,7 @@ public class BackwardCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments. The one node is the distance moved
    *                  backwards.
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the number of pixels moved backward
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
@@ -57,6 +56,7 @@ public class BackwardCommand implements Command {
     double newY = turtle.getY() + pixels * Math.cos(Math.toRadians(turtle.getHeading()));
     turtle.setX(newX);
     turtle.setY(newY);
-    listener.onUpdateTurtleState(turtle.getImmutableTurtle());    return pixels;
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());
+    return pixels;
   }
 }

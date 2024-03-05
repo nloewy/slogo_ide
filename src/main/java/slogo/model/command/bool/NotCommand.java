@@ -19,7 +19,7 @@ public class NotCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
-  private ModelState modelState;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of NotCommand with the given model state and listener.
@@ -36,8 +36,7 @@ public class NotCommand implements Command {
    * Executes the logical NOT operation on the provided node.
    *
    * @param arguments a list containing a single node to be evaluated
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 1.0 if the node's value is 0, otherwise returns 0.0
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
@@ -46,6 +45,6 @@ public class NotCommand implements Command {
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
     modelState.outer = false;
-      return (arguments.get(0).evaluate()==0) ? 1.0 : 0.0;
+    return (arguments.get(0).evaluate() == 0) ? 1.0 : 0.0;
   }
 }

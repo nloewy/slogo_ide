@@ -38,8 +38,7 @@ public class ForCommand implements Command {
    * @param arguments a list containing two nodes: the first list node contains the variable name,
    *                  start value, end value, and increment value, and the second list node contains
    *                  the command nodes to execute
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of the last evaluated command in the loop
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

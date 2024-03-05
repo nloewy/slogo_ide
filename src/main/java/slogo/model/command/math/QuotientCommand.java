@@ -20,7 +20,7 @@ public class QuotientCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-  private ModelState modelState;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of QuotientCommand with the given model state and listener. This
@@ -38,8 +38,7 @@ public class QuotientCommand implements Command {
    * Executes the quotient mathematical operation.
    *
    * @param arguments a list containing two nodes representing the dividend and divisor
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the quotient of the two numbers
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

@@ -11,7 +11,7 @@ public class Turtle {
 
   private final int myId;
   private boolean myPen;
-  private boolean active;
+  private final boolean active;
   private double myX;
   private double myY;
   private boolean myVisible;
@@ -172,6 +172,6 @@ public class Turtle {
   public int getId() {
     return myId;
   }
-  
+
 
 }

@@ -43,8 +43,7 @@ public class SetPositionCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (containing two
    *                  nodes with the x and y coordinates)
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the distance traveled by the turtle
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
@@ -60,6 +59,7 @@ public class SetPositionCommand implements Command {
     double currentY = turtle.getY();
     turtle.setX(newX);
     turtle.setY(newY);
-    listener.onUpdateTurtleState(turtle.getImmutableTurtle());    return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());
+    return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
   }
 }

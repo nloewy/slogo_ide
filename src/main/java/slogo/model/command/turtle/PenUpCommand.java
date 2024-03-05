@@ -40,8 +40,7 @@ public class PenUpCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (empty for this
    *                  command)
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 0.0 to indicate that the pen is up and successful execution
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
@@ -52,6 +51,7 @@ public class PenUpCommand implements Command {
     modelState.outer = false;
     Turtle turtle = modelState.getTurtles().get(index);
     turtle.setPen(false);
-    listener.onUpdateTurtleState(turtle.getImmutableTurtle());    return 0.0;
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());
+    return 0.0;
   }
 }

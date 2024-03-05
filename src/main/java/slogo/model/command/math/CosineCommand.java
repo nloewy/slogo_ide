@@ -20,7 +20,7 @@ public class CosineCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
-  private ModelState modelState;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of CosineCommand with the given model state and listener. This
@@ -38,8 +38,7 @@ public class CosineCommand implements Command {
    * Executes the cosine mathematical operation.
    *
    * @param arguments a list containing a single node representing the angle in degrees
-   * @param index the index of the turtle in the list at the top of getActiveTurtles() stack
-
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the cosine of the input angle
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution

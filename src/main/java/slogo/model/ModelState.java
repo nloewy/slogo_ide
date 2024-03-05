@@ -1,6 +1,5 @@
 package slogo.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,14 +39,12 @@ public class ModelState {
    * obtain the nodes needed to execute the user defined commands
    */
   private final Map<String, List<Node>> myUserDefinedCommandNodes;
-
-
+  public boolean outer;
+  public int currTurtle;
   /**
    * Stack of currently active turtles
    */
-  private Stack<List<Integer>> activeTurtles;
-  public boolean outer;
-  public int currTurtle;
+  private final Stack<List<Integer>> activeTurtles;
 
   /**
    * Initializes turtles, variables, commands to default values (empty maps)
