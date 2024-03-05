@@ -78,9 +78,16 @@ public class CommandNode extends Node {
       throw new InsufficientArgumentsException("", getToken());
     }
     double val = 0;
-    for(int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
-      val = command.execute(getChildren(), index);
+    if(myToken.equals("control.Make") || !myModelState.outer) {
+      val = command.execute(getChildren(), myModelState.currTurtle);
     }
+    else {
+    for(int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
+      myModelState.currTurtle = myModelState.getActiveTurtles().peek().get(index);
+      val = command.execute(getChildren(), myModelState.currTurtle);
+
+    }
+    myModelState.outer = true;
     return val;
   }
 

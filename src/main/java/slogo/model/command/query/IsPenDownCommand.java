@@ -46,7 +46,7 @@ public class IsPenDownCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
+    Turtle turtle = modelState.getTurtles().get(index);
     if (turtle.getPen()) {
       return 1.0;
     }

@@ -52,8 +52,9 @@ public class RightCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double turnDegrees = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
+    Turtle turtle = modelState.getTurtles().get(index);
     turtle.setHeading(turtle.getHeading() + turnDegrees);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return turnDegrees;

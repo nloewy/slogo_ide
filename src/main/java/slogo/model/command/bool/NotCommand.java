@@ -45,6 +45,7 @@ public class NotCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
       return (arguments.get(0).evaluate()==0) ? 1.0 : 0.0;
   }
 }

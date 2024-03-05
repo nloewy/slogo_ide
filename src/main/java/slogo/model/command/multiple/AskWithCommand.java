@@ -47,6 +47,7 @@ public class AskWithCommand implements Command {
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
 
+    modelState.outer = false;
     List<Integer> tempList = new ArrayList<>();
     for (Integer id : modelState.getTurtles().keySet()) {
       List<Integer> oneNodeList = new ArrayList<>();

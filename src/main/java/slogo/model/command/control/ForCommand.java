@@ -47,6 +47,7 @@ public class ForCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     String variableName = arguments.get(0).getChildren().get(0).getToken();
     double start = arguments.get(0).getChildren().get(1).evaluate();
     double end = arguments.get(0).getChildren().get(2).evaluate();

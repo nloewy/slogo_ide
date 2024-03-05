@@ -49,7 +49,8 @@ public class PenUpCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
+    modelState.outer = false;
+    Turtle turtle = modelState.getTurtles().get(index);
     turtle.setPen(false);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());    return 0.0;
   }

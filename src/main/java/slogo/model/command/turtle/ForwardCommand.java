@@ -51,8 +51,9 @@ public class ForwardCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double pixels = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
+    Turtle turtle = modelState.getTurtles().get(index);
     turtle.setX(turtle.getX() + pixels * Math.sin(MathUtils.toRadians(turtle.getHeading())));
     turtle.setY(turtle.getY() - pixels * Math.cos(MathUtils.toRadians(turtle.getHeading())));
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());

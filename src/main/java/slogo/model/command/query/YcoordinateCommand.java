@@ -3,6 +3,7 @@ package slogo.model.command.query;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -45,6 +46,7 @@ public class YcoordinateCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    return modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index)).getY();
+    modelState.outer = false;
+    return modelState.getTurtles().get(index).getY();
   }
 }

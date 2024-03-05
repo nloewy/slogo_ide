@@ -20,7 +20,7 @@ public class RandomCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
-
+  private ModelState modelState;
   /**
    * Constructs an instance of RandomCommand with the given model state and listener. This
    * constructor does not actually do anything, and exists for the sake of consistency across
@@ -30,6 +30,7 @@ public class RandomCommand implements Command {
    * @param listener   the listener for state change events
    */
   public RandomCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
@@ -46,6 +47,7 @@ public class RandomCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
+    modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {
       throw new InvalidOperandException("Max must be positive");

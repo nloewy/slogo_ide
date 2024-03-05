@@ -50,7 +50,6 @@ public class AskCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    if(index==modelState.getActiveTurtles().peek().size()-1) {
       List<Integer> tempList = new ArrayList<>();
       for (Node node : arguments.get(0).getChildren()) {
        int id = (int) Math.round(node.evaluate());
@@ -63,19 +62,18 @@ public class AskCommand implements Command {
       modelState.getActiveTurtles().add(tempList);
       myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
       double val = 0.0;
-      for (int i = 0; i < modelState.getActiveTurtles().peek().size(); i++) {
-        for (Node node : arguments.get(1).getChildren()) {
-          List<Integer> oneNodeList = new ArrayList<>();
-          oneNodeList.add(modelState.getActiveTurtles().peek().get(i));
-          modelState.getActiveTurtles().add(oneNodeList);
+      for (Node node : arguments.get(1).getChildren()) {
+        for(int i : tempList) {
+          modelState.outer=true;
+          modelState.currTurtle = i;
           val = node.evaluate();
-          modelState.getActiveTurtles().pop();
         }
       }
+
       modelState.getActiveTurtles().pop();
+      modelState.outer=false;
       return val;
-    }
-    return 0;
+
   }
 }
 

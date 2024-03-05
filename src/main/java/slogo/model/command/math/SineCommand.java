@@ -20,6 +20,7 @@ public class SineCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
+  private ModelState modelState;
 
   /**
    * Constructs an instance of SineCommand with the given model state and listener. This constructor
@@ -29,6 +30,7 @@ public class SineCommand implements Command {
    * @param listener   the listener for state change events
    */
   public SineCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
@@ -43,6 +45,7 @@ public class SineCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     return Math.sin(MathUtils.toRadians(arg1));
   }

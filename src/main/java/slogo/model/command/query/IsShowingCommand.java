@@ -46,8 +46,8 @@ public class IsShowingCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
-    if (turtle.getVisible()) {
+    modelState.outer = false;
+    if (modelState.getTurtles().get(index).getVisible()) {
       return 1.0;
     }
     return 0.0;

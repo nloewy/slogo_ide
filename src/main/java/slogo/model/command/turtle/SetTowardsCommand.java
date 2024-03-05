@@ -51,9 +51,10 @@ public class SetTowardsCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double locationX = arguments.get(0).evaluate();
     double locationY = arguments.get(1).evaluate();
-    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
+    Turtle turtle = modelState.getTurtles().get(index);
     double dx = locationX - turtle.getX();
     double dy = locationY - turtle.getY();
     double targetHeading = MathUtils.toDegrees(Math.atan2(dx, dy));

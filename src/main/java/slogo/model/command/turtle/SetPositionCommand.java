@@ -52,9 +52,10 @@ public class SetPositionCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double newX = arguments.get(0).evaluate();
     double newY = arguments.get(1).evaluate();
-    Turtle turtle = modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index));
+    Turtle turtle = modelState.getTurtles().get(index);
     double currentX = turtle.getX();
     double currentY = turtle.getY();
     turtle.setX(newX);

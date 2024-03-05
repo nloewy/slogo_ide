@@ -20,6 +20,7 @@ public class RemainderCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
+  private ModelState modelState;
 
   /**
    * Constructs an instance of RemainderCommand with the given model state and listener. This
@@ -30,7 +31,7 @@ public class RemainderCommand implements Command {
    * @param listener   the listener for state change events
    */
   public RemainderCommand(ModelState modelState, SlogoListener listener) {
-
+    this.modelState = modelState;
   }
 
   /**
@@ -46,6 +47,7 @@ public class RemainderCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
+    modelState.outer = false;
     if (arguments.get(1).evaluate() == 0) {
       throw new InvalidOperandException("Divisor must be Non-Zero");
     }

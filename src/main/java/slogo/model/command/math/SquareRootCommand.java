@@ -20,6 +20,7 @@ public class SquareRootCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
+  private ModelState modelState;
 
   /**
    * Constructs an instance of SquareRootCommand with the given model state and listener. This
@@ -30,6 +31,7 @@ public class SquareRootCommand implements Command {
    * @param listener   the listener for state change events
    */
   public SquareRootCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
@@ -45,6 +47,7 @@ public class SquareRootCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
+    modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {
       throw new InvalidOperandException("Operand must be non-negative");

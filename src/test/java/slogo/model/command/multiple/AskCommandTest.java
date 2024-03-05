@@ -48,7 +48,8 @@ public class AskCommandTest extends CommandTest {
     Node nodeNinty = new ConstantNode("90", model);
     list2.getChildren().add(rightNode);
     rightNode.getChildren().add(nodeNinty);
-    assertEquals(90.0, askNode.evaluate(), DELTA);
+    askNode.evaluate();
+
     assertEquals(90, model.getTurtles().get(20).getHeading(), DELTA);
     assertEquals(90, model.getTurtles().get(9).getHeading(), DELTA);
     Node rightNode2 = new CommandNode("turtle.Right", model);

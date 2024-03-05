@@ -21,6 +21,7 @@ public class IfElseCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 3;
+  private ModelState modelState;
 
   /**
    * Constructs an instance of IfElseCommand with the given model state and listener. This
@@ -31,6 +32,7 @@ public class IfElseCommand implements Command {
    * @param listener   the listener for state change events
    */
   public IfElseCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
@@ -50,6 +52,7 @@ public class IfElseCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double condition = arguments.get(0).evaluate();
     Node toExecuteIfTrue = arguments.get(1);
     Node toExecuteIfFalse = arguments.get(2);

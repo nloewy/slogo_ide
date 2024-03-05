@@ -46,6 +46,8 @@ public class ModelState {
    * Stack of currently active turtles
    */
   private Stack<List<Integer>> activeTurtles;
+  public boolean outer;
+  public int currTurtle;
 
   /**
    * Initializes turtles, variables, commands to default values (empty maps)
@@ -57,6 +59,8 @@ public class ModelState {
     myUserDefinedCommands = new HashMap<>();
     myUserDefinedCommandNodes = new HashMap<>();
     activeTurtles = new Stack<>();
+    outer = true;
+    currTurtle = 1;
   }
 
   /**

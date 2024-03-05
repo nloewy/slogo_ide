@@ -44,7 +44,7 @@ public class IdCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    return modelState.getActiveTurtles().peek().get(index);
+    return index;
   }
 }
 

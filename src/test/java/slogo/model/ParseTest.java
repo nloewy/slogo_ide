@@ -346,4 +346,33 @@ public class ParseTest {
   }
 
 
+  @Test
+  void testVariables1()
+      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+    slogo.parse("make :x 10 tell [ 1 2 3 ] make :x [ * :x :x ] fd :x");
+    assertEquals(100, slogo.getModelstate().getVariables().get(":x"));
+    assertEquals(-100.0, slogo.getModelstate().getTurtles().get(1).getY());
+    assertEquals(-100.0, slogo.getModelstate().getTurtles().get(2).getY());
+    assertEquals(-100.0, slogo.getModelstate().getTurtles().get(3).getY());
+  }
+
+  @Test
+  void testVariables2()
+      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+    slogo.parse("set :x 10 tell [ 1 2 3 ] fd * :x id");
+    assertEquals(-10, slogo.getModelstate().getTurtles().get(1).getY());
+    assertEquals(-20, slogo.getModelstate().getTurtles().get(2).getY());
+    assertEquals(-30, slogo.getModelstate().getTurtles().get(3).getY());
+  }
+
+  @Test
+  void testVariables3()
+      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
+    slogo.parse("set :x 10 tell [ 1 2 3 ] fd set :x [ + :x 10 ]");
+    assertEquals(-20, slogo.getModelstate().getTurtles().get(1).getY());
+    assertEquals(-30, slogo.getModelstate().getTurtles().get(2).getY());
+    assertEquals(-40, slogo.getModelstate().getTurtles().get(3).getY());
+  }
+
+
 }

@@ -52,6 +52,7 @@ public class GreaterThanCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     return (arguments.get(0).evaluate() + TOLERANCE > arguments.get(1).evaluate()) ? 1.0 : 0.0;
   }
 }

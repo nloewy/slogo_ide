@@ -19,6 +19,7 @@ public class MinusCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
+  private ModelState modelState;
 
   /**
    * Constructs an instance of MinusCommand with the given model state and listener. This
@@ -29,6 +30,7 @@ public class MinusCommand implements Command {
    * @param listener   the listener for state change events
    */
   public MinusCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
@@ -44,6 +46,7 @@ public class MinusCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     return -arg1;
   }

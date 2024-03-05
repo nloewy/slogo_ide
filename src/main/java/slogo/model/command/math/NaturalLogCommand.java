@@ -20,6 +20,7 @@ public class NaturalLogCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
+  private ModelState modelState;
 
   /**
    * Constructs an instance of NaturalLogCommand with the given model state and listener. This
@@ -30,6 +31,7 @@ public class NaturalLogCommand implements Command {
    * @param listener   the listener for state change events
    */
   public NaturalLogCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
@@ -47,6 +49,7 @@ public class NaturalLogCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
+    modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     if (arg1 <= 0) {
       throw new InvalidOperandException("Input to log function must be non-negative");

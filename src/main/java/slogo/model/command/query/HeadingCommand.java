@@ -45,6 +45,7 @@ public class HeadingCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    return modelState.getTurtles().get(modelState.getActiveTurtles().peek().get(index)).getHeading();
+    modelState.outer = false;
+    return modelState.getTurtles().get(index).getHeading();
   }
 }
