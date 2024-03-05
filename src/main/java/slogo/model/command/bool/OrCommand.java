@@ -20,13 +20,18 @@ public class OrCommand implements Command {
    */
   public static final int NUM_ARGS = 2;
 
+  private ModelState modelState;
+
   /**
-   * Constructs an instance of OrCommand with the given model state and listener. This constructor
-   * does not actually do anything, and exists for the sake of consistency across commands.
+   * Constructs an instance of OrCommand with the given model state and listener.
+   *
+   * @param modelState the model state
+   * @param listener   the listener for state change events
    */
   public OrCommand(ModelState modelState, SlogoListener listener) {
-  }
+    this.modelState = modelState;
 
+  }
   /**
    * Executes the logical OR operation on the provided nodes.
    *
@@ -38,6 +43,9 @@ public class OrCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    return (arguments.get(0).evaluate() != 0) || (arguments.get(1).evaluate() != 0) ? 1.0 : 0.0;
-  }
+    double val = 0;
+    for(int index = 0; index < modelState.getActiveTurtles().size(); index++) {
+      val = (!(arguments.get(0).evaluate() == 0) || !(arguments.get(1).evaluate() == 0)) ? 1.0 : 0.0;
+    }
+    return val;  }
 }

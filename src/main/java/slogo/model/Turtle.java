@@ -172,27 +172,6 @@ public class Turtle {
   public int getId() {
     return myId;
   }
-
-  /**
-   * Sets the active status of the turtle.
-   *
-   * @param active, The new active status
-   */
-
-  public void setActive(boolean active) {
-    this.active = active;
-  }
-
-
-  /**
-   * Retrieves the active status of the turtle.
-   *
-   * @return true iff turtle is active
-   */
-
-  public boolean isActive() {
-    return active;
-  }
-
+  
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import slogo.model.node.Node;
 
 
@@ -40,9 +41,16 @@ public class ModelState {
    */
   private final Map<String, List<Node>> myUserDefinedCommandNodes;
 
+
+  /**
+   * Stack of currently active turtles
+   */
+  private Stack<List<Integer>> activeTurtles;
+
   /**
    * Initializes turtles, variables, commands to default values (empty maps)
    */
+
   public ModelState() {
     myTurtles = new HashMap<>();
     myVariables = new HashMap<>();
@@ -85,4 +93,14 @@ public class ModelState {
   public Map<String, List<Node>> getUserDefinedCommandNodes() {
     return myUserDefinedCommandNodes;
   }
+
+  /**
+   * Returns the stack of lists of active turtle IDs in the current scope
+   *
+   * @return the stack of lists of active turtle IDs in the current scope
+   */
+  public Stack<List<Integer>> getActiveTurtles() {
+    return activeTurtles;
+  }
+
 }

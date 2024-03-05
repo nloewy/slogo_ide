@@ -19,18 +19,18 @@ public class EqualCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
+  private ModelState modelState;
 
   /**
-   * Constructs an instance of EqualCommand with the given model state and listener. This
-   * constructor does not actually do anything, and exists for the sake of consistency across
-   * commands
+   * Constructs an instance of EqualCommand with the given model state and listener.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
   public EqualCommand(ModelState modelState, SlogoListener listener) {
-  }
+    this.modelState = modelState;
 
+  }
   /**
    * Executes the equality comparison operation on the provided nodes.
    *
@@ -42,8 +42,12 @@ public class EqualCommand implements Command {
   @Override
   public double execute(List<Node> arguments)
       throws InvocationTargetException, IllegalAccessException {
-    double arg1 = arguments.get(0).evaluate();
-    double arg2 = arguments.get(1).evaluate();
-    return (arg1 == arg2) ? 1.0 : 0.0;
+    double val = 0;
+    for (int index = 0; index < modelState.getActiveTurtles().size(); index++) {
+      double arg1 = arguments.get(0).evaluate();
+      double arg2 = arguments.get(1).evaluate();
+      val = (arg1 == arg2) ? 1.0 : 0.0;
+    }
+    return val;
   }
 }
