@@ -20,6 +20,7 @@ public class RandomRangeCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of RandomRangeCommand with the given model state and listener. This
@@ -30,6 +31,7 @@ public class RandomRangeCommand implements Command {
    * @param listener   the listener for state change events
    */
   public RandomRangeCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
@@ -37,14 +39,16 @@ public class RandomRangeCommand implements Command {
    *
    * @param arguments a list containing two nodes representing the minimum and maximum values of the
    *                  range
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return a random number within the specified range
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    * @throws InvalidOperandException   if the minimum value is greater than the maximum value
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
+    modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
     if (arg1 > arg2) {

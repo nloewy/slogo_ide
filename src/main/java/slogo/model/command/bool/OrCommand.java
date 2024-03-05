@@ -19,25 +19,35 @@ public class OrCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
+  private static final double TOLERANCE = .001;
+
+  private final ModelState modelState;
 
   /**
-   * Constructs an instance of OrCommand with the given model state and listener. This constructor
-   * does not actually do anything, and exists for the sake of consistency across commands.
+   * Constructs an instance of OrCommand with the given model state and listener.
+   *
+   * @param modelState the model state
+   * @param listener   the listener for state change events
    */
   public OrCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
+
   }
 
   /**
    * Executes the logical OR operation on the provided nodes.
    *
    * @param arguments a list of nodes representing values to be compared
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 1.0 if at least one of the nodes' values is non-zero, otherwise returns 0.0
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    return (arguments.get(0).evaluate() != 0) || (arguments.get(1).evaluate() != 0) ? 1.0 : 0.0;
+    modelState.outer = false;
+    return (!(Math.abs(arguments.get(0).evaluate()) <= TOLERANCE) ||
+        !(Math.abs(arguments.get(1).evaluate()) <= TOLERANCE)) ? 1.0 : 0.0;
   }
 }

@@ -2,6 +2,7 @@ package slogo.model.command.control;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import slogo.model.ModelState;
@@ -25,7 +26,10 @@ public class MakeCommandTest extends CommandTest {
   public void testMakeCommand()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
-    model.getTurtles().add(new Turtle(1));
+    model.getTurtles().put(1, new Turtle(1));
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
+
     node = new CommandNode("control.Make", model);
     Node variableNode = new VariableNode("MyVar", model);
     node.addChild(variableNode);
@@ -39,7 +43,9 @@ public class MakeCommandTest extends CommandTest {
   public void testMakeCommandWithExpression()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
-    model.getTurtles().add(new Turtle(1));
+    model.getTurtles().put(1, new Turtle(1));
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().get(0).add(1);
     node = new CommandNode("control.Make", model);
     Node variableNode = new VariableNode("Var", model);
     Node nodeTwo = new CommandNode("math.Sum", model);

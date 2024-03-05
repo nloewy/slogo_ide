@@ -3,6 +3,7 @@ package slogo.model.command.turtle;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,10 +28,13 @@ public class SetHeadingCommandTest extends CommandTest {
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
-    model.getTurtles().add(new Turtle(1));
-    myTurtle = model.getTurtles().get(0);
+    model.getTurtles().put(1, new Turtle(1));
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
+    myTurtle = model.getTurtles().get(1);
     node = new CommandNode("turtle.SetHeading", model);
     node.addListener(myListener);
+
 
   }
 

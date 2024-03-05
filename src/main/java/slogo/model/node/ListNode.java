@@ -36,6 +36,9 @@ public class ListNode extends Node {
   public double evaluate() throws InvocationTargetException, IllegalAccessException {
     double ret = 0.0;
     for (Node child : getChildren()) {
+      if (child.getToken().equals("]")) {
+        continue;
+      }
       ret = child.evaluate();
     }
     return ret;

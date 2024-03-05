@@ -3,6 +3,7 @@ package slogo.model.command.bool;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -24,6 +25,9 @@ public class EqualCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
     ModelState model = new ModelState();
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
+
     node = new CommandNode("bool.Equal", model);
   }
 
@@ -34,14 +38,16 @@ public class EqualCommandTest extends CommandTest {
       "-1, 1, 0",
       "1, -1, 0",
       "1.5, 2.5, 0",
-      "2.222, 2.2220003, 0",
-      "-2.2222, -2.2221, 0",
-      "-2.2221, -2.2222, 0",
-      "2.2220003, 2.222, 0",
+      "2.222, 2.2220003, 1",
+      "-2.2222, -2.2221, 1",
+      "-2.2221, -2.2222, 1",
+      "2.2220003, 2.222, 1",
+      "2, 2.001, 1",
+      "2, 2.0011, 0",
       "1E40, 1.000000000001E40, 0",
       "1E40, 1E40, 1",
-      "-1E-61, -1E-62, 0",
-      "-1E-62, -1E-61, 0",
+      "-1E-61, -1E-62, 1",
+      "-1E-62, -1E-61, 1",
       "-1E-62, -1E-62, 1"
   })
   void testEqual(String op1, String op2, int result)

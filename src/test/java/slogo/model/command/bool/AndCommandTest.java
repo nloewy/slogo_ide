@@ -3,6 +3,7 @@ package slogo.model.command.bool;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -27,6 +28,9 @@ public class AndCommandTest extends CommandTest {
     myTurtle = null;
     model = new ModelState();
 
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
+
     node = new CommandNode("bool.And", model);
 
   }
@@ -46,11 +50,11 @@ public class AndCommandTest extends CommandTest {
       "2.2220003, 0, 0",
       "1E40, 1.000000000001E40, 1",
       "1E40, 1E40, 1",
-      "1E-40, 1E-41, 1",
-      "1E-41, 1E-40, 1",
-      "-1E-61, -1E-62, 1",
-      "-1E-62, -1E-61, 1",
-      "-1E-62, -1E-62, 1"
+      "1E-40, 1E-41, 0",
+      "1E-41, 1E-40, 0",
+      "-1E-61, -1E-62, 0",
+      "-1E-62, -1E-61, 0",
+      "-1E-62, -1E-2, 0"
 
   })
   void testAnd(String op1, String op2, int result)

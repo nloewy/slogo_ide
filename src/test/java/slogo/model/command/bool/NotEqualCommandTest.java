@@ -3,6 +3,7 @@ package slogo.model.command.bool;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,11 +20,14 @@ public class NotEqualCommandTest extends CommandTest {
   private Turtle myTurtle;
   private Node node;
 
+  private ModelState model;
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     myTurtle = null;
-    ModelState model = new ModelState();
+    model = new ModelState();
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
     node = new CommandNode("bool.NotEqual", model);
   }
 
@@ -34,20 +38,22 @@ public class NotEqualCommandTest extends CommandTest {
       "-1, 1, 1",
       "1, -1, 1",
       "1.5, 2.5, 1",
-      "2.222, 2.2220003, 1",
-      "-2.2222, -2.2221, 1",
-      "-2.2221, -2.2222, 1",
-      "2.2220003, 2.222, 1",
+      "2.222, 2.2220003, 0",
+      "-2.2222, -2.2221, 0",
+      "-2.2221, -2.2222, 0",
+      "2.2220003, 2.222, 0",
+      "2, 2.001, 0",
+      "2, 2.0011, 1",
       "1E40, 1.000000000001E40, 1",
       "1E40, 1E40, 0",
-      "-1E-61, -1E-62, 1",
-      "-1E-62, -1E-61, 1",
+      "-1E-61, -1E-62, 0",
+      "-1E-62, -1E-61, 0",
       "-1E-62, -1E-62, 0"
   })
   void testNotEqual(String op1, String op2, int result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
-    node.addChild(new ConstantNode(op2, null));
+    node.addChild(new ConstantNode(op1, model));
+    node.addChild(new ConstantNode(op2, model));
     assertEquals(result, node.evaluate(), DELTA);
   }
 }

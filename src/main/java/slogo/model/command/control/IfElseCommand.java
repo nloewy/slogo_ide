@@ -21,6 +21,7 @@ public class IfElseCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 3;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of IfElseCommand with the given model state and listener. This
@@ -31,6 +32,7 @@ public class IfElseCommand implements Command {
    * @param listener   the listener for state change events
    */
   public IfElseCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
@@ -40,14 +42,16 @@ public class IfElseCommand implements Command {
    *                  evaluate, the second node contains the command nodes to execute if the
    *                  condition is true, and the third node contains the command nodes to execute if
    *                  the condition is false
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of the last evaluated command if the condition is true, otherwise the result
    * of the last evaluated command in the else branch, or 0.0 if there's no else branch
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double condition = arguments.get(0).evaluate();
     Node toExecuteIfTrue = arguments.get(1);
     Node toExecuteIfFalse = arguments.get(2);

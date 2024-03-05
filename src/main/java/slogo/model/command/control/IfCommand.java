@@ -20,6 +20,7 @@ public class IfCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of IfCommand with the given model state and listener. This constructor
@@ -29,6 +30,7 @@ public class IfCommand implements Command {
    * @param listener   the listener for state change events
    */
   public IfCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
@@ -37,14 +39,16 @@ public class IfCommand implements Command {
    * @param arguments a list containing two nodes: the first node contains the condition to
    *                  evaluate, and the second node contains the command nodes to execute if the
    *                  condition is true
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of the last evaluated command if the condition is true, otherwise 0.0
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
 
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     Node toExecute = arguments.get(1);
     if (arg1 != 0) {

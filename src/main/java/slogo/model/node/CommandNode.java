@@ -2,7 +2,6 @@ package slogo.model.node;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
@@ -64,20 +63,35 @@ public class CommandNode extends Node {
   public double evaluate() //masked under factory
       throws InvalidCommandException, InsufficientArgumentsException, InvalidOperandException, InvocationTargetException, IllegalAccessException {
     try {
+
       Class<?> clazz = Class.forName(BASE_PACKAGE + myToken + "Command");
       command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
           .newInstance(myModelState, getListener());
-      method= clazz.getDeclaredMethod("execute", List.class);
     } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
              NoSuchMethodException | IllegalAccessException e) {
       throw new InvalidCommandException(
           "", getToken());
     }
+
     if (getNumArgs() != getChildren().size()) {
       throw new InsufficientArgumentsException("", getToken());
     }
-    return command.execute(getChildren());
+    double val = 0;
+    if (myToken.equals("control.Make") || myToken.equals("multiple.Ask") || !myModelState.outer) {
+      System.out.println(myToken + myModelState.currTurtle);
+      val = command.execute(getChildren(), myModelState.currTurtle);
+    } else {
+      for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
+        myModelState.currTurtle = myModelState.getActiveTurtles().peek().get(index);
+        System.out.println(myToken + myModelState.currTurtle);
+        val = command.execute(getChildren(), myModelState.currTurtle);
+      }
+    }
+    myModelState.outer = true;
+
+    return val;
   }
+
 
   /**
    * Retrieves the number of arguments expected for the Command corresponding to this CommandNode.

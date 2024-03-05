@@ -41,16 +41,18 @@ public class PenDownCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (empty for this
    *                  command)
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 1.0 to indicate that the pen is down and successful execution
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    Turtle turtle = modelState.getTurtles().get(0);
+    modelState.outer = false;
+    Turtle turtle = modelState.getTurtles().get(index);
     turtle.setPen(true);
-    listener.onUpdateTurtleState(modelState.getTurtles().get(0).getImmutableTurtle());
+    listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return 1.0;
   }
 }

@@ -1,9 +1,9 @@
 package slogo.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import slogo.model.node.Node;
 
 
@@ -23,9 +23,9 @@ import slogo.model.node.Node;
 public class ModelState {
 
   /**
-   * A list of Turtle objects representing the turtles currently present in the simulation.
+   * A map of Turtle ids to Turtle objects representing the turtles in the simulation.
    */
-  private final List<Turtle> myTurtles;
+  private final Map<Integer, Turtle> myTurtles;
   /**
    * A map from variable names (lowercase) to the current value of the variable.
    */
@@ -39,15 +39,25 @@ public class ModelState {
    * obtain the nodes needed to execute the user defined commands
    */
   private final Map<String, List<Node>> myUserDefinedCommandNodes;
+  public boolean outer;
+  public int currTurtle;
+  /**
+   * Stack of currently active turtles
+   */
+  private final Stack<List<Integer>> activeTurtles;
 
   /**
-   * Initializes turtles, variables, commands to default values (empty lists / maps)
+   * Initializes turtles, variables, commands to default values (empty maps)
    */
+
   public ModelState() {
-    myTurtles = new ArrayList<>();
+    myTurtles = new HashMap<>();
     myVariables = new HashMap<>();
     myUserDefinedCommands = new HashMap<>();
     myUserDefinedCommandNodes = new HashMap<>();
+    activeTurtles = new Stack<>();
+    outer = true;
+    currTurtle = 1;
   }
 
   /**
@@ -55,7 +65,7 @@ public class ModelState {
    *
    * @return a list of Turtle objects representing the turtles in the simulation
    */
-  public List<Turtle> getTurtles() {
+  public Map<Integer, Turtle> getTurtles() {
     return myTurtles;
   }
 
@@ -85,4 +95,14 @@ public class ModelState {
   public Map<String, List<Node>> getUserDefinedCommandNodes() {
     return myUserDefinedCommandNodes;
   }
+
+  /**
+   * Returns the stack of lists of active turtle IDs in the current scope
+   *
+   * @return the stack of lists of active turtle IDs in the current scope
+   */
+  public Stack<List<Integer>> getActiveTurtles() {
+    return activeTurtles;
+  }
+
 }

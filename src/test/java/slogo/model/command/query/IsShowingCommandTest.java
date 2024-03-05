@@ -1,6 +1,7 @@
 package slogo.model.command.query;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,8 +22,11 @@ public class IsShowingCommandTest extends CommandTest {
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     ModelState model = new ModelState();
-    model.getTurtles().add(new Turtle(1));
-    myTurtle = model.getTurtles().get(0);
+    model.getTurtles().put(1, new Turtle(1));
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
+
+    myTurtle = model.getTurtles().get(1);
     node = new CommandNode("query.IsShowing", model);
   }
 

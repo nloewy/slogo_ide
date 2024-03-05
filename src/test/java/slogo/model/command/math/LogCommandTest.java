@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,12 +25,15 @@ public class LogCommandTest extends CommandTest {
   private Turtle myTurtle;
   private Node node;
 
+  private ModelState model;
+
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-
     myTurtle = null;
-    ModelState model = new ModelState();
+    model = new ModelState();
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
     node = new CommandNode("math.NaturalLog", model);
 
   }
@@ -44,7 +48,7 @@ public class LogCommandTest extends CommandTest {
   @Test
   void testLogBasicOne()
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode("1", null));
+    node.addChild(new ConstantNode("1", model));
     assertEquals(0, node.evaluate(), DELTA);
   }
 
@@ -71,7 +75,7 @@ public class LogCommandTest extends CommandTest {
   })
   void testLogFloats(String op1, String result)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, model));
     assertEquals(Double.parseDouble(result), node.evaluate(), DELTA);
   }
 
@@ -86,7 +90,7 @@ public class LogCommandTest extends CommandTest {
   })
   void testLogNonPositive(String op1)
       throws InvocationTargetException, IllegalAccessException {
-    node.addChild(new ConstantNode(op1, null));
+    node.addChild(new ConstantNode(op1, model));
     assertThrows(InvalidOperandException.class, () -> {
       node.evaluate();
     });

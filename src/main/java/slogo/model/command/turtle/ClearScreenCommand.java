@@ -39,12 +39,14 @@ public class ClearScreenCommand extends HomeCommand {
    *
    * @param arguments a list of nodes representing the arguments of the command (none for this
    *                  command)
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of executing the super class's execute method
    */
   @Override
-  public double execute(List<Node> arguments) {
-    double ret = super.execute(arguments);
-    listener.onResetTurtle(modelState.getTurtles().get(0).getImmutableTurtle().id());
+  public double execute(List<Node> arguments, int index) {
+    double ret = super.execute(arguments, index);
+    modelState.outer = false;
+    listener.onResetTurtle(modelState.getTurtles().get(index).getImmutableTurtle().id());
     return ret;
   }
 }

@@ -36,13 +36,15 @@ public class XcoordinateCommand implements Command {
    * Retrieves the X coordinate of the requested turtle.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the X coordinate of the requested turtle
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
-    return modelState.getTurtles().get(0).getX();
+    modelState.outer = false;
+    return modelState.getTurtles().get(index).getX();
   }
 }

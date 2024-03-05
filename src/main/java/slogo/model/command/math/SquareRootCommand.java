@@ -20,6 +20,7 @@ public class SquareRootCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of SquareRootCommand with the given model state and listener. This
@@ -30,6 +31,7 @@ public class SquareRootCommand implements Command {
    * @param listener   the listener for state change events
    */
   public SquareRootCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
@@ -37,13 +39,15 @@ public class SquareRootCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number to calculate the
    *                  square root of
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the square root of the input number
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
+    modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {
       throw new InvalidOperandException("Operand must be non-negative");

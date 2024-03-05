@@ -39,13 +39,15 @@ public class MakeCommand implements Command {
    *
    * @param arguments a list containing two nodes: the first node represents the variable name, and
    *                  the second node represents the value to assign to the variable
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the assigned value
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     String token = arguments.get(0).getToken();
     double variableValue = arguments.get(1).evaluate();
     modelState.getVariables().put(token, variableValue);

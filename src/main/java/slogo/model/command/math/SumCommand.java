@@ -20,6 +20,8 @@ public class SumCommand implements Command {
    */
   public static final int NUM_ARGS = 2;
 
+  private final ModelState modelState;
+
   /**
    * Constructs an instance of SumCommand with the given model state and listener. This constructor
    * does not actually do anything, and exists for the sake of consistency across commands.
@@ -28,19 +30,22 @@ public class SumCommand implements Command {
    * @param listener   the listener for state change events
    */
   public SumCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
    * Executes the sum mathematical operation.
    *
    * @param arguments a list containing two nodes representing the numbers to be added
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the sum of the two input numbers
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
     return arg1 + arg2;

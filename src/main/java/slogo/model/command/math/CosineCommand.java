@@ -20,6 +20,7 @@ public class CosineCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
+  private final ModelState modelState;
 
   /**
    * Constructs an instance of CosineCommand with the given model state and listener. This
@@ -30,19 +31,22 @@ public class CosineCommand implements Command {
    * @param listener   the listener for state change events
    */
   public CosineCommand(ModelState modelState, SlogoListener listener) {
+    this.modelState = modelState;
   }
 
   /**
    * Executes the cosine mathematical operation.
    *
    * @param arguments a list containing a single node representing the angle in degrees
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the cosine of the input angle
    * @throws InvocationTargetException if an error occurs during execution
    * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments)
+  public double execute(List<Node> arguments, int index)
       throws InvocationTargetException, IllegalAccessException {
+    modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     return Math.cos(MathUtils.toRadians(arg1));
   }

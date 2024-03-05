@@ -3,6 +3,7 @@ package slogo.model.command.control;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.ModelState;
@@ -27,7 +28,10 @@ public class RepeatCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     myTurtle = new Turtle(1);
-    model.getTurtles().add(myTurtle);
+    model.getTurtles().put(1, myTurtle);
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
+
   }
 
   @Test

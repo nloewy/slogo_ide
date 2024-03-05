@@ -2,6 +2,7 @@ package slogo.model.command.control;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import slogo.model.ModelState;
@@ -27,7 +28,9 @@ public class IfElseCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     myTurtle = new Turtle(1);
-    model.getTurtles().add(myTurtle);
+    model.getTurtles().put(1, myTurtle);
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().get(0).add(1);
     node = new CommandNode("control.IfElse", model);
     Node nodeTwo = new CommandNode("math.Sum", model);
     Node nodeThree = new ConstantNode("-5", model);
@@ -61,7 +64,10 @@ public class IfElseCommandTest extends CommandTest {
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     model = new ModelState();
     myTurtle = new Turtle(1);
-    model.getTurtles().add(myTurtle);
+    model.getTurtles().put(1, myTurtle);
+    model.getActiveTurtles().add(new ArrayList<>());
+    model.getActiveTurtles().peek().add(1);
+
     node = new CommandNode("control.IfElse", model);
     Node nodeTwo = new CommandNode("math.Sum", model);
     Node nodeThree = new ConstantNode("-5", model);
