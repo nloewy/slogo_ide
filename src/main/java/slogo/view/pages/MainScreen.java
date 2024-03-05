@@ -159,7 +159,7 @@ public class MainScreen implements  SlogoListener {
     stage.show();
     centerX =  centerPane.getBoundsInParent().getWidth() / 2;
     centerY =  centerPane.getBoundsInParent().getHeight() / 2;
-    turtles.add(new FrontEndTurtle(1, centerX, centerY, Color.BLUE, true, 0, defaultImage));
+    turtles.add(new FrontEndTurtle(1, centerX, centerY, Color.BLUE, true, 0, defaultImage, this));
 
     initializeTurtleDisplays();
   }
@@ -545,8 +545,9 @@ public class MainScreen implements  SlogoListener {
     }
   }
 
-  private void pushCommand(String s) {
+  public void pushCommand(String s) {
     commandString = s;
+    System.out.println(commandString);
     parse.accept(commandString);
     updateCommands();
   }
@@ -600,7 +601,7 @@ public class MainScreen implements  SlogoListener {
     }
     turtles.add(new FrontEndTurtle(
         turtleState.id(), turtleState.x() + centerX, turtleState.y() + centerY,
-        Color.BLACK, true, turtleState.heading(), defaultImage));
+        Color.BLACK, true, turtleState.heading(), defaultImage, this));
   }
 
   @Override
