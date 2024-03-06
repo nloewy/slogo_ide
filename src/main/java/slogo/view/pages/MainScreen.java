@@ -98,6 +98,8 @@ public class MainScreen implements SlogoListener {
   private final Slider speedSlider;
   private Duration pausedTime;
   private Animation currAnimation;
+  private List<Integer> oldPenColor;
+  private List<Integer> oldBackgroundColor;
 
   private static final int height = 600;
   private static final int width = 1000;
@@ -609,10 +611,15 @@ public class MainScreen implements SlogoListener {
             turtleState.heading());
 
         List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
-        turtle.setPenColor(new Color(newPenColor.get(0)/255, newPenColor.get(1)/255, newPenColor.get(2)/255, 1));
+        if (newPenColor != null) {
+          turtle.setPenColor(new Color(newPenColor.get(0)/255, newPenColor.get(1)/255, newPenColor.get(2)/255, 1));
+        }
 
         List<Integer> newBackgroundColor = palette.get(turtleState.bgIndex());
-        centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + "," + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
+        if (newBackgroundColor != null) {
+          centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + "," + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
+        }
+        
         return;
       }
     }

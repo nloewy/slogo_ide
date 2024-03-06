@@ -57,7 +57,7 @@ public class SetTowardsCommand implements Command {
     double clockwiseTurn = Math.abs((targetHeading - currentHeading + 360) % 360);
     double counterclockwiseTurn = Math.abs((currentHeading - targetHeading + 360) % 360);
     double minTurn = Math.min(clockwiseTurn, counterclockwiseTurn);
-    turtle.setHeading(targetHeading);
+    turtle.setHeading(((targetHeading%360)+360) % 360);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return minTurn;
   }
