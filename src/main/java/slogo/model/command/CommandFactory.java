@@ -43,7 +43,6 @@ public class CommandFactory {
 
   public static int getNumArgs(String myToken) throws IncompleteClassException {
     try {
-      System.out.println(myToken);
       return (int) Class.forName(getFullName(myToken)).getField("NUM_ARGS").get(null);
     } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException e) {
       throw new IncompleteClassException(

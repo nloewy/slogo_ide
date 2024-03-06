@@ -2,15 +2,19 @@ package slogo.view;
 
 
 
+import java.util.ArrayDeque;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
+import javafx.animation.Animation;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.util.Duration;
 import slogo.view.pages.MainScreen;
 
 public class FrontEndTurtle {
@@ -18,6 +22,9 @@ public class FrontEndTurtle {
   private ImageView display;
   private Image displayImage;
   private Color penColor;
+
+  private Queue<Animation> myAnimation;
+
   private double myX;
   private double myHeading;
   private double myY;
@@ -26,12 +33,14 @@ public class FrontEndTurtle {
   private boolean isPenDisplayed = false;
   private Timeline animation;
   private final Stack<Line> pathHistory = new Stack<Line>();
-  private MainScreen view;
   private boolean isActive;
+  private Duration pausedTime;
+  private boolean paused ;
+  private Animation currAnimation;
+  private boolean animationPlaying;
 
   public FrontEndTurtle(int id, double x, double y, Color color, boolean isPenVisible,
       double heading, Image image, MainScreen view) {
-    this.view = view;
     myId = id;
     myX = x;
     myY = y;
@@ -45,11 +54,13 @@ public class FrontEndTurtle {
     display.setLayoutY(myY);
     penColor = color;
     isPenDisplayed = isPenVisible;
+    paused = false;
 
     display.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
       view.pushCommand("TELL " + id);
     });
 
+    myAnimation = new ArrayDeque<>();
     this.heading = heading;
   }
 
@@ -124,5 +135,64 @@ public class FrontEndTurtle {
     myX = x;
     myY = y;
     myHeading = newHeading;
+  }
+
+  public Queue<Animation> getAnimationQueue() {
+    return myAnimation;
+  }
+
+  private void finishCurrAnimation() {
+    if (currAnimation != null) {
+      currAnimation.play();
+      paused = true;
+    }
+  }
+
+  private void playSingleAnimation() {
+    if (!myAnimation.isEmpty()) {
+      Animation animation = myAnimation.poll();
+      animation.setOnFinished(event -> {
+        animationPlaying = false;
+        playAnimation(); // Continue playing other animations after finishing this one
+      });
+      animationPlaying = true;
+      animation.play();
+    }
+  }
+
+  public void playAnimation() {
+    if (!animationPlaying && !myAnimation.isEmpty() && !paused) {
+      currAnimation = myAnimation.poll();
+      currAnimation.setOnFinished(event -> {
+        animationPlaying = false;
+        currAnimation = null;
+        playAnimation();
+      });
+      animationPlaying = true;
+      currAnimation.play();
+    } else if (animationPlaying && paused) {
+      if (currAnimation != null) {
+        pausedTime = currAnimation.getCurrentTime(); // Store the current time when animation is paused
+        currAnimation.pause();
+      }
+    } else if (animationPlaying && !paused && pausedTime != null) {
+      // If animation was paused and now unpaused, resume from the paused time
+      if (currAnimation != null) {
+        currAnimation.playFrom(pausedTime);
+        pausedTime = null; // Reset paused time
+      }
+    }
+  }
+
+  public void handleStep() {
+    if (currAnimation == null) {
+      playSingleAnimation();
+    } else {
+      finishCurrAnimation();
+    }
+  }
+
+  public void handlePause(boolean b) {
+    paused = b;
   }
 }

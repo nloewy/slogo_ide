@@ -143,7 +143,7 @@ public class Parser {
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
     }
-    if ((!commandMap.containsKey(tokens.get(myIndex)) && !modelState.getUserDefinedCommands().containsKey(tokens.get(myIndex).toLowerCase())) && nodeStack.peek()
+    if ((!commandMap.containsKey(tokens.get(myIndex).toLowerCase()) && !modelState.getUserDefinedCommands().containsKey(tokens.get(myIndex).toLowerCase())) && nodeStack.peek()
         .equals(rootNode)) {
       throw new InvalidCommandException("", tokens.get(myIndex));
     }
