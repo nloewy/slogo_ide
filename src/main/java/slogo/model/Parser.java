@@ -14,8 +14,10 @@ import java.util.Properties;
 import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import slogo.model.exceptions.InsufficientArgumentsException;
 import slogo.model.exceptions.InvalidCommandException;
 import slogo.model.exceptions.InvalidTokenException;
+import slogo.model.exceptions.InvalidUserCommandException;
 import slogo.model.exceptions.InvalidVariableException;
 import slogo.model.node.CommandCreatorNode;
 import slogo.model.node.CommandNode;
@@ -213,6 +215,13 @@ public class Parser {
         throw new InvalidVariableException("", tokens.get(index));
       }
       index++;
+    }
+    if(index == tokens.size()) {
+      throw new InsufficientArgumentsException("", tokens.get(myIndex));
+    }
+    if(myIndex+1 >= tokens.size() || !tokenMatched(tokens.get(myIndex+1), "Command") || commandMap.containsKey(tokens.get(myIndex+1))) {
+      String userCommandName = (tokens.size() > index) ? tokens.get(myIndex + 1) : "";
+      throw new InvalidUserCommandException("", userCommandName);
     }
     currentNode = new CommandCreatorNode(tokens.get(myIndex + 1).toLowerCase(), modelState,
         index - myIndex - 1);
