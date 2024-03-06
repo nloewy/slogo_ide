@@ -112,7 +112,7 @@ public class Turtle {
    */
 
   public void setHeading(double myHeading) {
-    this.myHeading = (myHeading % 360 + 360) % 360; // Ensures positive modulus
+    this.myHeading = myHeading;
   }
 
   /**

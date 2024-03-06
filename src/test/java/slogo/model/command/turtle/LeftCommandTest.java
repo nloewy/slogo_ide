@@ -43,7 +43,7 @@ public class LeftCommandTest extends CommandTest {
     String rot = "75";
     node.addChild(new ConstantNode(rot, model));
     assertEquals(75, node.evaluate(), DELTA);
-    assertEquals(285, myTurtle.getHeading(), DELTA);
+    assertEquals(-75, myTurtle.getHeading(), DELTA);
 
   }
 
@@ -64,7 +64,7 @@ public class LeftCommandTest extends CommandTest {
     myTurtle.setHeading(500);
     node.addChild(new ConstantNode(rot, model));
     assertEquals(0, node.evaluate(), DELTA);
-    assertEquals(140, myTurtle.getHeading(), DELTA);
+    assertEquals(500, myTurtle.getHeading(), DELTA);
 
   }
 
@@ -83,6 +83,6 @@ public class LeftCommandTest extends CommandTest {
     String rot = "900";
     node.addChild(new ConstantNode(rot, model));
     assertEquals(900, node.evaluate(), DELTA);
-    assertEquals(180, myTurtle.getHeading(), DELTA);
+    assertEquals(-900, myTurtle.getHeading(), DELTA);
   }
 }

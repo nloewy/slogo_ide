@@ -71,7 +71,7 @@ public class SetHeadingCommandTest extends CommandTest {
     myTurtle.setHeading(500);
     node.addChild(new ConstantNode(newHeading, model));
     assertEquals(80, node.evaluate(), DELTA);
-    assertEquals(220, myTurtle.getHeading(), DELTA);
+    assertEquals(940, myTurtle.getHeading(), DELTA);
   }
 
   @Test
@@ -81,7 +81,7 @@ public class SetHeadingCommandTest extends CommandTest {
     myTurtle.setHeading(361);
     node.addChild(new ConstantNode(newHeading, model));
     assertEquals(0, node.evaluate(), DELTA);
-    assertEquals(1, myTurtle.getHeading(), DELTA);
+    assertEquals(1081, myTurtle.getHeading(), DELTA);
   }
 
   @Test
@@ -91,6 +91,6 @@ public class SetHeadingCommandTest extends CommandTest {
     myTurtle.setHeading(95);
     node.addChild(new ConstantNode(newHeading, model));
     assertEquals(5, node.evaluate(), DELTA);
-    assertEquals(90, myTurtle.getHeading(), DELTA);
+    assertEquals(-270, myTurtle.getHeading(), DELTA);
   }
 }

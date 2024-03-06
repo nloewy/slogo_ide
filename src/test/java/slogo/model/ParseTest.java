@@ -320,7 +320,7 @@ public class ParseTest {
     assertTrue(myTurtle.getPen());
     assertEquals(40.0, myTurtle.getX(), DELTA);
     assertEquals(-20.0, myTurtle.getY(), DELTA);
-    assertEquals(80.0, myTurtle.getHeading(), DELTA);
+    assertEquals(440.0, myTurtle.getHeading(), DELTA);
   }
 
   @Test
