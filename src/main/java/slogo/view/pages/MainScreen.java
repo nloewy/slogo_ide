@@ -600,15 +600,6 @@ public class MainScreen implements SlogoListener {
     myAnimation.add(animation);
   }
 
-  /*
-   * new method returns list of indexed values
-   * indices to RGB values
-   * indices are integers
-   * Map<Index, List<Number>>
-   */
-
-  // WILL return background color and pen color in the future, each indices check with
-//the map
   @Override
   public void onUpdateTurtleState(TurtleRecord turtleState) {
     for (FrontEndTurtle turtle : turtles) {
