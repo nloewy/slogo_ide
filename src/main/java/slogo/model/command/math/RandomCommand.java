@@ -4,6 +4,7 @@ import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
+import slogo.model.command.exceptions.InvalidRandomInputException;
 import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.node.Node;
 
@@ -39,14 +40,14 @@ public class RandomCommand implements Command {
    * @param arguments a list containing a single node representing the maximum value
    * @param turtleId  the id of the turtle currently active
    * @return a random number between 0 (inclusive) and the specified maximum value (exclusive)
-   * @throws InvalidOperandException if the maximum value is negative
+   * @throws InvalidRandomInputException if the maximum value is negative
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
+  public double execute(List<Node> arguments, int turtleId) throws InvalidRandomInputException {
     modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {
-      throw new InvalidOperandException("Max must be positive");
+      throw new InvalidRandomInputException("Input to Random Function must be non-negative");
     }
     return Math.random() * arg1;
   }
