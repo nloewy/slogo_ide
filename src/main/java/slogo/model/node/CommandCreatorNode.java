@@ -49,7 +49,7 @@ public class CommandCreatorNode extends Node {
 
 
   @Override
-  public double evaluate() throws InvocationTargetException, IllegalAccessException {
+  public double evaluate() {
     List<Node> children = getChildren();
     myModelState.getUserDefinedCommandNodes().put(myToken, children);
     getListener().onUserDefinedCommand(toString());

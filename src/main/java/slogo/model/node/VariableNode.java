@@ -31,13 +31,10 @@ public class VariableNode extends Node {
    * state. If the variable does not exist, it is initialized with a value of 0.0.
    *
    * @return the value associated with the variable
-   * @throws InvocationTargetException if the variable node encounters an invocation target
-   *                                   exception
-   * @throws IllegalAccessException    if the variable node encounters an illegal access exception
    */
 
   @Override
-  public double evaluate() throws InvocationTargetException, IllegalAccessException {
+  public double evaluate() {
     if (!myModelState.getVariables().containsKey(myToken)) {
       getListener().onUpdateValue(myToken, 0.0);
       myModelState.getVariables().put(myToken, 0.0);

@@ -41,14 +41,12 @@ public class IfCommand implements Command {
    *                  condition is true
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of the last evaluated command if the condition is true, otherwise 0.0
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
    */
 
   @Override
   public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
-    modelState.outer = false;
+       {
+    modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     Node toExecute = arguments.get(1);
     if (arg1 != 0) {

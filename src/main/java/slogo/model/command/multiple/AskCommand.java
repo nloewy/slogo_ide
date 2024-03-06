@@ -49,7 +49,7 @@ public class AskCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
+       {
     List<Integer> tempList = new ArrayList<>();
     if (arguments.get(0).getChildren().isEmpty()) {
       int id = (int) Math.round(arguments.get(0).evaluate());
@@ -63,7 +63,7 @@ public class AskCommand implements Command {
         if (node.getToken().equals("]")) {
           continue;
         }
-        modelState.outer = false;
+        modelState.setOuter(false);
         int id = (int) Math.round(node.evaluate());
         if (!modelState.getTurtles().containsKey(id)) {
           modelState.getTurtles().put(id, new Turtle(id));
@@ -76,13 +76,13 @@ public class AskCommand implements Command {
     myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
     double val = 0.0;
     for (int i : tempList) {
-      modelState.outer = false;
-      modelState.currTurtle = i;
+      modelState.setOuter(false);
+      modelState.setCurrTurtle(i);
       val = arguments.get(1).evaluate();
     }
 
     modelState.getActiveTurtles().pop();
-    modelState.outer = false;
+    modelState.setOuter(false);
     return val;
 
   }

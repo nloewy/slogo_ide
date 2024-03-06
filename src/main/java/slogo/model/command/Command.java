@@ -46,10 +46,7 @@ public interface Command {
    * @param arguments a list of nodes representing the arguments for the command
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of executing the command
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
    */
 
-  double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException;
+  double execute(List<Node> arguments, int index);
 }

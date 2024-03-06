@@ -43,8 +43,8 @@ public class ModelState {
    * Stack of currently active turtles
    */
   private final Stack<List<Integer>> activeTurtles;
-  public boolean outer;
-  public int currTurtle;
+  private boolean outer;
+  private int currTurtle;
 
   /**
    * Initializes turtles, variables, commands to default values (empty maps)
@@ -105,4 +105,19 @@ public class ModelState {
     return activeTurtles;
   }
 
+  public void setCurrTurtle(int newTurtle) {
+    currTurtle = newTurtle;
+  }
+
+  public void setOuter(boolean state) {
+    outer = state;
+  }
+
+  public boolean getOuter() {
+    return outer;
+  }
+
+  public int getCurrTurtle() {
+    return currTurtle;
+  }
 }

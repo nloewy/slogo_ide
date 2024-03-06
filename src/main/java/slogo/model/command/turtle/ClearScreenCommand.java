@@ -45,7 +45,7 @@ public class ClearScreenCommand extends HomeCommand {
   @Override
   public double execute(List<Node> arguments, int index) {
     double ret = super.execute(arguments, index);
-    modelState.outer = false;
+    modelState.setOuter(false);
     listener.onResetTurtle(modelState.getTurtles().get(index).getImmutableTurtle().id());
     return ret;
   }

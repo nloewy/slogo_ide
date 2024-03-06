@@ -43,13 +43,11 @@ public class SetHeadingCommand implements Command {
    *                  node with the angle to set)
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the minimum angle of rotation needed to reach the new heading
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
-    modelState.outer = false;
+       {
+    modelState.setOuter(false);
     double newHeading = arguments.get(0).evaluate();
     Turtle turtle = modelState.getTurtles().get(index);
     double oldHeading = turtle.getHeading();

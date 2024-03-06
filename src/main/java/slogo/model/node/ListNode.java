@@ -29,11 +29,9 @@ public class ListNode extends Node {
    * last evaluated child node.
    *
    * @return the result of the last evaluated child node
-   * @throws InvocationTargetException if the list node encounters an invocation target exception
-   * @throws IllegalAccessException    if the list node encounters an illegal access exception
    */
   @Override
-  public double evaluate() throws InvocationTargetException, IllegalAccessException {
+  public double evaluate() {
     double ret = 0.0;
     for (Node child : getChildren()) {
       if (child.getToken().equals("]")) {

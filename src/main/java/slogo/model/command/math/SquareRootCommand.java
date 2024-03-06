@@ -41,13 +41,10 @@ public class SquareRootCommand implements Command {
    *                  square root of
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the square root of the input number
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
-  public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
-    modelState.outer = false;
+  public double execute(List<Node> arguments, int index) {
+    modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {
       throw new InvalidOperandException("Operand must be non-negative");

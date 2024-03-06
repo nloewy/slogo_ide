@@ -37,13 +37,11 @@ public class IdCommand implements Command {
    * @param arguments a list of nodes representing arguments (not used in this command)
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the id of currently active turtle
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
    */
 
   @Override
   public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
+       {
     return index;
   }
 }

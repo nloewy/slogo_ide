@@ -41,13 +41,9 @@ public class UserCommandNode extends Node {
    * evaluated command.
    *
    * @return the result of evaluating the user-defined command
-   * @throws InvocationTargetException if the user-defined command node encounters an invocation
-   *                                   target exception
-   * @throws IllegalAccessException    if the user-defined command node encounters an illegal access
-   *                                   exception
    */
   @Override
-  public double evaluate() throws InvocationTargetException, IllegalAccessException {
+  public double evaluate() {
     List<Node> children = modelState.getUserDefinedCommandNodes().get(myToken);
     children.addAll(getChildren());
     Node rootOfSubtree = children.get(1);

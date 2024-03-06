@@ -134,6 +134,7 @@ public class Controller {
         try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
           String line;
           while ((line = br.readLine()) != null) {
+            if(line.startsWith("#")) { continue;}
             contentBuilder.append(line).append("\n");
           }
         }

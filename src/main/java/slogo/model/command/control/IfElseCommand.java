@@ -45,13 +45,11 @@ public class IfElseCommand implements Command {
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of the last evaluated command if the condition is true, otherwise the result
    * of the last evaluated command in the else branch, or 0.0 if there's no else branch
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
-    modelState.outer = false;
+       {
+    modelState.setOuter(false);
     double condition = arguments.get(0).evaluate();
     Node toExecuteIfTrue = arguments.get(1);
     Node toExecuteIfFalse = arguments.get(2);

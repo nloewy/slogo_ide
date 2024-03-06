@@ -77,7 +77,7 @@ public class SlogoModel implements Model {
 
   @Override
   public void parse(String input)
-      throws InvocationTargetException, IllegalAccessException, InvalidCommandException, InvalidTokenException {
+      throws  IllegalAccessException, InvalidCommandException, InvalidTokenException {
     if (input.isEmpty()) {
       return;
     }
@@ -104,8 +104,7 @@ public class SlogoModel implements Model {
    * @throws IllegalAccessException    If access is not allowed to the invoked method.
    */
 
-  private void handleParseResult(String input, Node root)
-      throws InvocationTargetException, IllegalAccessException {
+  private void handleParseResult(String input, Node root) {
     dfsAddListener(root);
     double val = -1;
     for (Node node : root.getChildren()) {

@@ -40,14 +40,11 @@ public class QuotientCommand implements Command {
    * @param arguments a list containing two nodes representing the dividend and divisor
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the quotient of the two numbers
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
    * @throws InvalidOperandException   if the divisor is zero
    */
   @Override
-  public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
-    modelState.outer = false;
+  public double execute(List<Node> arguments, int index) {
+    modelState.setOuter(false);
     if (arguments.get(1).evaluate() == 0) {
       throw new InvalidOperandException("Divisor must be non-zero");
     }

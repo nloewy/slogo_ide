@@ -40,13 +40,11 @@ public class RepeatCommand implements Command {
    *                  repeat, and the second node represents the commands to repeat.
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of the last evaluated command in the loop
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
-    modelState.outer = false;
+       {
+    modelState.setOuter(false);
     String variableName = ":repcount";
     double end = arguments.get(0).evaluate();
     Node commands = arguments.get(1);

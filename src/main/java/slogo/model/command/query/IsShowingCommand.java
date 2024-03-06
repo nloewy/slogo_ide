@@ -38,13 +38,11 @@ public class IsShowingCommand implements Command {
    * @param arguments a list of nodes representing arguments (not used in this command)
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 1 if the requested turtle is showing, 0 otherwise
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
    */
   @Override
   public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
-    modelState.outer = false;
+       {
+    modelState.setOuter(false);
     if (modelState.getTurtles().get(index).getVisible()) {
       return 1.0;
     }

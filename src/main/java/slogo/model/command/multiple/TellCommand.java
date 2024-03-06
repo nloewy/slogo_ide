@@ -48,7 +48,7 @@ public class TellCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
+       {
     List<Integer> tempList = new ArrayList<>();
     int id = 0;
     if (arguments.get(0).getChildren().isEmpty()) {

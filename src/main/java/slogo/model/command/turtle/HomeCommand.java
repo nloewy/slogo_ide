@@ -45,7 +45,7 @@ public class HomeCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int index) {
-    modelState.outer = false;
+    modelState.setOuter(false);
     Turtle turtle = modelState.getTurtles().get(index);
     double currentX = turtle.getX();
     double currentY = turtle.getY();
