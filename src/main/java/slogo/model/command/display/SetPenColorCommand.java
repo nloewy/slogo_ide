@@ -21,6 +21,7 @@ public class SetPenColorCommand implements Command {
   public static final int NUM_ARGS = 1;
 
   private final ModelState modelState;
+  private final SlogoListener myListener;
 
   /**
    * Constructs an instance of SetPenCommand with the given model state and listener.
@@ -30,6 +31,7 @@ public class SetPenColorCommand implements Command {
    */
   public SetPenColorCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
+    myListener = listener;
   }
 
   /**
@@ -43,10 +45,10 @@ public class SetPenColorCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
-    for (Turtle turtle : modelState.getTurtles().values()) {
-      turtle.setPenColor((int) Math.round(arguments.get(0).evaluate()));
-    }
-    return modelState.getTurtles().get(turtleId).getHeading();
+    Turtle turtle = modelState.getTurtles().get(turtleId);
+    turtle.setPenColor((int) Math.round(arguments.get(0).evaluate()));
+    myListener.onUpdateTurtleState(turtle.getImmutableTurtle());
+    return modelState.getTurtles().get(turtleId).getPenColor();
   }
 }
 

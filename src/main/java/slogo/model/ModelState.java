@@ -40,6 +40,7 @@ public class ModelState {
    */
   private final Map<String, List<Node>> myUserDefinedCommandNodes;
   public boolean outer;
+  private Map<Integer, List<Integer>> myPalette;
   public int currTurtle;
   /**
    * Stack of currently active turtles
@@ -105,4 +106,7 @@ public class ModelState {
     return activeTurtles;
   }
 
+  public Map<Integer, List<Integer>> getPalette() {
+    return myPalette;
+  }
 }
