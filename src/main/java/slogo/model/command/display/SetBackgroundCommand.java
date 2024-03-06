@@ -37,7 +37,6 @@ public class SetBackgroundCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the background color of the workspace
    */
   @Override

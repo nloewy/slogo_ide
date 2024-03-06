@@ -38,7 +38,6 @@ public class EqualCommand implements Command {
    *
    * @param arguments a list of nodes representing values to be compared
    * @param turtleId  the id of the turtle currently active
-   *
    * @return 1.0 if the values are equal, otherwise returns 0.0
    */
   @Override

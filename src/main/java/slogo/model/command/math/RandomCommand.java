@@ -38,7 +38,6 @@ public class RandomCommand implements Command {
    *
    * @param arguments a list containing a single node representing the maximum value
    * @param turtleId  the id of the turtle currently active
-   *
    * @return a random number between 0 (inclusive) and the specified maximum value (exclusive)
    * @throws InvalidOperandException if the maximum value is negative
    */

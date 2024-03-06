@@ -10,8 +10,8 @@ import slogo.model.api.TurtleRecord;
 public class Turtle {
 
   private final int myId;
-  private boolean myPen;
   private final boolean active;
+  private boolean myPen;
   private double myX;
   private double myY;
   private boolean myVisible;
@@ -169,6 +169,7 @@ public class Turtle {
   public int getPenColor() {
     return penColor;
   }
+
   public void setPenColor(int index) {
     penColor = index;
   }

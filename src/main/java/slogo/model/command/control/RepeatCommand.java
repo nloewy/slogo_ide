@@ -38,7 +38,6 @@ public class RepeatCommand implements Command {
    * @param arguments a list containing two nodes: the first node represents the number of times to
    *                  repeat, and the second node represents the commands to repeat.
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the result of the last evaluated command in the loop
    */
   @Override

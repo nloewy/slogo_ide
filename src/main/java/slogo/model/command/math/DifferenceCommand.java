@@ -37,7 +37,6 @@ public class DifferenceCommand implements Command {
    *
    * @param arguments a list containing two nodes representing the numbers to subtract
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the difference between the two input numbers
    */
   @Override

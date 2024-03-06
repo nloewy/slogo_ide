@@ -40,7 +40,6 @@ public class ArcTangentCommand implements Command {
    * @param arguments a list containing a single node representing the number to calculate the
    *                  arctangent of
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the arctangent of the input number in degrees
    */
   @Override

@@ -1,10 +1,7 @@
 package slogo.model.command.display;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import slogo.model.ModelState;
-import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -40,7 +37,6 @@ public class SetPaletteCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the background color of the workspace
    */
   @Override
@@ -49,10 +45,10 @@ public class SetPaletteCommand implements Command {
     int index = (int) Math.round(arguments.get(0).evaluate());
     int red = (int) Math.round(arguments.get(1).evaluate());
     int green = (int) Math.round(arguments.get(2).evaluate());
-    int blue = (int) Math.round(arguments.get(3).evaluate())       ;
+    int blue = (int) Math.round(arguments.get(3).evaluate());
     modelState.getPalette().put(index, List.of(new Integer[]{red, green, blue}));
     myListener.onUpdatePallete(modelState.getPalette());
-    return modelState.getTurtles().get(turtleId).getHeading();
+    return index;
   }
 }
 

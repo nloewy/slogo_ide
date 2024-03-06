@@ -38,7 +38,6 @@ public class AndCommand implements Command {
    *
    * @param arguments a list of nodes, which can each be evaluated
    * @param turtleId  the id of the turtle currently active
-   *
    * @return 1.0 if both expressions are non-zero, otherwise returns 0.0
    */
   @Override

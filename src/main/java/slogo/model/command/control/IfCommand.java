@@ -39,7 +39,6 @@ public class IfCommand implements Command {
    *                  evaluate, and the second node contains the command nodes to execute if the
    *                  condition is true
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the result of the last evaluated command if the condition is true, otherwise 0.0
    */
 

@@ -39,7 +39,6 @@ public class MakeCommand implements Command {
    * @param arguments a list containing two nodes: the first node represents the variable name, and
    *                  the second node represents the value to assign to the variable
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the assigned value
    */
   @Override

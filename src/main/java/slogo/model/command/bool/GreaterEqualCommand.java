@@ -40,7 +40,6 @@ public class GreaterEqualCommand implements Command {
    *
    * @param arguments a list of nodes representing values to be compared
    * @param turtleId  the id of the turtle currently active
-   *
    * @return 1.0 if the first node's value is greater than or equal to the second node's value,
    * otherwise returns 0.0
    */

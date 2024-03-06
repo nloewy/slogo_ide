@@ -42,7 +42,6 @@ public class IfElseCommand implements Command {
    *                  condition is true, and the third node contains the command nodes to execute if
    *                  the condition is false
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the result of the last evaluated command if the condition is true, otherwise the result
    * of the last evaluated command in the else branch, or 0.0 if there's no else branch
    */

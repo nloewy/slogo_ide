@@ -39,13 +39,13 @@ public class ModelState {
    * obtain the nodes needed to execute the user defined commands
    */
   private final Map<String, List<Node>> myUserDefinedCommandNodes;
-  public boolean outer;
-  private Map<Integer, List<Integer>> myPalette;
-  public int currTurtle;
   /**
    * Stack of currently active turtles
    */
   private final Stack<List<Integer>> activeTurtles;
+  public boolean outer;
+  public int currTurtle;
+  private final Map<Integer, List<Integer>> myPalette;
 
   /**
    * Initializes turtles, variables, commands to default values (empty maps)
@@ -56,6 +56,7 @@ public class ModelState {
     myVariables = new HashMap<>();
     myUserDefinedCommands = new HashMap<>();
     myUserDefinedCommandNodes = new HashMap<>();
+    myPalette = new HashMap<>();
     activeTurtles = new Stack<>();
     outer = true;
     currTurtle = 1;

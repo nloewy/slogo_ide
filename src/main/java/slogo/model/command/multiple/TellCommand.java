@@ -1,6 +1,5 @@
 package slogo.model.command.multiple;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import slogo.model.ModelState;
@@ -40,7 +39,7 @@ public class TellCommand implements Command {
    * Executes the command to activate turtles with specified IDs, creating new turtles if needed.
    *
    * @param arguments a list of nodes representing the arguments passed to the command
-   * @param turtleId     the id of the turtle currently active
+   * @param turtleId  the id of the turtle currently active
    * @return the ID of the last activated turtle
    */
 

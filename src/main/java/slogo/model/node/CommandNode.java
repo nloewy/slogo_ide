@@ -78,12 +78,10 @@ public class CommandNode extends Node {
     }
     double val = 0;
     if (myToken.equals("control.Make") || myToken.equals("multiple.Ask") || !myModelState.outer) {
-      System.out.println(myToken + myModelState.currTurtle);
       val = command.execute(getChildren(), myModelState.currTurtle);
     } else {
       for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
         myModelState.currTurtle = myModelState.getActiveTurtles().peek().get(index);
-        System.out.println(myToken + myModelState.currTurtle);
         val = command.execute(getChildren(), myModelState.currTurtle);
       }
     }

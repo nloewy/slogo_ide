@@ -36,8 +36,7 @@ public class TurtlesCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
    * @param turtleId  the id of the turtle currently active
-   * @return the number of active turtles
-   *                  in the current workspace
+   * @return the number of active turtles in the current workspace
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {

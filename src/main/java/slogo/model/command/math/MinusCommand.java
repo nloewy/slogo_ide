@@ -37,7 +37,6 @@ public class MinusCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number to negate
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the negation of the input number
    */
   @Override

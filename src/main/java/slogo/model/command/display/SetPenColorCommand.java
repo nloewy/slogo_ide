@@ -39,7 +39,6 @@ public class SetPenColorCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the heading of the active turtle
    */
   @Override

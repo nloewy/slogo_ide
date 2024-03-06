@@ -38,7 +38,6 @@ public class CosineCommand implements Command {
    *
    * @param arguments a list containing a single node representing the angle in degrees
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the cosine of the input angle
    */
   @Override

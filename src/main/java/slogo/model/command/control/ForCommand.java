@@ -38,7 +38,6 @@ public class ForCommand implements Command {
    *                  start value, end value, and increment value, and the second list node contains
    *                  the command nodes to execute
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the result of the last evaluated command in the loop
    */
   @Override

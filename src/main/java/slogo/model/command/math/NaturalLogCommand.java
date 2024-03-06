@@ -39,7 +39,6 @@ public class NaturalLogCommand implements Command {
    * @param arguments a list containing a single node representing the number to calculate the
    *                  natural logarithm of
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the natural logarithm of the input number
    * @throws IllegalArgumentException if the input number is non-positive
    */

@@ -39,7 +39,6 @@ public class DoTimesCommand implements Command {
    *                  and the number of iterations, and the second list node contains the command
    *                  nodes that should be executed
    * @param turtleId  the id of the turtle currently active
-   *
    * @return the result of the last evaluated command in the loop
    */
   @Override
