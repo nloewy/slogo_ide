@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.api.SlogoException;
@@ -49,6 +50,11 @@ public class ParseTest {
 
       @Override
       public void onSetActiveTurtles(List<Integer> ids) {
+
+      }
+
+      @Override
+      public void onUpdatePallete(Map<Integer, List<Integer>> pallette) {
 
       }
     }, "English");
