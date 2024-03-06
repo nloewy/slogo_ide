@@ -38,7 +38,7 @@ public class PenColorCommandTest extends CommandTest {
   void testPenColor()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException {
     model.getTurtles().get(1).setPenColor(3);
-    node = new CommandNode("display.PenColor", model);
+    node = new CommandNode("PenColor", model);
     Assertions.assertEquals(3, node.evaluate());
   }
 

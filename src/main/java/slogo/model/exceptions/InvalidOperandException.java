@@ -1,5 +1,7 @@
 package slogo.model.exceptions;
 
+import slogo.model.api.SlogoException;
+
 /**
  * The InvalidOperandException is a runtime exception that occurs when a command attempts to perform
  * an operation with operands that result in undefined behavior or are not supported by the
@@ -9,9 +11,10 @@ package slogo.model.exceptions;
  * @author Noah Loewy
  */
 
-public class InvalidOperandException extends RuntimeException {
+public class InvalidOperandException extends SlogoException {
 
   public InvalidOperandException(String s) {
-    super(s);
+    super(s, "");
   }
+
 }

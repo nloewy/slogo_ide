@@ -26,7 +26,7 @@ public class HideTurtleCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("turtle.HideTurtle", model);
+    node = new CommandNode("HideTurtle", model);
     node.addListener(myListener);
   }
 

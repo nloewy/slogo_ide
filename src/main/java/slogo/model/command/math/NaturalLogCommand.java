@@ -5,6 +5,7 @@ import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.exceptions.InvalidOperandException;
+import slogo.model.exceptions.LogOfNegativeException;
 import slogo.model.node.Node;
 
 /**
@@ -40,14 +41,14 @@ public class NaturalLogCommand implements Command {
    *                  natural logarithm of
    * @param turtleId  the id of the turtle currently active
    * @return the natural logarithm of the input number
-   * @throws IllegalArgumentException if the input number is non-positive
+   * @throws LogOfNegativeException if the input number is non-positive
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
+  public double execute(List<Node> arguments, int turtleId) throws LogOfNegativeException {
     modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     if (arg1 <= 0) {
-      throw new InvalidOperandException("Input to log function must be non-negative");
+      throw new LogOfNegativeException("Input to log function must be non-negative");
     }
     return Math.log(arg1);
   }

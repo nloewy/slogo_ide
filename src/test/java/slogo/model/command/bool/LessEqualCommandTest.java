@@ -28,7 +28,7 @@ public class LessEqualCommandTest extends CommandTest {
     ModelState model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("bool.LessEqual", model);
+    node = new CommandNode("LessEqual", model);
   }
 
   @ParameterizedTest

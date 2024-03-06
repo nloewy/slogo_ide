@@ -18,7 +18,4 @@ public class InvalidCommandException extends SlogoException {
     super(s, token);
   }
 
-  public String getToken() {
-    return super.getToken();
-  }
 }

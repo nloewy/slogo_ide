@@ -30,7 +30,7 @@ public class DifferenceCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("math.Difference", model);
+    node = new CommandNode("Difference", model);
 
   }
 

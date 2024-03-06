@@ -32,10 +32,10 @@ public class TellCommandTest extends CommandTest {
     model.getActiveTurtles().get(0).add(10);
     model.getTurtles().put(9, new Turtle(9));
     model.getActiveTurtles().get(0).add(9);
-    node = new CommandNode("multiple.Tell", model);
+    node = new CommandNode("Tell", model);
     node.addListener(myListener);
     Node nodeChild = new ListNode("[", model) ;
-  //  Node nodeTwo = new CommandNode("math.Sum", model) ;
+  //  Node nodeTwo = new CommandNode("Sum", model) ;
  //   Node nodeThree = new ConstantNode("4", model);
   //  Node nodeFour = new ConstantNode("1", model);
     Node nodeFour = new ConstantNode("5", model);
@@ -51,7 +51,7 @@ public class TellCommandTest extends CommandTest {
     assertEquals(2.0, node.evaluate(), DELTA);
     assertEquals(3.0, model.getActiveTurtles().peek().size(), DELTA);
 
-    Node fwd = new CommandNode("turtle.Forward", model);
+    Node fwd = new CommandNode("Forward", model);
     fwd.addListener(myListener);
     fwd.addChild(new ConstantNode("90", model));
     fwd.evaluate();
@@ -78,10 +78,10 @@ public class TellCommandTest extends CommandTest {
     model.getActiveTurtles().peek().add(10);
     model.getTurtles().put(9, new Turtle(9));
     model.getActiveTurtles().peek().add(9);
-    node = new CommandNode("multiple.Tell", model);
+    node = new CommandNode("Tell", model);
     node.addListener(myListener);
     Node nodeChild = new ListNode("[", model) ;
-    Node nodeTwo = new CommandNode("math.Sum", model) ;
+    Node nodeTwo = new CommandNode("Sum", model) ;
     Node nodeThree = new ConstantNode("4", model);
     Node nodeFour = new ConstantNode("1", model);
 
@@ -104,7 +104,7 @@ public class TellCommandTest extends CommandTest {
     assertEquals(6.0, model.getActiveTurtles().peek().size(), DELTA);
     assertEquals(8.0, model.getTurtles().size(), DELTA);
 
-    Node fwd = new CommandNode("turtle.Forward", model);
+    Node fwd = new CommandNode("Forward", model);
     fwd.addListener(myListener);
     fwd.addChild(new ConstantNode("90", model));
     System.out.println(model.getActiveTurtles());

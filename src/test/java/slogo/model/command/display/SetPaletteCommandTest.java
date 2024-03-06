@@ -40,7 +40,7 @@ public class SetPaletteCommandTest extends CommandTest {
   @Test
   void testBgColor()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException {
-    node = new CommandNode("display.SetPalette", model);
+    node = new CommandNode("SetPalette", model);
     node.addChild(new ConstantNode("4", model));
     node.addChild(new ConstantNode("200", model));
     node.addChild(new ConstantNode("100", model));

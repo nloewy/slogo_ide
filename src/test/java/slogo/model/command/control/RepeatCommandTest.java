@@ -37,15 +37,15 @@ public class RepeatCommandTest extends CommandTest {
   @Test
   void testRepeatNoVariable()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.Repeat", model);
-    Node cmd = new CommandNode("math.SquareRoot", model);
+    node = new CommandNode("Repeat", model);
+    Node cmd = new CommandNode("SquareRoot", model);
     node.addChild(cmd);
     cmd.addChild(new ConstantNode("9", model));
     Node commandListNode = new ListNode("", model);
-    Node fwdNode = new CommandNode("turtle.Backward", model);
+    Node fwdNode = new CommandNode("Backward", model);
     fwdNode.addChild(new ConstantNode("2", model));
     commandListNode.addChild(fwdNode);
-    Node fwdNode2 = new CommandNode("turtle.Backward", model);
+    Node fwdNode2 = new CommandNode("Backward", model);
     fwdNode2.addChild(new ConstantNode("5", model));
     commandListNode.addChild(fwdNode2);
     node.addChild(commandListNode);
@@ -57,13 +57,13 @@ public class RepeatCommandTest extends CommandTest {
   @Test
   void testRepeatVariableUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.Repeat", model);
-    Node cmd = new CommandNode("math.SquareRoot", model);
+    node = new CommandNode("Repeat", model);
+    Node cmd = new CommandNode("SquareRoot", model);
     node.addChild(cmd);
     cmd.addChild(new ConstantNode("9", model));
 
     Node commandListNode = new ListNode("", model);
-    Node cmdNode = new CommandNode("turtle.Backward", model);
+    Node cmdNode = new CommandNode("Backward", model);
     commandListNode.addChild(cmdNode);
     Node varNode = new VariableNode(":repcount", model);
     cmdNode.addChild(varNode);

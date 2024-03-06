@@ -4,6 +4,7 @@ import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
+import slogo.model.exceptions.InvalidRgbValueException;
 import slogo.model.node.Node;
 
 public class SetPaletteCommand implements Command {
@@ -43,12 +44,20 @@ public class SetPaletteCommand implements Command {
   public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
     int index = (int) Math.round(arguments.get(0).evaluate());
-    int red = (int) Math.round(arguments.get(1).evaluate());
-    int green = (int) Math.round(arguments.get(2).evaluate());
-    int blue = (int) Math.round(arguments.get(3).evaluate());
+    int red = validateRgb((int) Math.round(arguments.get(1).evaluate()));
+    int green = validateRgb((int) Math.round(arguments.get(2).evaluate()));
+    int blue = validateRgb((int) Math.round(arguments.get(3).evaluate()));
+
     modelState.getPalette().put(index, List.of(new Integer[]{red, green, blue}));
     myListener.onUpdatePallete(modelState.getPalette());
     return index;
+  }
+
+  private int validateRgb(int val) throws InvalidRgbValueException {
+    if (val >= 0 && val <= 256) {
+      return val;
+    }
+    throw new InvalidRgbValueException("RGB Val Not in Range", Integer.toString(val));
   }
 }
 

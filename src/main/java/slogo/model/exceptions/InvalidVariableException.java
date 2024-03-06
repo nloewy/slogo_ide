@@ -15,7 +15,4 @@ public class InvalidVariableException extends SlogoException {
     super(s, token);
   }
 
-  public String getToken() {
-    return super.getToken();
-  }
 }

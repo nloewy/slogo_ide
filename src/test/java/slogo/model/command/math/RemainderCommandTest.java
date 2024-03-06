@@ -34,7 +34,7 @@ public class RemainderCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("math.Remainder", model);
+    node = new CommandNode("Remainder", model);
 
   }
 

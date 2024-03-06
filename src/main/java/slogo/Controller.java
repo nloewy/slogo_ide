@@ -52,7 +52,6 @@ public class Controller {
     this.stage = stage;
     openStartScreen();
     prop = new Properties();
-    getProperties();
   }
 
   public void setTurtleImage(File i) {
@@ -102,6 +101,7 @@ public class Controller {
   public void openNewIDESession(String slogoContent) throws IOException {
     Stage newStage = new Stage();
     newStage.setMaximized(false);
+    getProperties();
     MainScreen mainScreen = new MainScreen(newStage, this);
     if (turtleImage != null) {
       mainScreen.setTurtleImage(turtleImage);

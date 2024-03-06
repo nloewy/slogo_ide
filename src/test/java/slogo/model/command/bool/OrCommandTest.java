@@ -29,7 +29,7 @@ public class OrCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
 
-    node = new CommandNode("bool.Or", model);
+    node = new CommandNode("Or", model);
   }
 
   @ParameterizedTest

@@ -37,7 +37,7 @@ import slogo.model.node.Node;
       model.getTurtles().put(5, new Turtle(5));
       model.getActiveTurtles().add(new ArrayList<>());
       model.getActiveTurtles().get(0).add(5);
-      node = new CommandNode("multiple.Id", model);
+      node = new CommandNode("Id", model);
       assertEquals(5.0, node.evaluate(), DELTA);
     }
 
