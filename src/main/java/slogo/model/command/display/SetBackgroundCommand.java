@@ -5,6 +5,7 @@ import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
+import slogo.model.exceptions.IndexNotOnPaletteException;
 import slogo.model.node.Node;
 
 public class SetBackgroundCommand implements Command {
@@ -21,6 +22,7 @@ public class SetBackgroundCommand implements Command {
   public static final int NUM_ARGS = 1;
 
   private final ModelState modelState;
+  private final SlogoListener myListener;
 
   /**
    * Constructs an instance of SetPenCommand with the given model state and listener.
@@ -30,6 +32,7 @@ public class SetBackgroundCommand implements Command {
    */
   public SetBackgroundCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
+    myListener = listener;
   }
 
   /**
@@ -37,14 +40,19 @@ public class SetBackgroundCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments
    * @param turtleId  the id of the turtle currently active
+   * @throws IndexNotOnPaletteException if index not on color palette
    * @return the background color of the workspace
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, int turtleId) throws IndexNotOnPaletteException {
     modelState.setOuter(false);
     double val = Math.round(arguments.get(0).evaluate());
+    if(!modelState.getPalette().containsKey((int) val)) {
+      throw new IndexNotOnPaletteException("", String.valueOf(val));
+    }
     for (Turtle turtle : modelState.getTurtles().values()) {
       turtle.setBgColor((int) val);
+      myListener.onUpdateTurtleState(turtle.getImmutableTurtle());
     }
     return val;
   }

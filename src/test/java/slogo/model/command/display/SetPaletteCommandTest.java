@@ -49,7 +49,7 @@ public class SetPaletteCommandTest extends CommandTest {
     Assertions.assertEquals(8, node.evaluate());
     Assertions.assertEquals(8, model.getPalette().size());
     Assertions.assertEquals(List.of(200, 100, 50), model.getPalette().get(8));
-    Assertions.assertEquals(List.of(0, 0, 0), model.getPalette().get(5));
+    Assertions.assertEquals(List.of(255, 255, 255), model.getPalette().get(1));
   }
 
 }
