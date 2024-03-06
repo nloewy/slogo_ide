@@ -4,6 +4,7 @@ import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
+import slogo.model.command.exceptions.TangentUndefinedFunction;
 import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.node.Node;
 
@@ -39,14 +40,14 @@ public class TangentCommand implements Command {
    * @param arguments a list containing a single node representing the angle in degrees
    * @param turtleId  the id of the turtle currently active
    * @return the tangent of the input angle
-   * @throws InvalidOperandException if the tangent function is undefined
+   * @throws TangentUndefinedFunction if the tangent function is undefined
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
+  public double execute(List<Node> arguments, int turtleId) throws TangentUndefinedFunction {
     modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     if (Math.abs(arg1 % 180) == 90) {
-      throw new InvalidOperandException("Illegal Value for Tangent Function");
+      throw new TangentUndefinedFunction("Illegal Value for Tangent Function. Function is undefined for all integer k when x =  (Pi/2) + Pi*k");
     }
     return Math.tan(Math.toRadians(arg1));
   }

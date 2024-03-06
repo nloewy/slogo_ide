@@ -5,6 +5,7 @@ import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.exceptions.InvalidOperandException;
+import slogo.model.exceptions.SquareRootOfNegativeException;
 import slogo.model.node.Node;
 
 /**
@@ -40,14 +41,14 @@ public class SquareRootCommand implements Command {
    *                  square root of
    * @param turtleId  the id of the turtle currently active
    * @return the square root of the input number
-   * @throws InvalidOperandException if tries to take square root of negative number
+   * @throws SquareRootOfNegativeException if tries to take square root of negative number
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
+  public double execute(List<Node> arguments, int turtleId) throws SquareRootOfNegativeException {
     modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {
-      throw new InvalidOperandException("Operand must be non-negative");
+      throw new SquareRootOfNegativeException("Operand must be non-negative");
     }
     return Math.sqrt(arg1);
   }
