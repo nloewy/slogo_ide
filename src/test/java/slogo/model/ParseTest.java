@@ -417,8 +417,8 @@ public class ParseTest {
   @Test
   void askWithCommndYesPara() throws InvocationTargetException, IllegalAccessException {
     slogo.parse("tell 2 fd 90 tell [ 1 2 ] repeat 6 [ Repeat 2 [ Repeat quotient 60 2 [ fd 10 right 2 ] right 120 ] right 60 ] \n");
-    assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY());
-    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY());
+    assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
+    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY(), DELTA);
 
 
   }
