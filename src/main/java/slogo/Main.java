@@ -4,10 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import slogo.model.exceptions.DivideByZeroException;
-import slogo.model.exceptions.LogOfNegativeException;
-import slogo.model.exceptions.TangentUndefinedFunction;
-import slogo.model.exceptions.UndefinedExponentException;
+
 
 public class Main extends Application {
 

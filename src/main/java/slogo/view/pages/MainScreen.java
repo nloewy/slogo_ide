@@ -649,12 +649,15 @@ public class MainScreen implements SlogoListener {
   public void onResetTurtle(int id) {
     for (FrontEndTurtle turtle : turtles) {
       if (turtle.getId() == id) {
-        turtle.setIsPenDisplayed(false);
         turtle.setPosition(centerX, centerY, 0);
         turtle.setImage(defaultImage);
+        for(Line line : turtle.getPathHistory()) {
+            centerPane.getChildren().remove(line);
+          }
+        }
       }
     }
-  }
+
 
   // val returned by last command
   // add it to history next to the command
