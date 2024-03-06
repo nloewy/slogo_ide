@@ -5,6 +5,7 @@ import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
+import slogo.model.exceptions.IndexNotOnPaletteException;
 import slogo.model.node.Node;
 
 public class SetPenColorCommand implements Command {
@@ -39,13 +40,18 @@ public class SetPenColorCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments
    * @param turtleId  the id of the turtle currently active
+   * @throws IndexNotOnPaletteException if index not on color palette
    * @return the heading of the active turtle
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
     Turtle turtle = modelState.getTurtles().get(turtleId);
-    turtle.setPenColor((int) Math.round(arguments.get(0).evaluate()));
+    double val = Math.round(arguments.get(0).evaluate());
+    if(!modelState.getPalette().containsKey((int) val)) {
+      throw new IndexNotOnPaletteException("", String.valueOf(val));
+    }
+    turtle.setPenColor((int) val);
     myListener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return modelState.getTurtles().get(turtleId).getPenColor();
   }

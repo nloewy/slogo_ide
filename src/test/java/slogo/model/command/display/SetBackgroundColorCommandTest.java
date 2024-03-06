@@ -41,6 +41,7 @@ public class SetBackgroundColorCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException {
     node = new CommandNode("SetBackground", model);
     node.addChild(new ConstantNode("4", model));
+    node.addListener(myListener);
     Assertions.assertEquals(4, node.evaluate());
     Assertions.assertEquals(4, model.getTurtles().get(1).getImmutableTurtle().bgIndex());
     Assertions.assertEquals(4, model.getTurtles().get(2).getImmutableTurtle().bgIndex());
