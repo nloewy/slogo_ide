@@ -56,6 +56,7 @@ public class CommandNode extends Node {
    * @throws InvalidOperandException        if an invalid operand is encountered during execution
    */
 
+
   @Override
   public double evaluate() throws InsufficientArgumentsException {
     Command command = CommandFactory.createCommand(myToken, myModelState, getListener());
@@ -71,7 +72,7 @@ public class CommandNode extends Node {
         val = command.execute(getChildren(), myModelState.getCurrTurtle());
       }
     }
-    myModelState.setOuter(true) ;
+    myModelState.setOuter(true);
 
     return val;
   }

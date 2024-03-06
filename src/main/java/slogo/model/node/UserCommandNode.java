@@ -51,15 +51,21 @@ public class UserCommandNode extends Node {
       throw new InsufficientArgumentsException("", myToken);
     }
     Map<Node, String> constantNodeToVariable = new HashMap<>();
-    for (int i = 0; i < numArgs; i++) {
-      String tokenToReplace = children.get(0).getChildren().get(i).getToken();
-      double value = children.get(i + 2).evaluate();
-      Node constantNode = new ConstantNode(String.valueOf(value), modelState);
-      constantNodeToVariable.put(constantNode, tokenToReplace);
-      replaceNodesWithToken(rootOfSubtree, tokenToReplace, constantNode);
+
+  double val = 0;
+    for (int index = 0; index < modelState.getActiveTurtles().peek().size(); index++) {
+      modelState.setCurrTurtle(modelState.getActiveTurtles().peek().get(index));
+      modelState.setOuter(false);
+      for (int i = 0; i < numArgs; i++) {
+        String tokenToReplace = children.get(0).getChildren().get(i).getToken();
+        double value = children.get(i + 2).evaluate();
+        Node constantNode = new ConstantNode(String.valueOf(value), modelState);
+        constantNodeToVariable.put(constantNode, tokenToReplace);
+        replaceNodesWithToken(rootOfSubtree, tokenToReplace, constantNode);
+      }
+      val = rootOfSubtree.evaluate();
+      replaceTokensWithNodes(rootOfSubtree, constantNodeToVariable);
     }
-    double val = rootOfSubtree.evaluate();
-    replaceTokensWithNodes(rootOfSubtree, constantNodeToVariable);
     modelState.getUserDefinedCommandNodes().put(myToken, children.subList(0, 2));
     return val;
   }
