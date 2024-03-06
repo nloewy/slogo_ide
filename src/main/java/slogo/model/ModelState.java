@@ -45,9 +45,6 @@ public class ModelState {
   private final Stack<List<Integer>> activeTurtles;
   private boolean outer;
   private int currTurtle;
-
-  private boolean outer;
-  private int currTurtle;
   private final Map<Integer, List<Integer>> myPalette;
 
   /**

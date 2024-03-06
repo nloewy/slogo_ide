@@ -38,11 +38,11 @@ public class AndCommand implements Command {
    * Executes the logical AND operation on the provided boolean expressions.
    *
    * @param arguments a list of nodes, which can each be evaluated
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return 1.0 if both expressions are non-zero, otherwise returns 0.0
    */
   @Override
-  public double execute(List<Node> arguments, int index)
+  public double execute(List<Node> arguments, int turtleId)
   {
     modelState.setOuter(false);
     return (Math.abs(arguments.get(0).evaluate()) > TOLERANCE) &&
