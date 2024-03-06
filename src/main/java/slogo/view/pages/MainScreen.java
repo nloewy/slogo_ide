@@ -618,7 +618,7 @@ public class MainScreen implements SlogoListener {
             turtleState.heading());
 
         List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
-        // turtle.setPenColor(new Color(newPenColor.get(0), newPenColor.get(1), newPenColor.get(2), 1));
+        turtle.setPenColor(new Color(newPenColor.get(0)/255, newPenColor.get(1)/255, newPenColor.get(2)/255, 1));
         return;
       }
     }
