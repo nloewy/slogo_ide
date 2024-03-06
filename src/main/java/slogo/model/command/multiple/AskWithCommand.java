@@ -67,6 +67,7 @@ public class AskWithCommand implements Command {
     }
 
     modelState.getActiveTurtles().pop();
+    myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
     modelState.setOuter(false);
     return val;
 
