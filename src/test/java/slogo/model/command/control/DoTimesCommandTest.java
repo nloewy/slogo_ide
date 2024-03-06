@@ -37,8 +37,8 @@ public class DoTimesCommandTest extends CommandTest {
   @Test
   void testDoTimesForwardVariableNotUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.DoTimes", model);
-    Node fwdNode = new CommandNode("turtle.Backward", model);
+    node = new CommandNode("DoTimes", model);
+    Node fwdNode = new CommandNode("Backward", model);
     Node varNode = new VariableNode("i", model);
     Node listNode = new ListNode("", model);
     Node commandListNode = new ListNode("", model);
@@ -56,16 +56,16 @@ public class DoTimesCommandTest extends CommandTest {
   @Test
   void testDoTimesForwardVariableUsed()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException {
-    node = new CommandNode("control.DoTimes", model);
+    node = new CommandNode("DoTimes", model);
     Node listNode = new ListNode("", model);
     Node commandListNode = new ListNode("", model);
-    Node cmdNode = new CommandNode("turtle.Backward", model);
+    Node cmdNode = new CommandNode("Backward", model);
     commandListNode.addChild(cmdNode);
     Node varNode = new VariableNode("i", model);
     cmdNode.addChild(new VariableNode("i", model));
     listNode.addChild(varNode);
     listNode.addChild(new ConstantNode("5", model));
-    Node cmdNode2 = new CommandNode("turtle.Backward", model);
+    Node cmdNode2 = new CommandNode("Backward", model);
     cmdNode2.addChild(new VariableNode("i", model));
     commandListNode.addChild(cmdNode2);
     node.addChild(listNode);

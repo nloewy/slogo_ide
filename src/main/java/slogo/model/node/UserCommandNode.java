@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import slogo.model.ModelState;
+import slogo.model.exceptions.InsufficientArgumentsException;
 
 /**
  * Represents a user-defined command node in the syntax tree. This node evaluates a user-defined
@@ -46,6 +47,9 @@ public class UserCommandNode extends Node {
     List<Node> children = modelState.getUserDefinedCommandNodes().get(myToken);
     children.addAll(getChildren());
     Node rootOfSubtree = children.get(1);
+    if(children.size() < numArgs + 2) {
+      throw new InsufficientArgumentsException("", myToken);
+    }
     Map<Node, String> constantNodeToVariable = new HashMap<>();
     for (int i = 0; i < numArgs; i++) {
       String tokenToReplace = children.get(0).getChildren().get(i).getToken();

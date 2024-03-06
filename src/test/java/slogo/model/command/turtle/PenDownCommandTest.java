@@ -26,7 +26,7 @@ public class PenDownCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("turtle.PenDown", model);
+    node = new CommandNode("PenDown", model);
     node.addListener(myListener);
   }
 

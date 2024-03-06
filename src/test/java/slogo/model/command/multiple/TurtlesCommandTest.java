@@ -40,7 +40,7 @@ public class TurtlesCommandTest extends CommandTest {
     model.getTurtles().put(4, new Turtle(4));
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(4);
-    node = new CommandNode("multiple.Turtles", model);
+    node = new CommandNode("Turtles", model);
     assertEquals(2.0, node.evaluate(), DELTA);
   }
 

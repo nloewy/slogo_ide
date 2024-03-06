@@ -12,7 +12,9 @@ import slogo.model.api.SlogoException;
 import slogo.model.api.SlogoListener;
 import slogo.model.exceptions.InsufficientArgumentsException;
 import slogo.model.exceptions.InvalidCommandException;
+import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.exceptions.InvalidTokenException;
+import slogo.model.exceptions.InvalidUserCommandException;
 import slogo.model.exceptions.InvalidVariableException;
 import slogo.model.node.ListNode;
 import slogo.model.node.Node;
@@ -82,12 +84,16 @@ public class SlogoModel implements Model {
     try {
       parser.parse(input, root);
     } catch (InvalidCommandException | InvalidTokenException | InsufficientArgumentsException |
-             InvalidVariableException e) {
+             InvalidVariableException | InvalidUserCommandException e) {
       handleParseResult(input, root);
-      System.out.println(e.getClass());
       throw new SlogoException(e.getMessage(), e, e.getToken());
     }
-    handleParseResult(input, root);
+
+    try {
+      handleParseResult(input, root);
+    } catch (InvalidOperandException | InsufficientArgumentsException e) {
+      throw new SlogoException(e.getMessage(), e, e.getToken());
+    }
   }
 
   /**
@@ -105,7 +111,6 @@ public class SlogoModel implements Model {
     }
     myCommands.push(input);
     myListener.onReturn(val, root.toString());
-
   }
 
   /**

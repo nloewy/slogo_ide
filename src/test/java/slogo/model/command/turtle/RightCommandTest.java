@@ -29,7 +29,7 @@ public class RightCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("turtle.Right", model);
+    node = new CommandNode("Right", model);
     node.addListener(myListener);
 
   }
@@ -70,7 +70,7 @@ public class RightCommandTest extends CommandTest {
     model.getTurtles().put(2, new Turtle(2));
     model.getActiveTurtles().get(0).add(2);
     String rot = "80";
-    node = new CommandNode("turtle.Right", model);
+    node = new CommandNode("Right", model);
     node.addChild(new ConstantNode(rot, model));
     node.addListener(myListener);
     assertEquals(80, node.evaluate(), DELTA);

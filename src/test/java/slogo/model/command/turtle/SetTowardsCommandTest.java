@@ -31,7 +31,7 @@ public class SetTowardsCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("turtle.SetTowards", model);
+    node = new CommandNode("SetTowards", model);
     node.addListener(myListener);
   }
 

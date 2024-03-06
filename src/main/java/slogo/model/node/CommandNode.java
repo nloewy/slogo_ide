@@ -63,7 +63,7 @@ public class CommandNode extends Node {
       throw new InsufficientArgumentsException("", getToken());
     }
     double val = 0;
-    if (myToken.equals("control.Make") || myToken.startsWith("multiple.Ask") || !myModelState.getOuter()) {
+    if (myToken.equals("Make") || myToken.startsWith("Ask") || !myModelState.getOuter()) {
       val = command.execute(getChildren(), myModelState.getCurrTurtle());
     } else {
       for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {

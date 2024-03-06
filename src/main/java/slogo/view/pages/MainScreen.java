@@ -607,7 +607,7 @@ public class MainScreen implements SlogoListener {
    * Map<Index, List<Number>>
    */
 
-// WILL return background color and pen color in the future, each indices check with
+  // WILL return background color and pen color in the future, each indices check with
 //the map
   @Override
   public void onUpdateTurtleState(TurtleRecord turtleState) {
@@ -675,3 +675,4 @@ public class MainScreen implements SlogoListener {
     this.palette = palette;
   }
 }
+

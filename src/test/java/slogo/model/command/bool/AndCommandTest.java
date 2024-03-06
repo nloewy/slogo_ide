@@ -31,7 +31,7 @@ public class AndCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
 
-    node = new CommandNode("bool.And", model);
+    node = new CommandNode("And", model);
 
   }
 

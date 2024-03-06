@@ -31,7 +31,7 @@ public class XcoordinateCommandTest extends CommandTest {
     model.getActiveTurtles().peek().add(1);
 
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("query.Xcoordinate", model);
+    node = new CommandNode("Xcoordinate", model);
 
   }
 

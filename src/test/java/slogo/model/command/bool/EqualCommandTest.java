@@ -28,7 +28,7 @@ public class EqualCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
 
-    node = new CommandNode("bool.Equal", model);
+    node = new CommandNode("Equal", model);
   }
 
   @ParameterizedTest

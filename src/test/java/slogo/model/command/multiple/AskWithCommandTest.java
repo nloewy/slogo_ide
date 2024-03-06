@@ -32,11 +32,11 @@ public class AskWithCommandTest extends CommandTest {
       for(int i = 0; i < 16; i++) {
         model.getTurtles().put(i, new Turtle(i));
       }
-      Node askWithNode = new CommandNode("multiple.AskWith", model);
-      Node equal = new CommandNode("bool.Equal", model) ;
+      Node askWithNode = new CommandNode("AskWith", model);
+      Node equal = new CommandNode("Equal", model) ;
 
-      Node remainder = new CommandNode("math.Remainder", model);
-      Node dividend = new CommandNode("multiple.Id", model) ;
+      Node remainder = new CommandNode("Remainder", model);
+      Node dividend = new CommandNode("Id", model) ;
       Node divisor = new ConstantNode("3", model) ;
       askWithNode.addChild(equal);
       equal.addChild(new ConstantNode("0", model));
@@ -46,7 +46,7 @@ public class AskWithCommandTest extends CommandTest {
       Node list2 = new ListNode("[", model) ;
       askWithNode.getChildren().add(list2);
       list2.addListener(myListener);
-      Node rightNode = new CommandNode("turtle.Right", model);
+      Node rightNode = new CommandNode("Right", model);
       rightNode.addListener(myListener);
       Node nodeNinty = new ConstantNode("90", model);
       list2.getChildren().add(rightNode);
@@ -56,7 +56,7 @@ public class AskWithCommandTest extends CommandTest {
       assertTrue(model.getActiveTurtles().peek().contains(17));
       assertEquals(1,model.getActiveTurtles().size());
       assertEquals(17,model.getTurtles().size());
-      Node r = new CommandNode("turtle.Right", model);
+      Node r = new CommandNode("Right", model);
       r.addListener(myListener);
       Node n90 = new ConstantNode("60", model);
       r.addChild(n90);

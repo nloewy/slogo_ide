@@ -33,7 +33,7 @@ public class PowerCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("math.Power", model);
+    node = new CommandNode("Power", model);
 
   }
 

@@ -32,7 +32,7 @@ public class SetHeadingCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("turtle.SetHeading", model);
+    node = new CommandNode("SetHeading", model);
     node.addListener(myListener);
 
 

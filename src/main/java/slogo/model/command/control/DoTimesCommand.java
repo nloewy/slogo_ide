@@ -45,7 +45,6 @@ public class DoTimesCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int turtleId)
   {
-    modelState.setOuter(false);
     String variableName = arguments.get(0).getChildren().get(0).getToken();
     double end = arguments.get(0).getChildren().get(1).evaluate();
     Node commands = arguments.get(1);

@@ -53,7 +53,7 @@ public class ClearScreenCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("turtle.ClearScreen", model);
+    node = new CommandNode("ClearScreen", model);
     node.addListener(myListener);
     myTurtle.setX(Double.parseDouble(originalX));
     myTurtle.setY(Double.parseDouble(originalY));

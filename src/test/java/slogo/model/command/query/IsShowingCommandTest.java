@@ -27,7 +27,7 @@ public class IsShowingCommandTest extends CommandTest {
     model.getActiveTurtles().peek().add(1);
 
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("query.IsShowing", model);
+    node = new CommandNode("IsShowing", model);
   }
 
   @Test

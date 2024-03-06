@@ -34,7 +34,7 @@ public class QuotientCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("math.Quotient", model);
+    node = new CommandNode("Quotient", model);
 
   }
 

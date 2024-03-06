@@ -39,7 +39,7 @@ public class SetBackgroundColorCommandTest extends CommandTest {
   @Test
   void testBgColor()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException {
-    node = new CommandNode("display.SetBackground", model);
+    node = new CommandNode("SetBackground", model);
     node.addChild(new ConstantNode("4", model));
     Assertions.assertEquals(4, node.evaluate());
     Assertions.assertEquals(4, model.getTurtles().get(1).getImmutableTurtle().bgIndex());

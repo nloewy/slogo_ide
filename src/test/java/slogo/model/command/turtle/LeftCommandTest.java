@@ -32,7 +32,7 @@ public class LeftCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("turtle.Left", model);
+    node = new CommandNode("Left", model);
     node.addListener(myListener);
 
   }

@@ -30,7 +30,7 @@ public class ProductCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("math.Product", model);
+    node = new CommandNode("Product", model);
 
   }
 

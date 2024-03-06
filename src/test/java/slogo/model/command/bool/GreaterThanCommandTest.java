@@ -30,7 +30,7 @@ public class GreaterThanCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
 
-    node = new CommandNode("bool.GreaterThan", model);
+    node = new CommandNode("GreaterThan", model);
   }
 
   @ParameterizedTest

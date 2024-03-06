@@ -26,7 +26,7 @@ public class IsPenDownCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("query.IsPenDown", model);
+    node = new CommandNode("IsPenDown", model);
   }
 
   @Test

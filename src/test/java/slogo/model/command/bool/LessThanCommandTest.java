@@ -28,7 +28,7 @@ public class LessThanCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("bool.LessThan", model);
+    node = new CommandNode("LessThan", model);
   }
 
   @ParameterizedTest
