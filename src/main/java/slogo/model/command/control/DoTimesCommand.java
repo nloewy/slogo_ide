@@ -39,11 +39,11 @@ public class DoTimesCommand implements Command {
    * @param arguments a list containing two nodes: the first list node contains the variable name
    *                  and the number of iterations, and the second list node contains the command
    *                  nodes that should be executed
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the result of the last evaluated command in the loop
    */
   @Override
-  public double execute(List<Node> arguments, int index)
+  public double execute(List<Node> arguments, int turtleId)
   {
     modelState.setOuter(false);
     String variableName = arguments.get(0).getChildren().get(0).getToken();
