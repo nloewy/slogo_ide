@@ -57,13 +57,6 @@ import slogo.view.ComboChoice;
 import slogo.view.FrontEndTurtle;
 import slogo.view.UserInterfaceUtil;
 
-/*
-The View will already know the XMLFile data when
-this is initialized. This will periodically
-call View for updates and to schedule
-animation keyframes.
- */
-
 public class MainScreen implements SlogoListener {
 
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
@@ -604,6 +597,15 @@ public class MainScreen implements SlogoListener {
     myAnimation.add(animation);
   }
 
+  /*
+   * new method returns list of indexed values
+   * indices to RGB values
+   * indices are integers
+   * Map<Index, List<Number>>
+   */
+
+// WILL return background color and pen color in the future, each indices check with
+//the map
   @Override
   public void onUpdateTurtleState(TurtleRecord turtleState) {
     for (FrontEndTurtle turtle : turtles) {

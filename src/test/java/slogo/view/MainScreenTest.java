@@ -18,7 +18,6 @@ public class MainScreenTest extends DukeApplicationTest {
   private Button mySubmitButton;
   private Button myTestButton;
 
-
   // this method is run BEFORE EACH test to set up application in a fresh state
 
 //  @Override
