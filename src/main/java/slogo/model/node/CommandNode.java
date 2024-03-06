@@ -36,11 +36,9 @@ public class CommandNode extends Node {
    *
    * @param token      the token representing the command
    * @param modelState the model state of the application
-   * @throws ClassNotFoundException if the command class cannot be found
    */
 
-  public CommandNode(String token, ModelState modelState)
-      throws ClassNotFoundException {
+  public CommandNode(String token, ModelState modelState) {
     super();
     myToken = token;
     myModelState = modelState;

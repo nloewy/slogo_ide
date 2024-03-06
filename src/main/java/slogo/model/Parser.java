@@ -265,12 +265,8 @@ public class Parser {
 
     nodeHandler.add(new SimpleEntry<>(
         token -> tokenMatched(token, "Command") && isCommand(token) && !isToCommand(token),
-        tokens -> {
-          try {
-            currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
-                modelState);
-          } catch (ClassNotFoundException e) {
-          }
+        tokens -> {currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()), modelState);
+
         }));
 
     nodeHandler.add(new SimpleEntry<>(

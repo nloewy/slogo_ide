@@ -39,12 +39,12 @@ public class MakeCommand implements Command {
    *
    * @param arguments a list containing two nodes: the first node represents the variable name, and
    *                  the second node represents the value to assign to the variable
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the assigned value
    */
   @Override
-  public double execute(List<Node> arguments, int index)
-       {
+  public double execute(List<Node> arguments, int turtleId)
+  {
     modelState.setOuter(false);
     String token = arguments.get(0).getToken();
     double variableValue = arguments.get(1).evaluate();
@@ -53,3 +53,4 @@ public class MakeCommand implements Command {
     return variableValue;
   }
 }
+

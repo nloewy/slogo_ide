@@ -1,6 +1,5 @@
 package slogo.model.command.query;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -36,13 +35,12 @@ public class YcoordinateCommand implements Command {
    * Retrieves the Y coordinate of the requested turtle.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the Y coordinate of the requested turtle
    */
   @Override
-  public double execute(List<Node> arguments, int index)
-       {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
-    return modelState.getTurtles().get(index).getY();
+    return modelState.getTurtles().get(turtleId).getY();
   }
 }

@@ -2,6 +2,7 @@ package slogo.model.api;
 
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * The SlogoListener interface defines a set of methods to be implemented by classes that wish to
@@ -59,4 +60,7 @@ public interface SlogoListener {
    * @param ids The list of ids of all active turtles.
    */
   void onSetActiveTurtles(List<Integer> ids);
+
+  void onUpdatePallete(Map<Integer,List<Integer>> pallette);
+
 }

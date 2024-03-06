@@ -16,6 +16,8 @@ public class Turtle {
   private double myY;
   private boolean myVisible;
   private double myHeading; //range [0.0,360.0)
+  private int penColor;
+  private int bgColor;
 
   /**
    * Constructs a Turtle object with specified ID at the origin with the pen down, facing 0 degrees
@@ -120,7 +122,7 @@ public class Turtle {
    */
 
   public TurtleRecord getImmutableTurtle() {
-    return new TurtleRecord(myId, myX, myY, myPen, myVisible, myHeading);
+    return new TurtleRecord(myId, myX, myY, myPen, myVisible, myHeading, bgColor, penColor);
   }
 
   /**
@@ -163,15 +165,16 @@ public class Turtle {
     myVisible = b;
   }
 
-  /**
-   * Retrieves the id of the turtle.
-   *
-   * @return id The id of the turtle
-   */
 
-  public int getId() {
-    return myId;
+  public int getPenColor() {
+    return penColor;
   }
 
+  public void setPenColor(int index) {
+    penColor = index;
+  }
 
+  public void setBgColor(int index) {
+    bgColor = index;
+  }
 }

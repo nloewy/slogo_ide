@@ -31,7 +31,7 @@ public class FrontEndTurtle {
 
   public FrontEndTurtle(int id, double x, double y, Color color, boolean isPenVisible,
       double heading, Image image, MainScreen view) {
-        this.view = view;
+    this.view = view;
     myId = id;
     myX = x;
     myY = y;
@@ -49,13 +49,13 @@ public class FrontEndTurtle {
     display.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
       view.pushCommand("TELL " + id);
     });
-    
+
     this.heading = heading;
   }
 
   public void setIsActive(boolean state) {
     isActive = state;
-    
+
     if (isActive) {
       display.setOpacity(1);
     }
@@ -126,4 +126,3 @@ public class FrontEndTurtle {
     myHeading = newHeading;
   }
 }
-

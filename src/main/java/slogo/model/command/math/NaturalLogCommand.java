@@ -1,6 +1,5 @@
 package slogo.model.command.math;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -39,12 +38,12 @@ public class NaturalLogCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number to calculate the
    *                  natural logarithm of
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the natural logarithm of the input number
-   * @throws IllegalArgumentException  if the input number is non-positive
+   * @throws IllegalArgumentException if the input number is non-positive
    */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
     modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     if (arg1 <= 0) {

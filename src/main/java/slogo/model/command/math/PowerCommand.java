@@ -1,6 +1,5 @@
 package slogo.model.command.math;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -38,12 +37,12 @@ public class PowerCommand implements Command {
    * Executes the power mathematical operation.
    *
    * @param arguments a list containing two nodes which evaluate to the base and exponent
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the result of raising the base to the power of the exponent
-   * @throws InvalidOperandException   if the result of the operation is undefined
+   * @throws InvalidOperandException if the result of the operation is undefined
    */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
     modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();

@@ -20,7 +20,6 @@ public class SlogoException extends RuntimeException {
   }
 
   public Throwable getCause () {
-
     return cause;
   }
 
@@ -33,3 +32,4 @@ public class SlogoException extends RuntimeException {
     return token;
   }
 }
+

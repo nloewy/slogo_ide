@@ -1,6 +1,7 @@
 package slogo.model.command;
 
 import java.util.List;
+import java.util.Map;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.model.node.Node;
@@ -28,6 +29,11 @@ public class CommandTest {
 
     @Override
     public void onSetActiveTurtles(List<Integer> ids) {
+
+    }
+
+    @Override
+    public void onUpdatePallete(Map<Integer, List<Integer>> pallette) {
 
     }
 

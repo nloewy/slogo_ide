@@ -1,6 +1,5 @@
 package slogo.model.command.turtle;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
@@ -40,14 +39,13 @@ public class PenUpCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (empty for this
    *                  command)
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return 0.0 to indicate that the pen is up and successful execution
    */
   @Override
-  public double execute(List<Node> arguments, int index)
-       {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
-    Turtle turtle = modelState.getTurtles().get(index);
+    Turtle turtle = modelState.getTurtles().get(turtleId);
     turtle.setPen(false);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return 0.0;

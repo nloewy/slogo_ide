@@ -1,6 +1,5 @@
 package slogo.model.command;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.node.Node;
 
@@ -44,9 +43,9 @@ public interface Command {
    * listeners as needed.
    *
    * @param arguments a list of nodes representing the arguments for the command
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the result of executing the command
    */
 
-  double execute(List<Node> arguments, int index);
+  double execute(List<Node> arguments, int turtleId);
 }
