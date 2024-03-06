@@ -44,7 +44,7 @@ public class SetPenColorCommand implements Command {
   public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
     for (Turtle turtle : modelState.getTurtles().values()) {
-      turtle.setPenColor(arguments.get(0).evaluate());
+      turtle.setPenColor((int) Math.round(arguments.get(0).evaluate()));
     }
     return modelState.getTurtles().get(turtleId).getHeading();
   }
