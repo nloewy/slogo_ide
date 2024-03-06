@@ -70,6 +70,7 @@ public class CommandNode extends Node {
       for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
         myModelState.setCurrTurtle(myModelState.getActiveTurtles().peek().get(index));
         val = command.execute(getChildren(), myModelState.getCurrTurtle());
+        myModelState.setOuter(true);
       }
     }
     myModelState.setOuter(true);

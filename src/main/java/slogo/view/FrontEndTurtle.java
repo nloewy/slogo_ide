@@ -105,6 +105,7 @@ public class FrontEndTurtle {
     display.setImage(displayImage);
     display.setPreserveRatio(true);
     display.setFitWidth(50);
+    display.setFitHeight(50);
   }
 
   public Line drawLine(Double oldPosition, Double oldPosition2, Double newPosition,

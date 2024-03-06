@@ -40,10 +40,6 @@ public class StartScreen  {
     this.stage = stage;
   }
 
-  private void handleLoadTurtleImage() {
-    File dataFile = Screen.IMAGE_CHOOSER.showOpenDialog(stage);
-    controller.setTurtleImage(dataFile);
-  }
 
   public javafx.scene.Scene getScene() {
     return scene;
@@ -63,9 +59,6 @@ public class StartScreen  {
       }
     });
 //    Button loadOld = generateButton("LoadOld", 100, 360, e -> controller.loadSession());
-    Button uploadTurtle = generateButton("UploadTurtle", 400, 300, (event) -> {
-      handleLoadTurtleImage();
-    });
 
     ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "English");
     ObservableList<ComboChoice> supportedThemes = FXCollections.observableArrayList();
@@ -83,7 +76,6 @@ public class StartScreen  {
       loadSlogo.setText(newLang.getString("LoadSlogo"));
       loadGen.setText(newLang.getString("LoadGen"));
 //      loadOld.setText(newLang.getString("LoadOld"));
-      uploadTurtle.setText(newLang.getString("UploadTurtle"));
 
       String[] themes = newLang.getString("ColorThemes").split(",");
       ObservableList<ComboChoice> comboBoxItems = themeComboBox.getItems();
@@ -106,7 +98,7 @@ public class StartScreen  {
         loadSlogo,
         loadGen,
 //        loadOld,
-        uploadTurtle,
+        //uploadTurtle,
         themeComboBox
     );
     scene = new Scene(root, 600, 400);

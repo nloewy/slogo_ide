@@ -1,5 +1,7 @@
 package slogo.view.pages;
 
+import static slogo.view.UserInterfaceUtil.generateButton;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -77,6 +79,7 @@ public class MainScreen implements SlogoListener {
   private Button play;
   private Button pause;
   private Button step;
+  private Button uploadTurtle;
   private Button openNewWindow;
   private Button help;
   private Button save;
@@ -286,6 +289,7 @@ public class MainScreen implements SlogoListener {
     }
   }
 
+
   private void setSpeedSliderHandler(ChangeListener<Number> speedSliderHandler) {
     speedSlider.valueProperty().addListener(speedSliderHandler);
   }
@@ -323,6 +327,11 @@ public class MainScreen implements SlogoListener {
         e.printStackTrace();
       }
     });
+
+    uploadTurtle = generateButton("UploadTurtle", (event) -> {
+      handleLoadTurtleImage();
+    });
+
 
     play = UserInterfaceUtil.generateButton("Play", event -> {
       paused = false;
@@ -370,7 +379,7 @@ public class MainScreen implements SlogoListener {
         });
     backgroundDropDown.setValue(null);
     dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
-    List<Region> mainButtons = List.of(submitField, play, pause, step, help, upload, save, dropdowns, openNewWindow);
+    List<Region> mainButtons = List.of(submitField, play, pause, step, help, upload, uploadTurtle, save, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
 
@@ -383,6 +392,11 @@ public class MainScreen implements SlogoListener {
     layout.setLeft(commandsHistory);
     root = new Group();
     root.getChildren().add(layout);
+  }
+
+  private void handleLoadTurtleImage() {
+    File dataFile = slogo.view.pages.Screen.IMAGE_CHOOSER.showOpenDialog(stage);
+    setTurtleImage(dataFile);
   }
 
   private void saveToFile() {
@@ -483,6 +497,8 @@ public class MainScreen implements SlogoListener {
       play.setText(newLang.getString("Play"));
       pause.setText(newLang.getString("Pause"));
       openNewWindow.setText(newLang.getString("OpenNew"));
+      uploadTurtle.setText(newLang.getString("UploadTurtle"));
+
       String[] newPenColors = newLang.getString("PenColors").split(",");
       ObservableList<ComboChoice> colorItems = colorDropDown.getItems();
       ObservableList<ComboChoice> backgroundItems = backgroundDropDown.getItems();
@@ -548,8 +564,8 @@ public class MainScreen implements SlogoListener {
 
   public void setTurtleImage(File f) {
     try {
-      defaultImage = new Image(new FileInputStream(f));
       for (FrontEndTurtle t : turtles) {
+        defaultImage = new Image(new FileInputStream(f), defaultImage.getWidth(), defaultImage.getHeight(), true, true);
         t.setImage(defaultImage);
       }
     } catch (FileNotFoundException e) {
