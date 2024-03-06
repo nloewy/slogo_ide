@@ -47,7 +47,7 @@ public class SetPaletteCommand implements Command {
     int green = (int) Math.round(arguments.get(2).evaluate());
     int blue = (int) Math.round(arguments.get(3).evaluate());
     modelState.getPalette().put(index, List.of(new Integer[]{red, green, blue}));
-    myListener.onUpdatePallete(modelState.getPalette());
+    myListener.onUpdatePalette(modelState.getPalette());
     return index;
   }
 }

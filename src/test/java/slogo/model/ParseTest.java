@@ -54,7 +54,7 @@ public class ParseTest {
       }
 
       @Override
-      public void onUpdatePallete(Map<Integer, List<Integer>> pallette) {
+      public void onUpdatePalette(Map<Integer, List<Integer>> pallette) {
 
       }
     }, "English");

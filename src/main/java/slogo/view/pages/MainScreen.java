@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,12 +115,14 @@ public class MainScreen implements SlogoListener {
   private Consumer<String> parse;
   private double centerX;
   private double centerY;
+  private Map<Integer, List<Integer>> palette;
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
   public MainScreen(Stage stage, Controller controller) throws FileNotFoundException {
     this.stage = stage;
     this.controller = controller;
+    palette = new HashMap<>();
     mySpeed = 250;
     animationPlaying = false;
     myAnimation = new ArrayDeque<>();
@@ -613,6 +616,9 @@ public class MainScreen implements SlogoListener {
         turtle.setIsPenDisplayed(turtleState.pen());
         setPosition(turtle, turtleState.x() + centerX, turtleState.y() + centerY,
             turtleState.heading());
+
+        List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
+        turtle.setPenColor(new Color(newPenColor.get(0), newPenColor.get(1), newPenColor.get(2), 1));
         return;
       }
     }
@@ -620,6 +626,10 @@ public class MainScreen implements SlogoListener {
         Color.BLACK, true, turtleState.heading(), defaultImage, this);
     turtles.add(newTurtle);
     centerPane.getChildren().add(newTurtle.getDisplay());
+
+    List<Integer> newBackgroundColor = palette.get(turtleState.bgIndex());
+    //TODO implement background color
+    // centerPane.setFIl(new Color(newPenColor.get(0), newPenColor.get(1), newPenColor.get(2), 1));
   }
 
   @Override
@@ -661,7 +671,7 @@ public class MainScreen implements SlogoListener {
   }
 
   @Override
-  public void onUpdatePallete(Map<Integer, List<Integer>> pallette) {
-
+  public void onUpdatePalette(Map<Integer, List<Integer>> palette) {
+    this.palette = palette;
   }
 }
