@@ -54,7 +54,7 @@ public class SetPaletteCommand implements Command {
   }
 
   private int validateRgb(int val) throws InvalidRgbValueException {
-    if (val >= 0 && val <= 256) {
+    if (val >= 0 && val <= 255) {
       return val;
     }
     throw new InvalidRgbValueException("RGB Val Not in Range", Integer.toString(val));

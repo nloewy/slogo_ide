@@ -41,14 +41,15 @@ public class SetPaletteCommandTest extends CommandTest {
   void testBgColor()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException {
     node = new CommandNode("SetPalette", model);
-    node.addChild(new ConstantNode("4", model));
+    node.addChild(new ConstantNode("8", model));
     node.addChild(new ConstantNode("200", model));
     node.addChild(new ConstantNode("100", model));
     node.addChild(new ConstantNode("50", model));
     node.addListener(myListener);
-    Assertions.assertEquals(4, node.evaluate());
-    Assertions.assertEquals(1, model.getPalette().size());
-    Assertions.assertEquals(List.of(200, 100, 50), model.getPalette().get(4));
+    Assertions.assertEquals(8, node.evaluate());
+    Assertions.assertEquals(7, model.getPalette().size());
+    Assertions.assertEquals(List.of(200, 100, 50), model.getPalette().get(8));
+    Assertions.assertEquals(List.of(0, 0, 0), model.getPalette().get(5));
   }
 
 }
