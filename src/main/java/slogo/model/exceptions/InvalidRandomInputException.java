@@ -1,4 +1,4 @@
-package slogo.model.command.exceptions;
+package slogo.model.exceptions;
 
 import slogo.model.exceptions.InvalidOperandException;
 

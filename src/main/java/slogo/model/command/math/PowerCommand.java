@@ -4,8 +4,7 @@ import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
-import slogo.model.command.exceptions.UndefinedExponentException;
-import slogo.model.exceptions.InvalidOperandException;
+import slogo.model.exceptions.UndefinedExponentException;
 import slogo.model.node.Node;
 
 /**

@@ -4,8 +4,7 @@ import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
-import slogo.model.command.exceptions.TangentUndefinedFunction;
-import slogo.model.exceptions.InvalidOperandException;
+import slogo.model.exceptions.TangentUndefinedFunction;
 import slogo.model.node.Node;
 
 /**
