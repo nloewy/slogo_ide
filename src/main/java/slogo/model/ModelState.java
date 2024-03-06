@@ -46,6 +46,10 @@ public class ModelState {
   private boolean outer;
   private int currTurtle;
 
+  private boolean outer;
+  private int currTurtle;
+  private final Map<Integer, List<Integer>> myPalette;
+
   /**
    * Initializes turtles, variables, commands to default values (empty maps)
    */
@@ -55,6 +59,7 @@ public class ModelState {
     myVariables = new HashMap<>();
     myUserDefinedCommands = new HashMap<>();
     myUserDefinedCommandNodes = new HashMap<>();
+    myPalette = new HashMap<>();
     activeTurtles = new Stack<>();
     outer = true;
     currTurtle = 1;
@@ -105,12 +110,16 @@ public class ModelState {
     return activeTurtles;
   }
 
-  public void setCurrTurtle(int newTurtle) {
-    currTurtle = newTurtle;
+  public Map<Integer, List<Integer>> getPalette() {
+    return myPalette;
   }
 
   public void setOuter(boolean state) {
     outer = state;
+  }
+
+  public void setCurrTurtle(int index) {
+    currTurtle = index;
   }
 
   public boolean getOuter() {

@@ -273,7 +273,7 @@ public class MainScreen implements SlogoListener {
       titledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue) {
           String fullText = String.join("\n", Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the
-                                                                                           // first one
+          // first one
           titledPane.setContent(new Label(fullText)); // Set the full command content when expanded
           titledPane.setText(lines[0]); // Display the first line when expanded
         } else {
@@ -381,7 +381,7 @@ public class MainScreen implements SlogoListener {
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
     layout.setRight(new VBox(variablesPane, userDefinedCommandsPane)); // Stack variablesPane and
-                                                                       // userDefinedCommandsPane vertically
+    // userDefinedCommandsPane vertically
     layout.setLeft(commandsHistory);
     root = new Group();
     root.getChildren().add(layout);
@@ -650,7 +650,7 @@ public class MainScreen implements SlogoListener {
   public void onSetActiveTurtles(List<Integer> ids) {
     for (FrontEndTurtle turtle : turtles) {
       if(ids.contains(turtle.getId())) {
-       turtle.setIsActive(true);
+        turtle.setIsActive(true);
       }
       else {
         turtle.setIsActive(false);

@@ -10,7 +10,8 @@ public class CommandFactory {
 
   private static final String BASE_PACKAGE = "slogo.model.command.";
 
-  public static Command createCommand(String myToken, ModelState myModelState, SlogoListener listener) throws InvalidCommandException {
+  public static Command createCommand(String myToken, ModelState myModelState,
+      SlogoListener listener) throws InvalidCommandException {
     try {
       Class<?> clazz = Class.forName(BASE_PACKAGE + myToken + "Command");
       return (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
@@ -30,3 +31,4 @@ public class CommandFactory {
     }
   }
 }
+

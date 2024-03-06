@@ -48,7 +48,7 @@ public class IfElseCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int index)
-       {
+  {
     modelState.setOuter(false);
     double condition = arguments.get(0).evaluate();
     Node toExecuteIfTrue = arguments.get(1);
@@ -60,3 +60,4 @@ public class IfElseCommand implements Command {
     }
   }
 }
+

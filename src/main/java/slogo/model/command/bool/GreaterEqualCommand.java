@@ -46,8 +46,9 @@ public class GreaterEqualCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int index)
-       {
+  {
     modelState.setOuter(false);
     return (arguments.get(0).evaluate() + TOLERANCE >= arguments.get(1).evaluate()) ? 1.0 : 0.0;
   }
 }
+

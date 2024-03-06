@@ -44,7 +44,7 @@ public class MakeCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int index)
-       {
+  {
     modelState.setOuter(false);
     String token = arguments.get(0).getToken();
     double variableValue = arguments.get(1).evaluate();
@@ -53,3 +53,4 @@ public class MakeCommand implements Command {
     return variableValue;
   }
 }
+

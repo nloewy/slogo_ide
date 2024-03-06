@@ -13,8 +13,7 @@ public interface Model {
    *
    * @param commandStr input string of tokens to be parsed
    */
-  void parse(String commandStr)
-      throws SlogoException;
+  void parse(String commandStr) throws SlogoException;
 
   /**
    * Resets the model to its initial state.

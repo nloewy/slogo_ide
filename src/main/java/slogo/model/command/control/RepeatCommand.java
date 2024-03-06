@@ -43,7 +43,7 @@ public class RepeatCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int index)
-       {
+  {
     modelState.setOuter(false);
     String variableName = ":repcount";
     double end = arguments.get(0).evaluate();
@@ -57,3 +57,4 @@ public class RepeatCommand implements Command {
     return res;
   }
 }
+

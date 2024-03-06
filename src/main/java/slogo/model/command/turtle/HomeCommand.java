@@ -40,13 +40,13 @@ public class HomeCommand implements Command {
    * Executes the HomeCommand, moving the turtle to its home position.
    *
    * @param arguments a list of nodes representing the arguments for this command (none expected)
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the distance moved by the turtle from its previous position to the home position
    */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
-    Turtle turtle = modelState.getTurtles().get(index);
+    Turtle turtle = modelState.getTurtles().get(turtleId);
     double currentX = turtle.getX();
     double currentY = turtle.getY();
     turtle.setX(0);

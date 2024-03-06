@@ -1,6 +1,5 @@
 package slogo.model.command.math;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
@@ -40,12 +39,11 @@ public class ArcTangentCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number to calculate the
    *                  arctangent of
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the arctangent of the input number in degrees
    */
   @Override
-  public double execute(List<Node> arguments, int index)
-       {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     return MathUtils.toDegrees(Math.atan(arg1));

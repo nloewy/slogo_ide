@@ -45,7 +45,7 @@ public class AskWithCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int index)
-       {
+  {
     List<Integer> tempList = new ArrayList<>();
     for (int i : modelState.getTurtles().keySet()) {
       modelState.setCurrTurtle(i);
@@ -74,3 +74,4 @@ public class AskWithCommand implements Command {
 
   }
 }
+

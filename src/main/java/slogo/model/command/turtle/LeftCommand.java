@@ -1,6 +1,5 @@
 package slogo.model.command.turtle;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
@@ -40,15 +39,14 @@ public class LeftCommand implements Command {
    * Executes the LeftCommand, rotating the turtle to the left by the specified number of degrees.
    *
    * @param arguments a list of nodes representing the arguments for this command
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the number of degrees the turtle turned left by
    */
   @Override
-  public double execute(List<Node> arguments, int index)
-       {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
     double degrees = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(index);
+    Turtle turtle = modelState.getTurtles().get(turtleId);
     turtle.setHeading(turtle.getHeading() - degrees);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return degrees;
