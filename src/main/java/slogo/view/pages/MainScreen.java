@@ -82,6 +82,7 @@ public class MainScreen implements SlogoListener {
   private Button upload;
   private Pane centerPane = new Pane();
   private Scene scene;
+  private boolean paused;
   private BorderPane layout;
   private ScrollPane variablesPane;
   private ScrollPane commandsHistory;
@@ -92,9 +93,10 @@ public class MainScreen implements SlogoListener {
   private VBox userDefinedCommandsBox;
   private double mySpeed;
   private ResourceBundle myResources;
+  private boolean animationPlaying;
   private final Slider speedSlider;
-
-
+  private Duration pausedTime;
+  private Animation currAnimation;
 
   private static final int height = 600;
   private static final int width = 1000;
@@ -119,6 +121,7 @@ public class MainScreen implements SlogoListener {
     this.stage = stage;
     this.controller = controller;
     mySpeed = 250;
+    animationPlaying = false;
     myAnimation = new ArrayDeque<>();
     lang = "EG";
     commandString = "";
@@ -136,13 +139,8 @@ public class MainScreen implements SlogoListener {
 
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.getKeyFrames()
-        .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e ->
-        {
-          for (FrontEndTurtle t : turtles) {
-            t.playAnimation();
-
-          }
-        } ));
+        .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> playAnimation()));
+    paused = false;
     initResources();
     timeline.play();
     speedSlider = new Slider();
@@ -168,6 +166,48 @@ public class MainScreen implements SlogoListener {
 
   }
 
+  private void finishCurrAnimation() {
+    if (currAnimation != null) {
+      currAnimation.play();
+      paused = true;
+    }
+  }
+
+  private void playSingleAnimation() {
+    if (!myAnimation.isEmpty()) {
+      Animation animation = myAnimation.poll();
+      animation.setOnFinished(event -> {
+        animationPlaying = false;
+        playAnimation(); // Continue playing other animations after finishing this one
+      });
+      animationPlaying = true;
+      animation.play();
+    }
+  }
+
+  private void playAnimation() {
+    if (!animationPlaying && !myAnimation.isEmpty() && !paused) {
+      currAnimation = myAnimation.poll();
+      currAnimation.setOnFinished(event -> {
+        animationPlaying = false;
+        currAnimation = null;
+        playAnimation();
+      });
+      animationPlaying = true;
+      currAnimation.play();
+    } else if (animationPlaying && paused) {
+      if (currAnimation != null) {
+        pausedTime = currAnimation.getCurrentTime(); // Store the current time when animation is paused
+        currAnimation.pause();
+      }
+    } else if (animationPlaying && !paused && pausedTime != null) {
+      // If animation was paused and now unpaused, resume from the paused time
+      if (currAnimation != null) {
+        currAnimation.playFrom(pausedTime);
+        pausedTime = null; // Reset paused time
+      }
+    }
+  }
 
   private void initializeTurtleDisplays() {
     for (FrontEndTurtle turtle : turtles) {
@@ -267,32 +307,31 @@ public class MainScreen implements SlogoListener {
 
     submitField = UserInterfaceUtil.generateButton("Submit", event -> {
       sendCommandStringToView();
-      for(FrontEndTurtle t : turtles) {
-        t.handlePause(false);}
+      paused = false;
     });
 
     openNewWindow = UserInterfaceUtil.generateButton("Open New Window", event -> {
       try {
         controller.openNewIDESession(null);
-        for(FrontEndTurtle t : turtles) {
-          t.handlePause(false);}
+        paused = false;
       } catch (IOException e) {
         e.printStackTrace();
       }
     });
 
     play = UserInterfaceUtil.generateButton("Play", event -> {
-      for(FrontEndTurtle t : turtles) {
-        t.handlePause(true);}
+      paused = false;
     });
     pause = UserInterfaceUtil.generateButton("Pause", event -> {
-      for(FrontEndTurtle t : turtles) {
-        t.handlePause(false);}
+      paused = true;
     });
 
     step = UserInterfaceUtil.generateButton("Step", event -> {
-      for(FrontEndTurtle t : turtles) {
-        t.handleStep();}
+      if (currAnimation == null) {
+        playSingleAnimation();
+      } else {
+        finishCurrAnimation();
+      }
     });
 
     help = UserInterfaceUtil.generateButton("Help", event -> {
@@ -527,7 +566,6 @@ public class MainScreen implements SlogoListener {
     updateVariables();
   }
 
-
   private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading) {
     double oldX = turtle.getX();
     double oldY = turtle.getY();
@@ -556,9 +594,8 @@ public class MainScreen implements SlogoListener {
       animation.getKeyFrames().add(keyFrame);
     }
     turtle.setPosition(x, y, newHeading);
-    turtle.getAnimationQueue().add(animation);
+    myAnimation.add(animation);
   }
-
 
   /*
    * new method returns list of indexed values
@@ -567,7 +604,7 @@ public class MainScreen implements SlogoListener {
    * Map<Index, List<Number>>
    */
 
-// WILL return background color and pen color in the future, each indices check with
+  // WILL return background color and pen color in the future, each indices check with
 //the map
   @Override
   public void onUpdateTurtleState(TurtleRecord turtleState) {
@@ -585,13 +622,11 @@ public class MainScreen implements SlogoListener {
     centerPane.getChildren().add(newTurtle.getDisplay());
   }
 
-
-  //TO DO DELETE ALL LINES
   @Override
   public void onResetTurtle(int id) {
     for (FrontEndTurtle turtle : turtles) {
       if (turtle.getId() == id) {
-        turtle.setIsPenDisplayed(true);
+        turtle.setIsPenDisplayed(false);
         turtle.setPosition(centerX, centerY, 0);
         turtle.setImage(defaultImage);
       }
@@ -630,3 +665,4 @@ public class MainScreen implements SlogoListener {
 
   }
 }
+
