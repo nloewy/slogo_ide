@@ -55,6 +55,7 @@ public class SlogoModel implements Model {
     modelState.getActiveTurtles().add(new ArrayList<>());
     modelState.getActiveTurtles().peek().add(1);
     myListener = listener;
+    myListener.onUpdatePallete(modelState.getPalette());
     parser = new Parser(modelState, currentLanguage);
     myCommands = new Stack<>();
     prop = new Properties();
@@ -132,6 +133,8 @@ public class SlogoModel implements Model {
   public void resetModel() {
     modelState = new ModelState();
   }
+
+
 
   @Deprecated
     //FOR TESTING PURPOSES ONLY

@@ -1,5 +1,7 @@
 package slogo.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +59,7 @@ public class ModelState {
     myUserDefinedCommands = new HashMap<>();
     myUserDefinedCommandNodes = new HashMap<>();
     myPalette = new HashMap<>();
+    makePalette();
     activeTurtles = new Stack<>();
     outer = true;
     currTurtle = 1;
@@ -125,5 +128,15 @@ public class ModelState {
 
   public int getCurrTurtle() {
     return currTurtle;
+  }
+
+  private void makePalette() {
+    myPalette.put(0, Arrays.asList(new Integer[]{255, 0, 0}));
+    myPalette.put(1, Arrays.asList(new Integer[]{0, 255, 0}));
+    myPalette.put(2, Arrays.asList(new Integer[]{255, 255, 0}));
+    myPalette.put(3, Arrays.asList(new Integer[]{255, 165, 0}));
+    myPalette.put(4, Arrays.asList(new Integer[]{0, 0, 255}));
+    myPalette.put(5, Arrays.asList(new Integer[]{0, 0, 0}));
+
   }
 }
