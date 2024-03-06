@@ -1,6 +1,5 @@
 package slogo.model.command.query;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -36,12 +35,12 @@ public class HeadingCommand implements Command {
    * Retrieves the heading of the requested turtle.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the heading of the active turtle
-    */
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
-    return modelState.getTurtles().get(index).getHeading();
+    return modelState.getTurtles().get(turtleId).getHeading();
   }
 }

@@ -1,6 +1,5 @@
 package slogo.model.command.turtle;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
@@ -41,14 +40,14 @@ public class SetHeadingCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (containing one
    *                  node with the angle to set)
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the minimum angle of rotation needed to reach the new heading
-   * */
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
     double newHeading = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(index);
+    Turtle turtle = modelState.getTurtles().get(turtleId);
     double oldHeading = turtle.getHeading();
     turtle.setHeading(newHeading);
     double clockwiseTurn = (newHeading - oldHeading + 360) % 360;

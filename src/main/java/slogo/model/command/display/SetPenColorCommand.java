@@ -7,9 +7,9 @@ import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
 
-public class SetBackgroundCommand implements Command {
+public class SetPenColorCommand implements Command {
 
-  /** The SetBackgroundCommand represents a command that alters the Pen index of the
+  /** The SetPenCommand represents a command that alters the Pen index of the
    * workspace. It returns the heading of the requested turtle in the model state.
    *
    * @author Noah Loewy
@@ -28,23 +28,23 @@ public class SetBackgroundCommand implements Command {
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
-  public SetBackgroundCommand(ModelState modelState, SlogoListener listener) {
+  public SetPenColorCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
   }
 
   /**
-   * Updates the Background color of the workspace.
+   * Updates the Pen color of the workspace.
    *
    * @param arguments a list of nodes representing arguments
    * @param turtleId  the id of the turtle currently active
    *
-   * @return the background color of the workspace
+   * @return the heading of the active turtle
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
     for (Turtle turtle : modelState.getTurtles().values()) {
-      turtle.setBg(arguments.get(0).evaluate());
+      turtle.setPenColor(arguments.get(0).evaluate());
     }
     return modelState.getTurtles().get(turtleId).getHeading();
   }

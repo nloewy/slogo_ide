@@ -1,6 +1,5 @@
 package slogo.model.command.turtle;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
@@ -42,14 +41,14 @@ public class ForwardCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number of pixels to move
    *                  forward
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the number of pixels moved forward
-    */
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
     double pixels = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(index);
+    Turtle turtle = modelState.getTurtles().get(turtleId);
     turtle.setX(turtle.getX() + pixels * Math.sin(MathUtils.toRadians(turtle.getHeading())));
     turtle.setY(turtle.getY() - pixels * Math.cos(MathUtils.toRadians(turtle.getHeading())));
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());

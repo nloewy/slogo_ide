@@ -1,6 +1,5 @@
 package slogo.model.command.query;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -36,13 +35,13 @@ public class IsShowingCommand implements Command {
    * Checks whether the requested turtle is showing.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return 1 if the requested turtle is showing, 0 otherwise
-    */
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
-    if (modelState.getTurtles().get(index).getVisible()) {
+    if (modelState.getTurtles().get(turtleId).getVisible()) {
       return 1.0;
     }
     return 0.0;

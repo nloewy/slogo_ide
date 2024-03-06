@@ -1,6 +1,5 @@
 package slogo.model.command.math;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -36,11 +35,11 @@ public class PiCommand implements Command {
    * Executes the PiCommand, returning the mathematical constant pi.
    *
    * @param arguments a list containing no nodes, as PiCommand requires no arguments
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the value of pi
-    */
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
     return Math.PI;
   }

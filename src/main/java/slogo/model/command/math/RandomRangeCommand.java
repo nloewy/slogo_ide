@@ -1,6 +1,5 @@
 package slogo.model.command.math;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -39,12 +38,12 @@ public class RandomRangeCommand implements Command {
    *
    * @param arguments a list containing two nodes representing the minimum and maximum values of the
    *                  range
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return a random number within the specified range
-    * @throws InvalidOperandException   if the minimum value is greater than the maximum value
+   * @throws InvalidOperandException if the minimum value is greater than the maximum value
    */
   @Override
-  public double execute(List<Node> arguments, int index) throws InvalidOperandException {
+  public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
     modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();

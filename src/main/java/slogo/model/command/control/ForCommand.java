@@ -1,6 +1,5 @@
 package slogo.model.command.control;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -38,11 +37,12 @@ public class ForCommand implements Command {
    * @param arguments a list containing two nodes: the first list node contains the variable name,
    *                  start value, end value, and increment value, and the second list node contains
    *                  the command nodes to execute
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
+   *
    * @return the result of the last evaluated command in the loop
-    */
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
     String variableName = arguments.get(0).getChildren().get(0).getToken();
     double start = arguments.get(0).getChildren().get(1).evaluate();

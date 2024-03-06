@@ -1,6 +1,5 @@
 package slogo.model.command.multiple;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -36,11 +35,12 @@ public class TurtlesCommand implements Command {
    * Retrieves the number of active turtles in the current workspace.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
-   * @return the number of active turtles in the current workspace
-    */
+   * @param turtleId  the id of the turtle currently active
+   * @return the number of active turtles
+   *                  in the current workspace
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     return modelState.getTurtles().size();
   }
 }

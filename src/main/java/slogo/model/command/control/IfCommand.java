@@ -1,6 +1,5 @@
 package slogo.model.command.control;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -39,12 +38,13 @@ public class IfCommand implements Command {
    * @param arguments a list containing two nodes: the first node contains the condition to
    *                  evaluate, and the second node contains the command nodes to execute if the
    *                  condition is true
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
+   *
    * @return the result of the last evaluated command if the condition is true, otherwise 0.0
-    */
+   */
 
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     Node toExecute = arguments.get(1);

@@ -1,6 +1,5 @@
 package slogo.model.command.query;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
@@ -37,12 +36,12 @@ public class IsPenDownCommand implements Command {
    * Checks whether the pen of the requested turtle is down.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return 1 if the pen of the requested turtle is down, 0 otherwise
-    */
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
-    Turtle turtle = modelState.getTurtles().get(index);
+  public double execute(List<Node> arguments, int turtleId) {
+    Turtle turtle = modelState.getTurtles().get(turtleId);
     if (turtle.getPen()) {
       return 1.0;
     }

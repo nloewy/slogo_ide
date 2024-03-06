@@ -1,6 +1,5 @@
 package slogo.model.command.math;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -37,11 +36,12 @@ public class DifferenceCommand implements Command {
    * Executes the subtraction mathematical operation.
    *
    * @param arguments a list containing two nodes representing the numbers to subtract
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
+   *
    * @return the difference between the two input numbers
-    */
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();

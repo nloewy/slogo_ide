@@ -1,6 +1,5 @@
 package slogo.model.command.turtle;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
@@ -42,15 +41,15 @@ public class SetTowardsCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (containing two
    *                  nodes with the x and y coordinates of the target position)
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
-   * @return the minimum angle of rotation needed to reach the new heading
+   * @param turtleId  the id of the turtle currently active   * @return the minimum angle of
+   *                  rotation needed to reach the new heading
    */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
     double locationX = arguments.get(0).evaluate();
     double locationY = arguments.get(1).evaluate();
-    Turtle turtle = modelState.getTurtles().get(index);
+    Turtle turtle = modelState.getTurtles().get(turtleId);
     double dx = locationX - turtle.getX();
     double dy = locationY - turtle.getY();
     double targetHeading = MathUtils.toDegrees(Math.atan2(dx, dy));

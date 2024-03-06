@@ -1,6 +1,5 @@
 package slogo.model.command.math;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -38,12 +37,12 @@ public class RemainderCommand implements Command {
    * Executes the remainder mathematical operation.
    *
    * @param arguments a list containing two nodes representing the dividend and divisor
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the remainder of the division of the dividend by the divisor
-    * @throws InvalidOperandException   if the divisor is zero
+   * @throws InvalidOperandException if the divisor is zero
    */
   @Override
-  public double execute(List<Node> arguments, int index) throws InvalidOperandException {
+  public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
     modelState.outer = false;
     if (arguments.get(1).evaluate() == 0) {
       throw new InvalidOperandException("Divisor must be Non-Zero");

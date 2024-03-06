@@ -1,6 +1,5 @@
 package slogo.model.command.query;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -36,12 +35,12 @@ public class XcoordinateCommand implements Command {
    * Retrieves the X coordinate of the requested turtle.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the X coordinate of the requested turtle
-    */
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
-    return modelState.getTurtles().get(index).getX();
+    return modelState.getTurtles().get(turtleId).getX();
   }
 }

@@ -1,6 +1,5 @@
 package slogo.model.command.turtle;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
@@ -41,14 +40,14 @@ public class BackwardCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments. The one node is the distance moved
    *                  backwards.
-   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtleId  the id of the turtle currently active
    * @return the number of pixels moved backward
-    */
+   */
   @Override
-  public double execute(List<Node> arguments, int index) {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.outer = false;
     double pixels = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(index);
+    Turtle turtle = modelState.getTurtles().get(turtleId);
     double newX = turtle.getX() - pixels * Math.sin(Math.toRadians(turtle.getHeading()));
     double newY = turtle.getY() + pixels * Math.cos(Math.toRadians(turtle.getHeading()));
     turtle.setX(newX);
