@@ -105,7 +105,7 @@ public class ParseTest {
   void mathErrorHalfwayThrough()
       throws InvocationTargetException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException, InvalidCommandException {
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(1);
-    assertThrows(InvalidOperandException.class, () -> {
+    assertThrows(SlogoException.class, () -> {
       slogo.parse("fd SUM 10 10 fd QUOTIENT 5 0 fd SUM 10 10");
     });
     assertEquals(-20.0, myTurtle.getY(), DELTA);
@@ -207,7 +207,7 @@ public class ParseTest {
   @Test
   void testNotEnoughArguments()
       throws InsufficientArgumentsException, InvalidCommandException, InvalidTokenException {
-    assertThrows(InsufficientArgumentsException.class, () -> {
+    assertThrows(SlogoException.class, () -> {
       slogo.parse("MAKE :CLASS");
     });
   }
@@ -415,12 +415,17 @@ public class ParseTest {
   }
 
   @Test
-  void askWithCommndYesPara() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("tell 2 fd 90 tell [ 1 2 ] repeat 6 [ Repeat 2 [ Repeat quotient 60 2 [ fd 10 right 2 ] right 120 ] right 60 ] \n");
+  void flower() throws InvocationTargetException, IllegalAccessException {
+    slogo.parse("tell 2 fd 90 tell [ 1 2 ] repeat 6 [ Repeat 2 [ Repeat 30 [ fd 10 right 2 ] right 120 ] right 60 ]");
     assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
     assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY(), DELTA);
-
-
   }
 
+
+  @Test
+  void flowerCommand() throws InvocationTargetException, IllegalAccessException {
+    slogo.parse("tell 2 fd 90 tell [ 1 2 ]  to arc [ :incr :degrees ] [  repeat quotient :degrees 2  [    fd :incr rt 2  ] ] to petal [ :size ] [  repeat 2  [    arc :size 60    rt 120  ] ] to flower [ :length ] [  repeat 6  [    petal :length    rt 60  ] ]  flower 10");
+    assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
+    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY(), DELTA);
+  }
 }

@@ -38,6 +38,7 @@ public class VariableNode extends Node {
       getListener().onUpdateValue(myToken, 0.0);
       myModelState.getVariables().put(myToken, 0.0);
     }
+
     return myModelState.getVariables().getOrDefault(myToken, 0.0);
   }
 

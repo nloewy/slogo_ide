@@ -58,9 +58,22 @@ public class UserCommandNode extends Node {
       constantNodeToVariable.put(constantNode, tokenToReplace);
       replaceNodesWithToken(rootOfSubtree, tokenToReplace, constantNode);
     }
-    double val = rootOfSubtree.evaluate();
+    double val = 0;
+    if(!modelState.getOuter()) {
+       val = rootOfSubtree.evaluate();
+    }
+    else {
+      for (int index = 0; index < modelState.getActiveTurtles().peek().size(); index++) {
+        modelState.setCurrTurtle(modelState.getActiveTurtles().peek().get(index));
+         val = rootOfSubtree.evaluate();
+      }
+    }
+
+
+
     replaceTokensWithNodes(rootOfSubtree, constantNodeToVariable);
     modelState.getUserDefinedCommandNodes().put(myToken, children.subList(0, 2));
+
     return val;
   }
 

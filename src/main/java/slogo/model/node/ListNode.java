@@ -1,6 +1,7 @@
 package slogo.model.node;
 
 import slogo.model.ModelState;
+import slogo.model.api.Model;
 
 /**
  * Represents a list node in the syntax tree. This node serves as a container for other nodes and
@@ -12,6 +13,7 @@ public class ListNode extends Node {
    * The token representing the list node.
    */
   private final String myToken;
+  private ModelState modelState;
 
   /**
    * Constructs a ListNode with the specified token and model state.
@@ -21,6 +23,7 @@ public class ListNode extends Node {
    */
   public ListNode(String token, ModelState model) {
     myToken = token;
+    modelState = model;
   }
 
   /**
@@ -37,6 +40,7 @@ public class ListNode extends Node {
         continue;
       }
       ret = child.evaluate();
+      modelState.setOuter(false);
     }
     return ret;
   }
