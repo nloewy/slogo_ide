@@ -663,4 +663,3 @@ public class MainScreen implements SlogoListener {
 
   }
 }
-

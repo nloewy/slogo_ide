@@ -74,7 +74,7 @@ public class SlogoModel implements Model {
    */
 
   @Override
-  public void parse(String input) throws InvalidCommandException, InvalidTokenException {
+  public void parse(String input) throws SlogoException {
     if (input.isEmpty()) {
       return;
     }
@@ -84,10 +84,8 @@ public class SlogoModel implements Model {
     } catch (InvalidCommandException | InvalidTokenException | InsufficientArgumentsException |
              InvalidVariableException e) {
       handleParseResult(input, root);
-      SlogoException e2 = e; //shouldnt be in model
-      String template = (String) prop.getOrDefault(e.getClass().getSimpleName(), e.getMessage());
-      String message = String.format(template, e2.getToken());
-      throw new SlogoException(message, "");
+      System.out.println(e.getClass());
+      throw new SlogoException(e.getMessage(), e, e.getToken());
     }
     handleParseResult(input, root);
   }

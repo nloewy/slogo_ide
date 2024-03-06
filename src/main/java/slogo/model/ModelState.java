@@ -43,6 +43,8 @@ public class ModelState {
    * Stack of currently active turtles
    */
   private final Stack<List<Integer>> activeTurtles;
+  private boolean outer;
+  private int currTurtle;
 
   private boolean outer;
   private int currTurtle;

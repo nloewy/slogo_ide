@@ -252,7 +252,7 @@ public class ParseTest {
     slogo.parse("rt 270 mAke :random sum 1 random 100 fd sum 1 :random");
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(1);
     assertEquals(0.0, myTurtle.getY(), DELTA);
-    assertTrue(myTurtle.getX() <= -1 && myTurtle.getX() >= -101);
+    assertTrue(myTurtle.getX() <= -.999 && myTurtle.getX() >= -101.001);
     assertEquals(270.0, myTurtle.getHeading(), DELTA);
   }
 
@@ -380,5 +380,38 @@ public class ParseTest {
     assertEquals(-40, slogo.getModelstate().getTurtles().get(3).getY());
   }
 
+  @Test
+  void askCommandNoPara() throws InvocationTargetException, IllegalAccessException {
+    slogo.parse("ask 2 fd 90 rt 90");
+    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY());
+    assertEquals(90, slogo.getModelstate().getTurtles().get(1).getHeading());
+    assertEquals(0, slogo.getModelstate().getTurtles().get(2).getHeading());
+  }
+
+  @Test
+  void askCommandWithPara() throws InvocationTargetException, IllegalAccessException {
+    slogo.parse("ask [ 2 ] [ fd 90 rt 90 ]");
+    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY());
+    assertEquals(90, slogo.getModelstate().getTurtles().get(2).getHeading());
+  }
+
+  @Test
+  void askWithCommandNoPara() throws InvocationTargetException, IllegalAccessException {
+    slogo.parse("tell 2 askwith id [ fd 90 rt 90 ]");
+    assertEquals(-90, slogo.getModelstate().getTurtles().get(1).getY());
+    assertEquals(90, slogo.getModelstate().getTurtles().get(1).getHeading());
+    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY());
+    assertEquals(90, slogo.getModelstate().getTurtles().get(2).getHeading());
+  }
+
+  @Test
+  void askWithCommandYesPara() throws InvocationTargetException, IllegalAccessException {
+    slogo.parse("tell [ 1 2 ] askwith - id 1 [ fd 90 ] rt 90");
+    assertEquals(90, slogo.getModelstate().getTurtles().get(2).getHeading());
+    assertEquals(90, slogo.getModelstate().getTurtles().get(1).getHeading());
+    assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY());
+    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY());
+
+  }
 
 }

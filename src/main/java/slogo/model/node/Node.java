@@ -18,14 +18,6 @@ public abstract class Node {
   private List<Node> myChildren = new ArrayList<>();
   private SlogoListener myListener;
 
-  /**
-   * Abstract method to evaluate the node. We assume every Slogo node/command evaluates to a
-   * double.
-   *
-   * @return the result of evaluating the node
-   * @throws InvocationTargetException if an error occurs during invocation
-   * @throws IllegalAccessException    if access to the method is denied
-   */
 
   public abstract double evaluate();
 
