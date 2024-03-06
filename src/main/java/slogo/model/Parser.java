@@ -141,7 +141,7 @@ public class Parser {
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
     }
-    if (!tokens.get(myIndex).matches(patternLoader.getPattern("Command")) && nodeStack.peek()
+    if ((!commandMap.containsKey(tokens.get(myIndex)) && !modelState.getUserDefinedCommands().containsKey(tokens.get(myIndex).toLowerCase())) && nodeStack.peek()
         .equals(rootNode)) {
       throw new InvalidCommandException("", tokens.get(myIndex));
     }
@@ -260,11 +260,11 @@ public class Parser {
         tokens -> currentNode = new VariableNode(tokens.get(myIndex).toLowerCase(), modelState)));
 
     nodeHandler.add(new SimpleEntry<>(
-        token -> tokenMatched(token, "Command") && isCommand(token) && isToCommand(token),
+        token -> isCommand(token) && isToCommand(token),
         this::makeCommandCreatorNode));
 
     nodeHandler.add(new SimpleEntry<>(
-        token -> tokenMatched(token, "Command") && isCommand(token) && !isToCommand(token),
+        token -> isCommand(token) && !isToCommand(token),
         tokens -> {currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()), modelState);
 
         }));
