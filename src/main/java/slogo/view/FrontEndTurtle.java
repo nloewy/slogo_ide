@@ -27,6 +27,7 @@ public class FrontEndTurtle {
   private Timeline animation;
   private final Stack<Line> pathHistory = new Stack<Line>();
   private MainScreen view;
+  private boolean isActive;
 
   public FrontEndTurtle(int id, double x, double y, Color color, boolean isPenVisible,
       double heading, Image image, MainScreen view) {
@@ -50,6 +51,17 @@ public class FrontEndTurtle {
     });
     
     this.heading = heading;
+  }
+
+  public void setIsActive(boolean state) {
+    isActive = state;
+    
+    if (isActive) {
+      display.setOpacity(1);
+    }
+    else {
+      display.setOpacity(0.5);
+    }
   }
 
   public int getId() {

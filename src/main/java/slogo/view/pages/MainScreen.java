@@ -646,15 +646,14 @@ public class MainScreen implements SlogoListener {
     updateCommands();
   }
 
-  //TODO implement setActive and setInactive
   @Override
   public void onSetActiveTurtles(List<Integer> ids) {
     for (FrontEndTurtle turtle : turtles) {
       if(ids.contains(turtle.getId())) {
-       // setActive(turtle);
+       turtle.setIsActive(true);
       }
       else {
-        //setInactive(turtle);
+        turtle.setIsActive(false);
       }
     }
   }
