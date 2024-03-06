@@ -131,12 +131,13 @@ public class ModelState {
   }
 
   private void makePalette() {
-    myPalette.put(0, Arrays.asList(new Integer[]{255, 0, 0}));
-    myPalette.put(1, Arrays.asList(new Integer[]{0, 255, 0}));
-    myPalette.put(2, Arrays.asList(new Integer[]{255, 255, 0}));
-    myPalette.put(3, Arrays.asList(new Integer[]{255, 165, 0}));
-    myPalette.put(4, Arrays.asList(new Integer[]{0, 0, 255}));
-    myPalette.put(5, Arrays.asList(new Integer[]{0, 0, 0}));
+    myPalette.put(1, Arrays.asList(new Integer[]{255, 255, 255}));
+    myPalette.put(2, Arrays.asList(new Integer[]{255, 0, 0}));
+    myPalette.put(3, Arrays.asList(new Integer[]{0, 255, 0}));
+    myPalette.put(4, Arrays.asList(new Integer[]{255, 255, 0}));
+    myPalette.put(5, Arrays.asList(new Integer[]{255, 165, 0}));
+    myPalette.put(6, Arrays.asList(new Integer[]{0, 0, 255}));
+    myPalette.put(7, Arrays.asList(new Integer[]{0, 0, 0}));
 
   }
 }

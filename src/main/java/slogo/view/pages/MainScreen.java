@@ -557,7 +557,6 @@ public class MainScreen implements SlogoListener {
     commandString = s;
     commandHistory.push(commandString);
     parse.accept(commandString);
-    updateCommands();
   }
 
   @Override
@@ -639,7 +638,6 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onReturn(double value, String string) {
     commandHistory.add(string);
-    // print val perhaps ext to command?
     updateCommands();
   }
 
