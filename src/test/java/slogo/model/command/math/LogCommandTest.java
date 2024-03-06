@@ -34,7 +34,7 @@ public class LogCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("math.NaturalLog", model);
+    node = new CommandNode("NaturalLog", model);
 
   }
 

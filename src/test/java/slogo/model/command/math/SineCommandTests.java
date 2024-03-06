@@ -30,7 +30,7 @@ public class SineCommandTests extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("math.Sine", model);
+    node = new CommandNode("Sine", model);
   }
 
   @ParameterizedTest

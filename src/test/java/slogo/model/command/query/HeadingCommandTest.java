@@ -29,7 +29,7 @@ public class HeadingCommandTest extends CommandTest {
     model.getActiveTurtles().peek().add(1);
     model.getTurtles().put(1, new Turtle(1));
     myTurtle = model.getTurtles().get(1);
-    node = new CommandNode("query.Heading", model);
+    node = new CommandNode("Heading", model);
 
   }
 

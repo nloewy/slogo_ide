@@ -30,7 +30,7 @@ public class MakeCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
 
-    node = new CommandNode("control.Make", model);
+    node = new CommandNode("Make", model);
     Node variableNode = new VariableNode("MyVar", model);
     node.addChild(variableNode);
     node.addChild(new ConstantNode("5", model));
@@ -46,9 +46,9 @@ public class MakeCommandTest extends CommandTest {
     model.getTurtles().put(1, new Turtle(1));
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().get(0).add(1);
-    node = new CommandNode("control.Make", model);
+    node = new CommandNode("Make", model);
     Node variableNode = new VariableNode("Var", model);
-    Node nodeTwo = new CommandNode("math.Sum", model);
+    Node nodeTwo = new CommandNode("Sum", model);
     Node nodeThree = new ConstantNode("5", model);
     Node nodeFour = new ConstantNode("7", model);
     node.addChild(variableNode);

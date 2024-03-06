@@ -35,7 +35,7 @@ public class RandomRangeCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("math.RandomRange", model);
+    node = new CommandNode("RandomRange", model);
 
   }
 

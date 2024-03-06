@@ -29,7 +29,7 @@ public class ArcTanCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
 
-    node = new CommandNode("math.ArcTangent", model);
+    node = new CommandNode("ArcTangent", model);
   }
 
   @ParameterizedTest

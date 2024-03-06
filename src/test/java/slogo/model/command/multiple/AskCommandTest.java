@@ -32,7 +32,7 @@ public class AskCommandTest extends CommandTest {
     model.getActiveTurtles().get(0).add(10);
     model.getTurtles().put(9, new Turtle(9));
     model.getActiveTurtles().get(0).add(9);
-    Node askNode = new CommandNode("multiple.Ask", model);
+    Node askNode = new CommandNode("Ask", model);
     Node list1 = new ListNode("[", model) ;
     Node list2 = new ListNode("[", model) ;
     askNode.addListener(myListener);
@@ -43,7 +43,7 @@ public class AskCommandTest extends CommandTest {
     list1.getChildren().add(nodeNine);
     list1.getChildren().add(new ConstantNode("9", model));
     askNode.getChildren().add(list2);
-    Node rightNode = new CommandNode("turtle.Right", model);
+    Node rightNode = new CommandNode("Right", model);
     rightNode.addListener(myListener);
     Node nodeNinty = new ConstantNode("90", model);
     list2.getChildren().add(rightNode);
@@ -52,7 +52,7 @@ public class AskCommandTest extends CommandTest {
 
     assertEquals(90, model.getTurtles().get(20).getHeading(), DELTA);
     assertEquals(90, model.getTurtles().get(9).getHeading(), DELTA);
-    Node rightNode2 = new CommandNode("turtle.Right", model);
+    Node rightNode2 = new CommandNode("Right", model);
     Node nodeEighty = new ConstantNode("80", model);
     nodeNine.addListener(myListener);
     nodeNinty.addListener(myListener);
@@ -88,14 +88,14 @@ public class AskCommandTest extends CommandTest {
     model.getTurtles().put(9, new Turtle(9));
     model.getActiveTurtles().get(0).add(9);
     model.getTurtles().put(2, new Turtle(2));
-    Node askNode = new CommandNode("multiple.Ask", model);
+    Node askNode = new CommandNode("Ask", model);
     Node list1 = new ListNode("[", model) ;
     Node list2 = new ListNode("[", model) ;
     askNode.addListener(myListener);
     list1.addListener(myListener);
     list2.addListener(myListener);
     askNode.getChildren().add(list1);
-    Node nodeSeven = new CommandNode("math.Sum", model) ;
+    Node nodeSeven = new CommandNode("Sum", model) ;
     Node nodeEight = new ConstantNode("4", model) ;
     Node nodeNine = new ConstantNode("16.2", model) ;
     list1.getChildren().add(nodeSeven);
@@ -103,7 +103,7 @@ public class AskCommandTest extends CommandTest {
     nodeSeven.getChildren().add(nodeNine);
     list1.getChildren().add(new ConstantNode("9", model));
     askNode.getChildren().add(list2);
-    Node rightNode = new CommandNode("turtle.Right", model);
+    Node rightNode = new CommandNode("Right", model);
     rightNode.addListener(myListener);
     Node nodeNinty = new ConstantNode("90", model);
     list2.getChildren().add(rightNode);
@@ -111,7 +111,7 @@ public class AskCommandTest extends CommandTest {
     assertEquals(90.0, askNode.evaluate(), DELTA);
     assertEquals(90, model.getTurtles().get(20).getHeading(), DELTA);
     assertEquals(90, model.getTurtles().get(9).getHeading(), DELTA);
-    Node rightNode2 = new CommandNode("turtle.Right", model);
+    Node rightNode2 = new CommandNode("Right", model);
     Node nodeEighty = new ConstantNode("80", model);
     nodeSeven.addListener(myListener);
     nodeEight.addListener(myListener);

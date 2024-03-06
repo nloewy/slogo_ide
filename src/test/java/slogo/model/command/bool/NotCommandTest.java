@@ -29,7 +29,7 @@ public class NotCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
 
-    node = new CommandNode("bool.Not", model);
+    node = new CommandNode("Not", model);
   }
 
   @ParameterizedTest

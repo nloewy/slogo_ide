@@ -27,7 +27,7 @@ public class GreaterEqualCommandTest extends CommandTest {
     ModelState model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("bool.GreaterEqual", model);
+    node = new CommandNode("GreaterEqual", model);
   }
 
   @ParameterizedTest

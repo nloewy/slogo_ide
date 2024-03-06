@@ -29,7 +29,7 @@ public class SumCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("math.Sum", model);
+    node = new CommandNode("Sum", model);
 
   }
 

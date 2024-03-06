@@ -21,7 +21,7 @@ public class PiCommandTest extends CommandTest {
     ModelState model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    assertEquals(Math.PI, new CommandNode("math.Pi", model).evaluate(),
+    assertEquals(Math.PI, new CommandNode("Pi", model).evaluate(),
         DELTA);
   }
 }

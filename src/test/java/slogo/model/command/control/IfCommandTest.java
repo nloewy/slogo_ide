@@ -32,8 +32,8 @@ public class IfCommandTest extends CommandTest {
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
 
-    node = new CommandNode("control.If", model);
-    Node nodeTwo = new CommandNode("math.Sum", model);
+    node = new CommandNode("If", model);
+    Node nodeTwo = new CommandNode("Sum", model);
     Node nodeThree = new ConstantNode("-5", model);
     Node nodeFour = new ConstantNode("7", model);
     node.addChild(nodeTwo);
@@ -41,10 +41,10 @@ public class IfCommandTest extends CommandTest {
     nodeTwo.addChild(nodeFour);
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("turtle.Backward", model);
+    Node nodeSix = new CommandNode("Backward", model);
     nodeSix.addChild(new ConstantNode("60", model));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("turtle.Backward", model);
+    Node nodeSeven = new CommandNode("Backward", model);
     nodeSeven.addChild(new ConstantNode("30", model));
     nodeFive.addChild(nodeSeven);
     dfsAddListener(node);
@@ -60,8 +60,8 @@ public class IfCommandTest extends CommandTest {
     model.getTurtles().put(1, myTurtle);
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("control.If", model);
-    Node nodeTwo = new CommandNode("math.Sum", model);
+    node = new CommandNode("If", model);
+    Node nodeTwo = new CommandNode("Sum", model);
     Node nodeThree = new ConstantNode("-5", model);
     Node nodeFour = new ConstantNode("5", model);
     node.addChild(nodeTwo);
@@ -69,10 +69,10 @@ public class IfCommandTest extends CommandTest {
     nodeTwo.addChild(nodeFour);
     Node nodeFive = new ListNode("", model);
     node.addChild(nodeFive);
-    Node nodeSix = new CommandNode("turtle.Backward", model);
+    Node nodeSix = new CommandNode("Backward", model);
     nodeSix.addChild(new ConstantNode("60", model));
     nodeFive.addChild(nodeSix);
-    Node nodeSeven = new CommandNode("turtle.Backward", model);
+    Node nodeSeven = new CommandNode("Backward", model);
     nodeSeven.addChild(new ConstantNode("30", model));
     dfsAddListener(node);
     Assertions.assertEquals(0.0, node.evaluate(), DELTA);

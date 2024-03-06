@@ -28,7 +28,7 @@ public class NotEqualCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("bool.NotEqual", model);
+    node = new CommandNode("NotEqual", model);
   }
 
   @ParameterizedTest

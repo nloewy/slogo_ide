@@ -30,7 +30,7 @@ public class YcoordinateCommandTest extends CommandTest {
     myTurtle = model.getTurtles().get(1);
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("query.Ycoordinate", model);
+    node = new CommandNode("Ycoordinate", model);
 
   }
 

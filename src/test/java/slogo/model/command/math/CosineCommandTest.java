@@ -29,7 +29,7 @@ public class CosineCommandTest extends CommandTest {
     model = new ModelState();
     model.getActiveTurtles().add(new ArrayList<>());
     model.getActiveTurtles().peek().add(1);
-    node = new CommandNode("math.Cosine", model);
+    node = new CommandNode("Cosine", model);
   }
 
   @ParameterizedTest
