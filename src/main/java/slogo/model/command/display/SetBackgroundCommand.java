@@ -21,6 +21,7 @@ public class SetBackgroundCommand implements Command {
   public static final int NUM_ARGS = 1;
 
   private final ModelState modelState;
+  private final SlogoListener myListener;
 
   /**
    * Constructs an instance of SetPenCommand with the given model state and listener.
@@ -30,6 +31,7 @@ public class SetBackgroundCommand implements Command {
    */
   public SetBackgroundCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
+    myListener = listener;
   }
 
   /**
@@ -45,6 +47,7 @@ public class SetBackgroundCommand implements Command {
     double val = Math.round(arguments.get(0).evaluate());
     for (Turtle turtle : modelState.getTurtles().values()) {
       turtle.setBgColor((int) val);
+      myListener.onUpdateTurtleState(turtle.getImmutableTurtle());
     }
     return val;
   }
