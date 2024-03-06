@@ -43,8 +43,6 @@ public class CommandCreatorNode extends Node {
    * string representation of the command definition
    *
    * @return 1.0, indicating command successfully declined
-   * @throws InvocationTargetException if an error occurs during invocation
-   * @throws IllegalAccessException    if access to the method is denied
    */
 
 

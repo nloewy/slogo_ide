@@ -14,7 +14,7 @@ public interface Model {
    * @param commandStr input string of tokens to be parsed
    */
   void parse(String commandStr)
-      throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, NoSuchFieldException, InvalidTokenException;
+      throws SlogoException;
 
   /**
    * Resets the model to its initial state.

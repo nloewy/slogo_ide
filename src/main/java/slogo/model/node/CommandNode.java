@@ -59,8 +59,7 @@ public class CommandNode extends Node {
    */
 
   @Override
-  public double evaluate()
-      throws InvalidCommandException, InsufficientArgumentsException, InvalidOperandException {
+  public double evaluate() throws InsufficientArgumentsException {
     Command command = CommandFactory.createCommand(myToken, myModelState, getListener());
     if (getNumArgs() != getChildren().size()) {
       throw new InsufficientArgumentsException("", getToken());
