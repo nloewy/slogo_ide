@@ -120,7 +120,7 @@ public class Turtle {
    */
 
   public TurtleRecord getImmutableTurtle() {
-    return new TurtleRecord(myId, myX, myY, myPen, myVisible, myHeading);
+    return new TurtleRecord(myId, myX, myY, myPen, myVisible, myHeading, 0, 0);
   }
 
   /**

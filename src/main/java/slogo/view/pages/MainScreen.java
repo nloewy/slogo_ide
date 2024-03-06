@@ -657,4 +657,9 @@ public class MainScreen implements SlogoListener {
       }
     }
   }
+
+  @Override
+  public void onUpdatePallete(Map<Integer, List<Integer>> pallette) {
+
+  }
 }
