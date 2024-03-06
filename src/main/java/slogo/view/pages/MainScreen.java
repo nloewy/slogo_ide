@@ -387,7 +387,8 @@ public class MainScreen implements SlogoListener {
     File file = fileChooser.showSaveDialog(stage);
     if (file != null) {
       try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-        for (String command : userDefinedCommandHistory) {
+        for (String command : commandHistory) {
+          System.out.println(command);
           writer.write(command);
           writer.newLine();
         }

@@ -78,7 +78,7 @@ public class SlogoModel implements Model {
 
   @Override
   public void parse(String input) throws SlogoException {
-    if (input.isEmpty()) {
+    if (input==null || input.isEmpty()) {
       return;
     }
     Node root = new ListNode("[", modelState);
