@@ -113,6 +113,7 @@ public class Controller {
       try {
         model.parse(t);
       } catch (SlogoException e) {
+        System.out.println(e.getToken());
         String template = (String) prop.getOrDefault(e.getCause().getClass().getSimpleName(), e.getMessage());
         String message = String.format(template, e.getToken());
         new Alert(AlertType.ERROR, message).show();
