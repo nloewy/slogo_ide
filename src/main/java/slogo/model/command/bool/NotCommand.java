@@ -38,12 +38,9 @@ public class NotCommand implements Command {
    * @param arguments a list containing a single node to be evaluated
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 1.0 if the node's value is 0, otherwise returns 0.0
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
-   */
+    */
   @Override
-  public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
+  public double execute(List<Node> arguments, int index) {
     modelState.outer = false;
     return (arguments.get(0).evaluate() == 0) ? 1.0 : 0.0;
   }

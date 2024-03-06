@@ -39,12 +39,9 @@ public class SumCommand implements Command {
    * @param arguments a list containing two nodes representing the numbers to be added
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the sum of the two input numbers
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
-   */
+    */
   @Override
-  public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
+  public double execute(List<Node> arguments, int index) {
     modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();

@@ -61,7 +61,7 @@ public class CommandNode extends Node {
 
   @Override
   public double evaluate() //masked under factory
-      throws InvalidCommandException, InsufficientArgumentsException, InvalidOperandException, InvocationTargetException, IllegalAccessException {
+      throws InvalidCommandException, InsufficientArgumentsException, InvalidOperandException {
     try {
 
       Class<?> clazz = Class.forName(BASE_PACKAGE + myToken + "Command");

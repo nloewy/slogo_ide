@@ -41,12 +41,9 @@ public class PowerCommand implements Command {
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of raising the base to the power of the exponent
    * @throws InvalidOperandException   if the result of the operation is undefined
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
-   */
+    */
   @Override
-  public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
+  public double execute(List<Node> arguments, int index) throws InvalidOperandException {
     modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();

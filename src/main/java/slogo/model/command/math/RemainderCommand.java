@@ -40,13 +40,10 @@ public class RemainderCommand implements Command {
    * @param arguments a list containing two nodes representing the dividend and divisor
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the remainder of the division of the dividend by the divisor
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
-   * @throws InvalidOperandException   if the divisor is zero
+    * @throws InvalidOperandException   if the divisor is zero
    */
   @Override
-  public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
+  public double execute(List<Node> arguments, int index) throws InvalidOperandException {
     modelState.outer = false;
     if (arguments.get(1).evaluate() == 0) {
       throw new InvalidOperandException("Divisor must be Non-Zero");

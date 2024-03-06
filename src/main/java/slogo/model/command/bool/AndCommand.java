@@ -40,12 +40,9 @@ public class AndCommand implements Command {
    * @param arguments a list of nodes, which can each be evaluated
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 1.0 if both expressions are non-zero, otherwise returns 0.0
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
-   */
+    */
   @Override
-  public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
+  public double execute(List<Node> arguments, int index) {
     modelState.outer = false;
     return (Math.abs(arguments.get(0).evaluate()) > TOLERANCE) &&
         (Math.abs(arguments.get(1).evaluate()) > TOLERANCE) ? 1.0 : 0.0;

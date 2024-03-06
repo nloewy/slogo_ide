@@ -43,13 +43,11 @@ public class CommandCreatorNode extends Node {
    * string representation of the command definition
    *
    * @return 1.0, indicating command successfully declined
-   * @throws InvocationTargetException if an error occurs during invocation
-   * @throws IllegalAccessException    if access to the method is denied
    */
 
 
   @Override
-  public double evaluate() throws InvocationTargetException, IllegalAccessException {
+  public double evaluate() {
     List<Node> children = getChildren();
     myModelState.getUserDefinedCommandNodes().put(myToken, children);
     getListener().onUserDefinedCommand(toString());

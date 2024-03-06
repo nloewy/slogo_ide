@@ -48,8 +48,7 @@ public class AskCommand implements Command {
    */
 
   @Override
-  public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
+  public double execute(List<Node> arguments, int index) {
     List<Integer> tempList = new ArrayList<>();
     for (Node node : arguments.get(0).getChildren()) {
       modelState.outer = false;

@@ -27,7 +27,7 @@ public abstract class Node {
    * @throws IllegalAccessException    if access to the method is denied
    */
 
-  public abstract double evaluate() throws InvocationTargetException, IllegalAccessException;
+  public abstract double evaluate();
 
   /**
    * Retrieves myChildren instance variable of the node, which is later passed in as an argument to

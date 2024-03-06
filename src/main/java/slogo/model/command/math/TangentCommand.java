@@ -40,13 +40,10 @@ public class TangentCommand implements Command {
    * @param arguments a list containing a single node representing the angle in degrees
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the tangent of the input angle
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
-   * @throws InvalidOperandException   if the tangent function is undefined
+    * @throws InvalidOperandException   if the tangent function is undefined
    */
   @Override
-  public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException, InvalidOperandException {
+  public double execute(List<Node> arguments, int index) throws InvalidOperandException {
     modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     if (Math.abs(arg1 % 180) == 90) {

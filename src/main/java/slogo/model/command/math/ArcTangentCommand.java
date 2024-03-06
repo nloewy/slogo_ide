@@ -42,12 +42,9 @@ public class ArcTangentCommand implements Command {
    *                  arctangent of
    * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the arctangent of the input number in degrees
-   * @throws InvocationTargetException if an error occurs during execution
-   * @throws IllegalAccessException    if access is denied during execution
-   */
+    */
   @Override
-  public double execute(List<Node> arguments, int index)
-      throws InvocationTargetException, IllegalAccessException {
+  public double execute(List<Node> arguments, int index) {
     modelState.outer = false;
     double arg1 = arguments.get(0).evaluate();
     return MathUtils.toDegrees(Math.atan(arg1));
