@@ -587,7 +587,7 @@ public class MainScreen implements SlogoListener {
     updateVariables();
   }
 
-  private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading) {
+  private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading, boolean visible) {
     double oldX = turtle.getX();
     double oldY = turtle.getY();
     double oldHeading = turtle.getHeading();
@@ -611,10 +611,15 @@ public class MainScreen implements SlogoListener {
             if (!centerPane.getChildren().contains(line)) {
               centerPane.getChildren().add(line);
             }
+            turtle.getDisplay().setVisible(visible);
+
           });
       animation.getKeyFrames().add(keyFrame);
     }
-    turtle.setPosition(x, y, newHeading);
+    animation.getKeyFrames().add(new KeyFrame(Duration.seconds(duration), e -> {
+      turtle.setPosition(x, y, newHeading, visible);
+    }));
+    turtle.setPosition(x, y, newHeading, visible);
     myAnimation.add(animation);
   }
 
@@ -624,8 +629,7 @@ public class MainScreen implements SlogoListener {
       if (turtle.getId() == turtleState.id()) {
         turtle.setIsPenDisplayed(turtleState.pen());
         setPosition(turtle, turtleState.x() + centerX, turtleState.y() + centerY,
-            turtleState.heading());
-
+            turtleState.heading(), turtleState.visible());
         List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
         if (newPenColor != null) {
           turtle.setPenColor(new Color(newPenColor.get(0)/255, newPenColor.get(1)/255, newPenColor.get(2)/255, 1));
@@ -649,7 +653,7 @@ public class MainScreen implements SlogoListener {
   public void onResetTurtle(int id) {
     for (FrontEndTurtle turtle : turtles) {
       if (turtle.getId() == id) {
-        turtle.setPosition(centerX, centerY, 0);
+        turtle.setPosition(centerX, centerY, 0, true);
         turtle.setImage(defaultImage);
         for(Line line : turtle.getPathHistory()) {
             centerPane.getChildren().remove(line);

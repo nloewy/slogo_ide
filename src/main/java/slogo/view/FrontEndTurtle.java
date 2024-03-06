@@ -121,9 +121,15 @@ public class FrontEndTurtle {
     return display;
   }
 
-  public void setPosition(double x, double y, double newHeading) {
+  public void setPosition(double x, double y, double newHeading, boolean visble) {
     myX = x;
     myY = y;
     myHeading = newHeading;
+    setVisible(visble);
+  }
+
+
+  private void setVisible(boolean visible) {
+    display.setVisible(visible);
   }
 }
