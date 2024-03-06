@@ -55,7 +55,7 @@ public class SlogoModel implements Model {
     modelState.getActiveTurtles().add(new ArrayList<>());
     modelState.getActiveTurtles().peek().add(1);
     myListener = listener;
-    myListener.onUpdatePallete(modelState.getPalette());
+    myListener.onUpdatePalette(modelState.getPalette());
     parser = new Parser(modelState, currentLanguage);
     myCommands = new Stack<>();
     prop = new Properties();

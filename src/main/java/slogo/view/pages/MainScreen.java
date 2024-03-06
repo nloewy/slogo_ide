@@ -618,7 +618,7 @@ public class MainScreen implements SlogoListener {
             turtleState.heading());
 
         List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
-        turtle.setPenColor(new Color(newPenColor.get(0), newPenColor.get(1), newPenColor.get(2), 1));
+        // turtle.setPenColor(new Color(newPenColor.get(0), newPenColor.get(1), newPenColor.get(2), 1));
         return;
       }
     }
@@ -627,7 +627,7 @@ public class MainScreen implements SlogoListener {
     turtles.add(newTurtle);
     centerPane.getChildren().add(newTurtle.getDisplay());
 
-    List<Integer> newBackgroundColor = palette.get(turtleState.bgIndex());
+    // List<Integer> newBackgroundColor = palette.get(turtleState.bgIndex());
     //TODO implement background color
     // centerPane.setFIl(new Color(newPenColor.get(0), newPenColor.get(1), newPenColor.get(2), 1));
   }
