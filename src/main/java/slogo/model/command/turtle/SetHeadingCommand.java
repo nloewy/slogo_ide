@@ -45,7 +45,7 @@ public class SetHeadingCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.outer = false;
+    modelState.setOuter(false);
     double newHeading = arguments.get(0).evaluate();
     Turtle turtle = modelState.getTurtles().get(turtleId);
     double oldHeading = turtle.getHeading();

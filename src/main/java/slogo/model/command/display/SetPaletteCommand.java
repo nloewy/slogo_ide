@@ -41,7 +41,7 @@ public class SetPaletteCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.outer = false;
+    modelState.setOuter(false);
     int index = (int) Math.round(arguments.get(0).evaluate());
     int red = (int) Math.round(arguments.get(1).evaluate());
     int green = (int) Math.round(arguments.get(2).evaluate());

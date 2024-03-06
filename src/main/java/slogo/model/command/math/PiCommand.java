@@ -40,7 +40,7 @@ public class PiCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.outer = false;
+    modelState.setOuter(false);
     return Math.PI;
   }
 }

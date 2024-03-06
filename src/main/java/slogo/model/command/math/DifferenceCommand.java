@@ -41,7 +41,7 @@ public class DifferenceCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.outer = false;
+    modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
     return arg1 - arg2;

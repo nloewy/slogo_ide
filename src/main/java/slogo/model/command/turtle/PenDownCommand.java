@@ -45,7 +45,7 @@ public class PenDownCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.outer = false;
+    modelState.setOuter(false);
     Turtle turtle = modelState.getTurtles().get(turtleId);
     turtle.setPen(true);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());

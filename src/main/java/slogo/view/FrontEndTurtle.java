@@ -4,11 +4,14 @@ package slogo.view;
 
 import java.util.List;
 import java.util.Stack;
+
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import slogo.view.pages.MainScreen;
 
 public class FrontEndTurtle {
 
@@ -23,9 +26,12 @@ public class FrontEndTurtle {
   private boolean isPenDisplayed = false;
   private Timeline animation;
   private final Stack<Line> pathHistory = new Stack<Line>();
+  private MainScreen view;
+  private boolean isActive;
 
   public FrontEndTurtle(int id, double x, double y, Color color, boolean isPenVisible,
-      double heading, Image image) {
+      double heading, Image image, MainScreen view) {
+    this.view = view;
     myId = id;
     myX = x;
     myY = y;
@@ -39,7 +45,23 @@ public class FrontEndTurtle {
     display.setLayoutY(myY);
     penColor = color;
     isPenDisplayed = isPenVisible;
+
+    display.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+      view.pushCommand("TELL " + id);
+    });
+
     this.heading = heading;
+  }
+
+  public void setIsActive(boolean state) {
+    isActive = state;
+
+    if (isActive) {
+      display.setOpacity(1);
+    }
+    else {
+      display.setOpacity(0.5);
+    }
   }
 
   public int getId() {
@@ -104,4 +126,3 @@ public class FrontEndTurtle {
     myHeading = newHeading;
   }
 }
-

@@ -1,5 +1,6 @@
 package slogo.model.command.control;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -37,12 +38,13 @@ public class RepeatCommand implements Command {
    *
    * @param arguments a list containing two nodes: the first node represents the number of times to
    *                  repeat, and the second node represents the commands to repeat.
-   * @param turtleId  the id of the turtle currently active
+   * @param index     the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return the result of the last evaluated command in the loop
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-    modelState.outer = false;
+  public double execute(List<Node> arguments, int index)
+  {
+    modelState.setOuter(false);
     String variableName = ":repcount";
     double end = arguments.get(0).evaluate();
     Node commands = arguments.get(1);
@@ -55,3 +57,4 @@ public class RepeatCommand implements Command {
     return res;
   }
 }
+

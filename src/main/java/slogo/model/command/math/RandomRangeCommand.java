@@ -44,7 +44,7 @@ public class RandomRangeCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
-    modelState.outer = false;
+    modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
     if (arg1 > arg2) {

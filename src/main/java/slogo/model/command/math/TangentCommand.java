@@ -43,7 +43,7 @@ public class TangentCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
-    modelState.outer = false;
+    modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     if (Math.abs(arg1 % 180) == 90) {
       throw new InvalidOperandException("Illegal Value for Tangent Function");

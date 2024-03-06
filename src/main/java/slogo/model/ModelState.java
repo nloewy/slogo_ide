@@ -43,8 +43,9 @@ public class ModelState {
    * Stack of currently active turtles
    */
   private final Stack<List<Integer>> activeTurtles;
-  public boolean outer;
-  public int currTurtle;
+
+  private boolean outer;
+  private int currTurtle;
   private final Map<Integer, List<Integer>> myPalette;
 
   /**
@@ -109,5 +110,21 @@ public class ModelState {
 
   public Map<Integer, List<Integer>> getPalette() {
     return myPalette;
+  }
+
+  public void setOuter(boolean state) {
+    outer = state;
+  }
+
+  public void setCurrTurtle(int index) {
+    currTurtle = index;
+  }
+
+  public boolean getOuter() {
+    return outer;
+  }
+
+  public int getCurrTurtle() {
+    return currTurtle;
   }
 }

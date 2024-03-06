@@ -40,7 +40,7 @@ public class XcoordinateCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.outer = false;
+    modelState.setOuter(false);
     return modelState.getTurtles().get(turtleId).getX();
   }
 }

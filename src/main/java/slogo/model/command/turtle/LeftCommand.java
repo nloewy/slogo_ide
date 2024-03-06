@@ -44,7 +44,7 @@ public class LeftCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.outer = false;
+    modelState.setOuter(false);
     double degrees = arguments.get(0).evaluate();
     Turtle turtle = modelState.getTurtles().get(turtleId);
     turtle.setHeading(turtle.getHeading() - degrees);

@@ -2,6 +2,7 @@ package slogo;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.function.Consumer;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -43,10 +45,14 @@ public class Controller {
   private final List<MainScreen> windows = new ArrayList<>();
   private File turtleImage;
   private String uploadedCommand;
+  private Properties prop;
+
 
   public Controller(Stage stage) throws IOException {
     this.stage = stage;
     openStartScreen();
+    prop = new Properties();
+    getProperties();
   }
 
   public void setTurtleImage(File i) {
@@ -106,11 +112,10 @@ public class Controller {
     parse = t -> {
       try {
         model.parse(t);
-      } catch (ClassNotFoundException | InvocationTargetException |
-               NoSuchMethodException | InstantiationException | IllegalAccessException |
-               NoSuchFieldException | InvalidOperandException |
-               SlogoException e) {
-        new Alert(AlertType.ERROR, e.getMessage()).show();
+      } catch (SlogoException e) {
+        String template = (String) prop.getOrDefault(e.getCause().getClass().getSimpleName(), e.getMessage());
+        String message = String.format(template, e.getToken());
+        new Alert(AlertType.ERROR, message).show();
       }
     };
 
@@ -134,6 +139,7 @@ public class Controller {
         try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
           String line;
           while ((line = br.readLine()) != null) {
+            if(line.startsWith("#")) { continue;}
             contentBuilder.append(line).append("\n");
           }
         }
@@ -179,12 +185,17 @@ public class Controller {
         Node nNode = nList.item(temp);
         if (nNode.getNodeType() == Node.ELEMENT_NODE) {
           Element eElement = (Element) nNode;
-          String commandName = eElement.getElementsByTagName("canonicalName").item(0).getTextContent();
-          String description = eElement.getElementsByTagName("description").item(0).getTextContent();
+          String commandName = eElement.getElementsByTagName("canonicalName").item(0)
+              .getTextContent();
+          String description = eElement.getElementsByTagName("description").item(0)
+              .getTextContent();
           String example = eElement.getElementsByTagName("example").item(0).getTextContent();
-          Element helpDocumentation = (Element) eElement.getElementsByTagName("helpDocumentation").item(0);
-          String parameters = helpDocumentation.getElementsByTagName("parameters").item(0).getTextContent();
-          String returnValue = helpDocumentation.getElementsByTagName("returnValue").item(0).getTextContent();
+          Element helpDocumentation = (Element) eElement.getElementsByTagName("helpDocumentation")
+              .item(0);
+          String parameters = helpDocumentation.getElementsByTagName("parameters").item(0)
+              .getTextContent();
+          String returnValue = helpDocumentation.getElementsByTagName("returnValue").item(0)
+              .getTextContent();
           Map<String, String> details = new HashMap<>();
           details.put("description", description);
           details.put("example", example);
@@ -198,6 +209,17 @@ public class Controller {
     }
     return commandDetails;
   }
+  private void getProperties() {
+    File file = new File("src/main/resources/slogo/example/languages/" + currentLanguage + ".properties");
+    try {
+      prop.load(new FileInputStream(file));
+    } catch (IOException ex) {
+      new Alert(AlertType.ERROR, "File for Language Not Found").show();
+    }
+
+  }
+
 
 
 }
+

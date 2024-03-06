@@ -43,7 +43,7 @@ public class SetPenColorCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.outer = false;
+    modelState.setOuter(false);
     Turtle turtle = modelState.getTurtles().get(turtleId);
     turtle.setPenColor((int) Math.round(arguments.get(0).evaluate()));
     myListener.onUpdateTurtleState(turtle.getImmutableTurtle());

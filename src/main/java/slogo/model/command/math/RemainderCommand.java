@@ -43,7 +43,7 @@ public class RemainderCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws InvalidOperandException {
-    modelState.outer = false;
+    modelState.setOuter(false);
     if (arguments.get(1).evaluate() == 0) {
       throw new InvalidOperandException("Divisor must be Non-Zero");
     }

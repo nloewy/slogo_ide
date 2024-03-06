@@ -5,11 +5,22 @@ package slogo.model.api;
  */
 public class SlogoException extends RuntimeException {
 
-  private final String token;
+  private String token;
+  private Throwable cause;
 
   public SlogoException(String message, String token) {
     super(message);
     this.token = token;
+  }
+
+  public SlogoException(String message, Throwable cause, String token) {
+    super(message);
+    this.cause = cause;
+    this.token = token;
+  }
+
+  public Throwable getCause () {
+    return cause;
   }
 
   /**
@@ -21,3 +32,4 @@ public class SlogoException extends RuntimeException {
     return token;
   }
 }
+

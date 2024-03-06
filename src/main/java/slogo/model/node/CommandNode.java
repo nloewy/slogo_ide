@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
+import slogo.model.command.CommandFactory;
 import slogo.model.exceptions.IncompleteClassException;
 import slogo.model.exceptions.InsufficientArgumentsException;
 import slogo.model.exceptions.InvalidCommandException;
@@ -26,22 +27,18 @@ import slogo.model.exceptions.InvalidOperandException;
 
 public class CommandNode extends Node {
 
-  private static final String BASE_PACKAGE = "slogo.model.command.";
   private final String myToken;
   private final ModelState myModelState;
   private Command command;
-  private Method method;
 
   /**
    * Constructs a new CommandNode with the given token and model state.
    *
    * @param token      the token representing the command
    * @param modelState the model state of the application
-   * @throws ClassNotFoundException if the command class cannot be found
    */
 
-  public CommandNode(String token, ModelState modelState)
-      throws ClassNotFoundException {
+  public CommandNode(String token, ModelState modelState) {
     super();
     myToken = token;
     myModelState = modelState;
@@ -60,36 +57,24 @@ public class CommandNode extends Node {
    */
 
   @Override
-  public double evaluate() //masked under factory
-      throws InvalidCommandException, InsufficientArgumentsException, InvalidOperandException {
-    try {
-
-      Class<?> clazz = Class.forName(BASE_PACKAGE + myToken + "Command");
-      command = (Command) clazz.getDeclaredConstructor(ModelState.class, SlogoListener.class)
-          .newInstance(myModelState, getListener());
-    } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
-             NoSuchMethodException | IllegalAccessException e) {
-      throw new InvalidCommandException(
-          "", getToken());
-    }
-
+  public double evaluate() throws InsufficientArgumentsException {
+    Command command = CommandFactory.createCommand(myToken, myModelState, getListener());
     if (getNumArgs() != getChildren().size()) {
       throw new InsufficientArgumentsException("", getToken());
     }
     double val = 0;
-    if (myToken.equals("control.Make") || myToken.equals("multiple.Ask") || !myModelState.outer) {
-      val = command.execute(getChildren(), myModelState.currTurtle);
+    if (myToken.equals("control.Make") || myToken.startsWith("multiple.Ask") || !myModelState.getOuter()) {
+      val = command.execute(getChildren(), myModelState.getCurrTurtle());
     } else {
       for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
-        myModelState.currTurtle = myModelState.getActiveTurtles().peek().get(index);
-        val = command.execute(getChildren(), myModelState.currTurtle);
+        myModelState.setCurrTurtle(myModelState.getActiveTurtles().peek().get(index));
+        val = command.execute(getChildren(), myModelState.getCurrTurtle());
       }
     }
-    myModelState.outer = true;
+    myModelState.setOuter(true) ;
 
     return val;
   }
-
 
   /**
    * Retrieves the number of arguments expected for the Command corresponding to this CommandNode.
@@ -102,12 +87,7 @@ public class CommandNode extends Node {
 
   @Override
   public int getNumArgs() throws IncompleteClassException {
-    try {
-      return (int) Class.forName(BASE_PACKAGE + myToken + "Command").getField("NUM_ARGS").get(null);
-    } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException e) {
-      throw new IncompleteClassException(
-          "Error getting number of arguments. Field NUM_ARGS not found for " + myToken);
-    }
+    return CommandFactory.getNumArgs(myToken);
   }
 
   /**

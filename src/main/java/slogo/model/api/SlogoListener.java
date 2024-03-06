@@ -61,6 +61,6 @@ public interface SlogoListener {
    */
   void onSetActiveTurtles(List<Integer> ids);
 
-  void onUpdatePallete(Map<Integer, List<Integer>> pallette);
+  void onUpdatePallete(Map<Integer,List<Integer>> pallette);
 
 }

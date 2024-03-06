@@ -41,7 +41,7 @@ public class SineCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.outer = false;
+    modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     return Math.sin(MathUtils.toRadians(arg1));
   }

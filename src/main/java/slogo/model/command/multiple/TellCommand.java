@@ -1,5 +1,6 @@
 package slogo.model.command.multiple;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import slogo.model.ModelState;
@@ -39,22 +40,37 @@ public class TellCommand implements Command {
    * Executes the command to activate turtles with specified IDs, creating new turtles if needed.
    *
    * @param arguments a list of nodes representing the arguments passed to the command
-   * @param turtleId  the id of the turtle currently active
+   * @param index     the index of the command in the list of commands
    * @return the ID of the last activated turtle
+   * @throws InvocationTargetException if an error occurs during command execution
+   * @throws IllegalAccessException    if access to the method or field is denied
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, int index)
+  {
     List<Integer> tempList = new ArrayList<>();
     int id = 0;
-    for (Node node : arguments.get(0).getChildren()) {
-      id = (int) Math.round(node.evaluate());
+    if (arguments.get(0).getChildren().isEmpty()) {
+      id = (int) Math.round(arguments.get(0).evaluate());
       if (!modelState.getTurtles().containsKey(id)) {
         modelState.getTurtles().put(id, new Turtle(id));
-        myListener.onResetTurtle(id);
+        myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
       }
       tempList.add(id);
+    } else {
+      for (Node node : arguments.get(0).getChildren()) {
+        if (node.getToken().equals("]")) {
+          continue;
+        }
 
+        id = (int) Math.round(node.evaluate());
+        if (!modelState.getTurtles().containsKey(id)) {
+          modelState.getTurtles().put(id, new Turtle(id));
+          myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
+        }
+        tempList.add(id);
+      }
     }
     modelState.getActiveTurtles().clear();
     modelState.getActiveTurtles().add(tempList);
@@ -62,4 +78,3 @@ public class TellCommand implements Command {
     return id;
   }
 }
-

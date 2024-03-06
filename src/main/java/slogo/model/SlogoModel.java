@@ -67,8 +67,6 @@ public class SlogoModel implements Model {
    * value returned
    *
    * @param input The Slogo command to be parsed and executed.
-   * @throws InvocationTargetException If an error occurs during command execution.
-   * @throws IllegalAccessException    If access is not allowed to the invoked method.
    * @throws InvalidCommandException   If a non-command token is placed where a command is expected,
    *                                   or if command token not recognized.
    * @throws InvalidTokenException     If a token in the input string does not match an expected
@@ -76,8 +74,7 @@ public class SlogoModel implements Model {
    */
 
   @Override
-  public void parse(String input)
-      throws InvocationTargetException, IllegalAccessException, InvalidCommandException, InvalidTokenException {
+  public void parse(String input) throws InvalidCommandException, InvalidTokenException {
     if (input.isEmpty()) {
       return;
     }
@@ -100,12 +97,9 @@ public class SlogoModel implements Model {
    *
    * @param input The input command string.
    * @param root  The root node of the parsed command.
-   * @throws InvocationTargetException If an error occurs during command execution.
-   * @throws IllegalAccessException    If access is not allowed to the invoked method.
    */
 
-  private void handleParseResult(String input, Node root)
-      throws InvocationTargetException, IllegalAccessException {
+  private void handleParseResult(String input, Node root) {
     dfsAddListener(root);
     double val = -1;
     for (Node node : root.getChildren()) {

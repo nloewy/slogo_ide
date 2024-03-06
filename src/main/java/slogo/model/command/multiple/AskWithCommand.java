@@ -37,38 +37,41 @@ public class AskWithCommand implements Command {
    * needed, runs the given commands, and then goes back to previously active turtle.
    *
    * @param arguments a list of nodes representing the arguments passed to the command
-   * @param turtleId  the id of the turtle currently active
+   * @param index     the index of the command in the list of commands
    * @return result of last command run by the last turtle.
    * @throws InvocationTargetException if an error occurs during command execution
    * @throws IllegalAccessException    if access to the method or field is denied
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, int index)
+  {
     List<Integer> tempList = new ArrayList<>();
     for (int i : modelState.getTurtles().keySet()) {
-      modelState.currTurtle = i;
-      modelState.outer = false;
+      modelState.setCurrTurtle(i);
+      modelState.setOuter(false);
       int id = (int) Math.round(arguments.get(0).evaluate());
       if (id != 0) {
         tempList.add(i);
       }
     }
 
+    System.out.println(tempList);
     modelState.getActiveTurtles().add(tempList);
     myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
     double val = 0.0;
     for (Node node : arguments.get(1).getChildren()) {
       for (int i : tempList) {
-        modelState.outer = false;
-        modelState.currTurtle = i;
+        modelState.setOuter(false);
+        modelState.setCurrTurtle(i);
         val = node.evaluate();
       }
     }
 
     modelState.getActiveTurtles().pop();
-    modelState.outer = false;
+    modelState.setOuter(false);
     return val;
 
   }
 }
+
