@@ -13,6 +13,7 @@ import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
+import slogo.model.exceptions.TangentUndefinedFunction;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
@@ -69,7 +70,7 @@ public class TangentCommandTest extends CommandTest {
   void testTangentInvalid(String degrees)
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
     node.addChild(new ConstantNode(degrees, null));
-    assertThrows(InvalidOperandException.class, () -> {
+    assertThrows(TangentUndefinedFunction.class, () -> {
       node.evaluate();
     });
   }

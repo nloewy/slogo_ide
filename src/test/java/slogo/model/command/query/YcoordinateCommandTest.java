@@ -49,7 +49,7 @@ public class YcoordinateCommandTest extends CommandTest {
   void testYCorrBasic(String y)
       throws InvocationTargetException, IllegalAccessException {
     myTurtle.setY(Double.parseDouble(y));
-    assertEquals(myTurtle.getY(), Double.parseDouble(y), DELTA);
+    assertEquals(myTurtle.getY(), node.evaluate(), DELTA);
   }
 
 }

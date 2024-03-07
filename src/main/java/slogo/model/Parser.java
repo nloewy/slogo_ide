@@ -124,8 +124,9 @@ public class Parser {
   }
 
   /**
-   * Skips comments and whitespace tokens in the input string
+   * Skips comments and whitespace tokens in the input string.
    */
+
   private void skipCommentsAndWhitespace(List<String> tokens) {
     while (myIndex < tokens.size() && (tokens.get(myIndex).isEmpty() || tokens.get(myIndex)
         .startsWith("#"))) {
@@ -143,7 +144,9 @@ public class Parser {
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
     }
-    if ((!commandMap.containsKey(tokens.get(myIndex).toLowerCase()) && !modelState.getUserDefinedCommands().containsKey(tokens.get(myIndex).toLowerCase())) && nodeStack.peek()
+    if ((!commandMap.containsKey(tokens.get(myIndex).toLowerCase())
+        && !modelState.getUserDefinedCommands().containsKey(tokens.get(myIndex).toLowerCase()))
+        && nodeStack.peek()
         .equals(rootNode)) {
       throw new InvalidCommandException("", tokens.get(myIndex));
     }
@@ -216,10 +219,11 @@ public class Parser {
       }
       index++;
     }
-    if(index == tokens.size()) {
+    if (index == tokens.size()) {
       throw new InsufficientArgumentsException("", tokens.get(myIndex));
     }
-    if(myIndex+1 >= tokens.size() || !tokenMatched(tokens.get(myIndex+1), "Command") || commandMap.containsKey(tokens.get(myIndex+1))) {
+    if (myIndex + 1 >= tokens.size() || !tokenMatched(tokens.get(myIndex + 1), "Command")
+        || commandMap.containsKey(tokens.get(myIndex + 1))) {
       String userCommandName = (tokens.size() > index) ? tokens.get(myIndex + 1) : "";
       throw new InvalidUserCommandException("", userCommandName);
     }
@@ -274,7 +278,9 @@ public class Parser {
 
     nodeHandler.add(new SimpleEntry<>(
         token -> isCommand(token) && !isToCommand(token),
-        tokens -> {currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()), modelState);
+        tokens -> {
+          currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
+              modelState);
 
         }));
 
@@ -308,7 +314,7 @@ public class Parser {
   }
 
   /**
-   * Checks if token matches the pattern specified by regex key
+   * Checks if token matches the pattern specified by regex key.
    */
   private boolean tokenMatched(String token, String key) {
     return token.matches(patternLoader.getPattern(key));

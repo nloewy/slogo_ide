@@ -1,6 +1,5 @@
 package slogo.model.command.control;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -42,8 +41,7 @@ public class ForCommand implements Command {
    * @return the result of the last evaluated command in the loop
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId)
-  {
+  public double execute(List<Node> arguments, int turtleId) {
     String variableName = arguments.get(0).getChildren().get(0).getToken();
     double start = arguments.get(0).getChildren().get(1).evaluate();
     double end = arguments.get(0).getChildren().get(2).evaluate();

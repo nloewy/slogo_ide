@@ -1,11 +1,8 @@
 package slogo.view;
 
 import java.io.InputStream;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +16,7 @@ public class UserInterfaceUtil {
   public static Button generateButton(String text,
       EventHandler<ActionEvent> consumer) {
     Button ret = new Button();
+    ret.setText(text);
     ret.setId(text);
     ret.setOnAction(consumer);
 
@@ -39,13 +37,14 @@ public class UserInterfaceUtil {
   }
 
   public static ComboBox<String> generateComboStringBox(ObservableList<String> options,
+      String id,
       int x,
       int y,
       Function<String, String> fixString,
       Consumer<String> consumer) {
     ComboBox<String> comboBox = new ComboBox<>(options);
     comboBox.setValue(options.get(0));
-    comboBox.setId("themeBox");
+    comboBox.setId(id);
     comboBox.setLayoutX(x);
     comboBox.setLayoutY(y);
     comboBox.setOnAction(e -> {
@@ -57,6 +56,7 @@ public class UserInterfaceUtil {
   }
 
   public static ComboBox<ComboChoice> generateComboBox(ObservableList<ComboChoice> options,
+      String id,
       int x,
       int y,
       Function<String, String> fixString,
@@ -64,12 +64,12 @@ public class UserInterfaceUtil {
     ComboBox<ComboChoice> comboBox = new ComboBox<>();
     comboBox.setItems(options);
     comboBox.setValue(options.get(0));
-    comboBox.setId("themeBox");
+    comboBox.setId(id);
     comboBox.setLayoutX(x);
     comboBox.setLayoutY(y);
     comboBox.setOnAction(e -> {
       ComboChoice selectedOption = comboBox.getValue();
-      if(selectedOption != null) {
+      if (selectedOption != null) {
         consumer.accept(fixString.apply(selectedOption.getValue()));
       }
     });

@@ -1,15 +1,15 @@
 package slogo.model.api;
 
-import java.lang.reflect.InvocationTargetException;
-import slogo.model.exceptions.InvalidTokenException;
-
 /**
+ * Represents the template for a Slogo Model's external API. Aside from the listener, the view can
+ * only interact with the model by parsing and resetting.
+ *
  * @author Noah Loewy
  */
 public interface Model {
 
   /**
-   * Parses a command string to create a syntax tree, and then executes the tree,
+   * Parses a command string to create a syntax tree, and then executes the tree.
    *
    * @param commandStr input string of tokens to be parsed
    */

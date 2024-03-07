@@ -8,13 +8,13 @@ import slogo.model.command.Command;
 import slogo.model.exceptions.IndexNotOnPaletteException;
 import slogo.model.node.Node;
 
-public class SetPenColorCommand implements Command {
+/** The SetPenCommand represents a command that alters the Pen index of the
+ * workspace. It returns the heading of the requested turtle in the model state.
+ *
+ * @author Noah Loewy
+ */
 
-  /** The SetPenCommand represents a command that alters the Pen index of the
-   * workspace. It returns the heading of the requested turtle in the model state.
-   *
-   * @author Noah Loewy
-   */
+public class SetPenColorCommand implements Command {
 
   /**
    * The number of arguments this command requires.
@@ -40,15 +40,15 @@ public class SetPenColorCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments
    * @param turtleId  the id of the turtle currently active
-   * @throws IndexNotOnPaletteException if index not on color palette
    * @return the heading of the active turtle
+   * @throws IndexNotOnPaletteException if index not on color palette
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
     Turtle turtle = modelState.getTurtles().get(turtleId);
     double val = Math.round(arguments.get(0).evaluate());
-    if(!modelState.getPalette().containsKey((int) val)) {
+    if (!modelState.getPalette().containsKey((int) val)) {
       throw new IndexNotOnPaletteException("", String.valueOf(val));
     }
     turtle.setPenColor((int) val);

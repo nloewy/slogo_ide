@@ -29,19 +29,18 @@ public class ConstantNode extends Node {
   }
 
   /**
-   * Returns value of constant node
+   * Returns value of constant node.
    *
    * @return myConstant
    */
   @Override
   public double evaluate() {
 
-
-  return myConstant;
+    return myConstant;
   }
 
   /**
-   * Returns token of node
+   * Returns token of node.
    *
    * @return the token representing constant node (its value)
    */

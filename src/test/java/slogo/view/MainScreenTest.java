@@ -2,80 +2,70 @@ package slogo.view;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 import javafx.scene.control.Button;
 import java.util.concurrent.TimeUnit;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testfx.api.FxToolkit;
 import slogo.Controller;
 import util.DukeApplicationTest;
 
 public class MainScreenTest extends DukeApplicationTest {
-  // keep only if needed to call application methods in tests
-  // not tested yet
-  private TextInputControl myTextField;
-  private Button mySubmitButton;
-  private Button myTestButton;
+  private Button submitButton;
+  private TextField commandField;
+  private ImageView myTurtleView;
+  private Pane centerPane;
+  private double centerX;
+  private double centerY;
+  @Override
+  public void start(Stage stage) throws FileNotFoundException {
+    stage.setTitle("SLogo");
+    try {
+      Controller controller = new Controller(stage);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
-  // this method is run BEFORE EACH test to set up application in a fresh state
+    Button loadGen = lookup("#LoadGen").query();
+    clickOn(loadGen);
 
-//  @Override
-//  public void start (Stage stage) {
-//    // create application and add scene for testing to given stage
-//    try {
-//      Controller.openNewSession();
-//    } catch (Exception e) {
-//      throw new RuntimeException(e);
-//    }
-//
-//    // the 0 is the id set when creating FrontEndTurtle
-//    // components that will be reused in different tests
-//    myTextField = lookup("#field").query();
-//    // clear text field, just in case
-//    myTextField.clear();
-//
-//    mySubmitButton = lookup("#submit").query();
-//    myTestButton = lookup("#test").query();
-//  }
+  }
+
+  @BeforeEach
+  public void setUpMainScreenItems () {
+    // Now you can interact with the main screen's components
+    submitButton = lookup("#Submit").query();
+    commandField = lookup("#CommandField").query();
+    myTurtleView = lookup("#turtle").query();
+    centerPane = lookup("#CenterPane").query();
+    centerX = centerPane.getWidth() / 2;
+    centerY = centerPane.getHeight() / 2;
+  }
 
   @Test
-  void testTextFieldAction () {
-    String expected = "ENTER test!";
-    // GIVEN, app first starts up
-    // WHEN, command is typed and action is activated with ENTER key
-    writeInputTo(myTextField, expected + "\n");
-    // THEN, TODO what should happen?
-    assertEquals("ENTER test!", myTextField.getText());
+  void testDefaultStart () {
+    assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
+    assertEquals(centerX, myTurtleView.getLayoutY(), 0.01);
   }
 
   @Test
   void testSubmitButtonAction () {
     String expected = "fd 50";
-    // GIVEN, app first starts up
-    // WHEN, command is typed and action is activated with ENTER key
-    writeInputTo(myTextField, expected + "\n");
-    clickOn(mySubmitButton);
-    // THEN, TODO what should happen?
-    // probably check if model turtle moved or turtle node moved
-    assertEquals("", myTextField.getText());
+    writeInputTo(commandField, expected);
+    clickOn(submitButton);
+    sleep(600, TimeUnit.MILLISECONDS);
+    assertEquals(centerY - 50, myTurtleView.getLayoutY(), 0.01);
+    assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
   }
-
-  @Test
-  void testTestButtonAction () {
-    // GIVEN, app first starts up
-    // WHEN, command is typed and action is activated with ENTER key
-    clickOn(myTestButton);
-    // THEN, TODO what should happen?
-    // I understood it to move turtle to 100,100, I do not know how to check turtle moved to that position
-    sleep(1, TimeUnit.SECONDS);
-    ImageView myTurtleView = lookup("#turtle").query();
-    //these fail because there are multiple turtled with same ID, I tried to see how to work around it
-    //but I did not want to change too much of the code
-    assertEquals(myTurtleView.getX(), 100);
-    assertEquals(myTurtleView.getY(), 100);
-  }
-
 
 
 }

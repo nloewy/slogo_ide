@@ -1,10 +1,8 @@
 package slogo.model.node;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import slogo.model.api.SlogoListener;
-import slogo.model.exceptions.IncompleteClassException;
 
 /**
  * The abstract class Node represents a node in the syntax tree of a Slogo expression. It provides
@@ -23,7 +21,7 @@ public abstract class Node {
 
   /**
    * Retrieves myChildren instance variable of the node, which is later passed in as an argument to
-   * the evaluate function
+   * the evaluate function.
    *
    * @return the list of children nodes
    */
@@ -53,10 +51,9 @@ public abstract class Node {
    * Gets the number of arguments required by this node for the execute function.
    *
    * @return the number of arguments
-   * @throws IncompleteClassException if the class is incomplete
    */
 
-  public int getNumArgs() throws IncompleteClassException {
+  public int getNumArgs() {
     return 0;
   }
 

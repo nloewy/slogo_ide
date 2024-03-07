@@ -12,14 +12,18 @@ import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -39,6 +43,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -70,26 +75,34 @@ public class MainScreen implements SlogoListener {
   private static final double WINDOW_WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
   private static final double WINDOW_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
   private static final double FRAME_RATE = 4.0;
+  private static final int height = 600;
+  private static final int width = 1000;
+  public static final Double[] ORIGIN = new Double[]{width / 2.0, height / 2.0};
+  private static final double PIXELS_PER_SECOND = 25;
   private final Controller controller;
+  private Button reset;
   private final Timeline timeline = new Timeline();
   private final double speed = 1;
+  private final Slider speedSlider;
+  ComboBox<ComboChoice> colorDropDown;
   private Group root;
-  private Stage stage;
+  private final Stage stage;
   private TextField field;
-  private Text variablesBoxLabel = new Text();
-  private Text commandHistoryLabel = new Text();
-  private Text userDefinedCommandsLabel = new Text();
+  private final Text variablesBoxLabel = new Text();
+  private final Text commandHistoryLabel = new Text();
+  private final Text userDefinedCommandsLabel = new Text();
   private Button submitField;
   private Button play;
   private Button pause;
   private Button step;
+  private String commandHistoryText;
   private Button uploadTurtle;
   private Button openNewWindow;
   private Button help;
   private Button save;
   private Button upload;
-  private Pane centerPane = new Pane();
-  private Scene scene;
+  private final Pane centerPane = new Pane();
+  private final Scene scene;
   private GridPane paletteGrid;
   private boolean paused;
   private BorderPane layout;
@@ -97,36 +110,30 @@ public class MainScreen implements SlogoListener {
   private ScrollPane commandsHistory;
   private ScrollPane userDefinedCommandsPane;
   private VBox variablesBox;
+  private String recentlyUpdatedVariable;
+  private String recentlyUpdatedValue;
   private HBox textInputBox;
   private VBox commandHistoryBox;
   private VBox userDefinedCommandsBox;
   private double mySpeed;
   private ResourceBundle myResources;
   private boolean animationPlaying;
-  private final Slider speedSlider;
   private Duration pausedTime;
   private Animation currAnimation;
   private List<Integer> oldPenColor;
   private List<Integer> oldBackgroundColor;
-
-  private static final int height = 600;
-  private static final int width = 1000;
-  public static final Double[] ORIGIN = new Double[] { width / 2.0, height / 2.0 };
-  private static final double PIXELS_PER_SECOND = 25;
-  private Map<String, List<String>> variableCommands;
-  private Map<String, Number> variableValues;
-  private List<FrontEndTurtle> turtles;
-  private Stack<String> commandHistory;
-  private Stack<String> userDefinedCommandHistory;
+  private final Map<String, Number> variableValues;
+  private final List<FrontEndTurtle> turtles;
+  private final Stack<String> commandHistory;
+  private final Stack<String> userDefinedCommandHistory;
   private Image defaultImage;
-  private Queue<Animation> myAnimation;
+  private final Queue<Animation> myAnimation;
   private String commandString;
-  private String lang;
+  private final String lang;
   private Consumer<String> parse;
-  private double centerX;
-  private double centerY;
+  private final double centerX;
+  private final double centerY;
   private Map<Integer, List<Integer>> palette;
-  ComboBox<ComboChoice> colorDropDown;
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
@@ -139,11 +146,11 @@ public class MainScreen implements SlogoListener {
     myAnimation = new ArrayDeque<>();
     lang = "EG";
     commandString = "";
-    variableCommands = new LinkedHashMap<>();
     variableValues = new LinkedHashMap<>();
     turtles = new ArrayList<>();
     commandHistory = new Stack<String>();
     userDefinedCommandHistory = new Stack<String>();
+
 
     try {
       defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
@@ -171,7 +178,8 @@ public class MainScreen implements SlogoListener {
     initializeTurtleDisplays();
   }
 
-  public void addParser(Consumer<String> parseMethod, String slogoContent) throws FileNotFoundException {
+  public void addParser(Consumer<String> parseMethod, String slogoContent)
+      throws FileNotFoundException {
     parse = parseMethod;
 
     if (slogoContent != null) {
@@ -179,6 +187,7 @@ public class MainScreen implements SlogoListener {
     }
 
   }
+
 
   private void finishCurrAnimation() {
     if (currAnimation != null) {
@@ -244,50 +253,63 @@ public class MainScreen implements SlogoListener {
     variablesBox.getChildren().add(variablesBoxLabel);
 
     for (String key : variableValues.keySet()) {
-      List<String> relatedCommands = variableCommands.get(key);
       Button openRelatedCommands = new Button(key + " :: " + variableValues.get(key));
       openRelatedCommands.setId("variable");
-      openRelatedCommands.setOnAction((event) -> {
-        VariableDialog dialog = new VariableDialog(this, variableValues);
-        if (dialog.display()) {
-          updateVariables();
+      variablesBox.getChildren().add(openRelatedCommands);
+      openRelatedCommands.setOnAction(event -> {
+        String commands = "";
+        for (String command : commandHistory) {
+          if (command.contains(key)) {
+            commands += "\n" + command;
+          }
         }
 
-        String commands = "";
-        for (String command : relatedCommands) {
-          commands = commands + "\n" + command;
-        }
-        new Alert(AlertType.CONFIRMATION, "RELATED COMMANDS\n" + commands).show();
+        makeInputDialog(variableValues.get(key).toString(), "Enter New Value",
+            "Enter a new value for " + key, "New value:\n\nRELATED COMMANDS\n" + commands,
+            true,
+            newValue -> {
+              try {
+                variableValues.put(key, Double.valueOf(newValue));
+                pushCommand("MAKE " + key + " " + newValue);
+
+                new Alert(AlertType.INFORMATION, "New value for " + key + " saved: " + newValue)
+                    .showAndWait();
+
+              } catch (Exception e) {
+                new Alert(AlertType.INFORMATION, "Value Must be a Number");
+              }
+            });
       });
 
-      variablesBox.getChildren().add(openRelatedCommands);
-
     }
+
   }
 
-  private void updateCommands() {
-    System.out.print("COMMAND HISTORY\n");
-    updateCommandBox(commandHistoryBox, commandHistoryLabel, commandHistory);
-    for (String command : commandHistory) {
-      System.out.println(command);
-    }
-    System.out.print("USER DEFINED COMMAND HISTORY\n");
-    updateCommandBox(userDefinedCommandsBox, userDefinedCommandsLabel, userDefinedCommandHistory);
-    for (String com : userDefinedCommandHistory) {
-      System.out.println(com);
-    }
+  private void makeInputDialog(String value, String title, String header, String content, Boolean needsInput, Consumer<String> consumer) {
+    TextInputDialog dialog = new TextInputDialog();
+    dialog.getEditor().setText(value);
+    dialog.getEditor().setDisable(!needsInput);
+    dialog.setTitle(title);
+    dialog.setHeaderText(header);
+    dialog.setContentText(content);
+    dialog.showAndWait().ifPresent(consumer);
   }
+
+
+
 
   private void updateCommandBox(VBox box, Text label, List<String> history) {
     box.getChildren().clear();
     box.getChildren().add(label);
     for (String s : history) {
       String[] lines = s.split("\n");
+      VBox vbox = new VBox();
       TitledPane titledPane = new TitledPane();
       titledPane.setText(lines[0]);
       titledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue) {
-          String fullText = String.join("\n", Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the
+          String fullText = String.join("\n",
+              Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the
           // first one
           titledPane.setContent(new Label(fullText)); // Set the full command content when expanded
           titledPane.setText(lines[0]); // Display the first line when expanded
@@ -296,13 +318,48 @@ public class MainScreen implements SlogoListener {
           titledPane.setText(lines[0]);
         }
       });
-      VBox vbox = new VBox();
-      titledPane.setContent(vbox); // Set initial content as empty VBox
       titledPane.setExpanded(false); // Start collapsed
-      box.getChildren().add(titledPane);
+      Button openCustomCommand = new Button(myResources.getString("Execute"));
+      openCustomCommand.setId("customCommandPrompt");
+      String[] commandParts = lines[0].split("\\s+");
+      List<String> parameters = new ArrayList<>();
+      for (String part : commandParts) {
+        if (part.startsWith(":")) {
+          parameters.add(part);
+        }
+      }
+      vbox.getChildren().addAll(titledPane, openCustomCommand);
+      box.getChildren().add(vbox);
+      if(commandParts.length < 2) {
+        openCustomCommand.setOnAction(event -> {
+          makeInputDialog("", "Execute This Command",
+              "", "", false,
+              newValue -> {
+                pushCommand(s);
+              });
+        });
+        continue;
+      }
+      String commandName = commandParts[1];
+      Boolean hasParameters = !parameters.isEmpty();
+      String commandHeaderText =
+          hasParameters ? "Enter values for parameters: " + String.join(", ", parameters) : "";
+      openCustomCommand.setOnAction(event -> {
+        makeInputDialog("", "Execute This Command",
+            commandHeaderText, "", hasParameters,
+            newValue -> {
+              pushCommand(commandName + " " + newValue);
+            });
+      });
+
     }
   }
 
+
+  private void fullReset() throws IOException {
+    controller.openNewIDESession("");
+    stage.close();
+  }
 
   private void setSpeedSliderHandler(ChangeListener<Number> speedSliderHandler) {
     speedSlider.valueProperty().addListener(speedSliderHandler);
@@ -319,7 +376,7 @@ public class MainScreen implements SlogoListener {
     createSpeedSlider();
 
     field = new TextField();
-    // field.setPrefSize(WINDOW_WIDTH - 700, 300);
+    field.setPromptText(myResources.getString("EnterCommand"));
     field.setPrefSize(WINDOW_WIDTH - 1200, 300);
 
     field.setOnAction(event -> {
@@ -345,7 +402,6 @@ public class MainScreen implements SlogoListener {
     uploadTurtle = generateButton("UploadTurtle", (event) -> {
       handleLoadTurtleImage();
     });
-
 
     play = UserInterfaceUtil.generateButton("Play", event -> {
       paused = false;
@@ -374,30 +430,60 @@ public class MainScreen implements SlogoListener {
 
     save = UserInterfaceUtil.generateButton("Save", event -> saveToFile());
 
+    reset = UserInterfaceUtil.generateButton("Reset", event -> {
+      try {
+        fullReset();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    });
+
+
     VBox dropdowns = new VBox();
     dropdowns.getStyleClass().add("main-dropdowns");
-    ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "English");
+    ResourceBundle defaultResources = ResourceBundle.getBundle(
+        DEFAULT_RESOURCE_PACKAGE + "English");
     ObservableList<ComboChoice> penColors = FXCollections.observableArrayList();
     for (String color : defaultResources.getString("PenColors").split(",")) {
       penColors.add(new ComboChoice(color, color));
     }
 
-    colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
+    colorDropDown = UserInterfaceUtil.generateComboBox(penColors, "colorBox",100, 300, (s) -> s, (event) -> {
       turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
     });
     colorDropDown.getOnAction().handle(new ActionEvent());
 
-    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s,
+    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, "backgroundBox",100,
+        300, (s) -> s,
         (event) -> {
           centerPane.setStyle("-fx-background-color: " + event);
         });
     backgroundDropDown.setValue(null);
     dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
-    List<Region> mainButtons = List.of(submitField, play, pause, step, help, upload, uploadTurtle, save, dropdowns, openNewWindow);
+    List<Region> mainButtons = List.of(submitField, play, pause, step, help, reset, upload, uploadTurtle,
+        save, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
+
+    Button leftButton = UserInterfaceUtil.generateButton("←", event -> {
+      pushCommand("left 90");
+    });
+    Button rightButton = UserInterfaceUtil.generateButton("→", event -> {
+      pushCommand("right 90");
+    });
+    Button forwardButton = UserInterfaceUtil.generateButton("↑", event -> {
+      pushCommand("forward 50");
+    });
+    Button backwardButton = UserInterfaceUtil.generateButton("↓", event -> {
+      pushCommand("backward 50");
+    });
+    VBox upDownButtons = new VBox(forwardButton, backwardButton);
+    upDownButtons.setTranslateY(-15);
+    upDownButtons.setSpacing(10);
+    HBox turtleButtons = new HBox(leftButton, upDownButtons, rightButton);
+    turtleButtons.setPadding(new javafx.geometry.Insets(50, 0, 0, 0));
     paletteGrid = new GridPane();
-    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), field);
+    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), turtleButtons, field);
     textInputBox.getChildren().addAll(mainButtons);
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
@@ -418,12 +504,13 @@ public class MainScreen implements SlogoListener {
     for (Map.Entry<Integer, List<Integer>> entry : palette.entrySet()) {
       int colorKey = entry.getKey();
       List<Integer> rgbValues = entry.getValue();
-      Rectangle colorBox = new Rectangle(10, 10, Color.rgb(rgbValues.get(0), rgbValues.get(1), rgbValues.get(2)));
+      Rectangle colorBox = new Rectangle(10, 10,
+          Color.rgb(rgbValues.get(0), rgbValues.get(1), rgbValues.get(2)));
       paletteGrid.add(new HBox(new Label(Integer.toString(colorKey)), colorBox), col, row);
       row++;
-      if(row==8) {
+      if (row == 8) {
         col++;
-        row=0;
+        row = 0;
       }
     }
   }
@@ -493,7 +580,10 @@ public class MainScreen implements SlogoListener {
 
   private void saveCommandsToFile() {
     FileChooser fileChooser = new FileChooser();
-    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SLogo Files", "*.slogo"));
+    fileChooser.setInitialDirectory(
+        new File("data/examples/savedSlogos"));
+    fileChooser.getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("SLogo Files", "*.slogo"));
     File file = fileChooser.showSaveDialog(stage);
     if (file != null) {
       try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
@@ -509,7 +599,16 @@ public class MainScreen implements SlogoListener {
 
 
   private String getPenColor() {
-     return "PEN COLOR";
+    return "PEN COLOR";
+  }
+
+  public void setPenColor(String color) {
+    for (ComboChoice choice : colorDropDown.getItems()) {
+      if ((String.valueOf(choice)).equals(color)) {
+        colorDropDown.setValue(choice);
+        break;
+      }
+    }
   }
 
   private void showHelpPopup() {
@@ -525,9 +624,11 @@ public class MainScreen implements SlogoListener {
     Button closeButton = new Button(myResources.getString("Close"));
     closeButton.setOnAction(e -> popup.hide());
 
+
     String languagedCommands = myResources.getString("commands");
 
-    Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML(languagedCommands);
+    Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML(
+        languagedCommands);
     for (String command : commandDetails.keySet()) {
       Hyperlink commandLink = new Hyperlink(command);
       commandLink.setOnAction(e -> showCommandDetailsPopup(command, commandDetails.get(command)));
@@ -550,16 +651,29 @@ public class MainScreen implements SlogoListener {
     content.setStyle("-fx-background-color: white; -fx-padding: 10;");
 
     Label commandLabel = new Label(myResources.getString("Command") + ": " + command);
-    Label descriptionLabel = new Label(myResources.getString("Description") + ": " + details.get("description"));
-    Label exampleLabel = new Label(myResources.getString("Example") + ": " + details.get("example"));
-    Label parametersLabel = new Label(myResources.getString("Parameters") + ": " + details.get("parameters"));
-    Label returnValueLabel = new Label(myResources.getString("ReturnValue") + ": " + details.get("returnValue"));
+    Label descriptionLabel = new Label(
+        myResources.getString("Description") + ": " + details.get("description"));
+    Label exampleLabel = new Label(
+        myResources.getString("Example") + ": " + details.get("example"));
+    HBox parametersBox = new HBox(10);
+    Label parametersLabel = new Label(
+        myResources.getString("Parameters") + ": " + details.get("parameters"));
+    TextField parametersField = new TextField();
+    parametersBox.getChildren().addAll(parametersLabel, parametersField);
+    Label returnValueLabel = new Label(
+        myResources.getString("ReturnValue") + ": " + details.get("returnValue"));
 
     Button closeButton = new Button(myResources.getString("Close"));
     closeButton.setOnAction(e -> popup.hide());
 
-    content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, parametersLabel,
-        returnValueLabel, closeButton);
+    Button executeButton = new Button(myResources.getString("Execute"));
+    executeButton.setOnAction(e -> {
+      pushCommand(command + " " + parametersField.getText());
+      field.clear();
+    });
+
+    content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, parametersBox,
+        returnValueLabel, closeButton, executeButton);
     // popup.getContent().add(content);
 
     helpPopupModality(popup, content);
@@ -580,10 +694,6 @@ public class MainScreen implements SlogoListener {
     popup.show();
   }
 
-  class Delta {
-    double x, y;
-  }
-
   private void addLanguageObserver(ComboBox<ComboChoice> colorDropDown,
       ComboBox<ComboChoice> backgroundDropDown) {
     controller.addLanguageObserver((s) -> {
@@ -591,6 +701,7 @@ public class MainScreen implements SlogoListener {
       submitField.setText(newLang.getString("Submit"));
       variablesBoxLabel.setText(newLang.getString("varBox"));
       commandHistoryLabel.setText(newLang.getString("histBox"));
+      commandHistoryText = newLang.getString("histBox");
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
       play.setText(newLang.getString("Play"));
       pause.setText(newLang.getString("Pause"));
@@ -665,7 +776,8 @@ public class MainScreen implements SlogoListener {
   public void setTurtleImage(File f) {
     try {
       for (FrontEndTurtle t : turtles) {
-        defaultImage = new Image(new FileInputStream(f), defaultImage.getWidth(), defaultImage.getHeight(), true, true);
+        defaultImage = new Image(new FileInputStream(f), defaultImage.getWidth(),
+            defaultImage.getHeight(), true, true);
         t.setImage(defaultImage);
       }
     } catch (FileNotFoundException e) {
@@ -680,10 +792,11 @@ public class MainScreen implements SlogoListener {
 
   @Override
   public void onUpdateValue(String variableName, Number newValue) {
-    variableCommands.put(variableName, List.of(commandHistory.peek()));
     variableValues.put(variableName, newValue);
     updateVariables();
   }
+
+
 
   private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading, boolean visible) {
     double oldX = turtle.getX();
@@ -724,6 +837,7 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onUpdateTurtleState(TurtleRecord turtleState) {
     for (FrontEndTurtle turtle : turtles) {
+      System.out.println(turtles);
       if (turtle.getId() == turtleState.id()) {
         turtle.setIsPenDisplayed(turtleState.pen());
         setPosition(turtle, turtleState.x() + centerX, turtleState.y() + centerY,
@@ -737,7 +851,7 @@ public class MainScreen implements SlogoListener {
         if (newBackgroundColor != null) {
           centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + "," + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
         }
-        
+
         return;
       }
     }
@@ -747,18 +861,20 @@ public class MainScreen implements SlogoListener {
     centerPane.getChildren().add(newTurtle.getDisplay());
   }
 
+
+
   @Override
   public void onResetTurtle(int id) {
     for (FrontEndTurtle turtle : turtles) {
       if (turtle.getId() == id) {
         turtle.setPosition(centerX, centerY, 0, true);
         turtle.setImage(defaultImage);
-        for(Line line : turtle.getPathHistory()) {
-            centerPane.getChildren().remove(line);
-          }
+        for (Line line : turtle.getPathHistory()) {
+          centerPane.getChildren().remove(line);
         }
       }
     }
+  }
 
 
   // val returned by last command
@@ -766,24 +882,21 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onReturn(double value, String string) {
     commandHistory.add(string);
-    updateCommands();
+    commandHistoryLabel.setText(commandHistoryText + String.format(" %.2f",value));
+    updateCommandBox(commandHistoryBox, commandHistoryLabel, commandHistory);
   }
 
   @Override
   public void onUserDefinedCommand(String string) {
     userDefinedCommandHistory.add(string);
-    updateCommands();
+    updateCommandBox(userDefinedCommandsBox, userDefinedCommandsLabel, userDefinedCommandHistory);
+
   }
 
   @Override
   public void onSetActiveTurtles(List<Integer> ids) {
     for (FrontEndTurtle turtle : turtles) {
-      if(ids.contains(turtle.getId())) {
-        turtle.setIsActive(true);
-      }
-      else {
-        turtle.setIsActive(false);
-      }
+      turtle.setIsActive(ids.contains(turtle.getId()));
     }
   }
 
@@ -793,13 +906,9 @@ public class MainScreen implements SlogoListener {
     updatePalettePane();
   }
 
-  public void setPenColor(String color) {
-    for (ComboChoice choice : colorDropDown.getItems()) {
-      if ((String.valueOf(choice)).equals(color)) {
-        colorDropDown.setValue(choice);
-        break;
-      }
-    }
+  class Delta {
+
+    double x, y;
   }
 }
 

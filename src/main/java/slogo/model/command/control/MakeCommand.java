@@ -1,6 +1,5 @@
 package slogo.model.command.control;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -43,8 +42,7 @@ public class MakeCommand implements Command {
    * @return the assigned value
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId)
-  {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
     String token = arguments.get(0).getToken();
     double variableValue = arguments.get(1).evaluate();

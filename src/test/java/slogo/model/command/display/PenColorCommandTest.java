@@ -14,6 +14,7 @@ import slogo.model.Turtle;
 import slogo.model.api.Model;
 import slogo.model.command.CommandTest;
 import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
 public class PenColorCommandTest extends CommandTest {
@@ -40,6 +41,18 @@ public class PenColorCommandTest extends CommandTest {
     model.getTurtles().get(1).setPenColor(3);
     node = new CommandNode("PenColor", model);
     Assertions.assertEquals(3, node.evaluate());
+  }
+
+  @Test
+  void testSetPenColor()
+      throws InvocationTargetException, IllegalAccessException, ClassNotFoundException {
+    model.getTurtles().get(1).setPenColor(3);
+    node = new CommandNode("SetPenColor", model);
+    Node nodeChild = new ConstantNode("4", model);
+    node.addChild(nodeChild);
+    node.addListener(myListener);
+    node.evaluate();
+    Assertions.assertEquals(4, model.getTurtles().get(1).getPenColor());
   }
 
 }

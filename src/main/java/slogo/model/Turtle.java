@@ -3,7 +3,7 @@ package slogo.model;
 import slogo.model.api.TurtleRecord;
 
 /**
- * Represents the backend's model of a Turtle object
+ * Represents the backend's model of a Turtle object.
  *
  * @author Noah Loewy
  */
@@ -14,12 +14,13 @@ public class Turtle {
   private double myX;
   private double myY;
   private boolean myVisible;
-  private double myHeading; //range [0.0,360.0)
+  private double myHeading;
   private int penColor;
   private int bgColor;
 
   /**
-   * Constructs a Turtle object with specified ID at the origin with the pen down, facing 0 degrees
+   * Constructs a Turtle object with specified ID at the origin with the pen down, facing 0
+   * degrees.
    *
    * @param id The unique identifier for the turtle.
    */

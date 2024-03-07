@@ -3,7 +3,6 @@ package slogo.model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Stack;
@@ -70,15 +69,15 @@ public class SlogoModel implements Model {
    * value returned
    *
    * @param input The Slogo command to be parsed and executed.
-   * @throws InvalidCommandException   If a non-command token is placed where a command is expected,
-   *                                   or if command token not recognized.
-   * @throws InvalidTokenException     If a token in the input string does not match an expected
-   *                                   pattern.
+   * @throws InvalidCommandException If a non-command token is placed where a command is expected,
+   *                                 or if command token not recognized.
+   * @throws InvalidTokenException   If a token in the input string does not match an expected
+   *                                 pattern.
    */
 
   @Override
   public void parse(String input) throws SlogoException {
-    if (input==null || input.isEmpty()) {
+    if (input == null || input.isEmpty()) {
       return;
     }
     Node root = new ListNode("[", modelState);
@@ -89,7 +88,6 @@ public class SlogoModel implements Model {
       handleParseResult(input, root);
       throw new SlogoException(e.getMessage(), e, e.getToken());
     }
-
     try {
       handleParseResult(input, root);
     } catch (InvalidOperandException | InsufficientArgumentsException e) {
@@ -108,6 +106,7 @@ public class SlogoModel implements Model {
     dfsAddListener(root);
     double val = -1;
     for (Node node : root.getChildren()) {
+      modelState.setOuter(true);
       val = node.evaluate();
     }
     myCommands.push(input);
@@ -132,8 +131,8 @@ public class SlogoModel implements Model {
   @Override
   public void resetModel() {
     modelState = new ModelState();
-  }
 
+  }
 
 
   @Deprecated

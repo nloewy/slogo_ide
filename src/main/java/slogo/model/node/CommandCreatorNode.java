@@ -4,7 +4,7 @@ import java.util.List;
 import slogo.model.ModelState;
 
 /**
- * The CommandCreatorNode class represents a node that creates a user-defined command in Slogo
+ * The CommandCreatorNode class represents a node that creates a user-defined command in Slogo.
  *
  * @author Noah Loewy
  */

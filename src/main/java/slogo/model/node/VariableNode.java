@@ -21,6 +21,7 @@ public class VariableNode extends Node {
    */
 
   public VariableNode(String token, ModelState modelState) {
+    super();
     myModelState = modelState;
     myToken = token.toLowerCase();
   }

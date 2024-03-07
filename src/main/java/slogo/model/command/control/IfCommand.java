@@ -1,6 +1,5 @@
 package slogo.model.command.control;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -44,8 +43,7 @@ public class IfCommand implements Command {
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId)
-  {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     Node toExecute = arguments.get(1);

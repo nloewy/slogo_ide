@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The IdCommand class represents a command that retrieves the id of the active turtle
+ * The IdCommand class represents a command that retrieves the id of the active turtle.
  *
  * @author Noah Loewy
  */
@@ -40,7 +40,6 @@ public class IdCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-
     modelState.setOuter(false);
     return turtleId;
   }

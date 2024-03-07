@@ -8,13 +8,14 @@ import slogo.model.command.Command;
 import slogo.model.exceptions.IndexNotOnPaletteException;
 import slogo.model.node.Node;
 
+/** The SetBackgroundCommand represents a command that alters the Pen index of the
+ * workspace. It returns the heading of the requested turtle in the model state.
+ *
+ * @author Noah Loewy
+ */
+
 public class SetBackgroundCommand implements Command {
 
-  /** The SetBackgroundCommand represents a command that alters the Pen index of the
-   * workspace. It returns the heading of the requested turtle in the model state.
-   *
-   * @author Noah Loewy
-   */
 
   /**
    * The number of arguments this command requires.
@@ -40,14 +41,14 @@ public class SetBackgroundCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments
    * @param turtleId  the id of the turtle currently active
-   * @throws IndexNotOnPaletteException if index not on color palette
    * @return the background color of the workspace
+   * @throws IndexNotOnPaletteException if index not on color palette
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws IndexNotOnPaletteException {
     modelState.setOuter(false);
     double val = Math.round(arguments.get(0).evaluate());
-    if(!modelState.getPalette().containsKey((int) val)) {
+    if (!modelState.getPalette().containsKey((int) val)) {
       throw new IndexNotOnPaletteException("", String.valueOf(val));
     }
     for (Turtle turtle : modelState.getTurtles().values()) {

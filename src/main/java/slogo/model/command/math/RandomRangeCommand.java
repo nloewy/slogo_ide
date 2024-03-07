@@ -40,15 +40,18 @@ public class RandomRangeCommand implements Command {
    *                  range
    * @param turtleId  the id of the turtle currently active
    * @return a random number within the specified range
-   * @throws InvalidRandomRangeInputException if the minimum value is greater than the maximum value
+   * @throws InvalidRandomRangeInputException if the minimum value is greater than the maximum
+   *                                          value
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) throws InvalidRandomRangeInputException {
+  public double execute(List<Node> arguments, int turtleId)
+      throws InvalidRandomRangeInputException {
     modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
     if (arg1 > arg2) {
-      throw new InvalidRandomRangeInputException("Random Range Error: First input (min) cannot be greater than second input (Max)");
+      throw new InvalidRandomRangeInputException(
+          "Random Range Error: First input (min) cannot be greater than second input (Max)");
     }
     return arg1 + (arg2 - arg1) * Math.random();
   }
