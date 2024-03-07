@@ -567,8 +567,7 @@ public class MainScreen implements SlogoListener {
       try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
         writer.println("<preferences>");
         writer.println("  <language>" + controller.getCurrentLanguage() + "</language>");
-//        writer.println("  <theme>" + controller.getCurrentTheme() + "</theme>");
-        writer.println("  <theme>" + "IDK TRYING TO GET" + "</theme>");
+        writer.println("  <theme>" + controller.getCurrentTheme() + "</theme>");
         writer.println("  <penColor>" + getPenColor() + "</penColor>");
         writer.println("</preferences>");
 
