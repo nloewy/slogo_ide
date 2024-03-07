@@ -320,7 +320,7 @@ public class MainScreen implements SlogoListener {
     createSpeedSlider();
 
     field = new TextField();
-    // field.setPrefSize(WINDOW_WIDTH - 700, 300);
+    field.setPromptText(myResources.getString("EnterCommand"));
     field.setPrefSize(WINDOW_WIDTH - 1200, 300);
 
     field.setOnAction(event -> {
@@ -524,6 +524,7 @@ public class MainScreen implements SlogoListener {
     Button closeButton = new Button(myResources.getString("Close"));
     closeButton.setOnAction(e -> popup.hide());
 
+
     String languagedCommands = myResources.getString("commands");
 
     Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML(languagedCommands);
@@ -557,8 +558,14 @@ public class MainScreen implements SlogoListener {
     Button closeButton = new Button(myResources.getString("Close"));
     closeButton.setOnAction(e -> popup.hide());
 
+    Button executeButton = new Button(myResources.getString("Execute"));
+    executeButton.setOnAction(e -> {
+      pushCommand(details.get("example"));
+      field.clear();
+    });
+
     content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, parametersLabel,
-        returnValueLabel, closeButton);
+        returnValueLabel, closeButton, executeButton);
     // popup.getContent().add(content);
 
     helpPopupModality(popup, content);
