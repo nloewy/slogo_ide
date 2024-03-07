@@ -422,11 +422,12 @@ public class ParseTest {
 
   @Test
   void flowerCommand() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("Ask 2 fd 90 ask 3 fd 180 tell [ 1 2 3 ] to arc [ :incr :degrees ] [  repeat quotient :degrees 2  [  fd :incr rt 2  ] ] to petal [ :size ] [  repeat 2  [    arc :size 60    rt 120  ] ] to flower [ :length ] [  repeat 6  [    petal :length    rt 60  ] ]  flower 3");
+    slogo.getModelstate().setOuter(true);
+    slogo.parse("Ask 2 fd 90 ask 3 fd 180 tell [ 1 2 3 ] to arc [ :incr :degrees ] [  repeat quotient :degrees 2  [  fd :incr rt 2  ] ] to petal [ :size ] [  repeat 2  [    arc :size 60    rt 120  ] ] to flower [ :length ] [  repeat 6  [    petal :length    rt 60  ] ] ");
+    slogo.parse("flower 3");
     assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
     assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY(), DELTA);
   }
-
 
   @Test
   void halfSquare() throws InvocationTargetException, IllegalAccessException {

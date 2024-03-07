@@ -88,7 +88,6 @@ public class SlogoModel implements Model {
       handleParseResult(input, root);
       throw new SlogoException(e.getMessage(), e, e.getToken());
     }
-
     try {
       handleParseResult(input, root);
     } catch (InvalidOperandException | InsufficientArgumentsException e) {
@@ -107,6 +106,7 @@ public class SlogoModel implements Model {
     dfsAddListener(root);
     double val = -1;
     for (Node node : root.getChildren()) {
+      modelState.setOuter(true);
       val = node.evaluate();
     }
     myCommands.push(input);

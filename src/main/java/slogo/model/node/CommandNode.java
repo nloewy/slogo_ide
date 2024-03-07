@@ -63,14 +63,17 @@ public class CommandNode extends Node {
     double val = 0;
     if (myToken.equals("Make") || myToken.startsWith("Ask") || !myModelState.getOuter()) {
       val = command.execute(getChildren(), myModelState.getCurrTurtle());
-    } else {
-      for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
-        myModelState.setCurrTurtle(myModelState.getActiveTurtles().peek().get(index));
-        val = command.execute(getChildren(), myModelState.getCurrTurtle());
+      if(myToken.startsWith("Ask")) {
         myModelState.setOuter(true);
       }
+    } else {
+      for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
+        myModelState.setOuter(false);
+        myModelState.setCurrTurtle(myModelState.getActiveTurtles().peek().get(index));
+
+        val = command.execute(getChildren(), myModelState.getCurrTurtle());
+      }
     }
-    myModelState.setOuter(true);
 
     return val;
   }
