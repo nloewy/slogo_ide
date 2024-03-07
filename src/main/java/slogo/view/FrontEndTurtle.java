@@ -2,15 +2,23 @@ package slogo.view;
 
 
 
+import java.awt.Insets;
 import java.util.List;
 import java.util.Stack;
 
 import javafx.animation.Timeline;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import slogo.view.pages.MainScreen;
 
 public class FrontEndTurtle {
@@ -28,6 +36,11 @@ public class FrontEndTurtle {
   private final Stack<Line> pathHistory = new Stack<Line>();
   private MainScreen view;
   private boolean isActive;
+  private Stage infoPopup;
+  private Label positionLabel;
+  private Label headingLabel;
+  private Label penStatusLabel;
+  private Label penColorLabel;
 
   public FrontEndTurtle(int id, double x, double y, Color color, boolean isPenVisible,
       double heading, Image image, MainScreen view) {
@@ -45,12 +58,48 @@ public class FrontEndTurtle {
     display.setLayoutY(myY);
     penColor = color;
     isPenDisplayed = isPenVisible;
+    this.heading = heading;
+
+    initInfoPopup();
 
     display.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
       view.pushCommand("TELL " + id);
+      updateAndShowInfoPopup();
     });
+  }
 
-    this.heading = heading;
+  private void initInfoPopup() {
+    infoPopup = new Stage();
+    infoPopup.initStyle(StageStyle.UTILITY);
+    infoPopup.setAlwaysOnTop(true);
+
+    VBox content = new VBox(10);
+
+    positionLabel = new Label();
+    headingLabel = new Label();
+    penStatusLabel = new Label();
+    penColorLabel = new Label();
+
+
+    content.getChildren().addAll(positionLabel, headingLabel, penStatusLabel, penColorLabel);
+
+    Scene scene = new Scene(content);
+    infoPopup.setScene(scene);
+  }
+
+  private void updateAndShowInfoPopup() {
+    if (infoPopup != null) {
+      positionLabel.setText(String.format("ID: %d\nX: %.2f\nY: %.2f", myId, myX, myY));
+      headingLabel.setText(String.format("Heading: %.2f", myHeading));
+      penStatusLabel.setText(String.format("Pen: %s", isPenDisplayed ? "Down" : "Up"));
+      penColorLabel.setText(String.format("Pen Color: %s", Color.valueOf(penColor.toString())));
+
+      if (!infoPopup.isShowing()) {
+        infoPopup.show();
+      } else {
+        infoPopup.toFront();
+      }
+    }
   }
 
   public void setIsActive(boolean state) {
@@ -124,5 +173,9 @@ public class FrontEndTurtle {
     myX = x;
     myY = y;
     myHeading = newHeading;
+
+    if (infoPopup != null && infoPopup.isShowing()) {
+      updateAndShowInfoPopup();
+    }
   }
 }
