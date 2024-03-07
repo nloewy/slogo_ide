@@ -169,6 +169,7 @@ public class MainScreen implements SlogoListener {
     stage.show();
     centerX = centerPane.getBoundsInParent().getWidth() / 2;
     centerY = centerPane.getBoundsInParent().getHeight() / 2;
+    centerPane.setId("CenterPane");
     turtles.add(new FrontEndTurtle(1, centerX, centerY, Color.BLUE, true, 0, defaultImage, this));
 
     initializeTurtleDisplays();
@@ -330,6 +331,7 @@ public class MainScreen implements SlogoListener {
     createSpeedSlider();
 
     field = new TextField();
+    field.setId("CommandField");
     field.setPromptText(myResources.getString("EnterCommand"));
     field.setPrefSize(WINDOW_WIDTH - 1200, 300);
 
