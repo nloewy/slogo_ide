@@ -154,6 +154,7 @@ public class FrontEndTurtle {
     display.setImage(displayImage);
     display.setPreserveRatio(true);
     display.setFitWidth(50);
+    display.setFitHeight(50);
   }
 
   public Line drawLine(Double oldPosition, Double oldPosition2, Double newPosition,
@@ -169,13 +170,18 @@ public class FrontEndTurtle {
     return display;
   }
 
-  public void setPosition(double x, double y, double newHeading) {
+  public void setPosition(double x, double y, double newHeading, boolean visble) {
     myX = x;
     myY = y;
     myHeading = newHeading;
-
     if (infoPopup != null && infoPopup.isShowing()) {
       updateAndShowInfoPopup();
     }
+    setVisible(visble);
+  }
+
+
+  private void setVisible(boolean visible) {
+    display.setVisible(visible);
   }
 }
