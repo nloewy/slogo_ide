@@ -29,10 +29,10 @@ public class TellCommand implements Command {
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public TellCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
     myListener = listener;
-
   }
 
   /**
@@ -45,34 +45,31 @@ public class TellCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-
     List<Integer> tempList = new ArrayList<>();
     int id = 0;
     if (arguments.get(0).getChildren().isEmpty()) {
       id = (int) Math.round(arguments.get(0).evaluate());
-      if (!modelState.getTurtles().containsKey(id)) {
-        modelState.getTurtles().put(id, new Turtle(id));
-        myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
-      }
-      tempList.add(id);
+      addIdToList(id, tempList);
     } else {
       for (Node node : arguments.get(0).getChildren()) {
-        if (node.getToken().equals("]")) {
-          continue;
+        if (!node.getToken().equals("]")) {
+          id = (int) Math.round(node.evaluate());
+          addIdToList(id, tempList);
         }
-
-        id = (int) Math.round(node.evaluate());
-        if (!modelState.getTurtles().containsKey(id)) {
-          modelState.getTurtles().put(id, new Turtle(id));
-          myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
-        }
-        tempList.add(id);
-      }
+    }
     }
     modelState.getActiveTurtles().clear();
     modelState.getActiveTurtles().add(tempList);
     myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
     return id;
+  }
+
+  private void addIdToList(int id, List<Integer> tempList) {
+    if (!modelState.getTurtles().containsKey(id)) {
+      modelState.getTurtles().put(id, new Turtle(id));
+      myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
+    }
+    tempList.add(id);
   }
 }
 
