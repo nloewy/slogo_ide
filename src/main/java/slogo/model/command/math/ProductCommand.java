@@ -42,8 +42,6 @@ public class ProductCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
-    double arg1 = arguments.get(0).evaluate();
-    double arg2 = arguments.get(1).evaluate();
-    return arg1 * arg2;
+    return arguments.get(0).evaluate() * arguments.get(1).evaluate();
   }
 }

@@ -12,15 +12,18 @@ import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -28,6 +31,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -77,6 +81,7 @@ public class MainScreen implements SlogoListener {
   public static final Double[] ORIGIN = new Double[]{width / 2.0, height / 2.0};
   private static final double PIXELS_PER_SECOND = 25;
   private final Controller controller;
+  private Button reset;
   private final Timeline timeline = new Timeline();
   private final double speed = 1;
   private final Slider speedSlider;
@@ -183,6 +188,7 @@ public class MainScreen implements SlogoListener {
     }
 
   }
+
 
   private void finishCurrAnimation() {
     if (currAnimation != null) {
@@ -351,6 +357,11 @@ public class MainScreen implements SlogoListener {
   }
 
 
+  private void fullReset() throws IOException {
+    controller.openNewIDESession("");
+    stage.close();
+  }
+
   private void setSpeedSliderHandler(ChangeListener<Number> speedSliderHandler) {
     speedSlider.valueProperty().addListener(speedSliderHandler);
   }
@@ -420,6 +431,15 @@ public class MainScreen implements SlogoListener {
 
     save = UserInterfaceUtil.generateButton("Save", event -> saveToFile());
 
+    reset = UserInterfaceUtil.generateButton("Reset", event -> {
+      try {
+        fullReset();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    });
+
+
     VBox dropdowns = new VBox();
     dropdowns.getStyleClass().add("main-dropdowns");
     ResourceBundle defaultResources = ResourceBundle.getBundle(
@@ -441,7 +461,7 @@ public class MainScreen implements SlogoListener {
         });
     backgroundDropDown.setValue(null);
     dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
-    List<Region> mainButtons = List.of(submitField, play, pause, step, help, upload, uploadTurtle,
+    List<Region> mainButtons = List.of(submitField, play, pause, step, help, reset, upload, uploadTurtle,
         save, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
@@ -813,6 +833,7 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onUpdateTurtleState(TurtleRecord turtleState) {
     for (FrontEndTurtle turtle : turtles) {
+      System.out.println(turtles);
       if (turtle.getId() == turtleState.id()) {
         turtle.setIsPenDisplayed(turtleState.pen());
         setPosition(turtle, turtleState.x() + centerX, turtleState.y() + centerY,

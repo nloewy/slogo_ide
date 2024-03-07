@@ -9,7 +9,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The TellCommand class represents a command that given a turtle id(s), marks them as active
+ * The TellCommand class represents a command that given a turtle id(s), marks them as active.
  *
  * @author Noah Loewy
  */
@@ -49,29 +49,25 @@ public class TellCommand implements Command {
     List<Integer> tempList = new ArrayList<>();
     int id = 0;
     if (arguments.get(0).getChildren().isEmpty()) {
-      id = (int) Math.round(arguments.get(0).evaluate());
-      if (!modelState.getTurtles().containsKey(id)) {
-        modelState.getTurtles().put(id, new Turtle(id));
-        myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
-      }
-      tempList.add(id);
+      id = addToTempList(arguments.get(0), tempList);
     } else {
       for (Node node : arguments.get(0).getChildren()) {
-        if (node.getToken().equals("]")) {
-          continue;
-        }
-
-        id = (int) Math.round(node.evaluate());
-        if (!modelState.getTurtles().containsKey(id)) {
-          modelState.getTurtles().put(id, new Turtle(id));
-          myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
-        }
-        tempList.add(id);
+        id = addToTempList(node, tempList);
       }
     }
     modelState.getActiveTurtles().clear();
     modelState.getActiveTurtles().add(tempList);
     myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
+    return id;
+  }
+
+  private int addToTempList(Node node, List<Integer> tempList) {
+    int id = (int) Math.round(node.evaluate());
+    if (!modelState.getTurtles().containsKey(id)) {
+      modelState.getTurtles().put(id, new Turtle(id));
+      myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
+    }
+    tempList.add(id);
     return id;
   }
 }

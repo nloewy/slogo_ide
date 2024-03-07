@@ -7,7 +7,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The PenColorCommand represents a command that retrieves the pen color of the active turtle
+ * The PenColorCommand represents a command that retrieves the pen color of the active turtle.
  *
  * @author Noah Loewy
  */

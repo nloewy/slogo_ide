@@ -131,6 +131,7 @@ public class SlogoModel implements Model {
   @Override
   public void resetModel() {
     modelState = new ModelState();
+
   }
 
 

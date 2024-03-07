@@ -8,8 +8,13 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
+ * The AskWithCommand class represents a command that given an expression marks only turtles that
+ * satisfy the expression as temporarily active for a sequence of commands, then goes back to the
+ * previously active turtles.
+ *
  * @author Noah Loewy
  */
+
 public class AskWithCommand implements Command {
 
   /**
@@ -26,6 +31,7 @@ public class AskWithCommand implements Command {
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public AskWithCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
     myListener = listener;
@@ -51,7 +57,6 @@ public class AskWithCommand implements Command {
         tempList.add(i);
       }
     }
-
     modelState.getActiveTurtles().add(tempList);
     myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
     double val = 0.0;

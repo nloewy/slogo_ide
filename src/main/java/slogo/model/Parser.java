@@ -124,8 +124,9 @@ public class Parser {
   }
 
   /**
-   * Skips comments and whitespace tokens in the input string
+   * Skips comments and whitespace tokens in the input string.
    */
+
   private void skipCommentsAndWhitespace(List<String> tokens) {
     while (myIndex < tokens.size() && (tokens.get(myIndex).isEmpty() || tokens.get(myIndex)
         .startsWith("#"))) {
@@ -313,7 +314,7 @@ public class Parser {
   }
 
   /**
-   * Checks if token matches the pattern specified by regex key
+   * Checks if token matches the pattern specified by regex key.
    */
   private boolean tokenMatched(String token, String key) {
     return token.matches(patternLoader.getPattern(key));

@@ -1,7 +1,14 @@
 package slogo.model.exceptions;
 
-public class IndexNotOnPaletteException extends InvalidOperandException {
+/**
+ * The DivideByZeroException class represents an exception that is thrown when attempting to access
+ * an index that is not currently a key in myPalette. This occurs during evaluation step of paring.
+ * It extends the InvalidOperandException class.
+ *
+ * @author Noah Loewy
+ */
 
+public class IndexNotOnPaletteException extends InvalidOperandException {
 
   private final String myToken;
 
