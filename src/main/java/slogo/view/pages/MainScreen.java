@@ -91,8 +91,7 @@ public class MainScreen implements SlogoListener {
   private Button play;
   private Button pause;
   private Button step;
-  private TextField distanceField;
-  private TextField rotateField;
+  private String commandHistoryText;
   private Button uploadTurtle;
   private Button openNewWindow;
   private Button help;
@@ -106,8 +105,9 @@ public class MainScreen implements SlogoListener {
   private ScrollPane variablesPane;
   private ScrollPane commandsHistory;
   private ScrollPane userDefinedCommandsPane;
-  private String commandHistoryText;
   private VBox variablesBox;
+  private String recentlyUpdatedVariable;
+  private String recentlyUpdatedValue;
   private HBox textInputBox;
   private VBox commandHistoryBox;
   private VBox userDefinedCommandsBox;
@@ -147,6 +147,7 @@ public class MainScreen implements SlogoListener {
     commandHistory = new Stack<String>();
     userDefinedCommandHistory = new Stack<String>();
 
+
     try {
       defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
     } catch (FileNotFoundException e) {
@@ -168,7 +169,6 @@ public class MainScreen implements SlogoListener {
     stage.show();
     centerX = centerPane.getBoundsInParent().getWidth() / 2;
     centerY = centerPane.getBoundsInParent().getHeight() / 2;
-    centerPane.setId("CenterPane");
     turtles.add(new FrontEndTurtle(1, centerX, centerY, Color.BLUE, true, 0, defaultImage, this));
 
     initializeTurtleDisplays();
@@ -259,30 +259,35 @@ public class MainScreen implements SlogoListener {
           }
         }
 
-        // Create and show the TextInputDialog for entering a new value
-        TextInputDialog dialog = new TextInputDialog(variableValues.get(key).toString());
-        dialog.setTitle("Enter New Value");
-        dialog.setHeaderText("Enter a new value for " + key);
-        dialog.setContentText("New value:\n\nRELATED COMMANDS\n" + commands);
-        Optional<String> result = dialog.showAndWait();
+        makeInputDialog(variableValues.get(key).toString(), "Enter New Value",
+            "Enter a new value for " + key, "New value:\n\nRELATED COMMANDS\n" + commands,
+            true,
+            newValue -> {
+              try {
+                variableValues.put(key, Double.valueOf(newValue));
+                pushCommand("MAKE " + key + " " + newValue);
 
-        // If a new value is entered and confirmed, update the variable value
-        result.ifPresent(newValue -> {
-          try {
-            variableValues.put(key, Double.valueOf(newValue));
-            pushCommand("MAKE " + key + " " + newValue);
+                new Alert(AlertType.INFORMATION, "New value for " + key + " saved: " + newValue)
+                    .showAndWait();
 
-            new Alert(AlertType.INFORMATION, "New value for " + key + " saved: " + newValue).showAndWait();
-
-          }
-          catch (Exception e) {
-            new Alert(AlertType.INFORMATION, "Value Must be a Number");
-          }
-        });
+              } catch (Exception e) {
+                new Alert(AlertType.INFORMATION, "Value Must be a Number");
+              }
+            });
       });
 
     }
 
+  }
+
+  private void makeInputDialog(String value, String title, String header, String content, Boolean needsInput, Consumer<String> consumer) {
+    TextInputDialog dialog = new TextInputDialog();
+    dialog.getEditor().setText(value);
+    dialog.getEditor().setDisable(!needsInput);
+    dialog.setTitle(title);
+    dialog.setHeaderText(header);
+    dialog.setContentText(content);
+    dialog.showAndWait().ifPresent(consumer);
   }
 
 
@@ -293,6 +298,7 @@ public class MainScreen implements SlogoListener {
     box.getChildren().add(label);
     for (String s : history) {
       String[] lines = s.split("\n");
+      VBox vbox = new VBox();
       TitledPane titledPane = new TitledPane();
       titledPane.setText(lines[0]);
       titledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
@@ -307,10 +313,40 @@ public class MainScreen implements SlogoListener {
           titledPane.setText(lines[0]);
         }
       });
-      VBox vbox = new VBox();
-      titledPane.setContent(vbox); // Set initial content as empty VBox
       titledPane.setExpanded(false); // Start collapsed
-      box.getChildren().add(titledPane);
+      Button openCustomCommand = new Button(myResources.getString("Execute"));
+      openCustomCommand.setId("customCommandPrompt");
+      String[] commandParts = lines[0].split("\\s+");
+      List<String> parameters = new ArrayList<>();
+      for (String part : commandParts) {
+        if (part.startsWith(":")) {
+          parameters.add(part);
+        }
+      }
+      vbox.getChildren().addAll(titledPane, openCustomCommand);
+      box.getChildren().add(vbox);
+      if(commandParts.length < 2) {
+        openCustomCommand.setOnAction(event -> {
+          makeInputDialog("", "Execute This Command",
+              "", "", false,
+              newValue -> {
+                pushCommand(s);
+              });
+        });
+        continue;
+      }
+      String commandName = commandParts[1];
+      Boolean hasParameters = !parameters.isEmpty();
+      String commandHeaderText =
+          hasParameters ? "Enter values for parameters: " + String.join(", ", parameters) : "";
+      openCustomCommand.setOnAction(event -> {
+        makeInputDialog("", "Execute This Command",
+            commandHeaderText, "", hasParameters,
+            newValue -> {
+              pushCommand(commandName + " " + newValue);
+            });
+      });
+
     }
   }
 
@@ -330,7 +366,6 @@ public class MainScreen implements SlogoListener {
     createSpeedSlider();
 
     field = new TextField();
-    field.setId("CommandField");
     field.setPromptText(myResources.getString("EnterCommand"));
     field.setPrefSize(WINDOW_WIDTH - 1200, 300);
 
@@ -410,24 +445,18 @@ public class MainScreen implements SlogoListener {
         save, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
-    distanceField = new TextField("50");
-    distanceField.setPrefWidth(60);
-    rotateField = new TextField("90");
-    rotateField.setPrefWidth(60);
-    HBox turtleMoveBox = new HBox(distanceField, rotateField);
-    turtleMoveBox.setTranslateY(50);
-    turtleMoveBox.setPadding(new javafx.geometry.Insets(0, 0, 0, -100));
+
     Button leftButton = UserInterfaceUtil.generateButton("←", event -> {
-      pushCommand("left " + rotateField.getText());
+      pushCommand("left 90");
     });
     Button rightButton = UserInterfaceUtil.generateButton("→", event -> {
-      pushCommand("right " + rotateField.getText());
+      pushCommand("right 90");
     });
     Button forwardButton = UserInterfaceUtil.generateButton("↑", event -> {
-      pushCommand("forward " + distanceField.getText());
+      pushCommand("forward 50");
     });
     Button backwardButton = UserInterfaceUtil.generateButton("↓", event -> {
-      pushCommand("backward " + distanceField.getText());
+      pushCommand("backward 50");
     });
     VBox upDownButtons = new VBox(forwardButton, backwardButton);
     upDownButtons.setTranslateY(-15);
@@ -435,7 +464,7 @@ public class MainScreen implements SlogoListener {
     HBox turtleButtons = new HBox(leftButton, upDownButtons, rightButton);
     turtleButtons.setPadding(new javafx.geometry.Insets(50, 0, 0, 0));
     paletteGrid = new GridPane();
-    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), turtleMoveBox, turtleButtons, field);
+    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), turtleButtons, field);
     textInputBox.getChildren().addAll(mainButtons);
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
@@ -654,8 +683,6 @@ public class MainScreen implements SlogoListener {
       pause.setText(newLang.getString("Pause"));
       openNewWindow.setText(newLang.getString("OpenNew"));
       uploadTurtle.setText(newLang.getString("UploadTurtle"));
-      distanceField.setPromptText(newLang.getString("DistanceField"));
-      rotateField.setPromptText(newLang.getString("RotateField"));
 
       String[] newPenColors = newLang.getString("PenColors").split(",");
       ObservableList<ComboChoice> colorItems = colorDropDown.getItems();
