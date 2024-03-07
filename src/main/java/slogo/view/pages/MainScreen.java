@@ -260,30 +260,35 @@ public class MainScreen implements SlogoListener {
           }
         }
 
-        // Create and show the TextInputDialog for entering a new value
-        TextInputDialog dialog = new TextInputDialog(variableValues.get(key).toString());
-        dialog.setTitle("Enter New Value");
-        dialog.setHeaderText("Enter a new value for " + key);
-        dialog.setContentText("New value:\n\nRELATED COMMANDS\n" + commands);
-        Optional<String> result = dialog.showAndWait();
+        makeInputDialog(variableValues.get(key).toString(), "Enter New Value",
+            "Enter a new value for " + key, "New value:\n\nRELATED COMMANDS\n" + commands,
+            true,
+            newValue -> {
+              try {
+                variableValues.put(key, Double.valueOf(newValue));
+                pushCommand("MAKE " + key + " " + newValue);
 
-        // If a new value is entered and confirmed, update the variable value
-        result.ifPresent(newValue -> {
-          try {
-            variableValues.put(key, Double.valueOf(newValue));
-            pushCommand("MAKE " + key + " " + newValue);
+                new Alert(AlertType.INFORMATION, "New value for " + key + " saved: " + newValue)
+                    .showAndWait();
 
-            new Alert(AlertType.INFORMATION, "New value for " + key + " saved: " + newValue).showAndWait();
-
-          }
-          catch (Exception e) {
-            new Alert(AlertType.INFORMATION, "Value Must be a Number");
-          }
-        });
+              } catch (Exception e) {
+                new Alert(AlertType.INFORMATION, "Value Must be a Number");
+              }
+            });
       });
 
     }
 
+  }
+
+  private void makeInputDialog(String value, String title, String header, String content, Boolean needsInput, Consumer<String> consumer) {
+    TextInputDialog dialog = new TextInputDialog();
+    dialog.getEditor().setText(value);
+    dialog.getEditor().setDisable(!needsInput);
+    dialog.setTitle(title);
+    dialog.setHeaderText(header);
+    dialog.setContentText(content);
+    dialog.showAndWait().ifPresent(consumer);
   }
 
 
@@ -294,6 +299,7 @@ public class MainScreen implements SlogoListener {
     box.getChildren().add(label);
     for (String s : history) {
       String[] lines = s.split("\n");
+      VBox vbox = new VBox();
       TitledPane titledPane = new TitledPane();
       titledPane.setText(lines[0]);
       titledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
@@ -308,10 +314,40 @@ public class MainScreen implements SlogoListener {
           titledPane.setText(lines[0]);
         }
       });
-      VBox vbox = new VBox();
-      titledPane.setContent(vbox); // Set initial content as empty VBox
       titledPane.setExpanded(false); // Start collapsed
-      box.getChildren().add(titledPane);
+      Button openCustomCommand = new Button(myResources.getString("Execute"));
+      openCustomCommand.setId("customCommandPrompt");
+      String[] commandParts = lines[0].split("\\s+");
+      List<String> parameters = new ArrayList<>();
+      for (String part : commandParts) {
+        if (part.startsWith(":")) {
+          parameters.add(part);
+        }
+      }
+      vbox.getChildren().addAll(titledPane, openCustomCommand);
+      box.getChildren().add(vbox);
+      if(commandParts.length < 2) {
+        openCustomCommand.setOnAction(event -> {
+          makeInputDialog("", "Execute This Command",
+              "", "", false,
+              newValue -> {
+                pushCommand(s);
+              });
+        });
+        continue;
+      }
+      String commandName = commandParts[1];
+      Boolean hasParameters = !parameters.isEmpty();
+      String commandHeaderText =
+          hasParameters ? "Enter values for parameters: " + String.join(", ", parameters) : "";
+      openCustomCommand.setOnAction(event -> {
+        makeInputDialog("", "Execute This Command",
+            commandHeaderText, "", hasParameters,
+            newValue -> {
+              pushCommand(commandName + " " + newValue);
+            });
+      });
+
     }
   }
 
