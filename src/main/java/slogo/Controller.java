@@ -168,10 +168,10 @@ public class Controller {
 
 
   
-  public Map<String, Map<String, String>> getCommandDetailsFromXML() {
+  public Map<String, Map<String, String>> getCommandDetailsFromXML(String commandLanguage) {
     Map<String, Map<String, String>> commandDetails = new HashMap<>();
     try {
-      File inputFile = new File("data/helpXmls/commands.xml");
+      File inputFile = new File("data/helpXmls/"+ commandLanguage +".xml");
       DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
       Document doc = dBuilder.parse(inputFile);

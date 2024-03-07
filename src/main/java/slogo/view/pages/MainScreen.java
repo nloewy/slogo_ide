@@ -267,8 +267,16 @@ public class MainScreen implements SlogoListener {
   }
 
   private void updateCommands() {
+    System.out.print("COMMAND HISTORY\n");
     updateCommandBox(commandHistoryBox, commandHistoryLabel, commandHistory);
+    for (String command : commandHistory) {
+      System.out.println(command);
+    }
+    System.out.print("USER DEFINED COMMAND HISTORY\n");
     updateCommandBox(userDefinedCommandsBox, userDefinedCommandsLabel, userDefinedCommandHistory);
+    for (String com : userDefinedCommandHistory) {
+      System.out.println(com);
+    }
   }
 
   private void updateCommandBox(VBox box, Text label, List<String> history) {
@@ -443,20 +451,24 @@ public class MainScreen implements SlogoListener {
   private void saveToFile() {
     Alert alert = new Alert(AlertType.CONFIRMATION);
     alert.setTitle("Save Options");
-    alert.setHeaderText("Choose what you want to save:");
-    ButtonType buttonTypeOne = new ButtonType("Save Preferences and Commands");
+    alert.setHeaderText("Choose what to save:");
+    ButtonType buttonTypeOne = new ButtonType("Save Preferences Only");
     ButtonType buttonTypeTwo = new ButtonType("Save Commands Only");
+    ButtonType closeButtonType = new ButtonType("Close");
     alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+    alert.getButtonTypes().add(closeButtonType);
     alert.showAndWait().ifPresent(response -> {
       if (response == buttonTypeOne) {
-        savePreferencesAndCommandsToFile();
+        savePreferences();
       } else if (response == buttonTypeTwo) {
         saveCommandsToFile();
+      } else if (response == closeButtonType) {
+        alert.close();
       }
     });
   }
 
-  private void savePreferencesAndCommandsToFile() {
+  private void savePreferences() {
     FileChooser fileChooser = new FileChooser();
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
     File file = fileChooser.showSaveDialog(stage);
@@ -468,10 +480,6 @@ public class MainScreen implements SlogoListener {
         writer.println("  <theme>" + "IDK TRYING TO GET" + "</theme>");
         writer.println("  <penColor>" + getPenColor() + "</penColor>");
         writer.println("</preferences>");
-
-        for (String command : commandHistory) {
-          writer.println(command);
-        }
 
       } catch (IOException e) {
         e.printStackTrace();
@@ -509,10 +517,12 @@ public class MainScreen implements SlogoListener {
     VBox content = new VBox(10);
     content.setStyle("-fx-background-color: white; -fx-padding: 10;");
 
-    Button closeButton = new Button("Close");
+    Button closeButton = new Button(myResources.getString("Close"));
     closeButton.setOnAction(e -> popup.hide());
 
-    Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML();
+    String languagedCommands = myResources.getString("commands");
+
+    Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML(languagedCommands);
     for (String command : commandDetails.keySet()) {
       Hyperlink commandLink = new Hyperlink(command);
       commandLink.setOnAction(e -> showCommandDetailsPopup(command, commandDetails.get(command)));
@@ -534,13 +544,13 @@ public class MainScreen implements SlogoListener {
     VBox content = new VBox(10);
     content.setStyle("-fx-background-color: white; -fx-padding: 10;");
 
-    Label commandLabel = new Label("Command: " + command);
-    Label descriptionLabel = new Label("Description: " + details.get("description"));
-    Label exampleLabel = new Label("Example: " + details.get("example"));
-    Label parametersLabel = new Label("Parameters: " + details.get("parameters"));
-    Label returnValueLabel = new Label("Return Value: " + details.get("returnValue"));
+    Label commandLabel = new Label(myResources.getString("Command") + ": " + command);
+    Label descriptionLabel = new Label(myResources.getString("Description") + ": " + details.get("description"));
+    Label exampleLabel = new Label(myResources.getString("Example") + ": " + details.get("example"));
+    Label parametersLabel = new Label(myResources.getString("Parameters") + ": " + details.get("parameters"));
+    Label returnValueLabel = new Label(myResources.getString("ReturnValue") + ": " + details.get("returnValue"));
 
-    Button closeButton = new Button("Close");
+    Button closeButton = new Button(myResources.getString("Close"));
     closeButton.setOnAction(e -> popup.hide());
 
     content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, parametersLabel,
@@ -597,6 +607,8 @@ public class MainScreen implements SlogoListener {
       help.setText(newLang.getString("Help"));
       save.setText(newLang.getString("Save"));
       upload.setText(newLang.getString("Upload"));
+
+
     });
   }
 
