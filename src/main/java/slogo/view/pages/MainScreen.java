@@ -317,8 +317,8 @@ public class MainScreen implements SlogoListener {
     createVariablesBox();
     createCommandHistoryBox();
     createUserDefinedCommandBox();
-    createTextInputBox();
     createSpeedSlider();
+    createTextInputBox();
 
     field = new TextField();
     field.setPromptText(myResources.getString("EnterCommand"));
