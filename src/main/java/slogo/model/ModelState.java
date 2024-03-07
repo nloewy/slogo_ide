@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.TreeMap;
 import slogo.model.node.Node;
 
 
@@ -58,7 +59,7 @@ public class ModelState {
     myVariables = new HashMap<>();
     myUserDefinedCommands = new HashMap<>();
     myUserDefinedCommandNodes = new HashMap<>();
-    myPalette = new HashMap<>();
+    myPalette = new TreeMap<>();
     makePalette();
     activeTurtles = new Stack<>();
     outer = true;

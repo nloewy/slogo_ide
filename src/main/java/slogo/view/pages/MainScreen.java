@@ -26,6 +26,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -40,12 +41,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -86,6 +89,7 @@ public class MainScreen implements SlogoListener {
   private Button upload;
   private Pane centerPane = new Pane();
   private Scene scene;
+  private GridPane paletteGrid;
   private boolean paused;
   private BorderPane layout;
   private ScrollPane variablesPane;
@@ -382,8 +386,8 @@ public class MainScreen implements SlogoListener {
     List<Region> mainButtons = List.of(submitField, play, pause, step, help, upload, uploadTurtle, save, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
-
-    textInputBox.getChildren().addAll(speedSlider, field);
+    paletteGrid = new GridPane();
+    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), field);
     textInputBox.getChildren().addAll(mainButtons);
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
@@ -392,6 +396,40 @@ public class MainScreen implements SlogoListener {
     layout.setLeft(commandsHistory);
     root = new Group();
     root.getChildren().add(layout);
+  }
+
+
+  private void updatePalettePane() {
+    // Clear existing content from the palette grid
+    paletteGrid.getChildren().clear();
+
+    int col = 0;
+    int row = 0;
+    for (Map.Entry<Integer, List<Integer>> entry : palette.entrySet()) {
+      int colorKey = entry.getKey();
+      List<Integer> rgbValues = entry.getValue();
+      Rectangle colorBox = new Rectangle(10, 10, Color.rgb(rgbValues.get(0), rgbValues.get(1), rgbValues.get(2)));
+      paletteGrid.add(new HBox(new Label(Integer.toString(colorKey)), colorBox), col, row);
+      row++;
+      if(row==8) {
+        col++;
+        row=0;
+      }
+    }
+  }
+
+
+  private void setLabelTextColor(Label label, List<Integer> rgbValues) {
+    // Calculate luminance of the color to determine if text should be dark or light
+    double luminance =
+        (0.299 * rgbValues.get(0) + 0.587 * rgbValues.get(1) + 0.114 * rgbValues.get(2)) / 255;
+
+    // Set text color based on luminance
+    if (luminance > 0.5) {
+      label.setTextFill(Color.BLACK);
+    } else {
+      label.setTextFill(Color.WHITE);
+    }
   }
 
   private void handleLoadTurtleImage() {
@@ -693,6 +731,7 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onUpdatePalette(Map<Integer, List<Integer>> palette) {
     this.palette = palette;
+    updatePalettePane();
   }
 }
 
