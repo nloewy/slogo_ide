@@ -124,8 +124,9 @@ public class Parser {
   }
 
   /**
-   * Skips comments and whitespace tokens in the input string
+   * Skips comments and whitespace tokens in the input string.
    */
+
   private void skipCommentsAndWhitespace(List<String> tokens) {
     while (myIndex < tokens.size() && (tokens.get(myIndex).isEmpty() || tokens.get(myIndex)
         .startsWith("#"))) {

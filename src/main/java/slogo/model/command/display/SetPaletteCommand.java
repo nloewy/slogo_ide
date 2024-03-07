@@ -7,12 +7,13 @@ import slogo.model.command.Command;
 import slogo.model.exceptions.InvalidRgbValueException;
 import slogo.model.node.Node;
 
+/** The SetPaletteCommand represents a command that adds a new indexed color to the workspace.
+ *
+ * @author Noah Loewy
+ */
+
 public class SetPaletteCommand implements Command {
 
-  /** The SetPaletteCommand represents a command that adds a new indexed color to the workspace.
-   *
-   * @author Noah Loewy
-   */
 
   /**
    * The number of arguments this command requires.

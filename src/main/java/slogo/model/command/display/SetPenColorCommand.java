@@ -8,13 +8,13 @@ import slogo.model.command.Command;
 import slogo.model.exceptions.IndexNotOnPaletteException;
 import slogo.model.node.Node;
 
-public class SetPenColorCommand implements Command {
+/** The SetPenCommand represents a command that alters the Pen index of the
+ * workspace. It returns the heading of the requested turtle in the model state.
+ *
+ * @author Noah Loewy
+ */
 
-  /** The SetPenCommand represents a command that alters the Pen index of the
-   * workspace. It returns the heading of the requested turtle in the model state.
-   *
-   * @author Noah Loewy
-   */
+public class SetPenColorCommand implements Command {
 
   /**
    * The number of arguments this command requires.

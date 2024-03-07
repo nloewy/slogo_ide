@@ -2,6 +2,8 @@ package slogo.model.api;
 
 /**
  * General wrapper for common exceptions within the Slogo Model.
+ *
+ * @author Noah Loewy
  */
 public class SlogoException extends RuntimeException {
 
@@ -19,6 +21,11 @@ public class SlogoException extends RuntimeException {
     this.token = token;
   }
 
+  /**
+   * Retrieves the exception that caused the SlogoException
+   *
+   * @return the exception that caused the SlogoException
+   */
   public Throwable getCause() {
     return cause;
   }

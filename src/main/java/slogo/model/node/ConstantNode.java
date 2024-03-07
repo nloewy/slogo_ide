@@ -29,7 +29,7 @@ public class ConstantNode extends Node {
   }
 
   /**
-   * Returns value of constant node
+   * Returns value of constant node.
    *
    * @return myConstant
    */

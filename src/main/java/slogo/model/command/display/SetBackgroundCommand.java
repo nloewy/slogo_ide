@@ -8,13 +8,14 @@ import slogo.model.command.Command;
 import slogo.model.exceptions.IndexNotOnPaletteException;
 import slogo.model.node.Node;
 
+/** The SetBackgroundCommand represents a command that alters the Pen index of the
+ * workspace. It returns the heading of the requested turtle in the model state.
+ *
+ * @author Noah Loewy
+ */
+
 public class SetBackgroundCommand implements Command {
 
-  /** The SetBackgroundCommand represents a command that alters the Pen index of the
-   * workspace. It returns the heading of the requested turtle in the model state.
-   *
-   * @author Noah Loewy
-   */
 
   /**
    * The number of arguments this command requires.

@@ -1,12 +1,7 @@
 package slogo.model.command.turtle;
 
-import java.util.List;
-import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
-import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
-import slogo.model.command.Command;
-import slogo.model.node.Node;
 
 /**
  * The ForwardCommand class represents the forward movement command for the turtle. It informs the
