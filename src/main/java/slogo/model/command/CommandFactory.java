@@ -12,7 +12,7 @@ public class CommandFactory {
 
   private static String getFullName(String myToken) {
     String currentPackage = CommandFactory.class.getPackage().getName();
-    String packagePath = currentPackage.replace('.', File.separatorChar);
+    String packagePath = currentPackage.replace('.', '/');
     String basePath = CommandFactory.class.getClassLoader().getResource(packagePath).getFile();
     File[] directories = new File(basePath).listFiles(File::isDirectory);
 
