@@ -27,7 +27,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -468,8 +467,13 @@ public class MainScreen implements SlogoListener {
     });
   }
 
+  // Need to figure out where theme is stored, penColor is stored,
+  // and also add xml part for image filepath
+
   private void savePreferences() {
     FileChooser fileChooser = new FileChooser();
+    fileChooser.setInitialDirectory(
+        new File("data/preferencesXmls"));
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
     File file = fileChooser.showSaveDialog(stage);
     if (file != null) {
