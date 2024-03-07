@@ -16,6 +16,7 @@ public class Main extends Application {
 
   @Override
   public void start(Stage stage) throws FileNotFoundException {
+
     stage.setTitle("SLogo");
     try {
       Controller controller = new Controller(stage);
