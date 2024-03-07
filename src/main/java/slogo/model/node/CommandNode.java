@@ -3,7 +3,6 @@ package slogo.model.node;
 import slogo.model.ModelState;
 import slogo.model.command.Command;
 import slogo.model.command.CommandFactory;
-import slogo.model.exceptions.IncompleteClassException;
 import slogo.model.exceptions.InsufficientArgumentsException;
 import slogo.model.exceptions.InvalidCommandException;
 import slogo.model.exceptions.InvalidOperandException;
@@ -77,11 +76,10 @@ public class CommandNode extends Node {
    * attempts to retrieve the NUM_ARGS field.
    *
    * @return the number of arguments expected for the Command
-   * @throws IncompleteClassException if the NUM_ARGS field is not found for the Command class
    */
 
   @Override
-  public int getNumArgs() throws IncompleteClassException {
+  public int getNumArgs() {
     return CommandFactory.getNumArgs(myToken);
   }
 

@@ -1,6 +1,7 @@
 package slogo.model.command.display;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.Model;
 import slogo.model.command.CommandTest;
+import slogo.model.exceptions.InvalidRgbValueException;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
@@ -38,7 +40,7 @@ public class SetPaletteCommandTest extends CommandTest {
   }
 
   @Test
-  void testBgColor()
+  void testPaletteColor()
       throws InvocationTargetException, IllegalAccessException, ClassNotFoundException {
     node = new CommandNode("SetPalette", model);
     node.addChild(new ConstantNode("8", model));
@@ -52,4 +54,15 @@ public class SetPaletteCommandTest extends CommandTest {
     Assertions.assertEquals(List.of(255, 255, 255), model.getPalette().get(1));
   }
 
+  @Test
+  void TestInvalidPalette() {
+    node = new CommandNode("SetPalette", model);
+    node.addChild(new ConstantNode("8", model));
+    node.addChild(new ConstantNode("200", model));
+    node.addChild(new ConstantNode("300", model));
+    node.addChild(new ConstantNode("50", model));
+    assertThrows(InvalidRgbValueException.class, () -> {
+        node.evaluate();
+      });
+  }
 }

@@ -14,6 +14,7 @@ import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
+import slogo.model.exceptions.LogOfNegativeException;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
@@ -91,7 +92,7 @@ public class LogCommandTest extends CommandTest {
   void testLogNonPositive(String op1)
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, model));
-    assertThrows(InvalidOperandException.class, () -> {
+    assertThrows(LogOfNegativeException.class, () -> {
       node.evaluate();
     });
   }

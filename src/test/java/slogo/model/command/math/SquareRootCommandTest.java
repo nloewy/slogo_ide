@@ -13,6 +13,7 @@ import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
+import slogo.model.exceptions.SquareRootOfNegativeException;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
@@ -93,7 +94,7 @@ public class SquareRootCommandTest extends CommandTest {
   void testSquareRootNegatives(String op1)
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null));
-    assertThrows(InvalidOperandException.class, () -> {
+    assertThrows(SquareRootOfNegativeException.class, () -> {
       node.evaluate();
     });
   }
