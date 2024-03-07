@@ -14,6 +14,7 @@ import slogo.model.node.Node;
  *
  * @author Noah Loewy
  */
+
 public class AskCommand implements Command {
 
   /**
@@ -30,6 +31,7 @@ public class AskCommand implements Command {
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public AskCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
     myListener = listener;

@@ -44,6 +44,7 @@ public class CommandFactory {
           Class.forName(fullName);
           return fullName;
         } catch (ClassNotFoundException ignored) {
+          continue;
         }
       }
     }
