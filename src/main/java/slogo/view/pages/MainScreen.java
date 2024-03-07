@@ -27,7 +27,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -71,15 +70,21 @@ public class MainScreen implements SlogoListener {
   private static final double WINDOW_WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
   private static final double WINDOW_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
   private static final double FRAME_RATE = 4.0;
+  private static final int height = 600;
+  private static final int width = 1000;
+  public static final Double[] ORIGIN = new Double[]{width / 2.0, height / 2.0};
+  private static final double PIXELS_PER_SECOND = 25;
   private final Controller controller;
   private final Timeline timeline = new Timeline();
   private final double speed = 1;
+  private final Slider speedSlider;
+  ComboBox<ComboChoice> colorDropDown;
   private Group root;
-  private Stage stage;
+  private final Stage stage;
   private TextField field;
-  private Text variablesBoxLabel = new Text();
-  private Text commandHistoryLabel = new Text();
-  private Text userDefinedCommandsLabel = new Text();
+  private final Text variablesBoxLabel = new Text();
+  private final Text commandHistoryLabel = new Text();
+  private final Text userDefinedCommandsLabel = new Text();
   private Button submitField;
   private Button play;
   private Button pause;
@@ -89,8 +94,8 @@ public class MainScreen implements SlogoListener {
   private Button help;
   private Button save;
   private Button upload;
-  private Pane centerPane = new Pane();
-  private Scene scene;
+  private final Pane centerPane = new Pane();
+  private final Scene scene;
   private GridPane paletteGrid;
   private boolean paused;
   private BorderPane layout;
@@ -104,30 +109,23 @@ public class MainScreen implements SlogoListener {
   private double mySpeed;
   private ResourceBundle myResources;
   private boolean animationPlaying;
-  private final Slider speedSlider;
   private Duration pausedTime;
   private Animation currAnimation;
   private List<Integer> oldPenColor;
   private List<Integer> oldBackgroundColor;
-
-  private static final int height = 600;
-  private static final int width = 1000;
-  public static final Double[] ORIGIN = new Double[] { width / 2.0, height / 2.0 };
-  private static final double PIXELS_PER_SECOND = 25;
-  private Map<String, List<String>> variableCommands;
-  private Map<String, Number> variableValues;
-  private List<FrontEndTurtle> turtles;
-  private Stack<String> commandHistory;
-  private Stack<String> userDefinedCommandHistory;
+  private final Map<String, List<String>> variableCommands;
+  private final Map<String, Number> variableValues;
+  private final List<FrontEndTurtle> turtles;
+  private final Stack<String> commandHistory;
+  private final Stack<String> userDefinedCommandHistory;
   private Image defaultImage;
-  private Queue<Animation> myAnimation;
+  private final Queue<Animation> myAnimation;
   private String commandString;
-  private String lang;
+  private final String lang;
   private Consumer<String> parse;
-  private double centerX;
-  private double centerY;
+  private final double centerX;
+  private final double centerY;
   private Map<Integer, List<Integer>> palette;
-  ComboBox<ComboChoice> colorDropDown;
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
@@ -172,7 +170,8 @@ public class MainScreen implements SlogoListener {
     initializeTurtleDisplays();
   }
 
-  public void addParser(Consumer<String> parseMethod, String slogoContent) throws FileNotFoundException {
+  public void addParser(Consumer<String> parseMethod, String slogoContent)
+      throws FileNotFoundException {
     parse = parseMethod;
 
     if (slogoContent != null) {
@@ -288,7 +287,8 @@ public class MainScreen implements SlogoListener {
       titledPane.setText(lines[0]);
       titledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue) {
-          String fullText = String.join("\n", Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the
+          String fullText = String.join("\n",
+              Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the
           // first one
           titledPane.setContent(new Label(fullText)); // Set the full command content when expanded
           titledPane.setText(lines[0]); // Display the first line when expanded
@@ -347,7 +347,6 @@ public class MainScreen implements SlogoListener {
       handleLoadTurtleImage();
     });
 
-
     play = UserInterfaceUtil.generateButton("Play", event -> {
       paused = false;
     });
@@ -377,7 +376,8 @@ public class MainScreen implements SlogoListener {
 
     VBox dropdowns = new VBox();
     dropdowns.getStyleClass().add("main-dropdowns");
-    ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "English");
+    ResourceBundle defaultResources = ResourceBundle.getBundle(
+        DEFAULT_RESOURCE_PACKAGE + "English");
     ObservableList<ComboChoice> penColors = FXCollections.observableArrayList();
     for (String color : defaultResources.getString("PenColors").split(",")) {
       penColors.add(new ComboChoice(color, color));
@@ -388,13 +388,15 @@ public class MainScreen implements SlogoListener {
     });
     colorDropDown.getOnAction().handle(new ActionEvent());
 
-    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s,
+    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, 100,
+        300, (s) -> s,
         (event) -> {
           centerPane.setStyle("-fx-background-color: " + event);
         });
     backgroundDropDown.setValue(null);
     dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
-    List<Region> mainButtons = List.of(submitField, play, pause, step, help, upload, uploadTurtle, save, dropdowns, openNewWindow);
+    List<Region> mainButtons = List.of(submitField, play, pause, step, help, upload, uploadTurtle,
+        save, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
     paletteGrid = new GridPane();
@@ -419,12 +421,13 @@ public class MainScreen implements SlogoListener {
     for (Map.Entry<Integer, List<Integer>> entry : palette.entrySet()) {
       int colorKey = entry.getKey();
       List<Integer> rgbValues = entry.getValue();
-      Rectangle colorBox = new Rectangle(10, 10, Color.rgb(rgbValues.get(0), rgbValues.get(1), rgbValues.get(2)));
+      Rectangle colorBox = new Rectangle(10, 10,
+          Color.rgb(rgbValues.get(0), rgbValues.get(1), rgbValues.get(2)));
       paletteGrid.add(new HBox(new Label(Integer.toString(colorKey)), colorBox), col, row);
       row++;
-      if(row==8) {
+      if (row == 8) {
         col++;
-        row=0;
+        row = 0;
       }
     }
   }
@@ -491,7 +494,8 @@ public class MainScreen implements SlogoListener {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setInitialDirectory(
         new File("data/examples/savedSlogos"));
-    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SLogo Files", "*.slogo"));
+    fileChooser.getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("SLogo Files", "*.slogo"));
     File file = fileChooser.showSaveDialog(stage);
     if (file != null) {
       try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
@@ -508,7 +512,16 @@ public class MainScreen implements SlogoListener {
 
 
   private String getPenColor() {
-     return "PEN COLOR";
+    return "PEN COLOR";
+  }
+
+  public void setPenColor(String color) {
+    for (ComboChoice choice : colorDropDown.getItems()) {
+      if ((String.valueOf(choice)).equals(color)) {
+        colorDropDown.setValue(choice);
+        break;
+      }
+    }
   }
 
   private void showHelpPopup() {
@@ -527,7 +540,8 @@ public class MainScreen implements SlogoListener {
 
     String languagedCommands = myResources.getString("commands");
 
-    Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML(languagedCommands);
+    Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML(
+        languagedCommands);
     for (String command : commandDetails.keySet()) {
       Hyperlink commandLink = new Hyperlink(command);
       commandLink.setOnAction(e -> showCommandDetailsPopup(command, commandDetails.get(command)));
@@ -550,10 +564,14 @@ public class MainScreen implements SlogoListener {
     content.setStyle("-fx-background-color: white; -fx-padding: 10;");
 
     Label commandLabel = new Label(myResources.getString("Command") + ": " + command);
-    Label descriptionLabel = new Label(myResources.getString("Description") + ": " + details.get("description"));
-    Label exampleLabel = new Label(myResources.getString("Example") + ": " + details.get("example"));
-    Label parametersLabel = new Label(myResources.getString("Parameters") + ": " + details.get("parameters"));
-    Label returnValueLabel = new Label(myResources.getString("ReturnValue") + ": " + details.get("returnValue"));
+    Label descriptionLabel = new Label(
+        myResources.getString("Description") + ": " + details.get("description"));
+    Label exampleLabel = new Label(
+        myResources.getString("Example") + ": " + details.get("example"));
+    Label parametersLabel = new Label(
+        myResources.getString("Parameters") + ": " + details.get("parameters"));
+    Label returnValueLabel = new Label(
+        myResources.getString("ReturnValue") + ": " + details.get("returnValue"));
 
     Button closeButton = new Button(myResources.getString("Close"));
     closeButton.setOnAction(e -> popup.hide());
@@ -584,10 +602,6 @@ public class MainScreen implements SlogoListener {
     Scene scene = new Scene(content);
     popup.setScene(scene);
     popup.show();
-  }
-
-  class Delta {
-    double x, y;
   }
 
   private void addLanguageObserver(ComboBox<ComboChoice> colorDropDown,
@@ -671,7 +685,8 @@ public class MainScreen implements SlogoListener {
   public void setTurtleImage(File f) {
     try {
       for (FrontEndTurtle t : turtles) {
-        defaultImage = new Image(new FileInputStream(f), defaultImage.getWidth(), defaultImage.getHeight(), true, true);
+        defaultImage = new Image(new FileInputStream(f), defaultImage.getWidth(),
+            defaultImage.getHeight(), true, true);
         t.setImage(defaultImage);
       }
     } catch (FileNotFoundException e) {
@@ -691,7 +706,8 @@ public class MainScreen implements SlogoListener {
     updateVariables();
   }
 
-  private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading, boolean visible) {
+  private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading,
+      boolean visible) {
     double oldX = turtle.getX();
     double oldY = turtle.getY();
     double oldHeading = turtle.getHeading();
@@ -705,7 +721,8 @@ public class MainScreen implements SlogoListener {
       double progress = (double) i / numSteps;
       double offsetx = turtle.getDisplay().getImage().getWidth() / 4;
       double offsety = turtle.getDisplay().getImage().getHeight() / 4;
-      Line line = turtle.drawLine(oldX + offsetx, oldY + offsety, oldX + (x - oldX) * progress + offsetx,
+      Line line = turtle.drawLine(oldX + offsetx, oldY + offsety,
+          oldX + (x - oldX) * progress + offsetx,
           oldY + (y - oldY) * progress + offsety);
       KeyFrame keyFrame = new KeyFrame(Duration.seconds(duration * progress),
           e -> {
@@ -736,18 +753,21 @@ public class MainScreen implements SlogoListener {
             turtleState.heading(), turtleState.visible());
         List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
         if (newPenColor != null) {
-          turtle.setPenColor(new Color(newPenColor.get(0)/255, newPenColor.get(1)/255, newPenColor.get(2)/255, 1));
+          turtle.setPenColor(new Color(newPenColor.get(0) / 255, newPenColor.get(1) / 255,
+              newPenColor.get(2) / 255, 1));
         }
 
         List<Integer> newBackgroundColor = palette.get(turtleState.bgIndex());
         if (newBackgroundColor != null) {
-          centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + "," + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
+          centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + ","
+              + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
         }
-        
+
         return;
       }
     }
-    FrontEndTurtle newTurtle = new FrontEndTurtle(turtleState.id(), turtleState.x() + centerX, turtleState.y() + centerY,
+    FrontEndTurtle newTurtle = new FrontEndTurtle(turtleState.id(), turtleState.x() + centerX,
+        turtleState.y() + centerY,
         Color.BLACK, true, turtleState.heading(), defaultImage, this);
     turtles.add(newTurtle);
     centerPane.getChildren().add(newTurtle.getDisplay());
@@ -759,12 +779,12 @@ public class MainScreen implements SlogoListener {
       if (turtle.getId() == id) {
         turtle.setPosition(centerX, centerY, 0, true);
         turtle.setImage(defaultImage);
-        for(Line line : turtle.getPathHistory()) {
-            centerPane.getChildren().remove(line);
-          }
+        for (Line line : turtle.getPathHistory()) {
+          centerPane.getChildren().remove(line);
         }
       }
     }
+  }
 
 
   // val returned by last command
@@ -784,12 +804,7 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onSetActiveTurtles(List<Integer> ids) {
     for (FrontEndTurtle turtle : turtles) {
-      if(ids.contains(turtle.getId())) {
-        turtle.setIsActive(true);
-      }
-      else {
-        turtle.setIsActive(false);
-      }
+      turtle.setIsActive(ids.contains(turtle.getId()));
     }
   }
 
@@ -799,13 +814,9 @@ public class MainScreen implements SlogoListener {
     updatePalettePane();
   }
 
-  public void setPenColor(String color) {
-    for (ComboChoice choice : colorDropDown.getItems()) {
-      if ((String.valueOf(choice)).equals(color)) {
-        colorDropDown.setValue(choice);
-        break;
-      }
-    }
+  class Delta {
+
+    double x, y;
   }
 }
 

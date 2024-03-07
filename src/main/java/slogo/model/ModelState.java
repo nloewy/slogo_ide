@@ -1,6 +1,5 @@
 package slogo.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -46,9 +45,9 @@ public class ModelState {
    * Stack of currently active turtles
    */
   private final Stack<List<Integer>> activeTurtles;
+  private final Map<Integer, List<Integer>> myPalette;
   private boolean outer;
   private int currTurtle;
-  private final Map<Integer, List<Integer>> myPalette;
 
   /**
    * Initializes turtles, variables, commands to default values (empty maps)
@@ -115,30 +114,30 @@ public class ModelState {
     return myPalette;
   }
 
-  public void setOuter(boolean state) {
-    outer = state;
-  }
-
-  public void setCurrTurtle(int index) {
-    currTurtle = index;
-  }
-
   public boolean getOuter() {
     return outer;
+  }
+
+  public void setOuter(boolean state) {
+    outer = state;
   }
 
   public int getCurrTurtle() {
     return currTurtle;
   }
 
+  public void setCurrTurtle(int index) {
+    currTurtle = index;
+  }
+
   private void makePalette() {
-    myPalette.put(1, Arrays.asList(new Integer[]{255, 255, 255}));
-    myPalette.put(2, Arrays.asList(new Integer[]{255, 0, 0}));
-    myPalette.put(3, Arrays.asList(new Integer[]{0, 255, 0}));
-    myPalette.put(4, Arrays.asList(new Integer[]{255, 255, 0}));
-    myPalette.put(5, Arrays.asList(new Integer[]{255, 165, 0}));
-    myPalette.put(6, Arrays.asList(new Integer[]{0, 0, 255}));
-    myPalette.put(7, Arrays.asList(new Integer[]{0, 0, 0}));
+    myPalette.put(1, Arrays.asList(255, 255, 255));
+    myPalette.put(2, Arrays.asList(255, 0, 0));
+    myPalette.put(3, Arrays.asList(0, 255, 0));
+    myPalette.put(4, Arrays.asList(255, 255, 0));
+    myPalette.put(5, Arrays.asList(255, 165, 0));
+    myPalette.put(6, Arrays.asList(0, 0, 255));
+    myPalette.put(7, Arrays.asList(0, 0, 0));
 
   }
 }

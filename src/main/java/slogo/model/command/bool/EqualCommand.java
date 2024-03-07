@@ -1,6 +1,5 @@
 package slogo.model.command.bool;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -42,8 +41,7 @@ public class EqualCommand implements Command {
    * @return 1.0 if the values are equal, otherwise returns 0.0
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId)
-  {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
     return (Math.abs(arguments.get(0).evaluate() - arguments.get(1).evaluate()) <= TOLERANCE) ? 1.0
         : 0.0;

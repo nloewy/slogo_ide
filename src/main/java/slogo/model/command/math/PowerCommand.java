@@ -49,7 +49,8 @@ public class PowerCommand implements Command {
     double result = Math.pow(arg1, arg2);
     if (Double.isNaN(result) || result == Double.NEGATIVE_INFINITY ||
         result == Double.POSITIVE_INFINITY) {
-      throw new UndefinedExponentException("Undefined Power Operation: Denominator of Power Function Evaluates to Zero");
+      throw new UndefinedExponentException(
+          "Undefined Power Operation: Denominator of Power Function Evaluates to Zero");
     }
     return result;
   }

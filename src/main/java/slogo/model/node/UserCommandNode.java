@@ -47,12 +47,12 @@ public class UserCommandNode extends Node {
     List<Node> children = modelState.getUserDefinedCommandNodes().get(myToken);
     children.addAll(getChildren());
     Node rootOfSubtree = children.get(1);
-    if(children.size() < numArgs + 2) {
+    if (children.size() < numArgs + 2) {
       throw new InsufficientArgumentsException("", myToken);
     }
     Map<Node, String> constantNodeToVariable = new HashMap<>();
 
-  double val = 0;
+    double val = 0;
     for (int index = 0; index < modelState.getActiveTurtles().peek().size(); index++) {
       modelState.setCurrTurtle(modelState.getActiveTurtles().peek().get(index));
       modelState.setOuter(false);

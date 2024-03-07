@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +25,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import slogo.model.SlogoModel;
-import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.api.Model;
 import slogo.model.api.SlogoException;
 import slogo.view.ViewInternal;
@@ -38,14 +36,14 @@ import slogo.view.pages.StartScreen;
 public class Controller {
 
   private final Stage stage;
+  private final List<Consumer<String>> languageObservers = new ArrayList<>();
+  private final List<MainScreen> windows = new ArrayList<>();
   private String currentLanguage = "English";
   private String currentTheme = "LightMode.css";
-  private final List<Consumer<String>> languageObservers = new ArrayList<>();
   private Consumer<String> parse;
-  private final List<MainScreen> windows = new ArrayList<>();
   private File turtleImage;
   private String uploadedCommand;
-  private Properties prop;
+  private final Properties prop;
 
 
   public Controller(Stage stage) throws IOException {
@@ -113,7 +111,8 @@ public class Controller {
       try {
         model.parse(t);
       } catch (SlogoException e) {
-        String template = (String) prop.getOrDefault(e.getCause().getClass().getSimpleName(), e.getMessage());
+        String template = (String) prop.getOrDefault(e.getCause().getClass().getSimpleName(),
+            e.getMessage());
         String message = String.format(template, e.getToken());
         new Alert(AlertType.ERROR, message).show();
       }
@@ -140,7 +139,9 @@ public class Controller {
         try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
           String line;
           while ((line = br.readLine()) != null) {
-            if(line.startsWith("#")) { continue;}
+            if (line.startsWith("#")) {
+              continue;
+            }
             contentBuilder.append(line).append("\n");
           }
         }
@@ -160,19 +161,18 @@ public class Controller {
     }
   }
 
-  private void setSlogoContent(String slogoContent) {
-    uploadedCommand = slogoContent;
-  }
   public String getSlogoContent() {
     return uploadedCommand;
   }
 
-
+  private void setSlogoContent(String slogoContent) {
+    uploadedCommand = slogoContent;
+  }
 
   public Map<String, Map<String, String>> getCommandDetailsFromXML(String commandLanguage) {
     Map<String, Map<String, String>> commandDetails = new HashMap<>();
     try {
-      File inputFile = new File("data/helpXmls/"+ commandLanguage +".xml");
+      File inputFile = new File("data/helpXmls/" + commandLanguage + ".xml");
       DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
       Document doc = dBuilder.parse(inputFile);
@@ -206,15 +206,17 @@ public class Controller {
     }
     return commandDetails;
   }
-    private void getProperties() {
-      File file = new File("src/main/resources/slogo/example/languages/" + currentLanguage + ".properties");
-      try {
-        prop.load(new FileInputStream(file));
-      } catch (IOException ex) {
-        new Alert(AlertType.ERROR, "File for Language Not Found").show();
-      }
 
+  private void getProperties() {
+    File file = new File(
+        "src/main/resources/slogo/example/languages/" + currentLanguage + ".properties");
+    try {
+      prop.load(new FileInputStream(file));
+    } catch (IOException ex) {
+      new Alert(AlertType.ERROR, "File for Language Not Found").show();
     }
+
+  }
 
   public void loadSettings(File file) {
     try {
@@ -239,7 +241,6 @@ public class Controller {
       e.printStackTrace();
     }
   }
-
 
 
 }

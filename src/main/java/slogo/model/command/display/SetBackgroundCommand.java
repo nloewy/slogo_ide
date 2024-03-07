@@ -40,14 +40,14 @@ public class SetBackgroundCommand implements Command {
    *
    * @param arguments a list of nodes representing arguments
    * @param turtleId  the id of the turtle currently active
-   * @throws IndexNotOnPaletteException if index not on color palette
    * @return the background color of the workspace
+   * @throws IndexNotOnPaletteException if index not on color palette
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws IndexNotOnPaletteException {
     modelState.setOuter(false);
     double val = Math.round(arguments.get(0).evaluate());
-    if(!modelState.getPalette().containsKey((int) val)) {
+    if (!modelState.getPalette().containsKey((int) val)) {
       throw new IndexNotOnPaletteException("", String.valueOf(val));
     }
     for (Turtle turtle : modelState.getTurtles().values()) {

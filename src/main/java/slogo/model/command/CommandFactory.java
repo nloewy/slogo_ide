@@ -18,11 +18,12 @@ public class CommandFactory {
 
     if (directories != null) {
       for (File directory : directories) {
-        String fullName = currentPackage + "." + directory.getName() + "."+ myToken + "Command";
+        String fullName = currentPackage + "." + directory.getName() + "." + myToken + "Command";
         try {
           Class.forName(fullName);
           return fullName;
-        } catch (ClassNotFoundException e) {}
+        } catch (ClassNotFoundException e) {
+        }
       }
     }
     return null;
