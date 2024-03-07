@@ -1,6 +1,5 @@
 package slogo.model.command.multiple;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import slogo.model.ModelState;
@@ -42,8 +41,7 @@ public class AskWithCommand implements Command {
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId)
-  {
+  public double execute(List<Node> arguments, int turtleId) {
     List<Integer> tempList = new ArrayList<>();
     for (int i : modelState.getTurtles().keySet()) {
       modelState.setCurrTurtle(i);

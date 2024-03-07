@@ -1,6 +1,5 @@
 package slogo.model.command.control;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -47,8 +46,7 @@ public class IfElseCommand implements Command {
    * of the last evaluated command in the else branch, or 0.0 if there's no else branch
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId)
-  {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
     double condition = arguments.get(0).evaluate();
     Node toExecuteIfTrue = arguments.get(1);

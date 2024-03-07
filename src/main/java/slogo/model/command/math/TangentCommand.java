@@ -46,7 +46,8 @@ public class TangentCommand implements Command {
     modelState.setOuter(false);
     double arg1 = arguments.get(0).evaluate();
     if (Math.abs(arg1 % 180) == 90) {
-      throw new TangentUndefinedFunction("Illegal Value for Tangent Function. Function is undefined for all integer k when x =  (Pi/2) + Pi*k");
+      throw new TangentUndefinedFunction(
+          "Illegal Value for Tangent Function. Function is undefined for all integer k when x =  (Pi/2) + Pi*k");
     }
     return Math.tan(Math.toRadians(arg1));
   }
