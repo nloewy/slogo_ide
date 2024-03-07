@@ -9,7 +9,7 @@ import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
- * The TellCommand class represents a command that given a turtle id(s), marks them as active
+ * The TellCommand class represents a command that given a turtle id(s), marks them as active.
  *
  * @author Noah Loewy
  */

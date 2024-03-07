@@ -26,7 +26,6 @@ public class CommandNode extends Node {
 
   private final String myToken;
   private final ModelState myModelState;
-  private Command command;
 
   /**
    * Constructs a new CommandNode with the given token and model state.

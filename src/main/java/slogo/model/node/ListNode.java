@@ -12,7 +12,6 @@ public class ListNode extends Node {
    * The token representing the list node.
    */
   private final String myToken;
-  private final ModelState modelState;
 
   /**
    * Constructs a ListNode with the specified token and model state.
@@ -21,8 +20,8 @@ public class ListNode extends Node {
    * @param model the model state associated with this node
    */
   public ListNode(String token, ModelState model) {
+    super();
     myToken = token;
-    modelState = model;
   }
 
   /**

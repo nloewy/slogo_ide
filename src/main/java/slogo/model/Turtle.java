@@ -19,7 +19,7 @@ public class Turtle {
   private int bgColor;
 
   /**
-   * Constructs a Turtle object with specified ID at the origin with the pen down, facing 0 degrees
+   * Constructs a Turtle object with specified ID at the origin with the pen down, facing 0 degrees.
    *
    * @param id The unique identifier for the turtle.
    */

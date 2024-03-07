@@ -22,7 +22,7 @@ public abstract class Node {
 
   /**
    * Retrieves myChildren instance variable of the node, which is later passed in as an argument to
-   * the evaluate function
+   * the evaluate function.
    *
    * @return the list of children nodes
    */

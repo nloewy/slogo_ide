@@ -313,7 +313,7 @@ public class Parser {
   }
 
   /**
-   * Checks if token matches the pattern specified by regex key
+   * Checks if token matches the pattern specified by regex key.
    */
   private boolean tokenMatched(String token, String key) {
     return token.matches(patternLoader.getPattern(key));
