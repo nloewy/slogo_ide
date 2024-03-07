@@ -16,6 +16,7 @@ public class UserInterfaceUtil {
   public static Button generateButton(String text,
       EventHandler<ActionEvent> consumer) {
     Button ret = new Button();
+    ret.setText(text);
     ret.setId(text);
     ret.setOnAction(consumer);
 
