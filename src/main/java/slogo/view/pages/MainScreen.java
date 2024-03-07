@@ -489,11 +489,14 @@ public class MainScreen implements SlogoListener {
 
   private void saveCommandsToFile() {
     FileChooser fileChooser = new FileChooser();
+    fileChooser.setInitialDirectory(
+        new File("data/examples/savedSlogos"));
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SLogo Files", "*.slogo"));
     File file = fileChooser.showSaveDialog(stage);
     if (file != null) {
       try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
         for (String command : commandHistory) {
+          System.out.println(command);
           writer.write(command);
           writer.newLine();
         }

@@ -59,6 +59,15 @@ public class StartScreen  {
         throw new RuntimeException(ex);
       }
     });
+
+    Button uploadPref = generateButton("uploadPreferences", 100, 360, e -> {
+      FileChooser fileChooser = new FileChooser();
+      fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+      File selectedFile = fileChooser.showOpenDialog(stage);
+      if (selectedFile != null) {
+        controller.loadSettings(selectedFile);
+      }
+    });
 //    Button loadOld = generateButton("LoadOld", 100, 360, e -> controller.loadSession());
 
     ResourceBundle defaultResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "English");
@@ -76,6 +85,7 @@ public class StartScreen  {
       ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
       loadSlogo.setText(newLang.getString("LoadSlogo"));
       loadGen.setText(newLang.getString("LoadGen"));
+      uploadPref.setText(newLang.getString("uploadPreferences"));
 //      loadOld.setText(newLang.getString("LoadOld"));
 
       String[] themes = newLang.getString("ColorThemes").split(",");
@@ -98,20 +108,15 @@ public class StartScreen  {
             controller::setCurrentLanguage),
         loadSlogo,
         loadGen,
+
 //        loadOld,
         //uploadTurtle,
+        uploadPref,
         themeComboBox
     );
 
-    Button uploadSettings = generateButton("UploadSettings", 100, 360, e -> {
-      FileChooser fileChooser = new FileChooser();
-      fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
-      File selectedFile = fileChooser.showOpenDialog(stage);
-      if (selectedFile != null) {
-        controller.loadSettings(selectedFile);
-      }
-    });
-    root.getChildren().add(uploadSettings);
+
+
 
     scene = new Scene(root, 600, 400);
 
