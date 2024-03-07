@@ -3,11 +3,13 @@ package slogo.view;
 import java.io.InputStream;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -88,6 +90,18 @@ public class UserInterfaceUtil {
     imageView.setLayoutX(x);
     imageView.setLayoutY(y);
     return imageView;
+  }
+
+  public static Slider generateSlider(double min, double max, double val, ChangeListener<Number> sliderListener) {
+    Slider userSlider = new Slider();
+    userSlider.setMin(min);
+    userSlider.setMax(max);
+    userSlider.setValue(val);
+    userSlider.setShowTickLabels(true);
+    userSlider.setShowTickMarks(true);
+    userSlider.setMajorTickUnit(10);
+    userSlider.valueProperty().addListener(sliderListener);
+    return userSlider;
   }
 
 }
