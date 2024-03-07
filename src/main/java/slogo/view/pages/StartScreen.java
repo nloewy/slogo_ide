@@ -36,6 +36,7 @@ public class StartScreen {
   public StartScreen(Stage stage, Controller controller) {
     this.controller = controller;
     this.stage = stage;
+    root.setId("startScreen");
   }
 
 
@@ -73,7 +74,7 @@ public class StartScreen {
     for (String theme : defaultResources.getString("ColorThemes").split(",")) {
       supportedThemes.add(new ComboChoice(theme, theme));
     }
-    ComboBox<ComboChoice> themeComboBox = generateComboBox(supportedThemes, 400, 330, (s) -> {
+    ComboBox<ComboChoice> themeComboBox = generateComboBox(supportedThemes, "themeBox", 400, 330, (s) -> {
       return s.replace(" ", "") + ".css";
     }, (event) -> {
       controller.setCurrentTheme(event, scene);
@@ -98,7 +99,7 @@ public class StartScreen {
 
     root.getChildren().addAll(
         generateImageView(LOGO_IMAGE_PATH, 100, 50),
-        generateComboStringBox(SUPPORTED_LANGUAGES, 100, 200,
+        generateComboStringBox(SUPPORTED_LANGUAGES, "languageBox",100, 200,
             (s) -> {
               return LANG_OPT_BUNDLE.keySet().stream()
                   .filter(key -> LANG_OPT_BUNDLE.getString(key).equals(s)).findFirst().get();

@@ -16,6 +16,7 @@ public class UserInterfaceUtil {
   public static Button generateButton(String text,
       EventHandler<ActionEvent> consumer) {
     Button ret = new Button();
+    ret.setText(text);
     ret.setId(text);
     ret.setOnAction(consumer);
 
@@ -36,13 +37,14 @@ public class UserInterfaceUtil {
   }
 
   public static ComboBox<String> generateComboStringBox(ObservableList<String> options,
+      String id,
       int x,
       int y,
       Function<String, String> fixString,
       Consumer<String> consumer) {
     ComboBox<String> comboBox = new ComboBox<>(options);
     comboBox.setValue(options.get(0));
-    comboBox.setId("themeBox");
+    comboBox.setId(id);
     comboBox.setLayoutX(x);
     comboBox.setLayoutY(y);
     comboBox.setOnAction(e -> {
@@ -54,6 +56,7 @@ public class UserInterfaceUtil {
   }
 
   public static ComboBox<ComboChoice> generateComboBox(ObservableList<ComboChoice> options,
+      String id,
       int x,
       int y,
       Function<String, String> fixString,
@@ -61,7 +64,7 @@ public class UserInterfaceUtil {
     ComboBox<ComboChoice> comboBox = new ComboBox<>();
     comboBox.setItems(options);
     comboBox.setValue(options.get(0));
-    comboBox.setId("themeBox");
+    comboBox.setId(id);
     comboBox.setLayoutX(x);
     comboBox.setLayoutY(y);
     comboBox.setOnAction(e -> {

@@ -144,6 +144,7 @@ public class MainScreen implements SlogoListener {
     commandHistory = new Stack<String>();
     userDefinedCommandHistory = new Stack<String>();
 
+
     try {
       defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
     } catch (FileNotFoundException e) {
@@ -320,7 +321,7 @@ public class MainScreen implements SlogoListener {
     createSpeedSlider();
 
     field = new TextField();
-    // field.setPrefSize(WINDOW_WIDTH - 700, 300);
+    field.setPromptText(myResources.getString("EnterCommand"));
     field.setPrefSize(WINDOW_WIDTH - 1200, 300);
 
     field.setOnAction(event -> {
@@ -383,12 +384,12 @@ public class MainScreen implements SlogoListener {
       penColors.add(new ComboChoice(color, color));
     }
 
-    colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
+    colorDropDown = UserInterfaceUtil.generateComboBox(penColors, "colorBox",100, 300, (s) -> s, (event) -> {
       turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
     });
     colorDropDown.getOnAction().handle(new ActionEvent());
 
-    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, 100,
+    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, "backgroundBox",100,
         300, (s) -> s,
         (event) -> {
           centerPane.setStyle("-fx-background-color: " + event);
@@ -399,8 +400,26 @@ public class MainScreen implements SlogoListener {
         save, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
+
+    Button leftButton = UserInterfaceUtil.generateButton("←", event -> {
+      pushCommand("left 90");
+    });
+    Button rightButton = UserInterfaceUtil.generateButton("→", event -> {
+      pushCommand("right 90");
+    });
+    Button forwardButton = UserInterfaceUtil.generateButton("↑", event -> {
+      pushCommand("forward 50");
+    });
+    Button backwardButton = UserInterfaceUtil.generateButton("↓", event -> {
+      pushCommand("backward 50");
+    });
+    VBox upDownButtons = new VBox(forwardButton, backwardButton);
+    upDownButtons.setTranslateY(-15);
+    upDownButtons.setSpacing(10);
+    HBox turtleButtons = new HBox(leftButton, upDownButtons, rightButton);
+    turtleButtons.setPadding(new javafx.geometry.Insets(50, 0, 0, 0));
     paletteGrid = new GridPane();
-    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), field);
+    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), turtleButtons, field);
     textInputBox.getChildren().addAll(mainButtons);
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
@@ -537,6 +556,7 @@ public class MainScreen implements SlogoListener {
     Button closeButton = new Button(myResources.getString("Close"));
     closeButton.setOnAction(e -> popup.hide());
 
+
     String languagedCommands = myResources.getString("commands");
 
     Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML(
@@ -567,16 +587,25 @@ public class MainScreen implements SlogoListener {
         myResources.getString("Description") + ": " + details.get("description"));
     Label exampleLabel = new Label(
         myResources.getString("Example") + ": " + details.get("example"));
+    HBox parametersBox = new HBox(10);
     Label parametersLabel = new Label(
         myResources.getString("Parameters") + ": " + details.get("parameters"));
+    TextField parametersField = new TextField();
+    parametersBox.getChildren().addAll(parametersLabel, parametersField);
     Label returnValueLabel = new Label(
         myResources.getString("ReturnValue") + ": " + details.get("returnValue"));
 
     Button closeButton = new Button(myResources.getString("Close"));
     closeButton.setOnAction(e -> popup.hide());
 
-    content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, parametersLabel,
-        returnValueLabel, closeButton);
+    Button executeButton = new Button(myResources.getString("Execute"));
+    executeButton.setOnAction(e -> {
+      pushCommand(command + " " + parametersField.getText());
+      field.clear();
+    });
+
+    content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, parametersBox,
+        returnValueLabel, closeButton, executeButton);
     // popup.getContent().add(content);
 
     helpPopupModality(popup, content);
