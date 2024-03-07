@@ -106,9 +106,8 @@ public class MainScreen implements SlogoListener {
   private ScrollPane variablesPane;
   private ScrollPane commandsHistory;
   private ScrollPane userDefinedCommandsPane;
+  private String commandHistoryText;
   private VBox variablesBox;
-  private String recentlyUpdatedVariable;
-  private String recentlyUpdatedValue;
   private HBox textInputBox;
   private VBox commandHistoryBox;
   private VBox userDefinedCommandsBox;
@@ -649,6 +648,7 @@ public class MainScreen implements SlogoListener {
       submitField.setText(newLang.getString("Submit"));
       variablesBoxLabel.setText(newLang.getString("varBox"));
       commandHistoryLabel.setText(newLang.getString("histBox"));
+      commandHistoryText = newLang.getString("histBox");
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
       play.setText(newLang.getString("Play"));
       pause.setText(newLang.getString("Pause"));
@@ -830,7 +830,7 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onReturn(double value, String string) {
     commandHistory.add(string);
-    commandHistoryLabel.setText(commandHistoryLabel.getText()+ String.format(" %.2f",value));
+    commandHistoryLabel.setText(commandHistoryText + String.format(" %.2f",value));
     updateCommandBox(commandHistoryBox, commandHistoryLabel, commandHistory);
   }
 
