@@ -1,10 +1,11 @@
 package slogo.model.command;
 
+import com.sun.jdi.ClassNotPreparedException;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
-import slogo.model.exceptions.IncompleteClassException;
+import slogo.model.exceptions.InsufficientArgumentsException;
 import slogo.model.exceptions.InvalidCommandException;
 
 /**
@@ -78,15 +79,13 @@ public class CommandFactory {
    *
    * @param myToken the token representing the command
    * @return the number of arguments expected by the command
-   * @throws IncompleteClassException if the command class or the field "NUM_ARGS" is not found
    */
 
-  public static int getNumArgs(String myToken) throws IncompleteClassException {
+  public static int getNumArgs(String myToken) {
     try {
       return (int) Class.forName(getFullName(myToken)).getField("NUM_ARGS").get(null);
     } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException e) {
-      throw new IncompleteClassException(
-          "Error getting number of arguments. Field NUM_ARGS not found for " + myToken);
+      throw new ClassNotPreparedException();
     }
   }
 

@@ -13,6 +13,7 @@ import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
+import slogo.model.exceptions.UndefinedExponentException;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
@@ -67,7 +68,7 @@ public class PowerCommandTest extends CommandTest {
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode(op1, null));
     node.addChild(new ConstantNode(op2, null));
-    assertThrows(InvalidOperandException.class, () -> {
+    assertThrows(UndefinedExponentException.class, () -> {
       node.evaluate();
     });
   }

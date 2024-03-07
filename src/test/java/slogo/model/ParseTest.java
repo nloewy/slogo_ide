@@ -18,6 +18,7 @@ import slogo.model.exceptions.InsufficientArgumentsException;
 import slogo.model.exceptions.InvalidCommandException;
 import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.exceptions.InvalidTokenException;
+import slogo.model.exceptions.InvalidUserCommandException;
 
 public class ParseTest {
 
@@ -446,5 +447,21 @@ public class ParseTest {
     assertEquals(-90, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
     assertEquals(90, slogo.getModelstate().getTurtles().get(1).getX(), DELTA);
 
+  }
+
+  @Test
+  void testInvalidUserCommand() throws InvocationTargetException, IllegalAccessException {
+    assertThrows(SlogoException.class, () -> {
+      slogo.parse(
+          "to fd [ ] [ fd 90 ] ");
+    });
+  }
+
+  @Test
+  void testInvalidVariable() throws InvocationTargetException, IllegalAccessException {
+    assertThrows(SlogoException.class, () -> {
+      slogo.parse(
+          "to fd [ 90 ] [ fd 90 ] ");
+    });
   }
 }

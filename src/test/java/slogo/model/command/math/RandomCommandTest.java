@@ -15,6 +15,7 @@ import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
+import slogo.model.exceptions.InvalidRandomInputException;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
@@ -67,7 +68,7 @@ public class RandomCommandTest extends CommandTest {
   void testRandomNegative()
       throws InvocationTargetException, IllegalAccessException {
     node.addChild(new ConstantNode("-90.00000", null));
-    assertThrows(InvalidOperandException.class, () -> {
+    assertThrows(InvalidRandomInputException.class, () -> {
       node.evaluate();
     });
   }
