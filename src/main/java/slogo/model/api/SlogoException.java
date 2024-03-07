@@ -22,9 +22,9 @@ public class SlogoException extends RuntimeException {
   }
 
   /**
-   * Retrieves the exception that caused the SlogoException
+   * Retrieves the exception that caused the SlogoException.
    *
-   * @return the exception that caused the SlogoException
+   * @return the exception that caused the SlogoException.
    */
   public Throwable getCause() {
     return cause;
@@ -33,7 +33,7 @@ public class SlogoException extends RuntimeException {
   /**
    * Retrieves the token associated with the exception.
    *
-   * @return the token associated with the exception
+   * @return the token associated with the exception.
    */
   public String getToken() {
     return token;

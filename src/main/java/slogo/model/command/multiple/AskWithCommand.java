@@ -51,7 +51,6 @@ public class AskWithCommand implements Command {
         tempList.add(i);
       }
     }
-
     modelState.getActiveTurtles().add(tempList);
     myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
     double val = 0.0;

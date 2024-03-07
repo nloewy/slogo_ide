@@ -3,7 +3,7 @@ package slogo.model;
 import slogo.model.api.TurtleRecord;
 
 /**
- * Represents the backend's model of a Turtle object
+ * Represents the backend's model of a Turtle object.
  *
  * @author Noah Loewy
  */

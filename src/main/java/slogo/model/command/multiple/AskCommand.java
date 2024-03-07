@@ -48,24 +48,11 @@ public class AskCommand implements Command {
   public double execute(List<Node> arguments, int turtleId) {
     List<Integer> tempList = new ArrayList<>();
     if (arguments.get(0).getChildren().isEmpty()) {
-      int id = (int) Math.round(arguments.get(0).evaluate());
-      if (!modelState.getTurtles().containsKey(id)) {
-        modelState.getTurtles().put(id, new Turtle(id));
-        myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
-      }
-      tempList.add(id);
+      addToTempList(arguments.get(0), tempList);
     } else {
       for (Node node : arguments.get(0).getChildren()) {
-        if (node.getToken().equals("]")) {
-          continue;
-        }
         modelState.setOuter(false);
-        int id = (int) Math.round(node.evaluate());
-        if (!modelState.getTurtles().containsKey(id)) {
-          modelState.getTurtles().put(id, new Turtle(id));
-          myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
-        }
-        tempList.add(id);
+        addToTempList(node, tempList);
       }
     }
     modelState.getActiveTurtles().add(tempList);
@@ -76,11 +63,19 @@ public class AskCommand implements Command {
       modelState.setCurrTurtle(i);
       val = arguments.get(1).evaluate();
     }
-
     modelState.getActiveTurtles().pop();
     modelState.setOuter(false);
     return val;
 
+  }
+
+  private void addToTempList(Node node, List<Integer> tempList) {
+    int id = (int) Math.round(node.evaluate());
+    if (!modelState.getTurtles().containsKey(id)) {
+      modelState.getTurtles().put(id, new Turtle(id));
+      myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
+    }
+    tempList.add(id);
   }
 }
 
