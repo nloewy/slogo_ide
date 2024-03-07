@@ -731,9 +731,9 @@ public class MainScreen implements SlogoListener {
       animation.getKeyFrames().add(keyFrame);
     }
     animation.getKeyFrames().add(new KeyFrame(Duration.seconds(duration), e -> {
-      turtle.setPosition(x, y, newHeading, visible);
+      turtle.setPosition(x-centerX, y -centerY, newHeading, visible);
     }));
-    turtle.setPosition(x, y, newHeading, visible);
+    turtle.setPosition(x - centerX, y - centerY, newHeading, visible);
     myAnimation.add(animation);
   }
 
