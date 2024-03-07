@@ -62,9 +62,14 @@ public class FrontEndTurtle {
 
     initInfoPopup();
 
+    display.addEventHandler(MouseEvent.MOUSE_ENTERED, (event) -> {
+      updateAndShowInfoPopup();
+    });
+    display.addEventHandler(MouseEvent.MOUSE_EXITED, (event) -> {
+      infoPopup.hide();
+    });
     display.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
       view.pushCommand("TELL " + id);
-      updateAndShowInfoPopup();
     });
   }
 

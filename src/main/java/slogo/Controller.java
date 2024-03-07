@@ -167,11 +167,7 @@ public class Controller {
   }
 
 
-
-  public void openNewXMLSession() {
-    System.out.println("To Be Implemented!");
-  }
-
+  
   public Map<String, Map<String, String>> getCommandDetailsFromXML() {
     Map<String, Map<String, String>> commandDetails = new HashMap<>();
     try {
