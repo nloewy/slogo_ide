@@ -10,10 +10,23 @@ public class SlogoException extends RuntimeException {
   private final String token;
   private Throwable cause;
 
+  /**
+   * Constructs SlogoException.
+   * @param message for programmers purposes - not for user.
+   * @param token relevant token that caused error, to be later shown to user
+   */
+
   public SlogoException(String message, String token) {
     super(message);
     this.token = token;
   }
+
+  /**
+   * Constructs SlogoException.
+   * @param message for programmers purposes - not for user.
+   * @param cause exception that caused the wrapped exception that caused SlogoException.
+   * @param token relevant token that caused error, to be later shown to user
+   */
 
   public SlogoException(String message, Throwable cause, String token) {
     super(message);
@@ -26,6 +39,7 @@ public class SlogoException extends RuntimeException {
    *
    * @return the exception that caused the SlogoException.
    */
+
   public Throwable getCause() {
     return cause;
   }
@@ -35,6 +49,7 @@ public class SlogoException extends RuntimeException {
    *
    * @return the token associated with the exception.
    */
+
   public String getToken() {
     return token;
   }

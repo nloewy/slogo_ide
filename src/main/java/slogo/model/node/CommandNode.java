@@ -9,15 +9,9 @@ import slogo.model.exceptions.InvalidCommandException;
 import slogo.model.exceptions.InvalidOperandException;
 
 /**
- * The CommandNode class represents a node that executes a command in the Slogo language.
- * <p>
- * This class adheres to the Factory Pattern, as it dynamically creates instances of the Command
- * class based on the token stored in the CommandNode. It dynamically loads the Command class using
- * reflection and then instantiates it using the constructor that taken the ModelState and
- * SlogoListener as arguments, effectively creating a new Command instance. The created Command
- * instance is then used to execute the command operation, passing the list of children nodes as
- * arguments. If any errors occur during the creation or execution of the Command instance,
- * appropriate exceptions are thrown.
+ * The CommandNode class represents a node that executes a command in the Slogo language. The
+ * command instance created by the factory executes the command operation, passing the list of
+ * children nodes as arguments.
  *
  * @author Noah Loewy
  */

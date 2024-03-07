@@ -48,11 +48,13 @@ public class AskCommand implements Command {
   public double execute(List<Node> arguments, int turtleId) {
     List<Integer> tempList = new ArrayList<>();
     if (arguments.get(0).getChildren().isEmpty()) {
-      addToTempList(arguments.get(0), tempList);
+      Node nextValueFound = arguments.get(0);
+      int id = (int) Math.round(nextValueFound.evaluate());
+      addToTempList(id, tempList);
     } else {
       for (Node node : arguments.get(0).getChildren()) {
         modelState.setOuter(false);
-        addToTempList(node, tempList);
+        addToTempList((int) Math.round(node.evaluate()), tempList);
       }
     }
     modelState.getActiveTurtles().add(tempList);
@@ -69,13 +71,16 @@ public class AskCommand implements Command {
 
   }
 
-  private void addToTempList(Node node, List<Integer> tempList) {
-    int id = (int) Math.round(node.evaluate());
+  private void addToTempList(int id, List<Integer> tempList) {
     if (!modelState.getTurtles().containsKey(id)) {
-      modelState.getTurtles().put(id, new Turtle(id));
-      myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
+      makeTurtleTellListener(id);
     }
     tempList.add(id);
   }
+  private void makeTurtleTellListener(int id) {
+    modelState.getTurtles().put(id, new Turtle(id));
+    myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
+  }
+
 }
 

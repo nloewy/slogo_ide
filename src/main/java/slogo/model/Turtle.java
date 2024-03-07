@@ -14,7 +14,7 @@ public class Turtle {
   private double myX;
   private double myY;
   private boolean myVisible;
-  private double myHeading; //range [0.0,360.0)
+  private double myHeading;
   private int penColor;
   private int bgColor;
 
