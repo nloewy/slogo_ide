@@ -38,8 +38,8 @@ public class ListNode extends Node {
       if (child.getToken().equals("]")) {
         continue;
       }
-      ret = child.evaluate();
       modelState.setOuter(false);
+      ret = child.evaluate();
     }
     return ret;
   }

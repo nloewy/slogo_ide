@@ -284,18 +284,8 @@ public class MainScreen implements SlogoListener {
 
   }
 
-  private void updateCommands() {
-    System.out.print("COMMAND HISTORY\n");
-    updateCommandBox(commandHistoryBox, commandHistoryLabel, commandHistory);
-    for (String command : commandHistory) {
-      System.out.println(command);
-    }
-    System.out.print("USER DEFINED COMMAND HISTORY\n");
-    updateCommandBox(userDefinedCommandsBox, userDefinedCommandsLabel, userDefinedCommandHistory);
-    for (String com : userDefinedCommandHistory) {
-      System.out.println(com);
-    }
-  }
+
+
 
   private void updateCommandBox(VBox box, Text label, List<String> history) {
     box.getChildren().clear();
@@ -537,7 +527,6 @@ public class MainScreen implements SlogoListener {
     if (file != null) {
       try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
         for (String command : commandHistory) {
-          System.out.println(command);
           writer.write(command);
           writer.newLine();
         }
@@ -830,13 +819,15 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onReturn(double value, String string) {
     commandHistory.add(string);
-    updateCommands();
+    commandHistoryLabel.setText(commandHistoryLabel.getText()+ String.format(" %.2f",value));
+    updateCommandBox(commandHistoryBox, commandHistoryLabel, commandHistory);
   }
 
   @Override
   public void onUserDefinedCommand(String string) {
     userDefinedCommandHistory.add(string);
-    updateCommands();
+    updateCommandBox(userDefinedCommandsBox, userDefinedCommandsLabel, userDefinedCommandHistory);
+
   }
 
   @Override
