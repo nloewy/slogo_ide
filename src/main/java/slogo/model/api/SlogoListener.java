@@ -63,4 +63,5 @@ public interface SlogoListener {
 
   void onUpdatePalette(Map<Integer, List<Integer>> pallette);
 
+
 }

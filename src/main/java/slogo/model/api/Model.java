@@ -1,6 +1,8 @@
 package slogo.model.api;
 
 /**
+ *
+ *
  * @author Noah Loewy
  */
 public interface Model {

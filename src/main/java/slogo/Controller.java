@@ -1,5 +1,6 @@
 package slogo;
 
+import java.beans.EventHandler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +42,7 @@ public class Controller {
   private final List<MainScreen> windows = new ArrayList<>();
   private String currentLanguage = "English";
   private String currentTheme = "LightMode.css";
+  private Model model;
   private Consumer<String> parse;
   private File turtleImage;
   private String uploadedCommand;
@@ -104,7 +107,8 @@ public class Controller {
     if (turtleImage != null) {
       mainScreen.setTurtleImage(turtleImage);
     }
-    Model model = new SlogoModel(mainScreen, currentLanguage);
+    model = new SlogoModel(mainScreen, currentLanguage);
+
     windows.add(mainScreen);
 
     parse = t -> {
@@ -117,7 +121,6 @@ public class Controller {
         new Alert(AlertType.ERROR, message).show();
       }
     };
-
     mainScreen.addParser(parse, slogoContent);
     setCurrentLanguage(currentLanguage);
   }
@@ -146,8 +149,6 @@ public class Controller {
           }
         }
         String slogoContent = contentBuilder.toString();
-        System.out.println(slogoContent);
-
         if (type.equals("new")) {
           openNewIDESession(slogoContent);
         } else {
@@ -243,5 +244,8 @@ public class Controller {
   }
 
 
+  public void resetModel() {
+    model.resetModel();
+  }
 }
 
