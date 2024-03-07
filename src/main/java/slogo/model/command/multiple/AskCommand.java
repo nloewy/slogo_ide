@@ -79,6 +79,7 @@ public class AskCommand implements Command {
     }
     tempList.add(id);
   }
+
   private void makeTurtleTellListener(int id) {
     modelState.getTurtles().put(id, new Turtle(id));
     myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());

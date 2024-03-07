@@ -73,6 +73,14 @@ public class CommandFactory {
     }
   }
 
+  /**
+   * Retrieves the number of arguments expected by a command associated with the given token.
+   *
+   * @param myToken the token representing the command
+   * @return the number of arguments expected by the command
+   * @throws IncompleteClassException if the command class or the field "NUM_ARGS" is not found
+   */
+
   public static int getNumArgs(String myToken) throws IncompleteClassException {
     try {
       return (int) Class.forName(getFullName(myToken)).getField("NUM_ARGS").get(null);
