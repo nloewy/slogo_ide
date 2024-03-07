@@ -503,6 +503,7 @@ public class MainScreen implements SlogoListener {
     }
   }
 
+
   private String getPenColor() {
      return "PEN COLOR";
   }
@@ -670,9 +671,7 @@ public class MainScreen implements SlogoListener {
 
   public void pushCommand(String s) {
     commandString = s;
-    commandHistory.push(commandString);
     parse.accept(commandString);
-    updateCommands();
   }
 
   @Override
@@ -763,7 +762,6 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onReturn(double value, String string) {
     commandHistory.add(string);
-    // print val perhaps ext to command?
     updateCommands();
   }
 

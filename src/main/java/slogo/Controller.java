@@ -129,6 +129,7 @@ public class Controller {
     // The file is not currently used for anything
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open SLogo File");
+    fileChooser.setInitialDirectory(new File("data/examples/"));
     fileChooser.getExtensionFilters().addAll(
         new FileChooser.ExtensionFilter("SLogo Files", "*.slogo"));
     File selectedFile = fileChooser.showOpenDialog(stage);
@@ -167,7 +168,7 @@ public class Controller {
   }
 
 
-  
+
   public Map<String, Map<String, String>> getCommandDetailsFromXML(String commandLanguage) {
     Map<String, Map<String, String>> commandDetails = new HashMap<>();
     try {
