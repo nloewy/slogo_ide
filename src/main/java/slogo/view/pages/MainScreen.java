@@ -383,12 +383,12 @@ public class MainScreen implements SlogoListener {
       penColors.add(new ComboChoice(color, color));
     }
 
-    colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
+    colorDropDown = UserInterfaceUtil.generateComboBox(penColors, "colorBox",100, 300, (s) -> s, (event) -> {
       turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
     });
     colorDropDown.getOnAction().handle(new ActionEvent());
 
-    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, 100,
+    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, "backgroundBox",100,
         300, (s) -> s,
         (event) -> {
           centerPane.setStyle("-fx-background-color: " + event);
