@@ -63,7 +63,7 @@ public class CommandNode extends Node {
     double val = 0;
     if (myToken.equals("Make") || myToken.startsWith("Ask") || !myModelState.getOuter()) {
       val = command.execute(getChildren(), myModelState.getCurrTurtle());
-      if(myToken.startsWith("Ask")) {
+      if (myToken.startsWith("Ask")) {
         myModelState.setOuter(true);
       }
     } else {

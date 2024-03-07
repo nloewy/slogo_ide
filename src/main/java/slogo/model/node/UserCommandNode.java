@@ -91,8 +91,6 @@ public class UserCommandNode extends Node {
   }
 
 
-
-
   /**
    * Retrieves the number of arguments expected by the user-defined command.
    *
