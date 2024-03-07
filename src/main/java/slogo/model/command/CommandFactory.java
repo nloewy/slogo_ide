@@ -5,7 +5,6 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
-import slogo.model.exceptions.InsufficientArgumentsException;
 import slogo.model.exceptions.InvalidCommandException;
 
 /**

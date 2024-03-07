@@ -76,8 +76,8 @@ public class AskCommand implements Command {
   private void addToTempList(int id, List<Integer> tempList) {
     if (!modelState.getTurtles().containsKey(id)) {
       makeTurtleTellListener(id);
+      tempList.add(id);
     }
-    tempList.add(id);
   }
 
   private void makeTurtleTellListener(int id) {

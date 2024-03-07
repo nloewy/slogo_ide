@@ -61,6 +61,11 @@ public interface SlogoListener {
    */
   void onSetActiveTurtles(List<Integer> ids);
 
+  /**
+   * Invoked to provide the listener with the updated palette.
+   *
+   * @param pallette a map from indexes to lists of RGB values.
+   */
   void onUpdatePalette(Map<Integer, List<Integer>> pallette);
 
 
