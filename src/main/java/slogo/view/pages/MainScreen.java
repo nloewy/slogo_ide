@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.Stack;
@@ -39,6 +40,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -103,6 +105,8 @@ public class MainScreen implements SlogoListener {
   private ScrollPane commandsHistory;
   private ScrollPane userDefinedCommandsPane;
   private VBox variablesBox;
+  private String recentlyUpdatedVariable;
+  private String recentlyUpdatedValue;
   private HBox textInputBox;
   private VBox commandHistoryBox;
   private VBox userDefinedCommandsBox;
@@ -113,7 +117,6 @@ public class MainScreen implements SlogoListener {
   private Animation currAnimation;
   private List<Integer> oldPenColor;
   private List<Integer> oldBackgroundColor;
-  private final Map<String, List<String>> variableCommands;
   private final Map<String, Number> variableValues;
   private final List<FrontEndTurtle> turtles;
   private final Stack<String> commandHistory;
@@ -138,7 +141,6 @@ public class MainScreen implements SlogoListener {
     myAnimation = new ArrayDeque<>();
     lang = "EG";
     commandString = "";
-    variableCommands = new LinkedHashMap<>();
     variableValues = new LinkedHashMap<>();
     turtles = new ArrayList<>();
     commandHistory = new Stack<String>();
@@ -245,25 +247,41 @@ public class MainScreen implements SlogoListener {
     variablesBox.getChildren().add(variablesBoxLabel);
 
     for (String key : variableValues.keySet()) {
-      List<String> relatedCommands = variableCommands.get(key);
       Button openRelatedCommands = new Button(key + " :: " + variableValues.get(key));
       openRelatedCommands.setId("variable");
-      openRelatedCommands.setOnAction((event) -> {
-        VariableDialog dialog = new VariableDialog(this, variableValues);
-        if (dialog.display()) {
-          updateVariables();
+      variablesBox.getChildren().add(openRelatedCommands);
+      openRelatedCommands.setOnAction(event -> {
+        String commands = "";
+        for (String command : commandHistory) {
+          if (command.contains(key)) {
+            commands += "\n" + command;
+          }
         }
 
-        String commands = "";
-        for (String command : relatedCommands) {
-          commands = commands + "\n" + command;
-        }
-        new Alert(AlertType.CONFIRMATION, "RELATED COMMANDS\n" + commands).show();
+        // Create and show the TextInputDialog for entering a new value
+        TextInputDialog dialog = new TextInputDialog(variableValues.get(key).toString());
+        dialog.setTitle("Enter New Value");
+        dialog.setHeaderText("Enter a new value for " + key);
+        dialog.setContentText("New value:\n\nRELATED COMMANDS\n" + commands);
+        Optional<String> result = dialog.showAndWait();
+
+        // If a new value is entered and confirmed, update the variable value
+        result.ifPresent(newValue -> {
+          try {
+            variableValues.put(key, Double.valueOf(newValue));
+            pushCommand("MAKE " + key + " " + newValue);
+
+            new Alert(AlertType.INFORMATION, "New value for " + key + " saved: " + newValue).showAndWait();
+
+          }
+          catch (Exception e) {
+            new Alert(AlertType.INFORMATION, "Value Must be a Number");
+          }
+        });
       });
 
-      variablesBox.getChildren().add(openRelatedCommands);
-
     }
+
   }
 
   private void updateCommands() {
@@ -723,13 +741,13 @@ public class MainScreen implements SlogoListener {
 
   @Override
   public void onUpdateValue(String variableName, Number newValue) {
-    variableCommands.put(variableName, List.of(commandHistory.peek()));
     variableValues.put(variableName, newValue);
     updateVariables();
   }
 
-  private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading,
-      boolean visible) {
+
+
+  private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading, boolean visible) {
     double oldX = turtle.getX();
     double oldY = turtle.getY();
     double oldHeading = turtle.getHeading();
@@ -743,8 +761,7 @@ public class MainScreen implements SlogoListener {
       double progress = (double) i / numSteps;
       double offsetx = turtle.getDisplay().getImage().getWidth() / 4;
       double offsety = turtle.getDisplay().getImage().getHeight() / 4;
-      Line line = turtle.drawLine(oldX + offsetx, oldY + offsety,
-          oldX + (x - oldX) * progress + offsetx,
+      Line line = turtle.drawLine(oldX + offsetx, oldY + offsety, oldX + (x - oldX) * progress + offsetx,
           oldY + (y - oldY) * progress + offsety);
       KeyFrame keyFrame = new KeyFrame(Duration.seconds(duration * progress),
           e -> {
@@ -760,9 +777,9 @@ public class MainScreen implements SlogoListener {
       animation.getKeyFrames().add(keyFrame);
     }
     animation.getKeyFrames().add(new KeyFrame(Duration.seconds(duration), e -> {
-      turtle.setPosition(x-centerX, y -centerY, newHeading, visible);
+      turtle.setPosition(x, y, newHeading, visible);
     }));
-    turtle.setPosition(x - centerX, y - centerY, newHeading, visible);
+    turtle.setPosition(x, y, newHeading, visible);
     myAnimation.add(animation);
   }
 
@@ -775,25 +792,24 @@ public class MainScreen implements SlogoListener {
             turtleState.heading(), turtleState.visible());
         List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
         if (newPenColor != null) {
-          turtle.setPenColor(new Color(newPenColor.get(0) / 255, newPenColor.get(1) / 255,
-              newPenColor.get(2) / 255, 1));
+          turtle.setPenColor(new Color(newPenColor.get(0)/255, newPenColor.get(1)/255, newPenColor.get(2)/255, 1));
         }
 
         List<Integer> newBackgroundColor = palette.get(turtleState.bgIndex());
         if (newBackgroundColor != null) {
-          centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + ","
-              + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
+          centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + "," + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
         }
 
         return;
       }
     }
-    FrontEndTurtle newTurtle = new FrontEndTurtle(turtleState.id(), turtleState.x() + centerX,
-        turtleState.y() + centerY,
+    FrontEndTurtle newTurtle = new FrontEndTurtle(turtleState.id(), turtleState.x() + centerX, turtleState.y() + centerY,
         Color.BLACK, true, turtleState.heading(), defaultImage, this);
     turtles.add(newTurtle);
     centerPane.getChildren().add(newTurtle.getDisplay());
   }
+
+
 
   @Override
   public void onResetTurtle(int id) {
