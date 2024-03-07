@@ -51,7 +51,10 @@ public class HomeCommand implements Command {
     double currentY = turtle.getY();
     turtle.setX(0);
     turtle.setY(0);
+    turtle.setHeading(0);
+    turtle.setPen(false);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
+    turtle.setPen(true);
     return MathUtils.dist(0, 0, currentX, currentY);
   }
 }
