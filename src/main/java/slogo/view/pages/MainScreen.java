@@ -439,12 +439,15 @@ public class MainScreen implements SlogoListener {
 
   private void saveToFile() {
     FileChooser fileChooser = new FileChooser();
+    fileChooser.setInitialDirectory(
+        new File("data/examples/savedSlogos"));
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
         "SLogo files (*.slogo)", "*.slogo"));
     File file = fileChooser.showSaveDialog(stage);
     if (file != null) {
       try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-        for (String command : userDefinedCommandHistory) {
+        for (String command : commandHistory) {
+          System.out.println(command);
           writer.write(command);
           writer.newLine();
         }
@@ -613,9 +616,7 @@ public class MainScreen implements SlogoListener {
 
   public void pushCommand(String s) {
     commandString = s;
-    commandHistory.push(commandString);
     parse.accept(commandString);
-    updateCommands();
   }
 
   @Override
@@ -706,7 +707,6 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onReturn(double value, String string) {
     commandHistory.add(string);
-    // print val perhaps ext to command?
     updateCommands();
   }
 
