@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import slogo.Controller;
 import slogo.view.ComboChoice;
 import slogo.view.ViewInternal;
+import javafx.stage.FileChooser;
 
 public class StartScreen  {
 
@@ -101,6 +102,17 @@ public class StartScreen  {
         //uploadTurtle,
         themeComboBox
     );
+
+    Button uploadSettings = generateButton("UploadSettings", 100, 360, e -> {
+      FileChooser fileChooser = new FileChooser();
+      fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+      File selectedFile = fileChooser.showOpenDialog(stage);
+      if (selectedFile != null) {
+        controller.loadSettings(selectedFile);
+      }
+    });
+    root.getChildren().add(uploadSettings);
+
     scene = new Scene(root, 600, 400);
 
     controller.updateCurrentTheme(scene);

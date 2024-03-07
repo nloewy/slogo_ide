@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +33,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -125,6 +127,7 @@ public class MainScreen implements SlogoListener {
   private double centerX;
   private double centerY;
   private Map<Integer, List<Integer>> palette;
+  ComboBox<ComboChoice> colorDropDown;
 
   // Add an XMLFile object to this when Model adds one
   // Controller calls this with an XML File
@@ -372,7 +375,7 @@ public class MainScreen implements SlogoListener {
       penColors.add(new ComboChoice(color, color));
     }
 
-    ComboBox<ComboChoice> colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
+    colorDropDown = UserInterfaceUtil.generateComboBox(penColors, 100, 300, (s) -> s, (event) -> {
       turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
     });
     colorDropDown.getOnAction().handle(new ActionEvent());
@@ -438,13 +441,51 @@ public class MainScreen implements SlogoListener {
   }
 
   private void saveToFile() {
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+    alert.setTitle("Save Options");
+    alert.setHeaderText("Choose what you want to save:");
+    ButtonType buttonTypeOne = new ButtonType("Save Preferences and Commands");
+    ButtonType buttonTypeTwo = new ButtonType("Save Commands Only");
+    alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+    alert.showAndWait().ifPresent(response -> {
+      if (response == buttonTypeOne) {
+        savePreferencesAndCommandsToFile();
+      } else if (response == buttonTypeTwo) {
+        saveCommandsToFile();
+      }
+    });
+  }
+
+  private void savePreferencesAndCommandsToFile() {
     FileChooser fileChooser = new FileChooser();
-    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
-        "SLogo files (*.slogo)", "*.slogo"));
+    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+    File file = fileChooser.showSaveDialog(stage);
+    if (file != null) {
+      try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
+        writer.println("<preferences>");
+        writer.println("  <language>" + controller.getCurrentLanguage() + "</language>");
+//        writer.println("  <theme>" + controller.getCurrentTheme() + "</theme>");
+        writer.println("  <theme>" + "IDK TRYING TO GET" + "</theme>");
+        writer.println("  <penColor>" + getPenColor() + "</penColor>");
+        writer.println("</preferences>");
+
+        for (String command : commandHistory) {
+          writer.println(command);
+        }
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  private void saveCommandsToFile() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SLogo Files", "*.slogo"));
     File file = fileChooser.showSaveDialog(stage);
     if (file != null) {
       try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-        for (String command : userDefinedCommandHistory) {
+        for (String command : commandHistory) {
           writer.write(command);
           writer.newLine();
         }
@@ -452,6 +493,10 @@ public class MainScreen implements SlogoListener {
         e.printStackTrace();
       }
     }
+  }
+
+  private String getPenColor() {
+     return "PEN COLOR";
   }
 
   private void showHelpPopup() {
@@ -732,6 +777,15 @@ public class MainScreen implements SlogoListener {
   public void onUpdatePalette(Map<Integer, List<Integer>> palette) {
     this.palette = palette;
     updatePalettePane();
+  }
+
+  public void setPenColor(String color) {
+    for (ComboChoice choice : colorDropDown.getItems()) {
+      if ((String.valueOf(choice)).equals(color)) {
+        colorDropDown.setValue(choice);
+        break;
+      }
+    }
   }
 }
 

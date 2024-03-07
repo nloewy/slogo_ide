@@ -215,6 +215,30 @@ public class Controller {
 
     }
 
+  public void loadSettings(File file) {
+    try {
+      DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+      Document doc = dBuilder.parse(file);
+      doc.getDocumentElement().normalize();
+
+      String language = doc.getElementsByTagName("language").item(0).getTextContent();
+      String theme = doc.getElementsByTagName("theme").item(0).getTextContent();
+      String penColor = doc.getElementsByTagName("penColor").item(0).getTextContent();
+
+      setCurrentLanguage(language);
+
+      for (MainScreen window : windows) {
+        window.setPenColor(penColor);
+      }
+//      updateCurrentTheme(theme, stage);
+//      setPenColor(penColor);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
 
 
 }
