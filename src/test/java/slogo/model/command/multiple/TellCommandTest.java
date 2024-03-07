@@ -54,6 +54,7 @@ public class TellCommandTest extends CommandTest {
     Node fwd = new CommandNode("Forward", model);
     fwd.addListener(myListener);
     fwd.addChild(new ConstantNode("90", model));
+    model.setOuter(true);
     fwd.evaluate();
     assertEquals(5.0, model.getTurtles().size(), DELTA);
 
@@ -104,6 +105,7 @@ public class TellCommandTest extends CommandTest {
     assertEquals(6.0, model.getActiveTurtles().peek().size(), DELTA);
     assertEquals(8.0, model.getTurtles().size(), DELTA);
 
+    model.setOuter(true);
     Node fwd = new CommandNode("Forward", model);
     fwd.addListener(myListener);
     fwd.addChild(new ConstantNode("90", model));

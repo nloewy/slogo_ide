@@ -44,6 +44,27 @@ public class UserCommandNode extends Node {
    */
   @Override
   public double evaluate() {
+    if (modelState.getOuter()) {
+      return evaluateOuter();
+    } else {
+      return evaluateInner();
+    }
+  }
+
+  private double evaluateOuter() {
+    double val = 0;
+    for (int index = 0; index < modelState.getActiveTurtles().peek().size(); index++) {
+      val = evaluateHelper(true, index);
+    }
+    modelState.setOuter(true);
+    return val;
+  }
+
+  private double evaluateInner() {
+    return evaluateHelper(false, 0);
+  }
+
+  private double evaluateHelper(boolean isOuter, int index) {
     List<Node> children = modelState.getUserDefinedCommandNodes().get(myToken);
     children.addAll(getChildren());
     Node rootOfSubtree = children.get(1);
@@ -51,24 +72,26 @@ public class UserCommandNode extends Node {
       throw new InsufficientArgumentsException("", myToken);
     }
     Map<Node, String> constantNodeToVariable = new HashMap<>();
-
-    double val = 0;
-    for (int index = 0; index < modelState.getActiveTurtles().peek().size(); index++) {
-      modelState.setCurrTurtle(modelState.getActiveTurtles().peek().get(index));
+    for (int i = 0; i < numArgs; i++) {
+      String tokenToReplace = children.get(0).getChildren().get(i).getToken();
       modelState.setOuter(false);
-      for (int i = 0; i < numArgs; i++) {
-        String tokenToReplace = children.get(0).getChildren().get(i).getToken();
-        double value = children.get(i + 2).evaluate();
-        Node constantNode = new ConstantNode(String.valueOf(value), modelState);
-        constantNodeToVariable.put(constantNode, tokenToReplace);
-        replaceNodesWithToken(rootOfSubtree, tokenToReplace, constantNode);
-      }
-      val = rootOfSubtree.evaluate();
-      replaceTokensWithNodes(rootOfSubtree, constantNodeToVariable);
+      double value = children.get(i + 2).evaluate();
+      Node constantNode = new ConstantNode(String.valueOf(value), modelState);
+      constantNodeToVariable.put(constantNode, tokenToReplace);
+      replaceNodesWithToken(rootOfSubtree, tokenToReplace, constantNode);
     }
+    modelState.setOuter(false);
+    if (isOuter) {
+      modelState.setCurrTurtle(modelState.getActiveTurtles().peek().get(index));
+    }
+    double val = rootOfSubtree.evaluate();
+    replaceTokensWithNodes(rootOfSubtree, constantNodeToVariable);
     modelState.getUserDefinedCommandNodes().put(myToken, children.subList(0, 2));
     return val;
   }
+
+
+
 
   /**
    * Retrieves the number of arguments expected by the user-defined command.
