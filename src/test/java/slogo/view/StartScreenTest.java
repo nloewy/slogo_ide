@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import slogo.Controller;
@@ -60,5 +61,13 @@ public class StartScreenTest extends DukeApplicationTest {
   void testThemeBoxDefault () {
     clickOn(themeBox);
     assertEquals("Light Mode", themeBox.getValue().toString());
+    assertEquals(Color.WHITE, root.getBackground().getFills().get(0).getFill());
+  }
+  @Test
+  void testThemeBoxChangeDark () {
+    clickOn(themeBox);
+    clickOn("Dark Mode");
+    assertEquals("Dark Mode", themeBox.getValue().toString());
+    assertEquals(Color.BLACK, root.getBackground().getFills().get(0).getFill());
   }
 }
