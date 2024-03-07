@@ -96,6 +96,8 @@ public class MainScreen implements SlogoListener {
   private Button play;
   private Button pause;
   private Button step;
+  private TextField distanceField;
+  private TextField rotateField;
   private String commandHistoryText;
   private Button uploadTurtle;
   private Button openNewWindow;
@@ -465,26 +467,33 @@ public class MainScreen implements SlogoListener {
         save, dropdowns, openNewWindow);
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
     addLanguageObserver(colorDropDown, backgroundDropDown);
-
+    distanceField = new TextField("50");
+    distanceField.setPrefWidth(60);
+    rotateField = new TextField("90");
+    rotateField.setPrefWidth(60);
+    HBox turtleMoveBox = new HBox(distanceField, rotateField);
+    turtleMoveBox.setTranslateY(50);
+    turtleMoveBox.setPadding(new javafx.geometry.Insets(0, 0, 0, -100));
     Button leftButton = UserInterfaceUtil.generateButton("←", event -> {
-      pushCommand("left 90");
+      pushCommand(myResources.getString("Left").split("\\|")[0] + " " + rotateField.getText());
     });
     Button rightButton = UserInterfaceUtil.generateButton("→", event -> {
-      pushCommand("right 90");
+      pushCommand(myResources.getString("Right").split("\\|")[0] + " " + rotateField.getText());
     });
     Button forwardButton = UserInterfaceUtil.generateButton("↑", event -> {
-      pushCommand("forward 50");
+      pushCommand(myResources.getString("Forward").split("\\|")[0] + " " + distanceField.getText());
     });
     Button backwardButton = UserInterfaceUtil.generateButton("↓", event -> {
-      pushCommand("backward 50");
+      pushCommand(myResources.getString("Backward").split("\\|")[0] + " " + distanceField.getText());
     });
+
     VBox upDownButtons = new VBox(forwardButton, backwardButton);
     upDownButtons.setTranslateY(-15);
     upDownButtons.setSpacing(10);
     HBox turtleButtons = new HBox(leftButton, upDownButtons, rightButton);
     turtleButtons.setPadding(new javafx.geometry.Insets(50, 0, 0, 0));
     paletteGrid = new GridPane();
-    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), turtleButtons, field);
+    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), turtleMoveBox, turtleButtons, field);
     textInputBox.getChildren().addAll(mainButtons);
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
@@ -719,6 +728,8 @@ public class MainScreen implements SlogoListener {
       help.setText(newLang.getString("Help"));
       save.setText(newLang.getString("Save"));
       upload.setText(newLang.getString("Upload"));
+      distanceField.setPromptText(newLang.getString("DistanceField"));
+      rotateField.setPromptText(newLang.getString("RotateField"));
 
 
     });
