@@ -5,7 +5,7 @@ package slogo.model.api;
  */
 public class SlogoException extends RuntimeException {
 
-  private String token;
+  private final String token;
   private Throwable cause;
 
   public SlogoException(String message, String token) {
@@ -19,7 +19,7 @@ public class SlogoException extends RuntimeException {
     this.token = token;
   }
 
-  public Throwable getCause () {
+  public Throwable getCause() {
     return cause;
   }
 

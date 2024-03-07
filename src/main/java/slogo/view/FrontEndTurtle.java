@@ -1,15 +1,10 @@
 package slogo.view;
 
 
-
-import java.awt.Insets;
 import java.util.List;
 import java.util.Stack;
-
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,18 +18,18 @@ import slogo.view.pages.MainScreen;
 
 public class FrontEndTurtle {
 
-  private ImageView display;
+  private final Stack<Line> pathHistory = new Stack<Line>();
+  private final ImageView display;
   private Image displayImage;
   private Color penColor;
   private double myX;
   private double myHeading;
   private double myY;
   private double heading = 0;
-  private int myId;
+  private final int myId;
   private boolean isPenDisplayed = false;
   private Timeline animation;
-  private final Stack<Line> pathHistory = new Stack<Line>();
-  private MainScreen view;
+  private final MainScreen view;
   private boolean isActive;
   private Stage infoPopup;
   private Label positionLabel;
@@ -85,7 +80,6 @@ public class FrontEndTurtle {
     penStatusLabel = new Label();
     penColorLabel = new Label();
 
-
     content.getChildren().addAll(positionLabel, headingLabel, penStatusLabel, penColorLabel);
 
     Scene scene = new Scene(content);
@@ -112,8 +106,7 @@ public class FrontEndTurtle {
 
     if (isActive) {
       display.setOpacity(1);
-    }
-    else {
+    } else {
       display.setOpacity(0.5);
     }
   }

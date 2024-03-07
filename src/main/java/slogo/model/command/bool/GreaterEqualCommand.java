@@ -1,6 +1,5 @@
 package slogo.model.command.bool;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
@@ -45,8 +44,7 @@ public class GreaterEqualCommand implements Command {
    * otherwise returns 0.0
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId)
-  {
+  public double execute(List<Node> arguments, int turtleId) {
     modelState.setOuter(false);
     return (arguments.get(0).evaluate() + TOLERANCE >= arguments.get(1).evaluate()) ? 1.0 : 0.0;
   }

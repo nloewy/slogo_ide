@@ -1,8 +1,5 @@
 package slogo.model.api;
 
-import java.lang.reflect.InvocationTargetException;
-import slogo.model.exceptions.InvalidTokenException;
-
 /**
  * @author Noah Loewy
  */

@@ -1,6 +1,5 @@
 package slogo.model.node;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import slogo.model.api.SlogoListener;

@@ -1,9 +1,6 @@
 package slogo.model.node;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import slogo.model.ModelState;
-import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.command.CommandFactory;
 import slogo.model.exceptions.IncompleteClassException;

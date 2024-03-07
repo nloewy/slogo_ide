@@ -5,7 +5,6 @@ import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.exceptions.DivideByZeroException;
-import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.node.Node;
 
 /**

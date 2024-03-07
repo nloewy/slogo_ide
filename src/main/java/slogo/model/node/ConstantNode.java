@@ -36,8 +36,7 @@ public class ConstantNode extends Node {
   @Override
   public double evaluate() {
 
-
-  return myConstant;
+    return myConstant;
   }
 
   /**
