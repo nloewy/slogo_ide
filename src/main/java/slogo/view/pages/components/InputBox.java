@@ -225,8 +225,13 @@ public class InputBox {
       }
     });
 
-    mainButtons = List.of(submitField, play, pause, step, help, reset, upload, uploadTurtle,
-        save, dropdowns, openNewWindow);
+    VBox animateButtons = new VBox(play, pause, step);
+    animateButtons.getStyleClass().add("animate-buttons");
+
+    VBox uploadButtons = new VBox(upload, uploadTurtle, save);
+    uploadButtons.getStyleClass().add("animate-buttons");
+
+    mainButtons = List.of(submitField, animateButtons, help, reset, uploadButtons, dropdowns, openNewWindow);
 
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
 

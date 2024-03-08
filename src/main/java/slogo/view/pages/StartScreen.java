@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import slogo.model.api.SlogoException;
 import slogo.view.ComboChoice;
 import slogo.view.Controller;
 
@@ -78,7 +79,11 @@ public class StartScreen {
         (s) -> {
           return s.replace(" ", "") + ".css";
         }, (event) -> {
-          controller.setCurrentTheme(event, scene);
+          try {
+            controller.updateCurrentTheme(scene);
+          } catch (Exception e) {
+            throw new SlogoException("Error in updating theme", "");
+          }
         });
 
     controller.addLanguageObserver((s) -> {
@@ -86,7 +91,6 @@ public class StartScreen {
       loadSlogo.setText(newLang.getString("LoadSlogo"));
       loadGen.setText(newLang.getString("LoadGen"));
       uploadPref.setText(newLang.getString("uploadPreferences"));
-//      loadOld.setText(newLang.getString("LoadOld"));
 
       String[] themes = newLang.getString("ColorThemes").split(",");
       ObservableList<ComboChoice> comboBoxItems = themeComboBox.getItems();

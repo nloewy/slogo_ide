@@ -72,12 +72,18 @@
   -fx-pref-width: 300;
 }
 
+.animate-buttons {
+  -fx-padding: 50 0 0 0;
+  -fx-spacing: 10;
+}
+
+
 .main-screen-button {
   -fx-font-size: 11;
   -fx-translate-y: -5;
 }
 
 .main-dropdowns {
-  -fx-padding: 20 0 0 0;
+  -fx-padding: 60 0 0 0;
   -fx-spacing: 10;
 }

@@ -13,6 +13,11 @@
   -fx-font-weight: bold;
 }
 
+.animate-buttons {
+  -fx-padding: 50 0 0 0;
+  -fx-spacing: 10;
+}
+
 .combo-box {
   -fx-background-color: darkorange;
 }
@@ -80,6 +85,6 @@
 }
 
 .main-dropdowns {
-  -fx-padding: 20 0 0 0;
+  -fx-padding: 60 0 0 0;
   -fx-spacing: 10;
 }
