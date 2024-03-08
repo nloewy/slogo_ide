@@ -36,13 +36,13 @@ public class HistoryBox {
     commandHistoryBox.getChildren().clear();
     commandHistoryBox.getChildren().add(commandHistoryLabel);
     for (String s : history) {
-      String[] lines = s.split("\n");
+      String[] lines = s.split(" ");
       VBox vbox = new VBox();
       TitledPane titledPane = new TitledPane();
       titledPane.setText(lines[0]);
       titledPane.expandedProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue) {
-          String fullText = String.join("\n",
+          String fullText = String.join(" ",
               Arrays.copyOfRange(lines, 1, lines.length)); // Join lines excluding the
           // first one
           titledPane.setContent(new Label(fullText)); // Set the full command content when expanded
@@ -55,7 +55,7 @@ public class HistoryBox {
       titledPane.setExpanded(false); // Start collapsed
       Button openCustomCommand = new Button(myResources.getString("Execute"));
       openCustomCommand.setId("customCommandPrompt");
-      String[] commandParts = lines[0].split("\\s+");
+      String[] commandParts = lines[0].split(" ");
       List<String> parameters = new ArrayList<>();
       for (String part : commandParts) {
         if (part.startsWith(":")) {
@@ -64,25 +64,12 @@ public class HistoryBox {
       }
       vbox.getChildren().addAll(titledPane, openCustomCommand);
       commandHistoryBox.getChildren().add(vbox);
-      if(commandParts.length < 2) {
-        openCustomCommand.setOnAction(event -> {
-          makeInputDialog("", "Execute This Command",
-              "", "", false,
-              newValue -> {
-                pushCommand.accept(s);
-              });
-        });
-        continue;
-      }
-      String commandName = commandParts[1];
       Boolean hasParameters = !parameters.isEmpty();
-      String commandHeaderText =
-          hasParameters ? "Enter values for parameters: " + String.join(", ", parameters) : "";
       openCustomCommand.setOnAction(event -> {
         makeInputDialog("", "Execute This Command",
-            commandHeaderText, "", hasParameters,
+            s, "", hasParameters,
             newValue -> {
-              pushCommand.accept(commandName + " " + newValue);
+              pushCommand.accept(s);
             });
       });
 
