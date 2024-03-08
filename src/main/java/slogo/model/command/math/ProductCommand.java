@@ -18,7 +18,6 @@ public class ProductCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-  private final ModelState modelState;
 
   /**
    * Constructs an instance of ProductCommand with the given model state and listener. This
@@ -28,8 +27,9 @@ public class ProductCommand implements Command {
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public ProductCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
   }
 
   /**
