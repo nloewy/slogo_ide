@@ -70,6 +70,7 @@ import slogo.view.FrontEndTurtle;
 import slogo.view.UserInterfaceUtil;
 import slogo.view.pages.components.HistoryBox;
 import slogo.view.pages.Save;
+import slogo.view.pages.components.InputBox;
 
 public class MainScreen implements SlogoListener {
 
@@ -114,6 +115,7 @@ public class MainScreen implements SlogoListener {
   private ScrollPane commandsHistory;
   private HistoryBox historyBox;
   private HistoryBox definedCommandBox;
+  private InputBox inputBox;
   private ScrollPane userDefinedCommandsPane;
   private VBox variablesBox;
   private String recentlyUpdatedVariable;
@@ -198,6 +200,7 @@ public class MainScreen implements SlogoListener {
     if (currAnimation != null) {
       currAnimation.play();
       paused = true;
+//      inputBox.setPaused(true);
     }
   }
 
@@ -214,6 +217,7 @@ public class MainScreen implements SlogoListener {
   }
 
   private void playAnimation() {
+//    if (!animationPlaying && !myAnimation.isEmpty() && !inputBox.isPaused()) {
     if (!animationPlaying && !myAnimation.isEmpty() && !paused) {
       currAnimation = myAnimation.poll();
       currAnimation.setOnFinished(event -> {
@@ -223,12 +227,13 @@ public class MainScreen implements SlogoListener {
       });
       animationPlaying = true;
       currAnimation.play();
+//    } else if (animationPlaying && inputBox.isPaused()) {
     } else if (animationPlaying && paused) {
       if (currAnimation != null) {
         pausedTime = currAnimation.getCurrentTime(); // Store the current time when animation is paused
         currAnimation.pause();
       }
-    } else if (animationPlaying && !paused && pausedTime != null) {
+    } else if (animationPlaying && pausedTime != null) {
       // If animation was paused and now unpaused, resume from the paused time
       if (currAnimation != null) {
         currAnimation.playFrom(pausedTime);
@@ -300,15 +305,6 @@ public class MainScreen implements SlogoListener {
     dialog.showAndWait().ifPresent(consumer);
   }
 
-  private void fullReset() throws IOException {
-    controller.openNewIDESession("");
-    stage.close();
-  }
-
-  private void setSpeedSliderHandler(ChangeListener<Number> speedSliderHandler) {
-    speedSlider.valueProperty().addListener(speedSliderHandler);
-  }
-
   private void setUp() {
     layout = new BorderPane();
     layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -316,154 +312,33 @@ public class MainScreen implements SlogoListener {
     createVariablesBox();
     createCommandHistoryBox();
     createUserDefinedCommandBox();
-    createSpeedSlider();
+
+    controller.addLanguageObserver((s) -> {
+      ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
+      variablesBoxLabel.setText(newLang.getString("varBox"));
+      commandHistoryLabel.setText(newLang.getString("histBox"));
+      commandHistoryText = newLang.getString("histBox");
+      userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
+    });
+
     createTextInputBox();
+    inputBox.createSpeedSlider(mySpeed, speed -> mySpeed = speed);
 
-    field = new TextField();
-    field.setPromptText(myResources.getString("EnterCommand"));
-    field.setPrefSize(WINDOW_WIDTH - 1200, 300);
+    inputBox.setValues(controller, currAnimation, commandHistory, stage, centerPane);
+    inputBox.setUpDropdowns(turtles);
+    inputBox.setUpButtons(this::sendCommandStringToView, this::handleLoadTurtleImage, this::playSingleAnimation, this::finishCurrAnimation, this::pushCommand);
+    inputBox.setUpTurtleMovement(this::pushCommand);
 
-    field.setOnAction(event -> {
-      if (!field.getText().isEmpty()) {
-        sendCommandStringToView();
-      }
-    });
+    inputBox.addOtherComponentsToBox();
+    inputBox.addButtonsToBox();
 
-    submitField = UserInterfaceUtil.generateButton("Submit", event -> {
-      sendCommandStringToView();
-      paused = false;
-    });
-
-    openNewWindow = UserInterfaceUtil.generateButton("Open New Window", event -> {
-      try {
-        controller.openNewIDESession(null);
-        paused = false;
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    });
-
-    uploadTurtle = generateButton("UploadTurtle", (event) -> {
-      handleLoadTurtleImage();
-    });
-
-    play = UserInterfaceUtil.generateButton("Play", event -> {
-      paused = false;
-    });
-    pause = UserInterfaceUtil.generateButton("Pause", event -> {
-      paused = true;
-    });
-
-    step = UserInterfaceUtil.generateButton("Step", event -> {
-      if (currAnimation == null) {
-        playSingleAnimation();
-      } else {
-        finishCurrAnimation();
-      }
-    });
-
-    help = UserInterfaceUtil.generateButton("Help", event -> {
-      Help.showHelpPopup(myResources, controller, this::pushCommand, field);
-    });
-
-    upload = UserInterfaceUtil.generateButton("Upload", event -> {
-      controller.loadSession("add");
-      String newSlogoContent = controller.getSlogoContent();
-      pushCommand(newSlogoContent);
-    });
-
-    save = UserInterfaceUtil.generateButton("Save", event ->
-        Save.saveToFile(stage, controller, commandHistory));
-
-    reset = UserInterfaceUtil.generateButton("Reset", event -> {
-      try {
-        fullReset();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-    });
-
-
-    VBox dropdowns = new VBox();
-    dropdowns.getStyleClass().add("main-dropdowns");
-    ResourceBundle defaultResources = ResourceBundle.getBundle(
-        DEFAULT_RESOURCE_PACKAGE + "English");
-    ObservableList<ComboChoice> penColors = FXCollections.observableArrayList();
-    for (String color : defaultResources.getString("PenColors").split(",")) {
-      penColors.add(new ComboChoice(color, color));
-    }
-
-    colorDropDown = UserInterfaceUtil.generateComboBox(penColors, "colorBox",100, 300, (s) -> s, (event) -> {
-      turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
-    });
-    colorDropDown.getOnAction().handle(new ActionEvent());
-
-    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, "backgroundBox",100,
-        300, (s) -> s,
-        (event) -> {
-          centerPane.setStyle("-fx-background-color: " + event);
-        });
-    backgroundDropDown.setValue(null);
-    dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
-    List<Region> mainButtons = List.of(submitField, play, pause, step, help, reset, upload, uploadTurtle,
-        save, dropdowns, openNewWindow);
-    mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
-    addLanguageObserver(colorDropDown, backgroundDropDown);
-    distanceField = new TextField("50");
-    distanceField.setPrefWidth(60);
-    rotateField = new TextField("90");
-    rotateField.setPrefWidth(60);
-    HBox turtleMoveBox = new HBox(distanceField, rotateField);
-    turtleMoveBox.setTranslateY(50);
-    turtleMoveBox.setPadding(new javafx.geometry.Insets(0, 0, 0, -100));
-    Button leftButton = UserInterfaceUtil.generateButton("←", event -> {
-      pushCommand(myResources.getString("Left").split("\\|")[0] + " " + rotateField.getText());
-    });
-    Button rightButton = UserInterfaceUtil.generateButton("→", event -> {
-      pushCommand(myResources.getString("Right").split("\\|")[0] + " " + rotateField.getText());
-    });
-    Button forwardButton = UserInterfaceUtil.generateButton("↑", event -> {
-      pushCommand(myResources.getString("Forward").split("\\|")[0] + " " + distanceField.getText());
-    });
-    Button backwardButton = UserInterfaceUtil.generateButton("↓", event -> {
-      pushCommand(myResources.getString("Backward").split("\\|")[0] + " " + distanceField.getText());
-    });
-
-    VBox upDownButtons = new VBox(forwardButton, backwardButton);
-    upDownButtons.setTranslateY(-15);
-    upDownButtons.setSpacing(10);
-    HBox turtleButtons = new HBox(leftButton, upDownButtons, rightButton);
-    turtleButtons.setPadding(new javafx.geometry.Insets(50, 0, 0, 0));
-    paletteGrid = new GridPane();
-    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), turtleMoveBox, turtleButtons, field);
-    textInputBox.getChildren().addAll(mainButtons);
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
     layout.setRight(new VBox(variablesPane, userDefinedCommandsPane)); // Stack variablesPane and
-    // userDefinedCommandsPane vertically
     layout.setLeft(commandsHistory);
+
     root = new Group();
     root.getChildren().add(layout);
-  }
-
-  private void updatePalettePane() {
-    // Clear existing content from the palette grid
-    paletteGrid.getChildren().clear();
-
-    int col = 0;
-    int row = 0;
-    for (Map.Entry<Integer, List<Integer>> entry : palette.entrySet()) {
-      int colorKey = entry.getKey();
-      List<Integer> rgbValues = entry.getValue();
-      Rectangle colorBox = new Rectangle(10, 10,
-          Color.rgb(rgbValues.get(0), rgbValues.get(1), rgbValues.get(2)));
-      paletteGrid.add(new HBox(new Label(Integer.toString(colorKey)), colorBox), col, row);
-      row++;
-      if (row == 8) {
-        col++;
-        row = 0;
-      }
-    }
   }
 
   private void setLabelTextColor(Label label, List<Integer> rgbValues) {
@@ -497,56 +372,12 @@ public class MainScreen implements SlogoListener {
     }
   }
 
-  private void addLanguageObserver(ComboBox<ComboChoice> colorDropDown,
-      ComboBox<ComboChoice> backgroundDropDown) {
-    controller.addLanguageObserver((s) -> {
-      ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
-      submitField.setText(newLang.getString("Submit"));
-      variablesBoxLabel.setText(newLang.getString("varBox"));
-      commandHistoryLabel.setText(newLang.getString("histBox"));
-      commandHistoryText = newLang.getString("histBox");
-      userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
-      play.setText(newLang.getString("Play"));
-      pause.setText(newLang.getString("Pause"));
-      openNewWindow.setText(newLang.getString("OpenNew"));
-      uploadTurtle.setText(newLang.getString("UploadTurtle"));
-
-      String[] newPenColors = newLang.getString("PenColors").split(",");
-      ObservableList<ComboChoice> colorItems = colorDropDown.getItems();
-      ObservableList<ComboChoice> backgroundItems = backgroundDropDown.getItems();
-      for (int i = 0; i < newPenColors.length; i++) {
-        colorItems.set(i, new ComboChoice(newPenColors[i], colorItems.get(i).getValue()));
-        backgroundItems.set(i, new ComboChoice(newPenColors[i], backgroundItems.get(i).getValue()));
-        if (colorItems.get(i).getValue().equals(colorDropDown.getValue().toString())) {
-          colorDropDown.setValue(colorItems.get(i));
-        }
-      }
-      step.setText(newLang.getString("Step"));
-
-      help.setText(newLang.getString("Help"));
-      save.setText(newLang.getString("Save"));
-      upload.setText(newLang.getString("Upload"));
-      distanceField.setPromptText(newLang.getString("DistanceField"));
-      rotateField.setPromptText(newLang.getString("RotateField"));
-
-
-    });
-  }
-
-  private void createSpeedSlider() {
-    ChangeListener<Number> sliderListener = ((observable, oldVal, newVal) -> {
-      mySpeed = newVal.intValue();
-      if (mySpeed == 500) {
-        mySpeed = 10000;
-      }
-    });
-    speedSlider = UserInterfaceUtil.generateSlider(10, 500, mySpeed, sliderListener);
-  }
-
   private void createTextInputBox() {
-    textInputBox = new HBox();
-    textInputBox.getStyleClass().add("input-box");
-    textInputBox.setMaxSize(WINDOW_WIDTH, 200);
+    inputBox = new InputBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
+    inputBox.setFieldAction(this::sendCommandStringToView);
+    textInputBox = inputBox.getBox();
+    field = inputBox.getField();
+    paletteGrid = inputBox.getPaletteGrid();
   }
 
   private void createUserDefinedCommandBox() {
@@ -699,8 +530,7 @@ public class MainScreen implements SlogoListener {
 
   @Override
   public void onUpdatePalette(Map<Integer, List<Integer>> palette) {
-    this.palette = palette;
-    updatePalettePane();
+    inputBox.updatePalettePane(palette);
   }
 
 }
