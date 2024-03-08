@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +16,7 @@ import java.util.Properties;
 import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import slogo.model.exceptions.InsufficientArgumentsException;
 import slogo.model.exceptions.InvalidCommandException;
 import slogo.model.exceptions.InvalidTokenException;
@@ -42,6 +45,9 @@ public class Parser {
   private static final String CLOSED_BRACKET = "]";
   private static final String TO_COMMAND = "To";
   private static final String RESOURCE_PATH = "src/main/resources/slogo/example/languages/";
+
+  private final List<String> turtleCommands;
+
   private final ModelState modelState;
   private final PatternLoader patternLoader;
   private Node rootNode;
@@ -65,6 +71,9 @@ public class Parser {
         RESOURCE_PATH + "Syntax.properties");
     initializeNodeHandler();
     initializeTokenMap();
+    turtleCommands = Files.lines(Paths.get(RESOURCE_PATH + "TurtleCommands.txt"))
+        .collect(Collectors.toList());
+
   }
 
   /**
@@ -86,7 +95,9 @@ public class Parser {
       parseNextToken(tokens, nodeStack);
       myIndex++;
     }
-    checkForExtraneousArguments(nodeStack);
+    while (!nodeStack.isEmpty() && topNodeSatisfied(nodeStack)) {
+      nodeStack.pop();
+    }
   }
 
   /**
@@ -98,14 +109,6 @@ public class Parser {
     currentNode = null;
   }
 
-  /**
-   * Pops nodes that are saturated (have received all their arguments) from the node stack.
-   */
-  private void checkForExtraneousArguments(Stack<Node> nodeStack) {
-    while (!nodeStack.isEmpty() && topNodeSatisfied(nodeStack)) {
-      nodeStack.pop();
-    }
-  }
 
   /**
    * Checks if the node at the top of the node stack has received all of its arguments.
@@ -118,22 +121,17 @@ public class Parser {
    * Parses next token in the input and creates a new node, updating the nodeStack accordingly.
    */
   private void parseNextToken(List<String> tokens, Stack<Node> nodeStack) {
-    skipCommentsAndWhitespace(tokens);
+    while (myIndex < tokens.size() && (tokens.get(myIndex).isEmpty() || tokens.get(myIndex)
+        .startsWith("#"))) {  //skips comments and white space
+      myIndex++;
+    }
     Consumer<Stack<Node>> handler = tokenHandlers.getOrDefault(
-        tokens.get(myIndex), (stack) -> createTokenAndUpdateStack(tokens, stack));
+        tokens.get(myIndex),
+        stack -> createTokenAndUpdateStack(tokens, stack)
+    );
     handler.accept(nodeStack); //updates currentNode
   }
 
-  /**
-   * Skips comments and whitespace tokens in the input string.
-   */
-
-  private void skipCommentsAndWhitespace(List<String> tokens) {
-    while (myIndex < tokens.size() && (tokens.get(myIndex).isEmpty() || tokens.get(myIndex)
-        .startsWith("#"))) {
-      myIndex++;
-    }
-  }
 
   /**
    * Creates a new node for current token and adds to stack. Handles bracket matching for list
@@ -145,14 +143,17 @@ public class Parser {
     while (!nodeStack.peek().getToken().equals(OPEN_BRACKET) && topNodeSatisfied(nodeStack)) {
       nodeStack.pop();
     }
-    if ((!commandMap.containsKey(tokens.get(myIndex).toLowerCase())
-        && !modelState.getUserDefinedCommands().containsKey(tokens.get(myIndex).toLowerCase()))
-        && nodeStack.peek()
-        .equals(rootNode)) {
+    if (isInvalidCommand(tokens.get(myIndex), nodeStack)) {
       throw new InvalidCommandException("", tokens.get(myIndex));
     }
     nodeStack.peek().addChild(currentNode);
     nodeStack.push(currentNode);
+  }
+
+  private boolean isInvalidCommand(String token, Stack<Node> nodeStack) {
+    return (!commandMap.containsKey(token.toLowerCase())
+        && !modelState.getUserDefinedCommands().containsKey(token.toLowerCase()))
+        && nodeStack.peek().equals(rootNode);
   }
 
   /**
@@ -187,26 +188,26 @@ public class Parser {
 
   private void createNode(List<String> tokens, Stack<Node> nodeStack) {
     String token = tokens.get(myIndex);
-    boolean invalidToken = true;
     for (Map.Entry<Predicate<String>, Consumer<List<String>>> entry : nodeHandler) {
       if (entry.getKey().test(token)) {
         entry.getValue().accept(tokens);
-        invalidToken = false;
-        break;
+        return;
       }
     }
-    if (invalidToken) {
-      while (nodeStack.size() > 1) {
-        boolean flag = topNodeSatisfied(nodeStack);
-        nodeStack.pop();
-        if (!flag) {
-          nodeStack.peek().removeChildren();
-        }
-      }
-      throw new InvalidTokenException("", tokens.get(myIndex));
-    }
-
+    handleInvalidToken(token, nodeStack);
   }
+
+  private void handleInvalidToken(String token, Stack<Node> nodeStack) {
+    while (nodeStack.size() > 1) {
+      boolean flag = topNodeSatisfied(nodeStack);
+      nodeStack.pop();
+      if (!flag) {
+        nodeStack.peek().removeChildren();
+      }
+    }
+    throw new InvalidTokenException("Token not valid", token);
+  }
+
 
   /**
    * Creates a command creator node for the "TO" command.
@@ -214,23 +215,32 @@ public class Parser {
 
   private void makeCommandCreatorNode(List<String> tokens) {
     int index = myIndex + 3;
+    index = getNextClosedBracket(tokens, index); //where params of new command end in tokens
+    if (index == tokens.size()) {
+      throw new InsufficientArgumentsException("", tokens.get(myIndex));
+    }
+    checkForInvalidCommandName(tokens, index);
+    currentNode = new CommandCreatorNode(tokens.get(myIndex + 1).toLowerCase(), modelState,
+        index - myIndex - 1);
+    myIndex++;
+  }
+
+  private void checkForInvalidCommandName(List<String> tokens, int index) {
+    if (myIndex + 1 >= tokens.size() || !tokenMatched(tokens.get(myIndex + 1), "Command")
+        || commandMap.containsKey(tokens.get(myIndex + 1))) {
+      String userCommandName = (tokens.size() > index) ? tokens.get(myIndex + 1) : "";
+      throw new InvalidUserCommandException("", userCommandName);
+    }
+  }
+
+  private int getNextClosedBracket(List<String> tokens, int index) {
     while (index < tokens.size() && !tokens.get(index).equals(CLOSED_BRACKET)) {
       if (!tokenMatched(tokens.get(index), "Variable")) {
         throw new InvalidVariableException("", tokens.get(index));
       }
       index++;
     }
-    if (index == tokens.size()) {
-      throw new InsufficientArgumentsException("", tokens.get(myIndex));
-    }
-    if (myIndex + 1 >= tokens.size() || !tokenMatched(tokens.get(myIndex + 1), "Command")
-        || commandMap.containsKey(tokens.get(myIndex + 1))) {
-      String userCommandName = (tokens.size() > index) ? tokens.get(myIndex + 1) : "";
-      throw new InvalidUserCommandException("", userCommandName);
-    }
-    currentNode = new CommandCreatorNode(tokens.get(myIndex + 1).toLowerCase(), modelState,
-        index - myIndex - 1);
-    myIndex++;
+    return index;
   }
 
 
@@ -253,7 +263,6 @@ public class Parser {
     } catch (IOException e) {
       throw new FileNotFoundException("Cannot find file " + filePath);
     }
-
     return commandMap;
   }
 
@@ -280,23 +289,7 @@ public class Parser {
     nodeHandler.add(new SimpleEntry<>(
         token -> isCommand(token) && !isToCommand(token),
         tokens -> {
-          List<String> turtle = Arrays.asList("Forward", "Backward", "Left",
-              "Right",
-              "SetHeading",
-              "SetTowards",
-              "SetPosition",
-              "PenDown",
-              "PenUp",
-              "ShowTurtle",
-              "HideTurtle",
-              "Home",
-              "ClearScreen",
-              "Xcoordinate",
-              "Ycoordinate",
-              "Heading",
-              "IsPenDown",
-              "IsShowing");
-          if (turtle.contains(commandMap.get(tokens.get(myIndex).toLowerCase()))) {
+          if (turtleCommands.contains(commandMap.get(tokens.get(myIndex).toLowerCase()))) {
             currentNode = new TurtleCommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
                 modelState);
 

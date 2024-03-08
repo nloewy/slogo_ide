@@ -58,7 +58,6 @@ public class UserCommandNode extends Node {
       constantNodeToVariable.put(constantNode, tokenToReplace);
       replaceNodesWithToken(rootOfSubtree, tokenToReplace, constantNode);
     }
-
     double val = rootOfSubtree.evaluate();
     replaceTokensWithNodes(rootOfSubtree, constantNodeToVariable);
     modelState.getUserDefinedCommandNodes().put(myToken, children.subList(0, 2));
@@ -157,5 +156,4 @@ public class UserCommandNode extends Node {
       }
     }
   }
-
 }

@@ -1,20 +1,11 @@
 package slogo.model;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Properties;
-import java.util.Stack;
 import slogo.model.api.Model;
 import slogo.model.api.SlogoException;
 import slogo.model.api.SlogoListener;
-import slogo.model.exceptions.InsufficientArgumentsException;
 import slogo.model.exceptions.InvalidCommandException;
-import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.exceptions.InvalidTokenException;
-import slogo.model.exceptions.InvalidUserCommandException;
-import slogo.model.exceptions.InvalidVariableException;
 import slogo.model.node.ListNode;
 import slogo.model.node.Node;
 
@@ -31,6 +22,7 @@ import slogo.model.node.Node;
 
 public class SlogoModel implements Model {
 
+  private static final String OPEN_BRACKET = "[";
   private final SlogoListener myListener;
   private final Parser parser;
   private ModelState modelState;
@@ -47,9 +39,6 @@ public class SlogoModel implements Model {
 
   public SlogoModel(SlogoListener listener, String currentLanguage) throws IOException {
     modelState = new ModelState();
-    modelState.getTurtles().put(1, new Turtle(1));
-    modelState.getActiveTurtles().add(new ArrayList<>());
-    modelState.getActiveTurtles().peek().add(1);
     myListener = listener;
     myListener.onUpdatePalette(modelState.getPalette());
     parser = new Parser(modelState, currentLanguage);
@@ -73,17 +62,25 @@ public class SlogoModel implements Model {
     if (input == null || input.isEmpty()) {
       return;
     }
-    Node root = new ListNode("[", modelState);
+    Node root = new ListNode(OPEN_BRACKET, modelState);
+    parseString(input, root); // root is modified, the parsing tree is populated
+    executeCommand(input, root);
+  }
+
+  private void executeCommand(String input, Node root) {
     try {
-      parser.parse(input, root);
-    } catch (InvalidCommandException | InvalidTokenException | InsufficientArgumentsException |
-             InvalidVariableException | InvalidUserCommandException e) {
-      handleParseResult(input, root);
+      handleParseResult(input, root); //if no parsing error, just execution error
+    } catch (SlogoException e) {
       throw new SlogoException(e.getMessage(), e, e.getToken());
     }
+  }
+
+  private void parseString(String input, Node root) {
     try {
+      parser.parse(input, root);
+    } catch (SlogoException e) {       //does partial execution
+
       handleParseResult(input, root);
-    } catch (InvalidOperandException | InsufficientArgumentsException e) {
       throw new SlogoException(e.getMessage(), e, e.getToken());
     }
   }
@@ -99,7 +96,6 @@ public class SlogoModel implements Model {
     dfsAddListener(root);
     double val = -1;
     for (Node node : root.getChildren()) {
-
       val = node.evaluate();
     }
     myListener.onReturn(val, input);
@@ -123,9 +119,7 @@ public class SlogoModel implements Model {
   @Override
   public void resetModel() {
     modelState = new ModelState();
-
   }
-
 
   @Deprecated
     //FOR TESTING PURPOSES ONLY
