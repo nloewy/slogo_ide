@@ -2,79 +2,55 @@ package slogo.view.pages;
 
 import static slogo.view.UserInterfaceUtil.generateButton;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EventListener;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import slogo.Controller;
+import slogo.view.Controller;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.view.ComboChoice;
 import slogo.view.FrontEndTurtle;
-import slogo.view.UserInterfaceUtil;
 import slogo.view.pages.components.HistoryBox;
-import slogo.view.pages.Save;
 import slogo.view.pages.components.InputBox;
 
 public class MainScreen implements SlogoListener {
 
-  public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
+  public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.languages.";
   private static final double WINDOW_WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
   private static final double WINDOW_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
   private static final double FRAME_RATE = 4.0;
@@ -145,7 +121,7 @@ public class MainScreen implements SlogoListener {
     commandHistory = new Stack<String>();
     userDefinedCommandHistory = new Stack<String>();
     try {
-      defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
+      defaultImage = new Image(new FileInputStream("src/main/resources/turtleimages/DefaultTurtle.png"));
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }

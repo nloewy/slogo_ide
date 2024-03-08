@@ -1,11 +1,10 @@
 package slogo.model;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-import java.util.TreeMap;
 import slogo.model.node.Node;
 
 
@@ -41,9 +40,6 @@ public class ModelState {
    * obtain the nodes needed to execute the user defined commands.
    */
   private final Map<String, List<Node>> myUserDefinedCommandNodes;
-  /**
-   * Stack of currently active turtles.
-   */
   private final Stack<List<Integer>> activeTurtles;
   private final Map<Integer, List<Integer>> myPalette;
   private int currTurtle;
@@ -57,11 +53,13 @@ public class ModelState {
     myVariables = new HashMap<>();
     myUserDefinedCommands = new HashMap<>();
     myUserDefinedCommandNodes = new HashMap<>();
-    myPalette = new TreeMap<>();
-    makePalette();
+    PaletteInitializer paletteInitializer = new PaletteInitializer();
+    myPalette = paletteInitializer.makePalette();
     activeTurtles = new Stack<>();
     currTurtle = 1;
+    activateInitialTurtle();
   }
+
 
   /**
    * Returns the list of turtles currently present in the Slogo simulation model.
@@ -120,13 +118,10 @@ public class ModelState {
     currTurtle = index;
   }
 
-  private void makePalette() {
-    myPalette.put(1, Arrays.asList(255, 255, 255));
-    myPalette.put(2, Arrays.asList(255, 0, 0));
-    myPalette.put(3, Arrays.asList(0, 255, 0));
-    myPalette.put(4, Arrays.asList(255, 255, 0));
-    myPalette.put(5, Arrays.asList(255, 165, 0));
-    myPalette.put(6, Arrays.asList(0, 0, 255));
-    myPalette.put(7, Arrays.asList(0, 0, 0));
+
+  private void activateInitialTurtle() {
+    getTurtles().put(1, new Turtle(1));
+    getActiveTurtles().add(new ArrayList<>());
+    getActiveTurtles().peek().add(1);
   }
 }

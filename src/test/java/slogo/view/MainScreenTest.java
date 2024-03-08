@@ -4,19 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 import javafx.scene.control.Button;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxToolkit;
-import slogo.Controller;
 import util.DukeApplicationTest;
 
 public class MainScreenTest extends DukeApplicationTest {

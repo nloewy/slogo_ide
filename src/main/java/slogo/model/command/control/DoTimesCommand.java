@@ -15,7 +15,7 @@ import slogo.model.node.Node;
  *
  * @author Noah Loewy
  */
-public class DoTimesCommand implements Command {
+public class DoTimesCommand extends LoopCommand {
 
   /**
    * The number of arguments this command requires.
@@ -24,7 +24,6 @@ public class DoTimesCommand implements Command {
   private static final int VARIABLE_NAME_INDEX = 0;
   private static final int NUM_TIMES_INDEX = 1;
   private final ModelState modelState;
-  private final LoopCommandHandler loopHandler;
 
   /**
    * Constructs an instance of DoTimesCommand with the given model state and listener.
@@ -33,8 +32,9 @@ public class DoTimesCommand implements Command {
    * @param listener   the listener for state change events
    */
   public DoTimesCommand(ModelState modelState, SlogoListener listener) {
+    super();
     this.modelState = modelState;
-    loopHandler = new LoopCommandHandler();
+
   }
 
   /**
@@ -52,8 +52,7 @@ public class DoTimesCommand implements Command {
     Node commands = arguments.get(1);
     double end = loopData.getChildren().get(NUM_TIMES_INDEX).evaluate();
     String variableName = loopData.getChildren().get(VARIABLE_NAME_INDEX).getToken();
-    loopHandler.setLoopParameters(end);
-    return loopHandler.runLoop(commands, modelState, variableName);
+    return super.runLoop(1, end, 1, commands, modelState, variableName);
   }
 
 }

@@ -16,18 +16,18 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import slogo.Controller;
+import slogo.view.Controller;
 import slogo.view.ComboChoice;
 
 public class StartScreen {
 
-  private static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
+  private static final String DEFAULT_RESOURCE_PACKAGE = "slogo.languages.";
   private static final ResourceBundle LANG_OPT_BUNDLE = ResourceBundle.getBundle(
       DEFAULT_RESOURCE_PACKAGE + "LanguageOptions");
   private static final ObservableList<String> SUPPORTED_LANGUAGES =
       FXCollections.observableArrayList(
           LANG_OPT_BUNDLE.keySet().stream().map(LANG_OPT_BUNDLE::getString).toList());
-  private static final String LOGO_IMAGE_PATH = "SlogoLOGO.png";
+  private static final String LOGO_IMAGE_PATH = "turtleimages/SlogoLOGO.png";
   private final Controller controller;
   private final Pane root = new Pane();
   private final Stage stage;

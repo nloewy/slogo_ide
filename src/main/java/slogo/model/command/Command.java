@@ -34,6 +34,8 @@ import slogo.model.node.Node;
  *     }
  * }
  * }</pre>
+ *
+ * @author Noah Loewy
  */
 
 @FunctionalInterface

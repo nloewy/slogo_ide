@@ -1,6 +1,7 @@
 package slogo.model.node;
 
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.command.Command;
 import slogo.model.command.CommandFactory;
 import slogo.model.exceptions.InsufficientArgumentsException;
@@ -46,15 +47,24 @@ public class TurtleCommandNode extends CommandNode {
     if (getNumArgs() != getChildren().size()) {
       throw new InsufficientArgumentsException("", getToken());
     }
-    int prevCurrTurtle = myModelState.getCurrTurtle();
+    return evaluateEachTurtle(command);
+  }
+
+  //with more time, i would use a combination of a stack and composition design
+  private double evaluateEachTurtle(Command command) {
+    int oldTurtleId = myModelState.getCurrTurtle();
     double val = 0;
-    for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
-      myModelState.setCurrTurtle(myModelState.getActiveTurtles().peek().get(index));
-      val = command.execute(getChildren(),
-          myModelState.getTurtles().get(myModelState.getCurrTurtle()));
+    for (int currentTurtleId : myModelState.getActiveTurtles().peek()) {
+      val = evaluateSingleTurtle(currentTurtleId, command);
+      myModelState.setCurrTurtle(oldTurtleId);
     }
-    myModelState.setCurrTurtle(prevCurrTurtle);
     return val;
+  }
+
+  private double evaluateSingleTurtle(int turtleId, Command command) {
+    myModelState.setCurrTurtle(turtleId);
+    Turtle currentTurtle = myModelState.getTurtles().get(turtleId);
+    return command.execute(getChildren(), currentTurtle);
   }
 
 }

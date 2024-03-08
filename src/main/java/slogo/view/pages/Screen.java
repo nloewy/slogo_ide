@@ -12,7 +12,7 @@ public abstract class Screen {
   private static FileChooser makeImageChooser(String extensionAccepted) {
     FileChooser result = new FileChooser();
     result.setTitle("Select Turtle");
-    result.setInitialDirectory(new File("src/main/resources"));
+    result.setInitialDirectory(new File("src/main/resources/turtleimages/"));
 
     result.getExtensionFilters()
         .setAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));

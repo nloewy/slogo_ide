@@ -12,7 +12,7 @@ import slogo.model.node.Node;
  *
  * @author Noah Loewy
  */
-public class TellCommand implements Command {
+public class TellCommand extends InformCommand {
 
   /**
    * The number of arguments this command requires.
@@ -21,7 +21,6 @@ public class TellCommand implements Command {
   private static final int TELL_IDS_INDEX = 0;
   private final SlogoListener myListener;
   private final ModelState modelState;
-  private final TurtleInformer turtleInformer;
 
   /**
    * Constructs an instance of TellCommand with the given model state and listener.
@@ -31,10 +30,9 @@ public class TellCommand implements Command {
    */
 
   public TellCommand(ModelState modelState, SlogoListener listener) {
+    super();
     this.modelState = modelState;
     myListener = listener;
-    turtleInformer = new TurtleInformer();
-
   }
 
   /**
@@ -46,7 +44,7 @@ public class TellCommand implements Command {
    */
 
   public double execute(List<Node> arguments, Turtle turtle) {
-    List<Integer> toldTurtles = turtleInformer.informTurtles(arguments.get(TELL_IDS_INDEX),
+    List<Integer> toldTurtles = super.informTurtles(arguments.get(TELL_IDS_INDEX),
         modelState, myListener);
     modelState.getActiveTurtles().clear();
     modelState.getActiveTurtles().add(toldTurtles);

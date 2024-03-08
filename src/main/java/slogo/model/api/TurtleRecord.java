@@ -16,3 +16,12 @@ public record TurtleRecord(int id, double x, double y, boolean pen, boolean visi
                            int bgIndex, int penColorIndex) {
 
 }
+
+
+/**
+ *Not letting me deprecate a constructor.
+ * @Deprecated
+ * public TurtleRecord(int id, double x, double y, boolean pen, boolean visible, double heading) {
+ *   this(id, x, y, pen, visible, heading, 0, 0); // Default values for bgIndex and penColorIndex
+ *  }
+ */

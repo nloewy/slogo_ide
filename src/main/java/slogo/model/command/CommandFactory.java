@@ -61,7 +61,8 @@ public class CommandFactory {
     }
   }
 
-  private static String getFullPackagePath(String myToken, File[] directories, String currentPackage)
+  private static String getFullPackagePath(String myToken, File[] directories,
+      String currentPackage)
       throws ClassNotFoundException {
     if (directories != null) {
       for (File directory : directories) {

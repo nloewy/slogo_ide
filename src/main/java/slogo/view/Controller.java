@@ -1,4 +1,4 @@
-package slogo;
+package slogo.view;
 
 import java.beans.EventHandler;
 import java.io.BufferedReader;
@@ -224,7 +224,7 @@ public class Controller {
 
   private void getProperties() {
     File file = new File(
-        "src/main/resources/slogo/example/languages/" + currentLanguage + ".properties");
+        "src/main/resources/slogo/languages/" + currentLanguage + ".properties");
     try {
       prop.load(new FileInputStream(file));
     } catch (IOException ex) {
