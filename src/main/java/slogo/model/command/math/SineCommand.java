@@ -1,7 +1,6 @@
 package slogo.model.command.math;
 
 import java.util.List;
-import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
@@ -41,8 +40,7 @@ public class SineCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-
     double arg1 = arguments.get(0).evaluate();
-    return Math.sin(MathUtils.toRadians(arg1));
+    return Math.sin(arg1 * Math.PI / 180);
   }
 }

@@ -1,7 +1,6 @@
 package slogo.model.command.math;
 
 import java.util.List;
-import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
@@ -44,8 +43,7 @@ public class ArcTangentCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-
     double arg1 = arguments.get(0).evaluate();
-    return MathUtils.toDegrees(Math.atan(arg1));
+    return Math.atan(arg1) * 180 / Math.PI;
   }
 }

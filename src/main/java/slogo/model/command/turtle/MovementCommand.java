@@ -45,7 +45,6 @@ public abstract class MovementCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-
     double pixels = arguments.get(0).evaluate();
     Turtle turtle = modelState.getTurtles().get(turtleId);
     turtle.setX(

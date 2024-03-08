@@ -22,9 +22,8 @@ public class AndCommand implements Command {
   private static final double TOLERANCE = .001;
 
   /**
-   * Constructs an instance of AndCommand with the given model state and listener. This
-   * constructor does not actually do anything, and exists for the sake of consistency across
-   * commands.
+   * Constructs an instance of AndCommand with the given model state and listener. This constructor
+   * does not actually do anything, and exists for the sake of consistency across commands.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events

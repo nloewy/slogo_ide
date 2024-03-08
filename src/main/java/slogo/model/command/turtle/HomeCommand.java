@@ -1,7 +1,6 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
-import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
@@ -55,6 +54,6 @@ public class HomeCommand implements Command {
     turtle.setPen(false);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     turtle.setPen(true);
-    return MathUtils.dist(0, 0, currentX, currentY);
+    return Math.sqrt(Math.pow((currentX), 2) + Math.pow((currentY), 2));
   }
 }

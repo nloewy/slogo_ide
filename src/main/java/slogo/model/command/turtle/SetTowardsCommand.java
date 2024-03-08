@@ -1,7 +1,6 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
-import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
@@ -52,7 +51,7 @@ public class SetTowardsCommand implements Command {
     Turtle turtle = modelState.getTurtles().get(turtleId);
     double dx = locationX - turtle.getX();
     double dy = locationY - turtle.getY();
-    double targetHeading = MathUtils.toDegrees(Math.atan2(dx, dy));
+    double targetHeading = Math.atan2(dx, dy) * 180 / Math.PI;
     double currentHeading = turtle.getHeading();
     double clockwiseTurn = Math.abs((targetHeading - currentHeading + 360) % 360);
     double counterclockwiseTurn = Math.abs((currentHeading - targetHeading + 360) % 360);

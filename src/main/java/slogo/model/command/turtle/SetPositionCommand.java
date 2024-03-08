@@ -1,7 +1,6 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
-import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
@@ -56,6 +55,7 @@ public class SetPositionCommand implements Command {
     turtle.setX(newX);
     turtle.setY(newY);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
-    return MathUtils.dist(turtle.getX(), turtle.getY(), currentX, currentY);
+    return Math.sqrt(
+        Math.pow((turtle.getX() - currentX), 2) + Math.pow((turtle.getY() - currentY), 2));
   }
 }
