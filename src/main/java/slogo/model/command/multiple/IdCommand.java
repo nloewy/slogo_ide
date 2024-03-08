@@ -40,7 +40,6 @@ public class IdCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-
     return turtleId;
   }
 }

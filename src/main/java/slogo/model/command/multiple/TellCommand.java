@@ -46,22 +46,38 @@ public class TellCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int turtleId) {
     List<Integer> tempList = new ArrayList<>();
-    int id = 0;
-    if (arguments.get(0).getChildren().isEmpty()) {
-      id = (int) Math.round(arguments.get(0).evaluate());
-      addIdToList(id, tempList);
+    Node toldTurtlesList = arguments.get(0);
+    int id;
+    if (toldTurtlesList.getChildren().isEmpty()) { //case where singular turtle told, not list
+      id = tellSingularTurtle(toldTurtlesList, tempList);
     } else {
-      for (Node node : arguments.get(0).getChildren()) {
-        if (!node.getToken().equals("]")) {
-          id = (int) Math.round(node.evaluate());
-          addIdToList(id, tempList);
-        }
+      id = tellMultipleTurtles(toldTurtlesList, tempList);
+    }
+    updateActiveTurtles(tempList);
+    return id;
+  }
+
+  private int tellMultipleTurtles(Node toldTurtlesList, List<Integer> tempList) {
+    int id = 0;
+    for (Node node : toldTurtlesList.getChildren()) {
+      if (!node.getToken().equals("]")) {
+        id = (int) Math.round(node.evaluate());
+        addIdToList(id, tempList);
       }
     }
+    return id;
+  }
+
+  private int tellSingularTurtle(Node toldTurtlesList, List<Integer> tempList) {
+    int id = (int) Math.round(toldTurtlesList.evaluate());
+    addIdToList(id, tempList);
+    return id;
+  }
+
+  private void updateActiveTurtles(List<Integer> tempList) {
     modelState.getActiveTurtles().clear();
     modelState.getActiveTurtles().add(tempList);
     myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
-    return id;
   }
 
   private void addIdToList(int id, List<Integer> tempList) {

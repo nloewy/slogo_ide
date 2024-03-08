@@ -52,7 +52,6 @@ public class AskCommand implements Command {
       addIdToList(arguments.get(0), tempList);
     } else {
       for (Node node : arguments.get(0).getChildren()) {
-
         if (!node.getToken().equals("]")) {
           addIdToList(node, tempList);
         }

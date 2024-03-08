@@ -51,16 +51,13 @@ public class AskWithCommand implements Command {
     List<Integer> tempList = new ArrayList<>();
     for (int i : modelState.getTurtles().keySet()) {
       modelState.setCurrTurtle(i);
-
       int id = (int) Math.round(arguments.get(0).evaluate());
       if (id != 0) {
         tempList.add(i);
       }
     }
     modelState.getActiveTurtles().add(tempList);
-
     double val = arguments.get(1).evaluate();
-
     modelState.getActiveTurtles().pop();
     myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
 
