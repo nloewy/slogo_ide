@@ -65,9 +65,8 @@ public abstract class Node {
 
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    for (Node child : getChildren()) {
-      sb.append(toStringHelper(child, 0));
-    }
+    sb.append(toStringHelper(this, 0));
+
     return sb.toString();
   }
 
@@ -106,6 +105,7 @@ public abstract class Node {
     for (int i = 0; i < node.getChildren().size(); i++) {
       sb.append(toStringHelper(node.getChildren().get(i), indent + 1));
     }
+    System.out.println(sb);
     return sb.toString();
   }
 

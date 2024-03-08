@@ -1,117 +1,234 @@
 
-Forward
- 100
-<<<<<<< HEAD
-Right
- 90
-Forward
- 100
-Right
- 90
-Forward
- 100
-Right
- 90
-Forward
- 100
-Forward
- 100
-Right
- 90
-Forward
- 100
-Right
- 90
-Forward
- 100
-Right
- 90
-Forward
- 100
-Forward
- 100
-Right
- 90
-Forward
- 100
-Right
- 90
-Forward
- 100
-Right
- 90
-Forward
- 100
-Forward
- 100
-Right
- 90
-Forward
- 100
-Right
- 90
-Forward
- 100
-Right
- 90
-Forward
- 100
-=======
-
-Forward
- 100
-
-Backward
- 100
-
-Backward
- 100
-
-Backward
- 100
-
-Forward
- 100
-Forward
- 100
-Backward
- 100
-Backward
- 100
-Backward
- 100
-
-Right
- 50
-
-to slice
- [
-  ]
- [
-  Right
-   30
+[
+ Ask
+  2
   Forward
-   50
-  Left
-   105
+   90
+ Ask
+  3
   Forward
-   25
-  Backward
-   25
-  Right
-   105
-  Backward
-   50
-  ]
-to pizza
+   180
+ Tell
+  [
+   1
+   2
+   3
+   ]
+ Tell
+  [
+   1
+   2
+   3
+   ]
+ to arc
+  [
+   :incr
+   :degrees
+   ]
+  [
+   Repeat
+    Quotient
+     :degrees
+     2
+    [
+     Forward
+      :incr
+     Right
+      2
+     ]
+   ]
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+ to petal
+  [
+   :size
+   ]
+  [
+   Repeat
+    2
+    [
+     arc
+      :size
+      60
+     Right
+      120
+     ]
+   ]
+  3.0
+  3.0
+  3.0
+  3.0
+  3.0
+  3.0
+ to flower
+  [
+   :length
+   ]
+  [
+   Repeat
+    6
+    [
+     petal
+      :length
+     Right
+      60
+     ]
+   ]
+  3
+ flower
+  3
+
+[
  [
-  ]
- [
-  Repeat
-   12
+  Ask
+   2
+   Forward
+    90
+  Ask
+   3
+   Forward
+    180
+  Tell
    [
-    slice
+    1
+    2
+    3
     ]
-  ]
-pizza
->>>>>>> Preferences
+  Tell
+   [
+    1
+    2
+    3
+    ]
+  to arc
+   [
+    :incr
+    :degrees
+    ]
+   [
+    Repeat
+     Quotient
+      :degrees
+      2
+     [
+      Forward
+       :incr
+      Right
+       2
+      ]
+    ]
+   3.0
+   60
+   3.0
+   60
+   3.0
+   60
+   3.0
+   60
+   3.0
+   60
+   3.0
+   60
+   3.0
+   60
+   3.0
+   60
+   3.0
+   60
+   3.0
+   60
+   3.0
+   60
+   3.0
+   60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  3.0
+  60
+  to petal
+   [
+    :size
+    ]
+   [
+    Repeat
+     2
+     [
+      arc
+       :size
+       60
+      Right
+       120
+      ]
+    ]
+   3.0
+   3.0
+   3.0
+   3.0
+   3.0
+   3.0
+  3.0
+  3.0
+  3.0
+  3.0
+  3.0
+  3.0
+  to flower
+   [
+    :length
+    ]
+   [
+    Repeat
+     6
+     [
+      petal
+       :length
+      Right
+       60
+      ]
+    ]
+   3
+  3
+  flower
+   3
