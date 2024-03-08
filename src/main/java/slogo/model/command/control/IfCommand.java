@@ -19,7 +19,6 @@ public class IfCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-  private final ModelState modelState;
 
   /**
    * Constructs an instance of IfCommand with the given model state and listener. This constructor
@@ -29,7 +28,7 @@ public class IfCommand implements Command {
    * @param listener   the listener for state change events
    */
   public IfCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
   }
 
   /**

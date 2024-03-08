@@ -280,7 +280,7 @@ public class Parser {
     nodeHandler.add(new SimpleEntry<>(
         token -> isCommand(token) && !isToCommand(token),
         tokens -> {
-          List<String> turtle = Arrays.asList("Forward", "Backward", "Left",
+          List<String> turtle = Arrays.asList(new String[]{"Forward", "Backward", "Left",
               "Right",
               "SetHeading",
               "SetTowards",
@@ -295,7 +295,8 @@ public class Parser {
               "Ycoordinate",
               "Heading",
               "IsPenDown",
-              "IsShowing");
+              "IsShowing"
+          });
           if (turtle.contains(commandMap.get(tokens.get(myIndex).toLowerCase()))) {
             currentNode = new TurtleCommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
                 modelState);

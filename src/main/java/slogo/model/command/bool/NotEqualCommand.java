@@ -21,16 +21,17 @@ public class NotEqualCommand implements Command {
   public static final int NUM_ARGS = 2;
   private static final double TOLERANCE = .001;
 
-  private final ModelState modelState;
-
   /**
-   * Constructs an instance of NotEqualCommand with the given model state and listener.
+   * Constructs an instance of NotEqualCommand with the given model state and listener. This
+   * constructor does not actually do anything, and exists for the sake of consistency across
+   * commands.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public NotEqualCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
 
   }
 

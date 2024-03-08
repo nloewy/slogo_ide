@@ -19,7 +19,6 @@ public class RandomCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
-  private final ModelState modelState;
 
   /**
    * Constructs an instance of RandomCommand with the given model state and listener. This
@@ -29,8 +28,9 @@ public class RandomCommand implements Command {
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public RandomCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
   }
 
   /**
