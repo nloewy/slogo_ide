@@ -20,16 +20,16 @@ public class FrontEndTurtle {
 
   private final Stack<Line> pathHistory = new Stack<Line>();
   private final ImageView display;
+  private final int myId;
+  private final MainScreen view;
   private Image displayImage;
   private Color penColor;
   private double myX;
   private double myHeading;
   private double myY;
   private double heading = 0;
-  private final int myId;
   private boolean isPenDisplayed = false;
   private Timeline animation;
-  private final MainScreen view;
   private boolean isActive;
   private Stage infoPopup;
   private Label positionLabel;

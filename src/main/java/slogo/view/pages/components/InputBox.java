@@ -27,14 +27,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import slogo.view.Controller;
 import slogo.view.ComboChoice;
+import slogo.view.Controller;
 import slogo.view.FrontEndTurtle;
 import slogo.view.UserInterfaceUtil;
 import slogo.view.pages.Help;
 import slogo.view.pages.Save;
 
 public class InputBox {
+
   private final HBox textInputBox;
   private final ResourceBundle myResources;
   private final TextField field;
@@ -50,7 +51,8 @@ public class InputBox {
   private GridPane paletteGrid;
   private Slider speedSlider;
   private boolean paused;
-  public InputBox(double width, double height, ResourceBundle source){
+
+  public InputBox(double width, double height, ResourceBundle source) {
     textInputBox = new HBox();
     textInputBox.getStyleClass().add("input-box");
     textInputBox.setMaxSize(width, 200);
@@ -58,13 +60,14 @@ public class InputBox {
 
     field = new TextField();
     field.setPromptText(myResources.getString("EnterCommand"));
+    field.setId("CommandField");
     field.setPrefSize(width - 1200, 300);
 
     paused = false;
     paletteGrid = new GridPane();
   }
 
-  public void setFieldAction(Runnable sendCommandStringToView){
+  public void setFieldAction(Runnable sendCommandStringToView) {
     field.setOnAction(event -> {
       if (!field.getText().isEmpty()) {
         sendCommandStringToView.run();
@@ -72,14 +75,16 @@ public class InputBox {
     });
   }
 
-  public boolean isPaused(){
+  public boolean isPaused() {
     return paused;
   }
 
-  public void setPaused(boolean paused){
+  public void setPaused(boolean paused) {
     this.paused = paused;
   }
-  public void setValues(Controller control, Animation animation, Stack<String> history, Stage stage, Pane centerPane){
+
+  public void setValues(Controller control, Animation animation, Stack<String> history, Stage stage,
+      Pane centerPane) {
     this.controller = control;
     this.currAnimation = animation;
     this.commandHistory = history;
@@ -108,16 +113,20 @@ public class InputBox {
     turtleMoveBox.setPadding(new javafx.geometry.Insets(0, 0, 0, -100));
 
     Button leftButton = UserInterfaceUtil.generateButton("←", event -> {
-      pushCommand.accept(myResources.getString("Left").split("\\|")[0] + " " + rotateField.getText());
+      pushCommand.accept(
+          myResources.getString("Left").split("\\|")[0] + " " + rotateField.getText());
     });
     Button rightButton = UserInterfaceUtil.generateButton("→", event -> {
-      pushCommand.accept(myResources.getString("Right").split("\\|")[0] + " " + rotateField.getText());
+      pushCommand.accept(
+          myResources.getString("Right").split("\\|")[0] + " " + rotateField.getText());
     });
     Button forwardButton = UserInterfaceUtil.generateButton("↑", event -> {
-      pushCommand.accept(myResources.getString("Forward").split("\\|")[0] + " " + distanceField.getText());
+      pushCommand.accept(
+          myResources.getString("Forward").split("\\|")[0] + " " + distanceField.getText());
     });
     Button backwardButton = UserInterfaceUtil.generateButton("↓", event -> {
-      pushCommand.accept(myResources.getString("Backward").split("\\|")[0] + " " + distanceField.getText());
+      pushCommand.accept(
+          myResources.getString("Backward").split("\\|")[0] + " " + distanceField.getText());
     });
 
     VBox upDownButtons = new VBox(forwardButton, backwardButton);
@@ -143,12 +152,14 @@ public class InputBox {
       penColors.add(new ComboChoice(color, color));
     }
 
-    ComboBox<ComboChoice> colorDropDown = UserInterfaceUtil.generateComboBox(penColors, "colorBox",100, 300, (s) -> s, (event) -> {
-      turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
-    });
+    ComboBox<ComboChoice> colorDropDown = UserInterfaceUtil.generateComboBox(penColors, "colorBox",
+        100, 300, (s) -> s, (event) -> {
+          turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
+        });
     colorDropDown.getOnAction().handle(new ActionEvent());
 
-    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, "backgroundBox",100,
+    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors,
+        "backgroundBox", 100,
         300, (s) -> s,
         (event) -> {
           centerPane.setStyle("-fx-background-color: " + event);
@@ -156,7 +167,9 @@ public class InputBox {
     backgroundDropDown.setValue(null);
     dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
   }
-  public void setUpButtons(Runnable sendCommandStringToView, Runnable handleLoadTurtleImage, Runnable playSingleAnimation, Runnable finishCurrAnimation, Consumer<String> pushCommand) {
+
+  public void setUpButtons(Runnable sendCommandStringToView, Runnable handleLoadTurtleImage,
+      Runnable playSingleAnimation, Runnable finishCurrAnimation, Consumer<String> pushCommand) {
     Button submitField = UserInterfaceUtil.generateButton("Submit", event -> {
       sendCommandStringToView.run();
       paused = false;
@@ -230,23 +243,27 @@ public class InputBox {
       upload.setText(newLang.getString("Upload"));
     });
 
-    }
-  public void addOtherComponentsToBox() {
-    textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), turtleMoveBox, turtleButtons, field);
   }
+
+  public void addOtherComponentsToBox() {
+    textInputBox.getChildren()
+        .addAll(new VBox(speedSlider, paletteGrid), turtleMoveBox, turtleButtons, field);
+  }
+
   public void addButtonsToBox() {
     textInputBox.getChildren().addAll(mainButtons);
   }
 
 
-  public HBox getBox(){
+  public HBox getBox() {
     return textInputBox;
   }
 
-  public TextField getField(){
+  public TextField getField() {
     return field;
   }
-  public GridPane getPaletteGrid(){
+
+  public GridPane getPaletteGrid() {
     return paletteGrid;
   }
 

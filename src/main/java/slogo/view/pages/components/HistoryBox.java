@@ -3,22 +3,23 @@ package slogo.view.pages.components;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import java.util.function.Consumer;
+import slogo.view.UserInterfaceUtil;
 
 public class HistoryBox {
+
   private final VBox commandHistoryBox;
   private final Text commandHistoryLabel;
   private final ScrollPane commandsHistory;
   private final ResourceBundle myResources;
 
-  public HistoryBox(double width, double height, ResourceBundle source){
+  public HistoryBox(double width, double height, ResourceBundle source) {
     commandHistoryBox = new VBox();
     commandHistoryLabel = new Text();
     commandHistoryBox.setPrefSize(400, height / 2);
@@ -27,7 +28,7 @@ public class HistoryBox {
     myResources = source;
   }
 
-  public void setStyleClass(String style){
+  public void setStyleClass(String style) {
     commandHistoryBox.getStyleClass().add(style);
   }
 
@@ -65,10 +66,6 @@ public class HistoryBox {
     return new Result(vbox, titledPane, openCustomCommand);
   }
 
-  private record Result(VBox vbox, TitledPane titledPane, Button openCustomCommand) {
-
-  }
-
   public void updateUserDefinedCommandBox(List<String> history, Consumer<String> pushCommand) {
     commandHistoryBox.getChildren().clear();
     commandHistoryBox.getChildren().add(commandHistoryLabel);
@@ -100,7 +97,7 @@ public class HistoryBox {
     String commandHeaderText =
         hasParameters ? "Enter values for parameters: " + String.join(", ", parameters) : "";
     openCustomCommand.setOnAction(event -> {
-      makeInputDialog("", "Execute This Command",
+      UserInterfaceUtil.makeInputDialog("", "Execute This Command",
           commandHeaderText, "", hasParameters,
           newValue -> {
             pushCommand.accept(commandName + " " + newValue);
@@ -108,26 +105,20 @@ public class HistoryBox {
     });
   }
 
-  private void makeInputDialog(String value, String title, String header, String content, Boolean needsInput, Consumer<String> consumer) {
-    TextInputDialog dialog = new TextInputDialog();
-    dialog.getEditor().setText(value);
-    dialog.getEditor().setDisable(!needsInput);
-    dialog.setTitle(title);
-    dialog.setHeaderText(header);
-    dialog.setContentText(content);
-    dialog.showAndWait().ifPresent(consumer);
-  }
-
-  public Text getLabel(){
+  public Text getLabel() {
     return commandHistoryLabel;
   }
 
-  public VBox getBox(){
+  public VBox getBox() {
     return commandHistoryBox;
   }
 
-  public ScrollPane getPane(){
+  public ScrollPane getPane() {
     return commandsHistory;
+  }
+
+  private record Result(VBox vbox, TitledPane titledPane, Button openCustomCommand) {
+
   }
 
 }

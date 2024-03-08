@@ -10,10 +10,22 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class UserInterfaceUtil {
+
+  public static void makeInputDialog(String value, String title, String header, String content,
+      Boolean needsInput, Consumer<String> consumer) {
+    TextInputDialog dialog = new TextInputDialog();
+    dialog.getEditor().setText(value);
+    dialog.getEditor().setDisable(!needsInput);
+    dialog.setTitle(title);
+    dialog.setHeaderText(header);
+    dialog.setContentText(content);
+    dialog.showAndWait().ifPresent(consumer);
+  }
 
   public static Button generateButton(String text,
       EventHandler<ActionEvent> consumer) {
@@ -92,7 +104,8 @@ public class UserInterfaceUtil {
     return imageView;
   }
 
-  public static Slider generateSlider(double min, double max, double val, ChangeListener<Number> sliderListener) {
+  public static Slider generateSlider(double min, double max, double val,
+      ChangeListener<Number> sliderListener) {
     Slider userSlider = new Slider();
     userSlider.setMin(min);
     userSlider.setMax(max);

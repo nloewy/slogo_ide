@@ -11,7 +11,6 @@ import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
 import slogo.model.node.CommandNode;
-import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;
 
 public class YcoordinateCommandTest extends CommandTest {

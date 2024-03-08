@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import slogo.model.SlogoModel;
-import slogo.model.Turtle;
 import slogo.model.api.SlogoException;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
@@ -43,6 +41,7 @@ public class AskWithTellAskCommandTest extends CommandTest {
       @Override
       public void onReturn(double value, String string) {
       }
+
       @Override
       public void onUserDefinedCommand(String s) {
       }
@@ -153,14 +152,16 @@ public class AskWithTellAskCommandTest extends CommandTest {
 
   @Test
   void flower() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("tell 2 fd 90 tell [ 1 2 ] repeat 6 [ Repeat 2 [ Repeat 30 [ fd 10 right 2 ] right 120 ] right 60 ]");
+    slogo.parse(
+        "tell 2 fd 90 tell [ 1 2 ] repeat 6 [ Repeat 2 [ Repeat 30 [ fd 10 right 2 ] right 120 ] right 60 ]");
     assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
     assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY(), DELTA);
   }
 
   @Test
   void flowerCommand() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("Ask 2 fd 90 ask 3 fd 180 tell [ 1 2 3 ] to arc [ :incr :degrees ] [  repeat quotient :degrees 2  [  fd :incr rt 2  ] ] to petal [ :size ] [  repeat 2  [    arc :size 60    rt 120  ] ] to flower [ :length ] [  repeat 6  [    petal :length    rt 60  ] ] ");
+    slogo.parse(
+        "Ask 2 fd 90 ask 3 fd 180 tell [ 1 2 3 ] to arc [ :incr :degrees ] [  repeat quotient :degrees 2  [  fd :incr rt 2  ] ] to petal [ :size ] [  repeat 2  [    arc :size 60    rt 120  ] ] to flower [ :length ] [  repeat 6  [    petal :length    rt 60  ] ] ");
     slogo.parse("flower 3");
     assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
     assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY(), DELTA);
@@ -185,15 +186,16 @@ public class AskWithTellAskCommandTest extends CommandTest {
 
 
   }
+
   @Test
   void askWithCommandTest() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("tell [ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 17 ] tell 17 askwith equal remainder id 3 0 [ right 90 ] right 60");
-    for(int i = 0; i< 16; i++) {
+    slogo.parse(
+        "tell [ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 17 ] tell 17 askwith equal remainder id 3 0 [ right 90 ] right 60");
+    for (int i = 0; i < 16; i++) {
 
-      if(i%3==0) {
+      if (i % 3 == 0) {
         assertEquals(90, slogo.getModelstate().getTurtles().get(i).getHeading(), DELTA);
-      }
-      else {
+      } else {
         assertEquals(0, slogo.getModelstate().getTurtles().get(i).getHeading(), DELTA);
       }
     }

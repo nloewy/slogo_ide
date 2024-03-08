@@ -8,6 +8,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class SampleApplication extends Application {
+
   private static final double MATCH_TOLERANCE = 0.01;
 
   // keep in case need to call application methods in tests

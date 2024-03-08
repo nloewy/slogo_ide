@@ -160,13 +160,21 @@ it makes the code more extendable, so it follows the open-closed principle.
 
 #### Internal View API
 
-* Method changed:
+* Method changed: generateComboBox static method in UserInterfaceUtil
 
     * Why was the change made?
+      * We needed a way to change the text and language of the ComboBoxes in the UI without changing the
+      values stored in the ComboBoxes. For example, if it is Red and the user changes the language to Spanish,
+      it should display Rojo, but the color when selected Rojo should still be Red. 
 
     * Major or Minor (how much they affected your team mate's code)
+      * This was a minor change as there were not too many ComboBoxes/Dropdowns in the UI. But, it did require
+      changing the code everywhere the ComboBoxes were used.
 
     * Better or Worse (and why)
+      * This change was better as it allowed us to change the language of the UI of the ComboBoxes. The next generateComboBox,
+      is not the most flexible or encapsulated which could be improved upon. There is still a generateComboStringBox static method
+      which would ideally be combined with generateComboBox to make it more flexible and encapsulated.
 
 
 * Method changed:

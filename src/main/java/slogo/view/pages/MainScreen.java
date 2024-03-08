@@ -1,7 +1,5 @@
 package slogo.view.pages;
 
-import static slogo.view.UserInterfaceUtil.generateButton;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,7 +25,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -40,11 +37,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import slogo.view.Controller;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
 import slogo.view.ComboChoice;
+import slogo.view.Controller;
 import slogo.view.FrontEndTurtle;
+import slogo.view.UserInterfaceUtil;
 import slogo.view.pages.components.HistoryBox;
 import slogo.view.pages.components.InputBox;
 
@@ -61,16 +59,23 @@ public class MainScreen implements SlogoListener {
   private final Controller controller;
   private final Timeline timeline = new Timeline();
   private final double speed = 1;
-  ComboBox<ComboChoice> colorDropDown;
-  private Group root;
   private final Stage stage;
-  private TextField field;
   private final Text variablesBoxLabel = new Text();
+  private final Pane centerPane = new Pane();
+  private final Scene scene;
+  private final Map<String, Number> variableValues;
+  private final List<FrontEndTurtle> turtles;
+  private final Stack<String> commandHistory;
+  private final Stack<String> userDefinedCommandHistory;
+  private final Queue<Animation> myAnimation;
+  private final double centerX;
+  private final double centerY;
+  private ComboBox<ComboChoice> colorDropDown;
+  private Group root;
+  private TextField field;
   private Text commandHistoryLabel;
   private Text userDefinedCommandsLabel;
   private String commandHistoryText;
-  private final Pane centerPane = new Pane();
-  private final Scene scene;
   private GridPane paletteGrid;
   private BorderPane layout;
   private ScrollPane variablesPane;
@@ -92,17 +97,10 @@ public class MainScreen implements SlogoListener {
   private Animation currAnimation;
   private List<Integer> oldPenColor;
   private List<Integer> oldBackgroundColor;
-  private final Map<String, Number> variableValues;
-  private final List<FrontEndTurtle> turtles;
-  private final Stack<String> commandHistory;
-  private final Stack<String> userDefinedCommandHistory;
   private Image defaultImage;
-  private final Queue<Animation> myAnimation;
   private String commandString;
   private String lang;
   private Consumer<String> parse;
-  private final double centerX;
-  private final double centerY;
   private Map<Integer, List<Integer>> palette;
 
   // Add an XMLFile object to this when Model adds one
@@ -121,7 +119,8 @@ public class MainScreen implements SlogoListener {
     commandHistory = new Stack<String>();
     userDefinedCommandHistory = new Stack<String>();
     try {
-      defaultImage = new Image(new FileInputStream("src/main/resources/turtleimages/DefaultTurtle.png"));
+      defaultImage = new Image(
+          new FileInputStream("src/main/resources/turtleimages/DefaultTurtle.png"));
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }
@@ -138,6 +137,7 @@ public class MainScreen implements SlogoListener {
     stage.show();
     centerX = centerPane.getBoundsInParent().getWidth() / 2;
     centerY = centerPane.getBoundsInParent().getHeight() / 2;
+    centerPane.setId("CenterPane");
     turtles.add(new FrontEndTurtle(1, centerX, centerY, Color.BLUE, true, 0, defaultImage, this));
     initializeTurtleDisplays();
   }
@@ -168,7 +168,7 @@ public class MainScreen implements SlogoListener {
           }
         }
 
-        makeInputDialog(variableValues.get(key).toString(), "Enter New Value",
+        UserInterfaceUtil.makeInputDialog(variableValues.get(key).toString(), "Enter New Value",
             "Enter a new value for " + key, "New value:\n\nRELATED COMMANDS\n" + commands,
             true,
             newValue -> {
@@ -221,23 +221,25 @@ public class MainScreen implements SlogoListener {
             turtleState.heading(), turtleState.visible());
         List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
         if (newPenColor != null) {
-          turtle.setPenColor(new Color(newPenColor.get(0)/255, newPenColor.get(1)/255, newPenColor.get(2)/255, 1));
+          turtle.setPenColor(new Color(newPenColor.get(0) / 255, newPenColor.get(1) / 255,
+              newPenColor.get(2) / 255, 1));
         }
 
         List<Integer> newBackgroundColor = palette.get(turtleState.bgIndex());
         if (newBackgroundColor != null) {
-          centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + "," + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
+          centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + ","
+              + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
         }
 
         return;
       }
     }
-    FrontEndTurtle newTurtle = new FrontEndTurtle(turtleState.id(), turtleState.x() + centerX, turtleState.y() + centerY,
+    FrontEndTurtle newTurtle = new FrontEndTurtle(turtleState.id(), turtleState.x() + centerX,
+        turtleState.y() + centerY,
         Color.BLACK, true, turtleState.heading(), defaultImage, this);
     turtles.add(newTurtle);
     centerPane.getChildren().add(newTurtle.getDisplay());
   }
-
 
 
   @Override
@@ -258,7 +260,7 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onReturn(double value, String string) {
     commandHistory.add(string);
-    commandHistoryLabel.setText(commandHistoryText + String.format(" %.2f",value));
+    commandHistoryLabel.setText(commandHistoryText + String.format(" %.2f", value));
     historyBox.updateCommandBox(commandHistory, this::pushCommand);
   }
 
@@ -280,15 +282,15 @@ public class MainScreen implements SlogoListener {
     inputBox.updatePalettePane(palette);
   }
 
-  private void makeInputDialog(String value, String title, String header, String content, Boolean needsInput, Consumer<String> consumer) {
-    TextInputDialog dialog = new TextInputDialog();
-    dialog.getEditor().setText(value);
-    dialog.getEditor().setDisable(!needsInput);
-    dialog.setTitle(title);
-    dialog.setHeaderText(header);
-    dialog.setContentText(content);
-    dialog.showAndWait().ifPresent(consumer);
-  }
+//  private void makeInputDialog(String value, String title, String header, String content, Boolean needsInput, Consumer<String> consumer) {
+//    TextInputDialog dialog = new TextInputDialog();
+//    dialog.getEditor().setText(value);
+//    dialog.getEditor().setDisable(!needsInput);
+//    dialog.setTitle(title);
+//    dialog.setHeaderText(header);
+//    dialog.setContentText(content);
+//    dialog.showAndWait().ifPresent(consumer);
+//  }
 
   private void setUp() {
     layout = new BorderPane();
@@ -370,8 +372,6 @@ public class MainScreen implements SlogoListener {
   }
 
 
-
-
   private void createUserDefinedCommandBox() {
     definedCommandBox = new HistoryBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
     definedCommandBox.setStyleClass("command-box");
@@ -440,7 +440,8 @@ public class MainScreen implements SlogoListener {
     }
   }
 
-  private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading, boolean visible) {
+  private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading,
+      boolean visible) {
     double oldX = turtle.getX();
     double oldY = turtle.getY();
     double oldHeading = turtle.getHeading();
@@ -454,7 +455,8 @@ public class MainScreen implements SlogoListener {
       double progress = (double) i / numSteps;
       double offsetx = turtle.getDisplay().getImage().getWidth() / 4;
       double offsety = turtle.getDisplay().getImage().getHeight() / 4;
-      Line line = turtle.drawLine(oldX + offsetx, oldY + offsety, oldX + (x - oldX) * progress + offsetx,
+      Line line = turtle.drawLine(oldX + offsetx, oldY + offsety,
+          oldX + (x - oldX) * progress + offsetx,
           oldY + (y - oldY) * progress + offsety);
       KeyFrame keyFrame = new KeyFrame(Duration.seconds(duration * progress),
           e -> {

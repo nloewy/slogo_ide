@@ -16,8 +16,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import slogo.view.Controller;
 import slogo.view.ComboChoice;
+import slogo.view.Controller;
 
 public class StartScreen {
 
@@ -74,11 +74,12 @@ public class StartScreen {
     for (String theme : defaultResources.getString("ColorThemes").split(",")) {
       supportedThemes.add(new ComboChoice(theme, theme));
     }
-    ComboBox<ComboChoice> themeComboBox = generateComboBox(supportedThemes, "themeBox", 400, 330, (s) -> {
-      return s.replace(" ", "") + ".css";
-    }, (event) -> {
-      controller.setCurrentTheme(event, scene);
-    });
+    ComboBox<ComboChoice> themeComboBox = generateComboBox(supportedThemes, "themeBox", 400, 330,
+        (s) -> {
+          return s.replace(" ", "") + ".css";
+        }, (event) -> {
+          controller.setCurrentTheme(event, scene);
+        });
 
     controller.addLanguageObserver((s) -> {
       ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
@@ -99,7 +100,7 @@ public class StartScreen {
 
     root.getChildren().addAll(
         generateImageView(LOGO_IMAGE_PATH, 100, 50),
-        generateComboStringBox(SUPPORTED_LANGUAGES, "languageBox",100, 200,
+        generateComboStringBox(SUPPORTED_LANGUAGES, "languageBox", 100, 200,
             (s) -> {
               return LANG_OPT_BUNDLE.keySet().stream()
                   .filter(key -> LANG_OPT_BUNDLE.getString(key).equals(s)).findFirst().get();
