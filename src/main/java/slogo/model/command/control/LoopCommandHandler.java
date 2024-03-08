@@ -4,6 +4,7 @@ import slogo.model.ModelState;
 import slogo.model.node.Node;
 
 public class LoopCommandHandler {
+
   private double start;
   private double end;
   private double increment;

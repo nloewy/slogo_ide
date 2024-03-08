@@ -25,7 +25,8 @@ public class TurtleInformer {
     if (ids.getChildren().isEmpty()) { // case where singular turtle is informed
       addIdToList((int) Math.round(ids.evaluate()), tempList, modelState, myListener);
     } else {
-      addIdsToList(ids, tempList, modelState, myListener); // case where multiple turtles are informed
+      addIdsToList(ids, tempList, modelState,
+          myListener); // case where multiple turtles are informed
     }
     return tempList;
   }

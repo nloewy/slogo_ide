@@ -15,6 +15,7 @@ import slogo.model.node.Node;
  */
 
 public abstract class MovementCommand implements Command {
+
   private final SlogoListener listener;
   private final boolean fwd;
 

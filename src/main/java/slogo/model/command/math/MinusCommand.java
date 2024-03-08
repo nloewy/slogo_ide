@@ -42,7 +42,6 @@ public class MinusCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, Turtle turtle) {
-
     double arg1 = arguments.get(0).evaluate();
     return -arg1;
   }

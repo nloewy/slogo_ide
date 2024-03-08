@@ -48,7 +48,8 @@ public class CommandNode extends Node {
     if (getNumArgs() != getChildren().size()) {
       throw new InsufficientArgumentsException("", getToken());
     }
-    return command.execute(getChildren(), myModelState.getTurtles().get(myModelState.getCurrTurtle()));
+    return command.execute(getChildren(),
+        myModelState.getTurtles().get(myModelState.getCurrTurtle()));
   }
 
   /**

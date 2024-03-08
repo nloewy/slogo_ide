@@ -21,6 +21,7 @@ public class RightCommand implements Command {
    * The number of arguments this command expects.
    */
   public static final int NUM_ARGS = 1;
+  private static final int ROTATION_INDEX = 0;
   private final SlogoListener listener;
 
   /**
@@ -45,7 +46,7 @@ public class RightCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, Turtle turtle) {
-    double turnDegrees = arguments.get(0).evaluate();
+    double turnDegrees = arguments.get(ROTATION_INDEX).evaluate();
     turtle.setHeading(turtle.getHeading() + turnDegrees);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return turnDegrees;

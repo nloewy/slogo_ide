@@ -20,6 +20,7 @@ public class SetHeadingCommand implements Command {
    * The number of arguments this command expects.
    */
   public static final int NUM_ARGS = 1;
+  private static final int HEADING_INDEX = 0;
   private final SlogoListener listener;
 
   /**
@@ -42,7 +43,7 @@ public class SetHeadingCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, Turtle turtle) {
-    double newHeading = arguments.get(0).evaluate();
+    double newHeading = arguments.get(HEADING_INDEX).evaluate();
     double oldHeading = turtle.getHeading();
     turtle.setHeading(newHeading);
     double clockwiseTurn = (newHeading - oldHeading + 360) % 360;

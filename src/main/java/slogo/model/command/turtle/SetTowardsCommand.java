@@ -20,6 +20,8 @@ public class SetTowardsCommand implements Command {
    * The number of arguments this command expects.
    */
   public static final int NUM_ARGS = 2;
+  private static final int TOWARDS_X_INDEX = 0;
+  private static final int TOWARDS_Y_INDEX = 1;
   private final SlogoListener listener;
 
   /**
@@ -42,10 +44,8 @@ public class SetTowardsCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, Turtle turtle) {
-
-    double locationX = arguments.get(0).evaluate();
-    double locationY = arguments.get(1).evaluate();
-
+    double locationX = arguments.get(TOWARDS_X_INDEX).evaluate();
+    double locationY = arguments.get(TOWARDS_Y_INDEX).evaluate();
     double dx = locationX - turtle.getX();
     double dy = locationY - turtle.getY();
     double targetHeading = Math.atan2(dx, dy) * 180 / Math.PI;

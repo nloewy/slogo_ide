@@ -46,7 +46,6 @@ public class IfCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, Turtle turtle) {
-
     double evaluatedCondition = arguments.get(CONDITION_INDEX).evaluate();
     Node trueBranch = arguments.get(TRUE_BRANCH_INDEX);
     if (evaluatedCondition != 0) {

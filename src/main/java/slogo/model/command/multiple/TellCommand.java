@@ -22,6 +22,7 @@ public class TellCommand implements Command {
   private final SlogoListener myListener;
   private final ModelState modelState;
   private final TurtleInformer turtleInformer;
+
   /**
    * Constructs an instance of TellCommand with the given model state and listener.
    *

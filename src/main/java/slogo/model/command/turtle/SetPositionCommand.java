@@ -21,6 +21,8 @@ public class SetPositionCommand implements Command {
    * The number of arguments this command expects.
    */
   public static final int NUM_ARGS = 2;
+  private static final int NEW_X_INDEX = 0;
+  private static final int NEW_Y_INDEX = 1;
   private final SlogoListener listener;
 
   /**
@@ -43,8 +45,8 @@ public class SetPositionCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, Turtle turtle) {
-    double newX = arguments.get(0).evaluate();
-    double newY = arguments.get(1).evaluate();
+    double newX = arguments.get(NEW_X_INDEX).evaluate();
+    double newY = arguments.get(NEW_Y_INDEX).evaluate();
     double currentX = turtle.getX();
     double currentY = turtle.getY();
     turtle.setX(newX);

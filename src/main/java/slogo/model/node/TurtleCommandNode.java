@@ -50,7 +50,8 @@ public class TurtleCommandNode extends CommandNode {
     double val = 0;
     for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
       myModelState.setCurrTurtle(myModelState.getActiveTurtles().peek().get(index));
-      val = command.execute(getChildren(), myModelState.getTurtles().get(myModelState.getCurrTurtle()));
+      val = command.execute(getChildren(),
+          myModelState.getTurtles().get(myModelState.getCurrTurtle()));
     }
     myModelState.setCurrTurtle(prevCurrTurtle);
     return val;

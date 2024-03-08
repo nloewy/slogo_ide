@@ -43,7 +43,6 @@ public class EqualCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, Turtle turtle) {
-
     return (Math.abs(arguments.get(0).evaluate() - arguments.get(1).evaluate()) <= TOLERANCE) ? 1.0
         : 0.0;
   }
