@@ -20,17 +20,18 @@ public class AndCommand implements Command {
    */
   public static final int NUM_ARGS = 2;
   private static final double TOLERANCE = .001;
-  private final ModelState modelState;
 
   /**
-   * Constructs an instance of AndCommand with the given model state and listener.
+   * Constructs an instance of AndCommand with the given model state and listener. This
+   * constructor does not actually do anything, and exists for the sake of consistency across
+   * commands.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
-  public AndCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
 
+  public AndCommand(ModelState modelState, SlogoListener listener) {
+    //DO NOTHING
   }
 
   /**
@@ -42,7 +43,6 @@ public class AndCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-
     return (Math.abs(arguments.get(0).evaluate()) > TOLERANCE) &&
         (Math.abs(arguments.get(1).evaluate()) > TOLERANCE) ? 1.0 : 0.0;
   }
