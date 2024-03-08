@@ -14,13 +14,14 @@ import slogo.model.node.Node;
  *
  * @author Noah Loewy
  */
-public class DoTimesCommand extends LoopCommand implements Command {
+public class DoTimesCommand implements Command {
 
   /**
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
   private final ModelState modelState;
+  private final LoopCommandHandler loopHandler;
   private static final int VARIABLE_NAME_INDEX = 0;
   private static final int NUM_TIMES_INDEX = 1;
 
@@ -32,10 +33,11 @@ public class DoTimesCommand extends LoopCommand implements Command {
    */
   public DoTimesCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
+    loopHandler = new LoopCommandHandler();
   }
 
   /**
-   * Executes the "do.times" control structure.
+   * Executes the "do.times" control structure, then calling the loopHandler to execute the logic
    *
    * @param arguments a list containing two nodes: the first list node contains the variable name
    *                  and the number of iterations, and the second list node contains the command
@@ -49,6 +51,7 @@ public class DoTimesCommand extends LoopCommand implements Command {
     Node commands = arguments.get(1);
     double end = loopData.getChildren().get(NUM_TIMES_INDEX).evaluate();
     String variableName = loopData.getChildren().get(VARIABLE_NAME_INDEX).getToken();
-    return super.runLoop(1, end, 1, commands, modelState, variableName);
+    loopHandler.setLoopParameters(end);
+    return loopHandler.runLoop(commands, modelState, variableName);
   }
 }
