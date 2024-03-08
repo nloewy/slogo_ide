@@ -21,8 +21,6 @@ public class SetPositionCommand implements Command {
    * The number of arguments this command expects.
    */
   public static final int NUM_ARGS = 2;
-
-  private final ModelState modelState;
   private final SlogoListener listener;
 
   /**
@@ -32,7 +30,6 @@ public class SetPositionCommand implements Command {
    * @param listener   the listener for state change events
    */
   public SetPositionCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
     this.listener = listener;
   }
 
@@ -41,15 +38,13 @@ public class SetPositionCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (containing two
    *                  nodes with the x and y coordinates)
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the distance traveled by the turtle
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
+  public double execute(List<Node> arguments, Turtle turtle) {
     double newX = arguments.get(0).evaluate();
     double newY = arguments.get(1).evaluate();
-    Turtle turtle = modelState.getTurtles().get(turtleId);
     double currentX = turtle.getX();
     double currentY = turtle.getY();
     turtle.setX(newX);

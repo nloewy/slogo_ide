@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -34,12 +35,12 @@ public class SumCommand implements Command {
    * Executes the sum mathematical operation.
    *
    * @param arguments a list containing two nodes representing the numbers to be added
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the sum of the two input numbers
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
     return arguments.get(0).evaluate() + arguments.get(1).evaluate();
   }
 }

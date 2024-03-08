@@ -2,6 +2,7 @@ package slogo.model.command.display;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.exceptions.InvalidRgbValueException;
@@ -42,11 +43,11 @@ public class SetPaletteCommand implements Command {
    * Updates the Background color of the workspace.
    *
    * @param arguments a list of nodes representing arguments
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the background color of the workspace
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
 
     int index = (int) Math.round(arguments.get(PALETTE_INDEX).evaluate());
     int red = validateRgb((int) Math.round(arguments.get(RED_INDEX).evaluate()));

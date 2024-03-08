@@ -2,6 +2,7 @@ package slogo.model.command.bool;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -37,11 +38,11 @@ public class NotCommand implements Command {
    * Executes the logical NOT operation on the provided node.
    *
    * @param arguments a list containing a single node to be evaluated
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return 1.0 if the node's value is 0, otherwise returns 0.0
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
 
     return (arguments.get(0).evaluate() == 0) ? 1.0 : 0.0;
   }

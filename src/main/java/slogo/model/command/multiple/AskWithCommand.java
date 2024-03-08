@@ -3,6 +3,7 @@ package slogo.model.command.multiple;
 import java.util.ArrayList;
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -44,12 +45,12 @@ public class AskWithCommand implements Command {
    * needed, runs the given commands, and then goes back to previously active turtle.
    *
    * @param arguments a list of nodes representing the arguments passed to the command
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return result of last command run by the last turtle.
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
     List<Integer> askedTurtles = getAskedTurtles(arguments);
     modelState.getActiveTurtles().add(askedTurtles);
     double val = arguments.get(COMMANDS_INDEX).evaluate();

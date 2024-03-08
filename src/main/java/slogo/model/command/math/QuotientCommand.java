@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.exceptions.DivideByZeroException;
@@ -37,12 +38,12 @@ public class QuotientCommand implements Command {
    * Executes the quotient mathematical operation.
    *
    * @param arguments a list containing two nodes representing the dividend and divisor
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the quotient of the two numbers
    * @throws DivideByZeroException if the divisor is zero
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) throws DivideByZeroException {
+  public double execute(List<Node> arguments, Turtle turtle) throws DivideByZeroException {
 
     if (arguments.get(1).evaluate() == 0) {
       throw new DivideByZeroException("Divisor must be non-zero");

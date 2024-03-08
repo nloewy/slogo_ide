@@ -44,12 +44,12 @@ public class AskCommand implements Command {
    * runs the given commands, and then goes back to previously active turtle.
    *
    * @param arguments a list of nodes representing the arguments passed to the command
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return result of last command run by the last turtle.
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
     List<Integer> askedTurtles = turtleInformer.informTurtles(arguments.get(ASK_IDS_INDEX),
         modelState, myListener);
     modelState.getActiveTurtles().add(askedTurtles);

@@ -2,6 +2,7 @@ package slogo.model.command.multiple;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -39,11 +40,11 @@ public class TellCommand implements Command {
    * Executes the command to activate turtles with specified IDs, creating new turtles if needed.
    *
    * @param arguments a list of nodes representing the arguments passed to the command
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the ID of the last activated turtle
    */
 
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
     List<Integer> toldTurtles = turtleInformer.informTurtles(arguments.get(TELL_IDS_INDEX),
         modelState, myListener);
     modelState.getActiveTurtles().clear();

@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -36,12 +37,11 @@ public class PiCommand implements Command {
    * Executes the PiCommand, returning the mathematical constant pi.
    *
    * @param arguments a list containing no nodes, as PiCommand requires no arguments
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the value of pi
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
+  public double execute(List<Node> arguments, Turtle turtle) {
     return Math.PI;
   }
 }

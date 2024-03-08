@@ -2,6 +2,7 @@ package slogo.model.command.control;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -43,11 +44,11 @@ public class ForCommand implements Command {
    * @param arguments a list containing two nodes: the first list node contains the variable name,
    *                  start value, end value, and increment value, and the second list node contains
    *                  the command nodes to execute
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the result of the last evaluated command in the loop
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
     Node loopData = arguments.get(0);
     Node commands = arguments.get(1);
     String variableName = loopData.getChildren().get(VARIABLE_NAME_INDEX).getToken();

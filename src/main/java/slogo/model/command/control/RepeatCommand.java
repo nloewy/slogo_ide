@@ -2,6 +2,7 @@ package slogo.model.command.control;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -40,11 +41,11 @@ public class RepeatCommand implements Command {
    *
    * @param arguments a list containing two nodes: the first node represents the number of times to
    *                  repeat, and the second node represents the commands to repeat.
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the result of the last evaluated command in the loop
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
     double end = arguments.get(NUM_TIMES_INDEX).evaluate();
     Node commands = arguments.get(COMMAND_INDEX);
     loopHandler.setLoopParameters(end);

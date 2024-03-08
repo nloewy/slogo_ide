@@ -21,7 +21,6 @@ public class RightCommand implements Command {
    * The number of arguments this command expects.
    */
   public static final int NUM_ARGS = 1;
-  private final ModelState modelState;
   private final SlogoListener listener;
 
   /**
@@ -32,7 +31,6 @@ public class RightCommand implements Command {
    */
 
   public RightCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
     this.listener = listener;
   }
 
@@ -41,15 +39,13 @@ public class RightCommand implements Command {
    * degrees.
    *
    * @param arguments a list of nodes representing the arguments for this command
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the number of degrees the turtle turned right by
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
+  public double execute(List<Node> arguments, Turtle turtle) {
     double turnDegrees = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(turtleId);
     turtle.setHeading(turtle.getHeading() + turnDegrees);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return turnDegrees;

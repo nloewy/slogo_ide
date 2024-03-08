@@ -2,6 +2,7 @@ package slogo.model.command.bool;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -39,12 +40,12 @@ public class NotEqualCommand implements Command {
    * Executes the not equal comparison operation on the provided nodes.
    *
    * @param arguments a list of nodes representing values to be compared
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return 1.0 if the first node's value is not equal to the second node's value, otherwise
    * returns 0.0
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
 
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
