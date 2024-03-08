@@ -30,7 +30,8 @@ public abstract class LoopCommand implements Command {
    * @return The result of the last evaluated command in the loop.
    */
 
-  protected double runLoop(double start, double end, double increment, Node commands, ModelState modelState, String variableName) {
+  protected double runLoop(double start, double end, double increment, Node commands,
+      ModelState modelState, String variableName) {
     double res = 0.0;
     for (double idx = start; idx <= end; idx += increment) {
       modelState.getVariables().put(variableName, idx);

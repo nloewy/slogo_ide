@@ -33,6 +33,7 @@ public class ForCommand extends LoopCommand {
    * @param listener   the listener for state change events
    */
   public ForCommand(ModelState modelState, SlogoListener listener) {
+    super();
     this.modelState = modelState;
   }
 

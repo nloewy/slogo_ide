@@ -30,6 +30,7 @@ public class TellCommand extends InformCommand {
    */
 
   public TellCommand(ModelState modelState, SlogoListener listener) {
+    super();
     this.modelState = modelState;
     myListener = listener;
   }

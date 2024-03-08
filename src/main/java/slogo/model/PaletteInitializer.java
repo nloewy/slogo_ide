@@ -17,16 +17,15 @@ import java.util.TreeMap;
 
 public class PaletteInitializer {
 
+  private static final String RESOURCE_PATH = "src/main/resources/slogo/palette/";
+  private static final String FILE_NAME = "initialpalette.properties";
+
   /**
    * Initializes a color palette with predefined colors.
    *
    * @return A map representing the color palette, where the key is the color index and the value is
    * a list of RGB values.
    */
-
-  private static final String RESOURCE_PATH = "src/main/resources/slogo/palette/";
-  private static final String FILE_NAME = "initialpalette.properties";
-
 
   public Map<Integer, List<Integer>> makePalette() {
     Map<Integer, List<Integer>> colors = new TreeMap<>();

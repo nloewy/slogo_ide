@@ -32,6 +32,7 @@ public class DoTimesCommand extends LoopCommand {
    * @param listener   the listener for state change events
    */
   public DoTimesCommand(ModelState modelState, SlogoListener listener) {
+    super();
     this.modelState = modelState;
 
   }

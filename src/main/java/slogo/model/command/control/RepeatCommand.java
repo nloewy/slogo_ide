@@ -31,6 +31,7 @@ public class RepeatCommand extends LoopCommand  {
    * @param listener   the listener for state change events
    */
   public RepeatCommand(ModelState modelState, SlogoListener listener) {
+    super();
     this.modelState = modelState;
   }
 

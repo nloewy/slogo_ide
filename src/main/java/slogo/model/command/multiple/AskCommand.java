@@ -33,6 +33,7 @@ public class AskCommand extends InformCommand {
    */
 
   public AskCommand(ModelState modelState, SlogoListener listener) {
+    super();
     this.modelState = modelState;
     myListener = listener;
   }
