@@ -85,6 +85,7 @@ public class Controller {
 
   public void setCurrentLanguage(String language) {
     this.currentLanguage = language;
+
     updateLanguageObservers();
   }
 
