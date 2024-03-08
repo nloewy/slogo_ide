@@ -54,8 +54,6 @@ public class MainScreen implements SlogoListener {
   private static final double FRAME_RATE = 4.0;
   private static final int height = 600;
   private static final int width = 1000;
-  public static final Double[] ORIGIN = new Double[]{width / 2.0, height / 2.0};
-  private static final double PIXELS_PER_SECOND = 25;
   private final Controller controller;
   private final Timeline timeline = new Timeline();
   private final double speed = 1;
@@ -215,6 +213,7 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onUpdateTurtleState(TurtleRecord turtleState) {
     for (FrontEndTurtle turtle : turtles) {
+
       if (turtle.getId() == turtleState.id()) {
         turtle.setIsPenDisplayed(turtleState.pen());
         setPosition(turtle, turtleState.x() + centerX, turtleState.y() + centerY,
@@ -226,7 +225,10 @@ public class MainScreen implements SlogoListener {
         }
 
         List<Integer> newBackgroundColor = palette.get(turtleState.bgIndex());
+
+        System.out.println(palette);
         if (newBackgroundColor != null) {
+
           centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + ","
               + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
         }
@@ -279,18 +281,9 @@ public class MainScreen implements SlogoListener {
 
   @Override
   public void onUpdatePalette(Map<Integer, List<Integer>> palette) {
+    this.palette = palette;
     inputBox.updatePalettePane(palette);
   }
-
-//  private void makeInputDialog(String value, String title, String header, String content, Boolean needsInput, Consumer<String> consumer) {
-//    TextInputDialog dialog = new TextInputDialog();
-//    dialog.getEditor().setText(value);
-//    dialog.getEditor().setDisable(!needsInput);
-//    dialog.setTitle(title);
-//    dialog.setHeaderText(header);
-//    dialog.setContentText(content);
-//    dialog.showAndWait().ifPresent(consumer);
-//  }
 
   private void setUp() {
     layout = new BorderPane();

@@ -52,7 +52,7 @@ public class StartScreen {
     });
     Button loadGen = generateButton("LoadGen", 100, 330, e -> {
       try {
-        controller.openNewIDESession(null);
+        controller.openNewIdeSession(null);
       } catch (IOException ex) {
         throw new RuntimeException(ex);
       }

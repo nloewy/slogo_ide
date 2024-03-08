@@ -48,7 +48,7 @@ public class InputBox {
   private List<Region> mainButtons;
   private HBox turtleButtons;
   private HBox turtleMoveBox;
-  private GridPane paletteGrid;
+  private final GridPane paletteGrid;
   private Slider speedSlider;
   private boolean paused;
 
@@ -177,7 +177,7 @@ public class InputBox {
 
     Button openNewWindow = UserInterfaceUtil.generateButton("Open New Window", event -> {
       try {
-        controller.openNewIDESession(null);
+        controller.openNewIdeSession(null);
         paused = false;
       } catch (IOException e) {
         e.printStackTrace();
@@ -218,7 +218,7 @@ public class InputBox {
 
     Button reset = UserInterfaceUtil.generateButton("Reset", event -> {
       try {
-        controller.openNewIDESession("");
+        controller.openNewIdeSession("");
         stage.close();
       } catch (IOException e) {
         e.printStackTrace();
