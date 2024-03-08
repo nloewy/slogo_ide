@@ -305,9 +305,13 @@ public class MainScreen implements SlogoListener {
     dialog.showAndWait().ifPresent(consumer);
   }
 
-  private void fullReset() throws IOException {
-    controller.openNewIDESession("");
-    stage.close();
+  private void fullReset() {
+    try {
+      controller.openNewIDESession("");
+      stage.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   private void setSpeedSliderHandler(ChangeListener<Number> speedSliderHandler) {
@@ -329,8 +333,9 @@ public class MainScreen implements SlogoListener {
         sendCommandStringToView();
       }
     });
-
-    inputBox.setUpButtons(controller, this::sendCommandStringToView, this::handleLoadTurtleImage);
+    inputBox.setValues(controller, currAnimation, commandHistory, stage, centerPane);
+    inputBox.setUpDropdowns(turtles);
+    inputBox.setUpButtons(this::sendCommandStringToView, this::handleLoadTurtleImage, this::playSingleAnimation, this::finishCurrAnimation, this::pushCommand);
 
 //    submitField = UserInterfaceUtil.generateButton("Submit", event -> {
 //      sendCommandStringToView();
@@ -357,61 +362,61 @@ public class MainScreen implements SlogoListener {
 //      paused = true;
 //    });
 
-    step = UserInterfaceUtil.generateButton("Step", event -> {
-      if (currAnimation == null) {
-        playSingleAnimation();
-      } else {
-        finishCurrAnimation();
-      }
-    });
+//    step = UserInterfaceUtil.generateButton("Step", event -> {
+//      if (currAnimation == null) {
+//        playSingleAnimation();
+//      } else {
+//        finishCurrAnimation();
+//      }
+//    });
+//
+//    help = UserInterfaceUtil.generateButton("Help", event -> {
+//      Help.showHelpPopup(myResources, controller, this::pushCommand, field);
+//    });
+//
+//    upload = UserInterfaceUtil.generateButton("Upload", event -> {
+//      controller.loadSession("add");
+//      String newSlogoContent = controller.getSlogoContent();
+//      pushCommand(newSlogoContent);
+//    });
+//
+//    save = UserInterfaceUtil.generateButton("Save", event ->
+//        Save.saveToFile(stage, controller, commandHistory));
 
-    help = UserInterfaceUtil.generateButton("Help", event -> {
-      Help.showHelpPopup(myResources, controller, this::pushCommand, field);
-    });
-
-    upload = UserInterfaceUtil.generateButton("Upload", event -> {
-      controller.loadSession("add");
-      String newSlogoContent = controller.getSlogoContent();
-      pushCommand(newSlogoContent);
-    });
-
-    save = UserInterfaceUtil.generateButton("Save", event ->
-        Save.saveToFile(stage, controller, commandHistory));
-
-    reset = UserInterfaceUtil.generateButton("Reset", event -> {
-      try {
-        fullReset();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-    });
+//    reset = UserInterfaceUtil.generateButton("Reset", event -> {
+//      try {
+//        fullReset();
+//      } catch (IOException e) {
+//        throw new RuntimeException(e);
+//      }
+//    });
 
 
-    VBox dropdowns = new VBox();
-    dropdowns.getStyleClass().add("main-dropdowns");
-    ResourceBundle defaultResources = ResourceBundle.getBundle(
-        DEFAULT_RESOURCE_PACKAGE + "English");
-    ObservableList<ComboChoice> penColors = FXCollections.observableArrayList();
-    for (String color : defaultResources.getString("PenColors").split(",")) {
-      penColors.add(new ComboChoice(color, color));
-    }
-
-    colorDropDown = UserInterfaceUtil.generateComboBox(penColors, "colorBox",100, 300, (s) -> s, (event) -> {
-      turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
-    });
-    colorDropDown.getOnAction().handle(new ActionEvent());
-
-    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, "backgroundBox",100,
-        300, (s) -> s,
-        (event) -> {
-          centerPane.setStyle("-fx-background-color: " + event);
-        });
-    backgroundDropDown.setValue(null);
-    dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
-    List<Region> mainButtons = List.of(submitField, play, pause, step, help, reset, upload, uploadTurtle,
-        save, dropdowns, openNewWindow);
-    mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
-    addLanguageObserver(colorDropDown, backgroundDropDown);
+//    VBox dropdowns = new VBox();
+//    dropdowns.getStyleClass().add("main-dropdowns");
+//    ResourceBundle defaultResources = ResourceBundle.getBundle(
+//        DEFAULT_RESOURCE_PACKAGE + "English");
+//    ObservableList<ComboChoice> penColors = FXCollections.observableArrayList();
+//    for (String color : defaultResources.getString("PenColors").split(",")) {
+//      penColors.add(new ComboChoice(color, color));
+//    }
+//
+//    colorDropDown = UserInterfaceUtil.generateComboBox(penColors, "colorBox",100, 300, (s) -> s, (event) -> {
+//      turtles.forEach(turtle -> turtle.setPenColor(Color.valueOf(event)));
+//    });
+//    colorDropDown.getOnAction().handle(new ActionEvent());
+//
+//    ComboBox<ComboChoice> backgroundDropDown = UserInterfaceUtil.generateComboBox(penColors, "backgroundBox",100,
+//        300, (s) -> s,
+//        (event) -> {
+//          centerPane.setStyle("-fx-background-color: " + event);
+//        });
+//    backgroundDropDown.setValue(null);
+//    dropdowns.getChildren().addAll(colorDropDown, backgroundDropDown);
+//    List<Region> mainButtons = List.of(submitField, play, pause, step, help, reset, upload, uploadTurtle,
+//        save, dropdowns, openNewWindow);
+//    mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
+//    addLanguageObserver(colorDropDown, backgroundDropDown);
     distanceField = new TextField("50");
     distanceField.setPrefWidth(60);
     rotateField = new TextField("90");
@@ -438,8 +443,11 @@ public class MainScreen implements SlogoListener {
     HBox turtleButtons = new HBox(leftButton, upDownButtons, rightButton);
     turtleButtons.setPadding(new javafx.geometry.Insets(50, 0, 0, 0));
     paletteGrid = new GridPane();
+
+
     textInputBox.getChildren().addAll(new VBox(speedSlider, paletteGrid), turtleMoveBox, turtleButtons, field);
-    textInputBox.getChildren().addAll(mainButtons);
+    inputBox.addButtonsToBox();
+//    textInputBox.getChildren().addAll(mainButtons);
     layout.setCenter(centerPane);
     layout.setBottom(textInputBox);
     layout.setRight(new VBox(variablesPane, userDefinedCommandsPane)); // Stack variablesPane and
@@ -550,7 +558,6 @@ public class MainScreen implements SlogoListener {
     inputBox = new InputBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
     textInputBox = inputBox.getBox();
     field = inputBox.getField();
-
   }
 
   private void createUserDefinedCommandBox() {
