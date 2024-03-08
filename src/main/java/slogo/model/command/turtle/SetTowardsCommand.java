@@ -46,7 +46,7 @@ public class SetTowardsCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     double locationX = arguments.get(0).evaluate();
     double locationY = arguments.get(1).evaluate();
     Turtle turtle = modelState.getTurtles().get(turtleId);

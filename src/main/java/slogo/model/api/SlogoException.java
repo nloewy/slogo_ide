@@ -12,8 +12,9 @@ public class SlogoException extends RuntimeException {
 
   /**
    * Constructs SlogoException.
+   *
    * @param message for programmers purposes - not for user.
-   * @param token relevant token that caused error, to be later shown to user
+   * @param token   relevant token that caused error, to be later shown to user
    */
 
   public SlogoException(String message, String token) {
@@ -23,9 +24,10 @@ public class SlogoException extends RuntimeException {
 
   /**
    * Constructs SlogoException.
+   *
    * @param message for programmers purposes - not for user.
-   * @param cause exception that caused the wrapped exception that caused SlogoException.
-   * @param token relevant token that caused error, to be later shown to user
+   * @param cause   exception that caused the wrapped exception that caused SlogoException.
+   * @param token   relevant token that caused error, to be later shown to user
    */
 
   public SlogoException(String message, Throwable cause, String token) {

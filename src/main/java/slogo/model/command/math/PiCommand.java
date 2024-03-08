@@ -18,7 +18,7 @@ public class PiCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 0;
-  private final ModelState modelState;
+
 
   /**
    * Constructs an instance of PiCommand with the given model state and listener. This constructor
@@ -27,8 +27,9 @@ public class PiCommand implements Command {
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public PiCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
   }
 
   /**
@@ -40,7 +41,7 @@ public class PiCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     return Math.PI;
   }
 }

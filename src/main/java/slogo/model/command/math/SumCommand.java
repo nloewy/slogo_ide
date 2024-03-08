@@ -19,8 +19,6 @@ public class SumCommand implements Command {
    */
   public static final int NUM_ARGS = 2;
 
-  private final ModelState modelState;
-
   /**
    * Constructs an instance of SumCommand with the given model state and listener. This constructor
    * does not actually do anything, and exists for the sake of consistency across commands.
@@ -29,7 +27,7 @@ public class SumCommand implements Command {
    * @param listener   the listener for state change events
    */
   public SumCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
   }
 
   /**
@@ -39,9 +37,9 @@ public class SumCommand implements Command {
    * @param turtleId  the id of the turtle currently active
    * @return the sum of the two input numbers
    */
+
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
     return arguments.get(0).evaluate() + arguments.get(1).evaluate();
   }
 }

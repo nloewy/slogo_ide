@@ -20,17 +20,18 @@ public class LessEqualCommand implements Command {
    */
   public static final int NUM_ARGS = 2;
   private static final double TOLERANCE = .001;
-  private final ModelState modelState;
-
 
   /**
-   * Constructs an instance of LessEqualCommand with the given model state and listener.
+   * Constructs an instance of LessEqualCommand with the given model state and listener. This
+   * constructor does not actually do anything, and exists for the sake of consistency across
+   * commands.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public LessEqualCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
 
   }
 
@@ -44,7 +45,7 @@ public class LessEqualCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     return (arguments.get(0).evaluate() - TOLERANCE <= arguments.get(1).evaluate()) ? 1.0 : 0.0;
   }
 }

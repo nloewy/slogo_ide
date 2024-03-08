@@ -24,6 +24,7 @@ import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.ListNode;
 import slogo.model.node.Node;
+import slogo.model.node.TurtleCommandNode;
 import slogo.model.node.UserCommandNode;
 import slogo.model.node.VariableNode;
 
@@ -279,9 +280,31 @@ public class Parser {
     nodeHandler.add(new SimpleEntry<>(
         token -> isCommand(token) && !isToCommand(token),
         tokens -> {
-          currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
-              modelState);
+          List<String> turtle = Arrays.asList(new String[]{"Forward", "Backward", "Left",
+              "Right",
+              "SetHeading",
+              "SetTowards",
+              "SetPosition",
+              "PenDown",
+              "PenUp",
+              "ShowTurtle",
+              "HideTurtle",
+              "Home",
+              "ClearScreen",
+              "Xcoordinate",
+              "Ycoordinate",
+              "Heading",
+              "IsPenDown",
+              "IsShowing"
+          });
+          if (turtle.contains(commandMap.get(tokens.get(myIndex).toLowerCase()))) {
+            currentNode = new TurtleCommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
+                modelState);
 
+          } else {
+            currentNode = new CommandNode(commandMap.get(tokens.get(myIndex).toLowerCase()),
+                modelState);
+          }
         }));
 
     nodeHandler.add(new SimpleEntry<>(

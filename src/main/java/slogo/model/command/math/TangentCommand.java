@@ -19,7 +19,6 @@ public class TangentCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
-  private final ModelState modelState;
 
   /**
    * Constructs an instance of TangentCommand with the given model state and listener. This
@@ -29,8 +28,9 @@ public class TangentCommand implements Command {
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public TangentCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
   }
 
   /**
@@ -43,7 +43,7 @@ public class TangentCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws TangentUndefinedFunction {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     if (Math.abs(arg1 % 180) == 90) {
       throw new TangentUndefinedFunction(

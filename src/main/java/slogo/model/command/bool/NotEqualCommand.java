@@ -21,16 +21,17 @@ public class NotEqualCommand implements Command {
   public static final int NUM_ARGS = 2;
   private static final double TOLERANCE = .001;
 
-  private final ModelState modelState;
-
   /**
-   * Constructs an instance of NotEqualCommand with the given model state and listener.
+   * Constructs an instance of NotEqualCommand with the given model state and listener. This
+   * constructor does not actually do anything, and exists for the sake of consistency across
+   * commands.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public NotEqualCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
 
   }
 
@@ -44,7 +45,7 @@ public class NotEqualCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
     return (Math.abs(arg1 - arg2) > TOLERANCE) ? 1.0 : 0.0;

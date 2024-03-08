@@ -19,7 +19,6 @@ public class SquareRootCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
-  private final ModelState modelState;
 
   /**
    * Constructs an instance of SquareRootCommand with the given model state and listener. This
@@ -29,8 +28,9 @@ public class SquareRootCommand implements Command {
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
+
   public SquareRootCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
   }
 
   /**
@@ -44,7 +44,7 @@ public class SquareRootCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws SquareRootOfNegativeException {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {
       throw new SquareRootOfNegativeException("Operand must be non-negative");

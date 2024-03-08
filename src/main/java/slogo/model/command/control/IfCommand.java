@@ -19,7 +19,6 @@ public class IfCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-  private final ModelState modelState;
 
   /**
    * Constructs an instance of IfCommand with the given model state and listener. This constructor
@@ -29,7 +28,7 @@ public class IfCommand implements Command {
    * @param listener   the listener for state change events
    */
   public IfCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
   }
 
   /**
@@ -44,7 +43,7 @@ public class IfCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     Node toExecute = arguments.get(1);
     if (arg1 != 0) {

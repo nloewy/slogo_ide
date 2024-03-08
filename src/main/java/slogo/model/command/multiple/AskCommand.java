@@ -10,7 +10,7 @@ import slogo.model.node.Node;
 
 /**
  * The AskCommand class represents a command that given a turtle id(s), marks them as active for a
- * sequence of commands, then goes back to the previously active turtles
+ * sequence of commands, then goes back to the previously active turtles.
  *
  * @author Noah Loewy
  */
@@ -52,23 +52,15 @@ public class AskCommand implements Command {
       addIdToList(arguments.get(0), tempList);
     } else {
       for (Node node : arguments.get(0).getChildren()) {
-        modelState.setOuter(false);
+
         if (!node.getToken().equals("]")) {
           addIdToList(node, tempList);
         }
       }
     }
-
     modelState.getActiveTurtles().add(tempList);
-    myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
-    double val = 0.0;
-    for (int i : tempList) {
-      modelState.setOuter(false);
-      modelState.setCurrTurtle(i);
-      val = arguments.get(1).evaluate();
-    }
+    double val = arguments.get(1).evaluate();
     modelState.getActiveTurtles().pop();
-    modelState.setOuter(false);
     return val;
 
   }

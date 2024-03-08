@@ -42,7 +42,7 @@ public class RepeatCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     String variableName = ":repcount";
     double end = arguments.get(0).evaluate();
     Node commands = arguments.get(1);

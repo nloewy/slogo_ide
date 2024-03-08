@@ -20,18 +20,18 @@ public class ArcTangentCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
-  private final ModelState modelState;
 
   /**
-   * Constructs an instance of ArcTangentCommand with the given model state and listener.
+   * Constructs an instance of ArcTangentCommand with the given model state and listener. This
+   * constructor does not actually do anything, and exists for the sake of consistency across
+   * commands.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
 
   public ArcTangentCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
-
+    //DO NOTHING
   }
 
   /**
@@ -44,7 +44,7 @@ public class ArcTangentCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     return MathUtils.toDegrees(Math.atan(arg1));
   }
