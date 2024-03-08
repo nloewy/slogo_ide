@@ -1,9 +1,8 @@
-package slogo.model;
+package slogo.model.api;
 
 import java.io.IOException;
-import slogo.model.api.Model;
-import slogo.model.api.SlogoException;
-import slogo.model.api.SlogoListener;
+import slogo.model.ModelState;
+import slogo.model.Parser;
 import slogo.model.exceptions.InvalidCommandException;
 import slogo.model.exceptions.InvalidTokenException;
 import slogo.model.node.ListNode;

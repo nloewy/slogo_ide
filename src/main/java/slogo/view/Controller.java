@@ -24,9 +24,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import slogo.model.SlogoModel;
 import slogo.model.api.Model;
 import slogo.model.api.SlogoException;
+import slogo.model.api.SlogoModel;
 import slogo.view.pages.MainScreen;
 import slogo.view.pages.StartScreen;
 
@@ -102,7 +102,7 @@ public class Controller {
     return currentTheme;
   }
 
-  public void openNewIDESession(String slogoContent) throws IOException {
+  public void openNewIdeSession(String slogoContent) throws IOException {
     Stage newStage = new Stage();
     newStage.setMaximized(false);
     getProperties();
@@ -153,11 +153,10 @@ public class Controller {
         }
         String slogoContent = contentBuilder.toString();
         if (type.equals("new")) {
-          openNewIDESession(slogoContent);
+          openNewIdeSession(slogoContent);
         } else {
           setSlogoContent(slogoContent);
         }
-//                openFileIDESession(slogoContent);
 
       } catch (IOException e) {
         e.printStackTrace();
@@ -173,7 +172,7 @@ public class Controller {
     uploadedCommand = slogoContent;
   }
 
-  public Map<String, Map<String, String>> getCommandDetailsFromXML(String commandLanguage) {
+  public Map<String, Map<String, String>> getCommandDetailsFromXml(String commandLanguage) {
     Map<String, Map<String, String>> commandDetails = new HashMap<>();
     try {
       File inputFile = new File("data/helpXmls/" + commandLanguage + ".xml");
@@ -181,11 +180,11 @@ public class Controller {
       DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
       Document doc = dBuilder.parse(inputFile);
       doc.getDocumentElement().normalize();
-      NodeList nList = doc.getElementsByTagName("command");
-      for (int temp = 0; temp < nList.getLength(); temp++) {
-        Node nNode = nList.item(temp);
-        if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-          Element eElement = (Element) nNode;
+      NodeList list = doc.getElementsByTagName("command");
+      for (int temp = 0; temp < list.getLength(); temp++) {
+        Node node = list.item(temp);
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+          Element eElement = (Element) node;
           String commandName = eElement.getElementsByTagName("canonicalName").item(0)
               .getTextContent();
           String description = eElement.getElementsByTagName("description").item(0)
@@ -193,13 +192,8 @@ public class Controller {
 
           NodeList exampleList = eElement.getElementsByTagName("example");
           String example = exampleList.getLength() > 0 ? exampleList.item(0).getTextContent() : "";
-
-//          String example = eElement.getElementsByTagName("example").item(0).getTextContent();
-
           Element helpDocumentation = (Element) eElement.getElementsByTagName("helpDocumentation")
               .item(0);
-//          String parameters = helpDocumentation.getElementsByTagName("parameters").item(0)
-//              .getTextContent();
           NodeList parametersList = helpDocumentation.getElementsByTagName("parameters");
           String parameters =
               parametersList.getLength() > 0 ? parametersList.item(0).getTextContent() : "";
@@ -234,22 +228,17 @@ public class Controller {
   public void loadSettings(File file, Scene scene) {
     try {
       DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-      Document doc = dBuilder.parse(file);
+      DocumentBuilder docBuilder = dbFactory.newDocumentBuilder();
+      Document doc = docBuilder.parse(file);
       doc.getDocumentElement().normalize();
-
       String language = doc.getElementsByTagName("language").item(0).getTextContent();
       String theme = doc.getElementsByTagName("theme").item(0).getTextContent();
       String penColor = doc.getElementsByTagName("penColor").item(0).getTextContent();
-
       setCurrentLanguage(language);
-
       for (MainScreen window : windows) {
         window.setPenColor(penColor);
       }
       setCurrentTheme(theme, scene);
-//      setPenColor(penColor);
-
     } catch (Exception e) {
       e.printStackTrace();
     }

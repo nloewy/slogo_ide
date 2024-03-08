@@ -1,4 +1,4 @@
-package slogo.model;
+package slogo.model.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,8 +10,10 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoException;
 import slogo.model.api.SlogoListener;
+import slogo.model.api.SlogoModel;
 import slogo.model.api.TurtleRecord;
 import slogo.model.command.CommandTest;
 import slogo.model.exceptions.InvalidCommandException;

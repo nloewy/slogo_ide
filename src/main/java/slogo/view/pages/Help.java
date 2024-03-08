@@ -36,7 +36,7 @@ public class Help {
 
     String languagedCommands = myResources.getString("commands");
 
-    Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML(
+    Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXml(
         languagedCommands);
 //    int commandCounter = 0;
     for (String command : commandDetails.keySet()) {
