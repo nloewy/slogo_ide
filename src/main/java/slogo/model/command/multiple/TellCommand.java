@@ -56,7 +56,7 @@ public class TellCommand implements Command {
           id = (int) Math.round(node.evaluate());
           addIdToList(id, tempList);
         }
-    }
+      }
     }
     modelState.getActiveTurtles().clear();
     modelState.getActiveTurtles().add(tempList);

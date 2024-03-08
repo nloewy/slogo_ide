@@ -40,7 +40,7 @@ public class TurtlesCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     return modelState.getTurtles().size();
   }
 }

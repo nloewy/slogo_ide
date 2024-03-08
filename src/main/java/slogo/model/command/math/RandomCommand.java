@@ -43,7 +43,7 @@ public class RandomCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws InvalidRandomInputException {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {
       throw new InvalidRandomInputException("Input to Random Function must be non-negative");

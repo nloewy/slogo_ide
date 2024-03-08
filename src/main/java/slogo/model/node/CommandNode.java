@@ -4,8 +4,6 @@ import slogo.model.ModelState;
 import slogo.model.command.Command;
 import slogo.model.command.CommandFactory;
 import slogo.model.exceptions.InsufficientArgumentsException;
-import slogo.model.exceptions.InvalidCommandException;
-import slogo.model.exceptions.InvalidOperandException;
 
 /**
  * The CommandNode class represents a node that executes a command in the Slogo language. The
@@ -36,13 +34,11 @@ public class CommandNode extends Node {
   /**
    * Evaluates the CommandNode by dynamically invoking the execute method of the corresponding
    * Command class using reflection based on the token. So long as the number of arguments match,
-   * the command is executed by calling the execute method on the proper Command object
+   * the command is executed by calling the execute method on the proper Command object. This
+   * applies to 'non-turtle' commands, that are only executed one time
    *
    * @return the result of executing the CommandNode
-   * @throws InvalidCommandException        if the Command class corresponding to token is not
-   *                                        found
    * @throws InsufficientArgumentsException if unexpected number of arguments received
-   * @throws InvalidOperandException        if an invalid operand is encountered during execution
    */
 
 
@@ -52,22 +48,7 @@ public class CommandNode extends Node {
     if (getNumArgs() != getChildren().size()) {
       throw new InsufficientArgumentsException("", getToken());
     }
-    double val = 0;
-    if (myToken.equals("Make") || myToken.startsWith("Ask") || !myModelState.getOuter()) {
-      val = command.execute(getChildren(), myModelState.getCurrTurtle());
-      if (myToken.startsWith("Ask")) {
-        myModelState.setOuter(true);
-      }
-    } else {
-      for (int index = 0; index < myModelState.getActiveTurtles().peek().size(); index++) {
-        myModelState.setOuter(false);
-        myModelState.setCurrTurtle(myModelState.getActiveTurtles().peek().get(index));
-
-        val = command.execute(getChildren(), myModelState.getCurrTurtle());
-      }
-    }
-
-    return val;
+    return command.execute(getChildren(), myModelState.getCurrTurtle());
   }
 
   /**

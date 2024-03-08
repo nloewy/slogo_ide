@@ -44,7 +44,7 @@ public class ArcTangentCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     return MathUtils.toDegrees(Math.atan(arg1));
   }

@@ -44,7 +44,7 @@ public class SquareRootCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws SquareRootOfNegativeException {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {
       throw new SquareRootOfNegativeException("Operand must be non-negative");
