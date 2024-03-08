@@ -21,6 +21,7 @@ public class NotEqualCommandTest extends CommandTest {
   private Node node;
 
   private ModelState model;
+
   @BeforeEach
   void setUp()
       throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {

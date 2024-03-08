@@ -18,12 +18,12 @@ public abstract class LoopCommand implements Command {
   public abstract double execute(List<Node> arguments, Turtle turtle);
 
   /**
-   * Sets the parameters for the loop: start value, end value, and increment value.
-   * Executes the loop with the specified commands for each value of the loop variable.
+   * Sets the parameters for the loop: start value, end value, and increment value. Executes the
+   * loop with the specified commands for each value of the loop variable.
    *
-   * @param start     The starting value of the loop.
-   * @param end       The ending value of the loop.
-   * @param increment The increment value for each iteration of the loop.
+   * @param start        The starting value of the loop.
+   * @param end          The ending value of the loop.
+   * @param increment    The increment value for each iteration of the loop.
    * @param commands     The commands to be executed in the loop.
    * @param modelState   The model state.
    * @param variableName The name of the loop variable.

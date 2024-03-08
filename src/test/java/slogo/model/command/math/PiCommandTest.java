@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.ModelState;
 import slogo.model.command.CommandTest;

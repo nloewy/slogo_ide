@@ -1,7 +1,6 @@
 package slogo.model.command.math;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.lang.reflect.InvocationTargetException;
@@ -10,11 +9,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import slogo.model.exceptions.DivideByZeroException;
-import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.command.CommandTest;
+import slogo.model.exceptions.DivideByZeroException;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;
 import slogo.model.node.Node;

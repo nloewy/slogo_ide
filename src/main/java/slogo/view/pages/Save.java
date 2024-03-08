@@ -1,17 +1,18 @@
 package slogo.view.pages;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import slogo.view.Controller;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Stack;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import slogo.view.Controller;
+
 public class Save {
 
   public static void saveToFile(Stage stage, Controller controller, Stack<String> commandHistory) {

@@ -41,9 +41,9 @@ public class CommandTest {
 
 
   protected void dfsAddListener(Node node) {
-    if(node != null) {
+    if (node != null) {
       node.addListener(myListener);
-      for(Node child : node.getChildren()) {
+      for (Node child : node.getChildren()) {
         dfsAddListener(child);
       }
     }

@@ -18,6 +18,7 @@ public class StartScreenTest extends DukeApplicationTest {
   private ComboBox themeBox;
   private Button loadGen;
   private Pane root;
+
   @Override
   public void start(Stage stage) throws FileNotFoundException {
     stage.setTitle("SLogo");
@@ -34,21 +35,22 @@ public class StartScreenTest extends DukeApplicationTest {
   }
 
   @Test
-  void testLanguageBoxDefault () {
+  void testLanguageBoxDefault() {
     clickOn(languageBox);
     assertEquals("English", languageBox.getValue());
     assertEquals("Load New General Session", loadGen.getText());
   }
 
   @Test
-  void testLanguageBoxChangeFrench () {
+  void testLanguageBoxChangeFrench() {
     clickOn(languageBox);
     clickOn("Français");
     assertEquals("Français", languageBox.getValue());
     assertEquals("Nouvelle session generale", loadGen.getText());
   }
+
   @Test
-  void testLanguageBoxChangeSpanish () {
+  void testLanguageBoxChangeSpanish() {
     clickOn(languageBox);
     clickOn("Español");
     assertEquals("Español", languageBox.getValue());
@@ -56,13 +58,14 @@ public class StartScreenTest extends DukeApplicationTest {
   }
 
   @Test
-  void testThemeBoxDefault () {
+  void testThemeBoxDefault() {
     clickOn(themeBox);
     assertEquals("Light Mode", themeBox.getValue().toString());
     assertEquals(Color.WHITE, root.getBackground().getFills().get(0).getFill());
   }
+
   @Test
-  void testThemeBoxChangeDark () {
+  void testThemeBoxChangeDark() {
     clickOn(themeBox);
     clickOn("Dark Mode");
     assertEquals("Dark Mode", themeBox.getValue().toString());

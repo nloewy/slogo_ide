@@ -4,7 +4,6 @@ import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
-import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
@@ -13,7 +12,7 @@ import slogo.model.node.Node;
  *
  * @author Noah Loewy
  */
-public class RepeatCommand extends LoopCommand  {
+public class RepeatCommand extends LoopCommand {
 
   /**
    * The number of arguments this command requires.

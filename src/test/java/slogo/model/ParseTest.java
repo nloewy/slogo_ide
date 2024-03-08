@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,15 +13,8 @@ import org.junit.jupiter.api.Test;
 import slogo.model.api.SlogoException;
 import slogo.model.api.SlogoListener;
 import slogo.model.api.TurtleRecord;
-import slogo.model.exceptions.InsufficientArgumentsException;
 import slogo.model.exceptions.InvalidCommandException;
-import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.exceptions.InvalidTokenException;
-import slogo.model.exceptions.InvalidUserCommandException;
-import slogo.model.node.CommandNode;
-import slogo.model.node.ConstantNode;
-import slogo.model.node.ListNode;
-import slogo.model.node.Node;
 
 public class ParseTest {
 
@@ -50,6 +41,7 @@ public class ParseTest {
       @Override
       public void onReturn(double value, String string) {
       }
+
       @Override
       public void onUserDefinedCommand(String s) {
       }
@@ -124,7 +116,7 @@ public class ParseTest {
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(1);
     assertThrows(SlogoException.class, () -> {
       slogo.parse("FD 10 10 RT 30");
-      assertEquals(10.0,myTurtle.getY(),DELTA);
+      assertEquals(10.0, myTurtle.getY(), DELTA);
     });
 
   }
@@ -133,12 +125,13 @@ public class ParseTest {
   void variableWithNoCommandBetweenProperCommands()
       throws SlogoException {
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(1);
-     assertThrows(SlogoException.class, () -> {
-       slogo.parse("FD 10 :C RT 30");
-      assertEquals(10.0,myTurtle.getY(),DELTA);
-     });
+    assertThrows(SlogoException.class, () -> {
+      slogo.parse("FD 10 :C RT 30");
+      assertEquals(10.0, myTurtle.getY(), DELTA);
+    });
 
   }
+
   @Test
   void testNestedIfElseList()
       throws SlogoException {
@@ -188,13 +181,13 @@ public class ParseTest {
   void testInvalidCommand()
       throws SlogoException {
     Turtle myTurtle = slogo.getModelstate().getTurtles().get(1);
-     assertThrows(SlogoException.class, () -> {
+    assertThrows(SlogoException.class, () -> {
       slogo.parse(
           "MAKE :CLASS 10 RANDOMTEXT DIFFERENCE :CLASS 5 [ RIGHT :CLASS ] RIGHT 50");
-    assertEquals(10.0, slogo.getModelstate().getVariables().get(":class"), DELTA);
-    assertEquals(00.0, slogo.getModelstate().getTurtles().get(1).getHeading(), DELTA);
+      assertEquals(10.0, slogo.getModelstate().getVariables().get(":class"), DELTA);
+      assertEquals(00.0, slogo.getModelstate().getTurtles().get(1).getHeading(), DELTA);
 
-     });
+    });
   }
 
   @Test
@@ -256,11 +249,11 @@ public class ParseTest {
   void testRandom()
       throws SlogoException {
 
-    for(int i = 0; i  < 100; i++) {
+    for (int i = 0; i < 100; i++) {
       slogo.parse("rt 270 mAke :random sum 1 random 100 fd sum 1 :random");
       Turtle myTurtle = slogo.getModelstate().getTurtles().get(1);
       assertEquals(0.0, myTurtle.getY(), DELTA);
-      if(!(myTurtle.getX() <= -1.999 && myTurtle.getX() >= -102.001)){
+      if (!(myTurtle.getX() <= -1.999 && myTurtle.getX() >= -102.001)) {
         System.out.println(myTurtle.getX());
       }
       assertTrue(myTurtle.getX() <= -1.999 && myTurtle.getX() >= -102.001);
@@ -336,4 +329,4 @@ public class ParseTest {
     assertEquals(440.0, myTurtle.getHeading(), DELTA);
   }
 
-  }
+}

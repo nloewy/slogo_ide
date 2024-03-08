@@ -4,7 +4,6 @@ import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
-import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**

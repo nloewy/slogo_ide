@@ -2,8 +2,8 @@ package slogo.view;
 
 public class ComboChoice {
 
-  private String name;
   private final String value;
+  private String name;
 
   public ComboChoice(String name, String value) {
     this.name = name;

@@ -1,6 +1,5 @@
 package slogo.view;
 
-import java.beans.EventHandler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +27,6 @@ import org.w3c.dom.NodeList;
 import slogo.model.SlogoModel;
 import slogo.model.api.Model;
 import slogo.model.api.SlogoException;
-import slogo.view.ViewInternal;
 import slogo.view.pages.MainScreen;
 import slogo.view.pages.StartScreen;
 
@@ -40,13 +37,13 @@ public class Controller {
   private final Stage stage;
   private final List<Consumer<String>> languageObservers = new ArrayList<>();
   private final List<MainScreen> windows = new ArrayList<>();
+  private final Properties prop;
   private String currentLanguage = "English";
   private String currentTheme = "LightMode.css";
   private Model model;
   private Consumer<String> parse;
   private File turtleImage;
   private String uploadedCommand;
-  private final Properties prop;
 
 
   public Controller(Stage stage) throws IOException {
@@ -204,7 +201,8 @@ public class Controller {
 //          String parameters = helpDocumentation.getElementsByTagName("parameters").item(0)
 //              .getTextContent();
           NodeList parametersList = helpDocumentation.getElementsByTagName("parameters");
-          String parameters = parametersList.getLength() > 0 ? parametersList.item(0).getTextContent() : "";
+          String parameters =
+              parametersList.getLength() > 0 ? parametersList.item(0).getTextContent() : "";
           String returnValue = helpDocumentation.getElementsByTagName("returnValue").item(0)
               .getTextContent();
           Map<String, String> details = new HashMap<>();
@@ -249,7 +247,7 @@ public class Controller {
       for (MainScreen window : windows) {
         window.setPenColor(penColor);
       }
-      setCurrentTheme(theme,scene);
+      setCurrentTheme(theme, scene);
 //      setPenColor(penColor);
 
     } catch (Exception e) {

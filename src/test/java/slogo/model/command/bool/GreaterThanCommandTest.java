@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
-import slogo.model.api.Model;
 import slogo.model.command.CommandTest;
 import slogo.model.node.CommandNode;
 import slogo.model.node.ConstantNode;

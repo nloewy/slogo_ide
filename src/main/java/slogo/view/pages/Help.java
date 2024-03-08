@@ -2,6 +2,7 @@ package slogo.view.pages;
 
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,7 +34,6 @@ public class Help {
     Button closeButton = new Button(myResources.getString("Close"));
     closeButton.setOnAction(e -> popup.hide());
 
-
     String languagedCommands = myResources.getString("commands");
 
     Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML(
@@ -42,7 +42,9 @@ public class Help {
     for (String command : commandDetails.keySet()) {
 //      commandCounter++;
       Hyperlink commandLink = new Hyperlink(command);
-      commandLink.setOnAction(e -> showCommandDetailsPopup(command, commandDetails.get(command), myResources, pushCommand, field));
+      commandLink.setOnAction(
+          e -> showCommandDetailsPopup(command, commandDetails.get(command), myResources,
+              pushCommand, field));
       content.getChildren().add(commandLink);
 //      System.out.print(commandCounter);
     }
@@ -103,7 +105,8 @@ public class Help {
   }
 
   private static void helpPopupModality(Stage popup, VBox content) {
-    final Delta dragDelta = new Delta();
+    AtomicReference<Double> dragDeltaX = new AtomicReference<>((double) 0);
+    AtomicReference<Double> dragDeltaY = new AtomicReference<>((double) 0);
 
     // Wrap content in a ScrollPane
     ScrollPane scrollPane = new ScrollPane();
@@ -113,12 +116,12 @@ public class Help {
     scrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED); // Show vertical scroll bar as needed
 
     content.setOnMousePressed(mouseEvent -> {
-      dragDelta.x = popup.getX() - mouseEvent.getScreenX();
-      dragDelta.y = popup.getY() - mouseEvent.getScreenY();
+      dragDeltaX.set(popup.getX() - mouseEvent.getScreenX());
+      dragDeltaY.set(popup.getY() - mouseEvent.getScreenY());
     });
     content.setOnMouseDragged(mouseEvent -> {
-      popup.setX(mouseEvent.getScreenX() + dragDelta.x);
-      popup.setY(mouseEvent.getScreenY() + dragDelta.y);
+      popup.setX(mouseEvent.getScreenX() + dragDeltaX.get());
+      popup.setY(mouseEvent.getScreenY() + dragDeltaY.get());
     });
 
     Scene scene = new Scene(scrollPane); // Set the scene to use the scroll pane
@@ -126,8 +129,4 @@ public class Help {
     popup.show();
   }
 
-}
-
-class Delta {
-  double x, y;
 }

@@ -1,15 +1,13 @@
 package slogo.example;
 
-import java.util.InputMismatchException;
-import java.lang.IllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.concurrent.TimeUnit;
 import javafx.animation.Animation;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import util.DukeApplicationTest;
 
 
@@ -19,53 +17,54 @@ import util.DukeApplicationTest;
  * @author Robert C. Duvall
  */
 public class AnimatedShapeTest extends DukeApplicationTest {
-    public static final double MATCH_TOLERANCE = 0.01;
 
-    // keep in case need to call application methods in tests
-    private AnimatedShape myApp;
-    // keep GUI components used in multiple tests
-    private Rectangle myActor;
+  public static final double MATCH_TOLERANCE = 0.01;
 
-
-    // this method is run BEFORE EACH test to set up application in a fresh state
-    @Override
-    public void start (Stage stage) {
-        // create app and add scene for testing to given stage
-        myApp = new AnimatedShape();
-        Scene scene = myApp.makeScene(1000, 600);
-        stage.setScene(scene);
-        stage.show();
-
-    }
-
-    @Test
-    void testA() {
-        assertEquals(1, 1);
-    }
+  // keep in case need to call application methods in tests
+  private AnimatedShape myApp;
+  // keep GUI components used in multiple tests
+  private Rectangle myActor;
 
 
-    @Test
-    void testAnimation () {
+  // this method is run BEFORE EACH test to set up application in a fresh state
+  @Override
+  public void start(Stage stage) {
+    // create app and add scene for testing to given stage
+    myApp = new AnimatedShape();
+    Scene scene = myApp.makeScene(1000, 600);
+    stage.setScene(scene);
+    stage.show();
 
-        Animation animation = myApp.makeAnimation(myActor, 350, 50, 90);
-        animation.play();
-        sleep(4, TimeUnit.SECONDS);    // PAUSE: not typically recommended in tests
-        Animation test = myApp.makeAnimation(myActor, 0, 0, 0);
-        animation.play();
-        sleep(4, TimeUnit.SECONDS);    // PAUSE: not typically recommended in tests
-    }
+  }
 
-    @Test
-    void testSetResources () {
-    }
+  @Test
+  void testA() {
+    assertEquals(1, 1);
+  }
 
-    @Test
-    void testResourceNumbers () {
 
-    }
+  @Test
+  void testAnimation() {
 
-    @Test
-    void testResourceColors () {
-        
-    }
+    Animation animation = myApp.makeAnimation(myActor, 350, 50, 90);
+    animation.play();
+    sleep(4, TimeUnit.SECONDS);    // PAUSE: not typically recommended in tests
+    Animation test = myApp.makeAnimation(myActor, 0, 0, 0);
+    animation.play();
+    sleep(4, TimeUnit.SECONDS);    // PAUSE: not typically recommended in tests
+  }
+
+  @Test
+  void testSetResources() {
+  }
+
+  @Test
+  void testResourceNumbers() {
+
+  }
+
+  @Test
+  void testResourceColors() {
+
+  }
 }

@@ -16,6 +16,7 @@ import slogo.model.node.Node;
 public abstract class InformCommand implements Command {
 
   public abstract double execute(List<Node> arguments, Turtle turtle);
+
   /**
    * Informs turtles based on the provided node containing turtle IDs.
    *
