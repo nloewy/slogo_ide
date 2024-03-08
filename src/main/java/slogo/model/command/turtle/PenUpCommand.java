@@ -19,8 +19,6 @@ public class PenUpCommand implements Command {
    * The number of arguments this command expects.
    */
   public static final int NUM_ARGS = 0;
-
-  private final ModelState modelState;
   private final SlogoListener listener;
 
   /**
@@ -30,7 +28,6 @@ public class PenUpCommand implements Command {
    * @param listener   the listener for state change events
    */
   public PenUpCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
     this.listener = listener;
   }
 
@@ -39,13 +36,11 @@ public class PenUpCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (empty for this
    *                  command)
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return 0.0 to indicate that the pen is up and successful execution
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
-    Turtle turtle = modelState.getTurtles().get(turtleId);
+  public double execute(List<Node> arguments, Turtle turtle) {
     turtle.setPen(false);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return 0.0;

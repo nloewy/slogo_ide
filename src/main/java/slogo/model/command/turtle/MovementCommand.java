@@ -16,7 +16,6 @@ import slogo.model.node.Node;
 
 public abstract class MovementCommand implements Command {
 
-  private final ModelState modelState;
   private final SlogoListener listener;
   private final boolean fwd;
 
@@ -30,7 +29,6 @@ public abstract class MovementCommand implements Command {
    */
 
   public MovementCommand(ModelState modelState, SlogoListener listener, boolean fwd) {
-    this.modelState = modelState;
     this.listener = listener;
     this.fwd = fwd;
   }
@@ -39,15 +37,13 @@ public abstract class MovementCommand implements Command {
    * Executes the movement command.
    *
    * @param arguments A list of arguments for the movement command.
-   * @param turtleId  The ID of the turtle executing the command.
+   * @param turtle    The ID of the turtle executing the command.
    * @return The number of pixels moved.
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
+  public double execute(List<Node> arguments, Turtle turtle) {
     double pixels = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(turtleId);
     turtle.setX(
         turtle.getX() + (fwd ? 1 : -1) * pixels * Math.sin(Math.toRadians(turtle.getHeading())));
     turtle.setY(

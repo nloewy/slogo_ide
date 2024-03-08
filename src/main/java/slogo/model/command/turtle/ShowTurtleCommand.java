@@ -22,7 +22,6 @@ public class ShowTurtleCommand implements Command {
    */
 
   public static final int NUM_ARGS = 0;
-  private final ModelState modelState;
   private final SlogoListener listener;
 
   /**
@@ -33,7 +32,6 @@ public class ShowTurtleCommand implements Command {
    */
 
   public ShowTurtleCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
     this.listener = listener;
   }
 
@@ -41,14 +39,12 @@ public class ShowTurtleCommand implements Command {
    * Executes the command to show the turtle. Sets the visibility of the turtle to true.
    *
    * @param arguments a list containing nodes representing the arguments (none required)
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return 1.0 indicating successful execution
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
-    Turtle turtle = modelState.getTurtles().get(turtleId);
+  public double execute(List<Node> arguments, Turtle turtle) {
     turtle.setVisible(true);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return 1.0;

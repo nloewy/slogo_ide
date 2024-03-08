@@ -31,11 +31,8 @@ import slogo.model.node.Node;
 
 public class SlogoModel implements Model {
 
-  public static final String RESOURCE_PATH = "src/main/resources/slogo/example/languages/";
   private final SlogoListener myListener;
   private final Parser parser;
-  private final Stack<String> myCommands;
-  private final Properties prop;
   private ModelState modelState;
 
   /**
@@ -56,10 +53,6 @@ public class SlogoModel implements Model {
     myListener = listener;
     myListener.onUpdatePalette(modelState.getPalette());
     parser = new Parser(modelState, currentLanguage);
-    myCommands = new Stack<>();
-    prop = new Properties();
-    File file = new File(RESOURCE_PATH + currentLanguage + ".properties");
-    prop.load(new FileInputStream(file));
   }
 
   /**
@@ -109,8 +102,7 @@ public class SlogoModel implements Model {
 
       val = node.evaluate();
     }
-    myCommands.push(input);
-    myListener.onReturn(val, root.toString());
+    myListener.onReturn(val, input);
   }
 
   /**

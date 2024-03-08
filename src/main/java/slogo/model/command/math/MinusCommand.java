@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -36,12 +37,11 @@ public class MinusCommand implements Command {
    * Executes the unary minus mathematical operation.
    *
    * @param arguments a list containing a single node representing the number to negate
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the negation of the input number
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
+  public double execute(List<Node> arguments, Turtle turtle) {
     double arg1 = arguments.get(0).evaluate();
     return -arg1;
   }

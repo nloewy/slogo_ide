@@ -2,6 +2,7 @@ package slogo.model.command.turtle;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.node.Node;
 
@@ -18,7 +19,6 @@ public class ClearScreenCommand extends HomeCommand {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 0;
-  private final ModelState modelState;
   private final SlogoListener listener;
 
   /**
@@ -29,7 +29,6 @@ public class ClearScreenCommand extends HomeCommand {
    */
   public ClearScreenCommand(ModelState modelState, SlogoListener listener) {
     super(modelState, listener);
-    this.modelState = modelState;
     this.listener = listener;
   }
 
@@ -39,13 +38,13 @@ public class ClearScreenCommand extends HomeCommand {
    *
    * @param arguments a list of nodes representing the arguments of the command (none for this
    *                  command)
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the result of executing the super class's execute method
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-    double ret = super.execute(arguments, turtleId);
-    listener.onResetTurtle(modelState.getTurtles().get(turtleId).getImmutableTurtle().id());
+  public double execute(List<Node> arguments, Turtle turtle) {
+    double ret = super.execute(arguments, turtle);
+    listener.onResetTurtle(turtle.getImmutableTurtle().id());
     return ret;
   }
 }

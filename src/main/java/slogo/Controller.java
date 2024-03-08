@@ -85,6 +85,7 @@ public class Controller {
 
   public void setCurrentLanguage(String language) {
     this.currentLanguage = language;
+
     updateLanguageObservers();
   }
 
@@ -192,11 +193,18 @@ public class Controller {
               .getTextContent();
           String description = eElement.getElementsByTagName("description").item(0)
               .getTextContent();
-          String example = eElement.getElementsByTagName("example").item(0).getTextContent();
+
+          NodeList exampleList = eElement.getElementsByTagName("example");
+          String example = exampleList.getLength() > 0 ? exampleList.item(0).getTextContent() : "";
+
+//          String example = eElement.getElementsByTagName("example").item(0).getTextContent();
+
           Element helpDocumentation = (Element) eElement.getElementsByTagName("helpDocumentation")
               .item(0);
-          String parameters = helpDocumentation.getElementsByTagName("parameters").item(0)
-              .getTextContent();
+//          String parameters = helpDocumentation.getElementsByTagName("parameters").item(0)
+//              .getTextContent();
+          NodeList parametersList = helpDocumentation.getElementsByTagName("parameters");
+          String parameters = parametersList.getLength() > 0 ? parametersList.item(0).getTextContent() : "";
           String returnValue = helpDocumentation.getElementsByTagName("returnValue").item(0)
               .getTextContent();
           Map<String, String> details = new HashMap<>();
@@ -205,6 +213,7 @@ public class Controller {
           details.put("parameters", parameters);
           details.put("returnValue", returnValue);
           commandDetails.put(commandName, details);
+          System.out.print(temp);
         }
       }
     } catch (Exception e) {

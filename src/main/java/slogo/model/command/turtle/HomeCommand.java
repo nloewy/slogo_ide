@@ -1,7 +1,6 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
-import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
@@ -21,8 +20,6 @@ public class HomeCommand implements Command {
    * The number of arguments this command expects.
    */
   public static final int NUM_ARGS = 0;
-
-  private final ModelState modelState;
   private final SlogoListener listener;
 
   /**
@@ -32,7 +29,6 @@ public class HomeCommand implements Command {
    * @param listener   the listener for state change events
    */
   public HomeCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
     this.listener = listener;
   }
 
@@ -40,13 +36,11 @@ public class HomeCommand implements Command {
    * Executes the HomeCommand, moving the turtle to its home position.
    *
    * @param arguments a list of nodes representing the arguments for this command (none expected)
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the distance moved by the turtle from its previous position to the home position
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
-    Turtle turtle = modelState.getTurtles().get(turtleId);
+  public double execute(List<Node> arguments, Turtle turtle) {
     double currentX = turtle.getX();
     double currentY = turtle.getY();
     turtle.setX(0);
@@ -55,6 +49,6 @@ public class HomeCommand implements Command {
     turtle.setPen(false);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     turtle.setPen(true);
-    return MathUtils.dist(0, 0, currentX, currentY);
+    return Math.sqrt(Math.pow((currentX), 2) + Math.pow((currentY), 2));
   }
 }

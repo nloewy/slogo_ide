@@ -2,6 +2,7 @@ package slogo.model.command.control;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -20,6 +21,10 @@ public class IfElseCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 3;
+  private static final int CONDITION_INDEX = 0;
+  private static final int TRUE_BRANCH_INDEX = 1;
+  private static final int FALSE_BRANCH_INDEX = 2;
+
 
   /**
    * Constructs an instance of IfElseCommand with the given model state and listener. This
@@ -41,21 +46,17 @@ public class IfElseCommand implements Command {
    *                  evaluate, the second node contains the command nodes to execute if the
    *                  condition is true, and the third node contains the command nodes to execute if
    *                  the condition is false
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the result of the last evaluated command if the condition is true, otherwise the result
    * of the last evaluated command in the else branch, or 0.0 if there's no else branch
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
-    double condition = arguments.get(0).evaluate();
-    Node toExecuteIfTrue = arguments.get(1);
-    Node toExecuteIfFalse = arguments.get(2);
-    if (condition != 0.0) {
-      return toExecuteIfTrue.evaluate();
-    } else {
-      return toExecuteIfFalse.evaluate();
-    }
+  public double execute(List<Node> arguments, Turtle turtle) {
+    double evaluatedCondition = arguments.get(CONDITION_INDEX).evaluate();
+    Node trueBranch = arguments.get(TRUE_BRANCH_INDEX);
+    Node falseBranch = arguments.get(FALSE_BRANCH_INDEX);
+    return (evaluatedCondition != 0.0) ? trueBranch.evaluate() : falseBranch.evaluate();
   }
+
 }
 

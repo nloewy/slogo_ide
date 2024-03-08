@@ -175,4 +175,8 @@ public class Turtle {
   public void setBgColor(int index) {
     bgColor = index;
   }
+
+  public double getId() {
+    return myId;
+  }
 }

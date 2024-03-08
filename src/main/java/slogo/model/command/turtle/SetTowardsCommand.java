@@ -1,7 +1,6 @@
 package slogo.model.command.turtle;
 
 import java.util.List;
-import slogo.mathutils.MathUtils;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
@@ -21,8 +20,8 @@ public class SetTowardsCommand implements Command {
    * The number of arguments this command expects.
    */
   public static final int NUM_ARGS = 2;
-
-  private final ModelState modelState;
+  private static final int TOWARDS_X_INDEX = 0;
+  private static final int TOWARDS_Y_INDEX = 1;
   private final SlogoListener listener;
 
   /**
@@ -32,7 +31,6 @@ public class SetTowardsCommand implements Command {
    * @param listener   the listener for state change events
    */
   public SetTowardsCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
     this.listener = listener;
   }
 
@@ -41,18 +39,16 @@ public class SetTowardsCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (containing two
    *                  nodes with the x and y coordinates of the target position)
-   * @param turtleId  the id of the turtle currently active   * @return the minimum angle of
+   * @param turtle    the id of the turtle currently active   * @return the minimum angle of
    *                  rotation needed to reach the new heading
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
-    double locationX = arguments.get(0).evaluate();
-    double locationY = arguments.get(1).evaluate();
-    Turtle turtle = modelState.getTurtles().get(turtleId);
+  public double execute(List<Node> arguments, Turtle turtle) {
+    double locationX = arguments.get(TOWARDS_X_INDEX).evaluate();
+    double locationY = arguments.get(TOWARDS_Y_INDEX).evaluate();
     double dx = locationX - turtle.getX();
     double dy = locationY - turtle.getY();
-    double targetHeading = MathUtils.toDegrees(Math.atan2(dx, dy));
+    double targetHeading = Math.atan2(dx, dy) * 180 / Math.PI;
     double currentHeading = turtle.getHeading();
     double clockwiseTurn = Math.abs((targetHeading - currentHeading + 360) % 360);
     double counterclockwiseTurn = Math.abs((currentHeading - targetHeading + 360) % 360);

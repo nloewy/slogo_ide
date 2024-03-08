@@ -2,6 +2,7 @@ package slogo.model.command.control;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -18,7 +19,8 @@ public class MakeCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-
+  private static final int VARIABLE_NAME_INDEX = 0;
+  private static final int VALUE_INDEX = 1;
   private final ModelState modelState;
   private final SlogoListener listener;
 
@@ -38,13 +40,13 @@ public class MakeCommand implements Command {
    *
    * @param arguments a list containing two nodes: the first node represents the variable name, and
    *                  the second node represents the value to assign to the variable
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the assigned value
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-    String token = arguments.get(0).getToken();
-    double variableValue = arguments.get(1).evaluate();
+  public double execute(List<Node> arguments, Turtle turtle) {
+    String token = arguments.get(VARIABLE_NAME_INDEX).getToken();
+    double variableValue = arguments.get(VALUE_INDEX).evaluate();
     modelState.getVariables().put(token, variableValue);
     listener.onUpdateValue(token, variableValue);
     return variableValue;

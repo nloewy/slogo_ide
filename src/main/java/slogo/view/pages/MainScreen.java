@@ -123,7 +123,7 @@ public class MainScreen implements SlogoListener {
   private Image defaultImage;
   private final Queue<Animation> myAnimation;
   private String commandString;
-  private final String lang;
+  private String lang;
   private Consumer<String> parse;
   private final double centerX;
   private final double centerY;
@@ -144,14 +144,11 @@ public class MainScreen implements SlogoListener {
     turtles = new ArrayList<>();
     commandHistory = new Stack<String>();
     userDefinedCommandHistory = new Stack<String>();
-
-
     try {
       defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }
-
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.getKeyFrames()
         .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> playAnimation()));
@@ -167,7 +164,6 @@ public class MainScreen implements SlogoListener {
     centerY = centerPane.getBoundsInParent().getHeight() / 2;
     centerPane.setId("CenterPane");
     turtles.add(new FrontEndTurtle(1, centerX, centerY, Color.BLUE, true, 0, defaultImage, this));
-
     initializeTurtleDisplays();
   }
 
@@ -179,6 +175,250 @@ public class MainScreen implements SlogoListener {
       pushCommand(slogoContent);
     }
 
+  }
+
+  public void updateVariables() {
+    variablesBox.getChildren().clear();
+    variablesBox.getChildren().add(variablesBoxLabel);
+
+    for (String key : variableValues.keySet()) {
+      Button openRelatedCommands = new Button(key + " :: " + variableValues.get(key));
+      openRelatedCommands.setId("variable");
+      variablesBox.getChildren().add(openRelatedCommands);
+      openRelatedCommands.setOnAction(event -> {
+        String commands = "";
+        for (String command : commandHistory) {
+          if (command.contains(key)) {
+            commands += "\n" + command;
+          }
+        }
+
+        makeInputDialog(variableValues.get(key).toString(), "Enter New Value",
+            "Enter a new value for " + key, "New value:\n\nRELATED COMMANDS\n" + commands,
+            true,
+            newValue -> {
+              try {
+                variableValues.put(key, Double.valueOf(newValue));
+                pushCommand("MAKE " + key + " " + newValue);
+
+                new Alert(AlertType.INFORMATION, "New value for " + key + " saved: " + newValue)
+                    .showAndWait();
+
+              } catch (Exception e) {
+                new Alert(AlertType.INFORMATION, "Value Must be a Number");
+              }
+            });
+      });
+
+    }
+
+  }
+
+  public void pushCommand(String s) {
+    commandString = s;
+    parse.accept(commandString);
+  }
+
+  @Override
+  public void onUpdateValue(String variableName, Number newValue) {
+    variableValues.put(variableName, newValue);
+    updateVariables();
+  }
+
+  public void setTurtleImage(File f) {
+    try {
+      for (FrontEndTurtle t : turtles) {
+        defaultImage = new Image(new FileInputStream(f), defaultImage.getWidth(),
+            defaultImage.getHeight(), true, true);
+        t.setImage(defaultImage);
+      }
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void onUpdateTurtleState(TurtleRecord turtleState) {
+    for (FrontEndTurtle turtle : turtles) {
+      if (turtle.getId() == turtleState.id()) {
+        turtle.setIsPenDisplayed(turtleState.pen());
+        setPosition(turtle, turtleState.x() + centerX, turtleState.y() + centerY,
+            turtleState.heading(), turtleState.visible());
+        List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
+        if (newPenColor != null) {
+          turtle.setPenColor(new Color(newPenColor.get(0)/255, newPenColor.get(1)/255, newPenColor.get(2)/255, 1));
+        }
+
+        List<Integer> newBackgroundColor = palette.get(turtleState.bgIndex());
+        if (newBackgroundColor != null) {
+          centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + "," + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
+        }
+
+        return;
+      }
+    }
+    FrontEndTurtle newTurtle = new FrontEndTurtle(turtleState.id(), turtleState.x() + centerX, turtleState.y() + centerY,
+        Color.BLACK, true, turtleState.heading(), defaultImage, this);
+    turtles.add(newTurtle);
+    centerPane.getChildren().add(newTurtle.getDisplay());
+  }
+
+
+
+  @Override
+  public void onResetTurtle(int id) {
+    for (FrontEndTurtle turtle : turtles) {
+      if (turtle.getId() == id) {
+        turtle.setPosition(centerX, centerY, 0, true);
+        turtle.setImage(defaultImage);
+        for (Line line : turtle.getPathHistory()) {
+          centerPane.getChildren().remove(line);
+        }
+      }
+    }
+  }
+
+  // val returned by last command
+  // add it to history next to the command
+  @Override
+  public void onReturn(double value, String string) {
+    commandHistory.add(string);
+    commandHistoryLabel.setText(commandHistoryText + String.format(" %.2f",value));
+    historyBox.updateCommandBox(commandHistory, this::pushCommand);
+  }
+
+  @Override
+  public void onUserDefinedCommand(String string) {
+    userDefinedCommandHistory.add(string);
+    definedCommandBox.updateUserDefinedCommandBox(userDefinedCommandHistory, this::pushCommand);
+  }
+
+  @Override
+  public void onSetActiveTurtles(List<Integer> ids) {
+    for (FrontEndTurtle turtle : turtles) {
+      turtle.setIsActive(ids.contains(turtle.getId()));
+    }
+  }
+
+  @Override
+  public void onUpdatePalette(Map<Integer, List<Integer>> palette) {
+    inputBox.updatePalettePane(palette);
+  }
+
+  private void makeInputDialog(String value, String title, String header, String content, Boolean needsInput, Consumer<String> consumer) {
+    TextInputDialog dialog = new TextInputDialog();
+    dialog.getEditor().setText(value);
+    dialog.getEditor().setDisable(!needsInput);
+    dialog.setTitle(title);
+    dialog.setHeaderText(header);
+    dialog.setContentText(content);
+    dialog.showAndWait().ifPresent(consumer);
+  }
+
+  private void setUp() {
+    layout = new BorderPane();
+    layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    createVariablesBox();
+    createCommandHistoryBox();
+    createUserDefinedCommandBox();
+    createLanguageObserver();
+    createTextInputBox();
+    setLayout();
+
+    root = new Group();
+    root.getChildren().add(layout);
+  }
+
+  private void createLanguageObserver() {
+    controller.addLanguageObserver((s) -> {
+      ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
+      variablesBoxLabel.setText(newLang.getString("varBox"));
+      commandHistoryLabel.setText(newLang.getString("histBox"));
+      commandHistoryText = newLang.getString("histBox");
+      userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
+      lang = s;
+    });
+  }
+
+  private void setLayout() {
+    layout.setCenter(centerPane);
+    layout.setBottom(textInputBox);
+    layout.setRight(new VBox(variablesPane, userDefinedCommandsPane)); // Stack variablesPane and
+    layout.setLeft(commandsHistory);
+  }
+
+  private void setLabelTextColor(Label label, List<Integer> rgbValues) {
+    // Calculate luminance of the color to determine if text should be dark or light
+    double luminance =
+        (0.299 * rgbValues.get(0) + 0.587 * rgbValues.get(1) + 0.114 * rgbValues.get(2)) / 255;
+
+    // Set text color based on luminance
+    if (luminance > 0.5) {
+      label.setTextFill(Color.BLACK);
+    } else {
+      label.setTextFill(Color.WHITE);
+    }
+  }
+
+  private void handleLoadTurtleImage() {
+    File dataFile = slogo.view.pages.Screen.IMAGE_CHOOSER.showOpenDialog(stage);
+    setTurtleImage(dataFile);
+  }
+
+  public void setPenColor(String color) {
+    for (ComboChoice choice : colorDropDown.getItems()) {
+      if ((String.valueOf(choice)).equals(color)) {
+        colorDropDown.setValue(choice);
+        break;
+      }
+    }
+  }
+
+  private void createTextInputBox() {
+    inputBox = new InputBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
+    inputBox.setFieldAction(this::sendCommandStringToView);
+    textInputBox = inputBox.getBox();
+    field = inputBox.getField();
+    paletteGrid = inputBox.getPaletteGrid();
+    inputBox.createSpeedSlider(mySpeed, speed -> mySpeed = speed);
+
+    inputBox.setValues(controller, currAnimation, commandHistory, stage, centerPane);
+    inputBox.setUpDropdowns(turtles);
+    inputBox.setUpButtons(this::sendCommandStringToView, this::handleLoadTurtleImage,
+        this::playSingleAnimation, this::finishCurrAnimation, this::pushCommand);
+    inputBox.setUpTurtleMovement(this::pushCommand);
+
+    inputBox.addOtherComponentsToBox();
+
+    inputBox.addButtonsToBox();
+  }
+
+
+
+
+  private void createUserDefinedCommandBox() {
+    definedCommandBox = new HistoryBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
+    definedCommandBox.setStyleClass("command-box");
+    userDefinedCommandsBox = definedCommandBox.getBox();
+    userDefinedCommandsPane = definedCommandBox.getPane();
+    userDefinedCommandsLabel = definedCommandBox.getLabel();
+  }
+
+  private void createCommandHistoryBox() {
+    historyBox = new HistoryBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
+    historyBox.setStyleClass("history-box");
+    commandHistoryBox = historyBox.getBox();
+    commandHistoryLabel = historyBox.getLabel();
+    commandsHistory = historyBox.getPane();
+  }
+
+  private void createVariablesBox() {
+    variablesBox = new VBox();
+    variablesBox.getStyleClass().add("variable-box");
+    variablesBox.setPrefSize(400, WINDOW_HEIGHT - 400);
+    variablesPane = new ScrollPane(variablesBox);
+    variablesBox.getChildren().add(variablesBoxLabel);
   }
 
 
@@ -225,191 +465,6 @@ public class MainScreen implements SlogoListener {
     }
   }
 
-  private void initializeTurtleDisplays() {
-    for (FrontEndTurtle turtle : turtles) {
-      centerPane.getChildren().add(turtle.getDisplay());
-    }
-  }
-
-  private void sendCommandStringToView() {
-    pushCommand(field.getText());
-    field.clear();
-  }
-
-  private void initResources() {
-    String currentLanguage = controller.getCurrentLanguage();
-    myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + currentLanguage);
-  }
-
-  public void updateVariables() {
-    variablesBox.getChildren().clear();
-    variablesBox.getChildren().add(variablesBoxLabel);
-
-    for (String key : variableValues.keySet()) {
-      Button openRelatedCommands = new Button(key + " :: " + variableValues.get(key));
-      openRelatedCommands.setId("variable");
-      variablesBox.getChildren().add(openRelatedCommands);
-      openRelatedCommands.setOnAction(event -> {
-        String commands = "";
-        for (String command : commandHistory) {
-          if (command.contains(key)) {
-            commands += "\n" + command;
-          }
-        }
-
-        makeInputDialog(variableValues.get(key).toString(), "Enter New Value",
-            "Enter a new value for " + key, "New value:\n\nRELATED COMMANDS\n" + commands,
-            true,
-            newValue -> {
-              try {
-                variableValues.put(key, Double.valueOf(newValue));
-                pushCommand("MAKE " + key + " " + newValue);
-
-                new Alert(AlertType.INFORMATION, "New value for " + key + " saved: " + newValue)
-                    .showAndWait();
-
-              } catch (Exception e) {
-                new Alert(AlertType.INFORMATION, "Value Must be a Number");
-              }
-            });
-      });
-
-    }
-
-  }
-
-  private void makeInputDialog(String value, String title, String header, String content, Boolean needsInput, Consumer<String> consumer) {
-    TextInputDialog dialog = new TextInputDialog();
-    dialog.getEditor().setText(value);
-    dialog.getEditor().setDisable(!needsInput);
-    dialog.setTitle(title);
-    dialog.setHeaderText(header);
-    dialog.setContentText(content);
-    dialog.showAndWait().ifPresent(consumer);
-  }
-
-  private void setUp() {
-    layout = new BorderPane();
-    layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-    createVariablesBox();
-    createCommandHistoryBox();
-    createUserDefinedCommandBox();
-
-    controller.addLanguageObserver((s) -> {
-      ResourceBundle newLang = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + s);
-      variablesBoxLabel.setText(newLang.getString("varBox"));
-      commandHistoryLabel.setText(newLang.getString("histBox"));
-      commandHistoryText = newLang.getString("histBox");
-      userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
-    });
-
-    createTextInputBox();
-    inputBox.createSpeedSlider(mySpeed, speed -> mySpeed = speed);
-
-    inputBox.setValues(controller, currAnimation, commandHistory, stage, centerPane);
-    inputBox.setUpDropdowns(turtles);
-    inputBox.setUpButtons(this::sendCommandStringToView, this::handleLoadTurtleImage, this::playSingleAnimation, this::finishCurrAnimation, this::pushCommand);
-    inputBox.setUpTurtleMovement(this::pushCommand);
-
-    inputBox.addOtherComponentsToBox();
-    inputBox.addButtonsToBox();
-
-    layout.setCenter(centerPane);
-    layout.setBottom(textInputBox);
-    layout.setRight(new VBox(variablesPane, userDefinedCommandsPane)); // Stack variablesPane and
-    layout.setLeft(commandsHistory);
-
-    root = new Group();
-    root.getChildren().add(layout);
-  }
-
-  private void setLabelTextColor(Label label, List<Integer> rgbValues) {
-    // Calculate luminance of the color to determine if text should be dark or light
-    double luminance =
-        (0.299 * rgbValues.get(0) + 0.587 * rgbValues.get(1) + 0.114 * rgbValues.get(2)) / 255;
-
-    // Set text color based on luminance
-    if (luminance > 0.5) {
-      label.setTextFill(Color.BLACK);
-    } else {
-      label.setTextFill(Color.WHITE);
-    }
-  }
-
-  private void handleLoadTurtleImage() {
-    File dataFile = slogo.view.pages.Screen.IMAGE_CHOOSER.showOpenDialog(stage);
-    setTurtleImage(dataFile);
-  }
-
-  private String getPenColor() {
-    return "PEN COLOR";
-  }
-
-  public void setPenColor(String color) {
-    for (ComboChoice choice : colorDropDown.getItems()) {
-      if ((String.valueOf(choice)).equals(color)) {
-        colorDropDown.setValue(choice);
-        break;
-      }
-    }
-  }
-
-  private void createTextInputBox() {
-    inputBox = new InputBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
-    inputBox.setFieldAction(this::sendCommandStringToView);
-    textInputBox = inputBox.getBox();
-    field = inputBox.getField();
-    paletteGrid = inputBox.getPaletteGrid();
-  }
-
-  private void createUserDefinedCommandBox() {
-    definedCommandBox = new HistoryBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
-    definedCommandBox.setStyleClass("command-box");
-    userDefinedCommandsBox = definedCommandBox.getBox();
-    userDefinedCommandsPane = definedCommandBox.getPane();
-    userDefinedCommandsLabel = definedCommandBox.getLabel();
-  }
-
-  private void createCommandHistoryBox() {
-    historyBox = new HistoryBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
-    historyBox.setStyleClass("history-box");
-    commandHistoryBox = historyBox.getBox();
-    commandHistoryLabel = historyBox.getLabel();
-    commandsHistory = historyBox.getPane();
-  }
-
-  private void createVariablesBox() {
-    variablesBox = new VBox();
-    variablesBox.getStyleClass().add("variable-box");
-    variablesBox.setPrefSize(400, WINDOW_HEIGHT - 400);
-    variablesPane = new ScrollPane(variablesBox);
-    variablesBox.getChildren().add(variablesBoxLabel);
-  }
-
-  public void setTurtleImage(File f) {
-    try {
-      for (FrontEndTurtle t : turtles) {
-        defaultImage = new Image(new FileInputStream(f), defaultImage.getWidth(),
-            defaultImage.getHeight(), true, true);
-        t.setImage(defaultImage);
-      }
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-  }
-
-  public void pushCommand(String s) {
-    commandString = s;
-    parse.accept(commandString);
-  }
-
-  @Override
-  public void onUpdateValue(String variableName, Number newValue) {
-    variableValues.put(variableName, newValue);
-    updateVariables();
-  }
-
   private void setPosition(FrontEndTurtle turtle, double x, double y, double newHeading, boolean visible) {
     double oldX = turtle.getX();
     double oldY = turtle.getY();
@@ -446,74 +501,20 @@ public class MainScreen implements SlogoListener {
     myAnimation.add(animation);
   }
 
-  @Override
-  public void onUpdateTurtleState(TurtleRecord turtleState) {
+  private void initializeTurtleDisplays() {
     for (FrontEndTurtle turtle : turtles) {
-      System.out.println(turtles);
-      if (turtle.getId() == turtleState.id()) {
-        turtle.setIsPenDisplayed(turtleState.pen());
-        setPosition(turtle, turtleState.x() + centerX, turtleState.y() + centerY,
-            turtleState.heading(), turtleState.visible());
-        List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
-        if (newPenColor != null) {
-          turtle.setPenColor(new Color(newPenColor.get(0)/255, newPenColor.get(1)/255, newPenColor.get(2)/255, 1));
-        }
-
-        List<Integer> newBackgroundColor = palette.get(turtleState.bgIndex());
-        if (newBackgroundColor != null) {
-          centerPane.setStyle("-fx-background-color: rgb(" + newBackgroundColor.get(0) + "," + newBackgroundColor.get(1) + "," + newBackgroundColor.get(2) + ")");
-        }
-
-        return;
-      }
-    }
-    FrontEndTurtle newTurtle = new FrontEndTurtle(turtleState.id(), turtleState.x() + centerX, turtleState.y() + centerY,
-        Color.BLACK, true, turtleState.heading(), defaultImage, this);
-    turtles.add(newTurtle);
-    centerPane.getChildren().add(newTurtle.getDisplay());
-  }
-
-
-
-  @Override
-  public void onResetTurtle(int id) {
-    for (FrontEndTurtle turtle : turtles) {
-      if (turtle.getId() == id) {
-        turtle.setPosition(centerX, centerY, 0, true);
-        turtle.setImage(defaultImage);
-        for (Line line : turtle.getPathHistory()) {
-          centerPane.getChildren().remove(line);
-        }
-      }
+      centerPane.getChildren().add(turtle.getDisplay());
     }
   }
 
-
-  // val returned by last command
-  // add it to history next to the command
-  @Override
-  public void onReturn(double value, String string) {
-    commandHistory.add(string);
-    commandHistoryLabel.setText(commandHistoryText + String.format(" %.2f",value));
-    historyBox.updateCommandBox(commandHistory, this::pushCommand);
+  private void sendCommandStringToView() {
+    pushCommand(field.getText());
+    field.clear();
   }
 
-  @Override
-  public void onUserDefinedCommand(String string) {
-    userDefinedCommandHistory.add(string);
-    definedCommandBox.updateCommandBox(userDefinedCommandHistory, this::pushCommand);
-  }
-
-  @Override
-  public void onSetActiveTurtles(List<Integer> ids) {
-    for (FrontEndTurtle turtle : turtles) {
-      turtle.setIsActive(ids.contains(turtle.getId()));
-    }
-  }
-
-  @Override
-  public void onUpdatePalette(Map<Integer, List<Integer>> palette) {
-    inputBox.updatePalettePane(palette);
+  private void initResources() {
+    String currentLanguage = controller.getCurrentLanguage();
+    myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + currentLanguage);
   }
 
 }
