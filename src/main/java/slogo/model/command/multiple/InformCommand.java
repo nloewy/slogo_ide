@@ -5,6 +5,7 @@ import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
+import slogo.model.command.Command;
 import slogo.model.node.Node;
 
 /**
@@ -12,8 +13,9 @@ import slogo.model.node.Node;
  *
  * @author Noah Loewy
  */
-public class TurtleInformer {
+public abstract class InformCommand implements Command {
 
+  public abstract double execute(List<Node> arguments, Turtle turtle);
   /**
    * Informs turtles based on the provided node containing turtle IDs.
    *
@@ -22,7 +24,8 @@ public class TurtleInformer {
    * @param myListener the listener for state change events
    * @return the list of informed turtle IDs
    */
-  public List<Integer> informTurtles(Node ids, ModelState modelState, SlogoListener myListener) {
+
+  protected List<Integer> informTurtles(Node ids, ModelState modelState, SlogoListener myListener) {
     List<Integer> tempList = new ArrayList<>();
     if (ids.getChildren().isEmpty()) { // case where singular turtle is informed
       addIdToList((int) Math.round(ids.evaluate()), tempList, modelState, myListener);
