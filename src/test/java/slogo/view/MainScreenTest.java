@@ -68,21 +68,51 @@ public class MainScreenTest extends DukeApplicationTest {
   }
 
   @Test
-  void testTurtleMoveButtons () {
+  void testTurtleMoveButtonsForward () {
     Button forwardButton = lookup("#↑").query();
-    Button backwardButton = lookup("#↓").query();
     clickOn(forwardButton);
     sleep(600, TimeUnit.MILLISECONDS);
     assertEquals(centerY - 50, myTurtleView.getLayoutY(), 0.01);
     assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
-    clickOn(backwardButton);
-    sleep(600, TimeUnit.MILLISECONDS);
-    assertEquals(centerY, myTurtleView.getLayoutY(), 0.01);
-    assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
+  }
+
+  @Test
+  void testTurtleMoveButtonsBackward () {
+    Button backwardButton = lookup("#↓").query();
     clickOn(backwardButton);
     sleep(600, TimeUnit.MILLISECONDS);
     assertEquals(centerY + 50, myTurtleView.getLayoutY(), 0.01);
     assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
+  }
+
+  @Test
+  void testTurtleMoveButtonsLeft () {
+    Button leftButton = lookup("#←").query();
+    clickOn(leftButton);
+    sleep(200, TimeUnit.MILLISECONDS);
+    assertEquals(centerY, myTurtleView.getLayoutY(), 0.01);
+    assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
+
+    Button forwardButton = lookup("#↑").query();
+    clickOn(forwardButton);
+    sleep(600, TimeUnit.MILLISECONDS);
+    assertEquals(centerY, myTurtleView.getLayoutY(), 0.01);
+    assertEquals(centerX - 50, myTurtleView.getLayoutX(), 0.01);
+  }
+
+  @Test
+  void testTurtleMoveButtonsRight () {
+    Button rightButton = lookup("#→").query();
+    clickOn(rightButton);
+    sleep(200, TimeUnit.MILLISECONDS);
+    assertEquals(centerY, myTurtleView.getLayoutY(), 0.01);
+    assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
+
+    Button forwardButton = lookup("#↑").query();
+    clickOn(forwardButton);
+    sleep(600, TimeUnit.MILLISECONDS);
+    assertEquals(centerY, myTurtleView.getLayoutY(), 0.01);
+    assertEquals(centerX + 50, myTurtleView.getLayoutX(), 0.01);
   }
 
 
