@@ -20,6 +20,10 @@ public class IfElseCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 3;
+  private static final int CONDITION_INDEX = 0;
+  private static final int TRUE_BRANCH_INDEX = 1;
+  private static final int FALSE_BRANCH_INDEX = 2;
+
 
   /**
    * Constructs an instance of IfElseCommand with the given model state and listener. This
@@ -47,15 +51,10 @@ public class IfElseCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-
-    double condition = arguments.get(0).evaluate();
-    Node toExecuteIfTrue = arguments.get(1);
-    Node toExecuteIfFalse = arguments.get(2);
-    if (condition != 0.0) {
-      return toExecuteIfTrue.evaluate();
-    } else {
-      return toExecuteIfFalse.evaluate();
-    }
+    double evaluatedCondition = arguments.get(CONDITION_INDEX).evaluate();
+    Node trueBranch = arguments.get(TRUE_BRANCH_INDEX);
+    Node falseBranch = arguments.get(FALSE_BRANCH_INDEX);
+    return (evaluatedCondition != 0.0) ? trueBranch.evaluate() : falseBranch.evaluate();
   }
 }
 

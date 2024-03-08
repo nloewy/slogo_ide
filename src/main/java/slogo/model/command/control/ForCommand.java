@@ -20,6 +20,10 @@ public class ForCommand implements Command {
    */
   public static final int NUM_ARGS = 2;
   private final ModelState modelState;
+  private static final int VARIABLE_NAME_INDEX = 0;
+  private static final int START_INDEX = 1;
+  private static final int END_INDEX = 2;
+  private static final int INCREMENT_INDEX = 3;
 
   /**
    * Constructs an instance of ForCommand with the given model state and listener.
@@ -42,14 +46,15 @@ public class ForCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    String variableName = arguments.get(0).getChildren().get(0).getToken();
-    double start = arguments.get(0).getChildren().get(1).evaluate();
-    double end = arguments.get(0).getChildren().get(2).evaluate();
-    double increment = arguments.get(0).getChildren().get(3).evaluate();
+    Node loopData = arguments.get(0);
     Node commands = arguments.get(1);
+    String variableName = loopData.getChildren().get(VARIABLE_NAME_INDEX).getToken();
+    double start = loopData.getChildren().get(START_INDEX).evaluate();
+    double end = loopData.getChildren().get(END_INDEX).evaluate();
+    double increment = loopData.getChildren().get(INCREMENT_INDEX).evaluate();
     double res = 0.0;
-    for (double i = start; i <= end; i += increment) {
-      modelState.getVariables().put(variableName, i);
+    for (double idx = start; idx <= end; idx += increment) {
+      modelState.getVariables().put(variableName, idx);
       res = commands.evaluate();
       modelState.getVariables().remove(variableName);
     }

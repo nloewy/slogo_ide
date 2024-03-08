@@ -21,6 +21,8 @@ public class DoTimesCommand implements Command {
    */
   public static final int NUM_ARGS = 2;
   private final ModelState modelState;
+  private static final int VARIABLE_NAME_INDEX = 0;
+  private static final int NUM_TIMES_INDEX = 1;
 
   /**
    * Constructs an instance of DoTimesCommand with the given model state and listener.
@@ -43,14 +45,14 @@ public class DoTimesCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    String variableName = arguments.get(0).getChildren().get(0).getToken();
-    double end = arguments.get(0).getChildren().get(1).evaluate();
+    Node loopData = arguments.get(0);
     Node commands = arguments.get(1);
-    double res = 0.0;
-    for (double i = 1; i <= end; i += 1) {
-      modelState.getVariables().put(variableName, i);
-      res = commands.evaluate();
+    String variableName = loopData.getChildren().get(VARIABLE_NAME_INDEX).getToken();
+    double val = 0.0;
+    for (double idx = 1; idx <= loopData.getChildren().get(NUM_TIMES_INDEX).evaluate(); idx += 1) {
+      modelState.getVariables().put(variableName, idx);
+      val = commands.evaluate();
     }
-    return res;
+    return val;
   }
 }

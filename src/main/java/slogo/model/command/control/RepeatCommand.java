@@ -20,6 +20,9 @@ public class RepeatCommand implements Command {
   public static final int NUM_ARGS = 2;
 
   private final ModelState modelState;
+  private static final int NUM_TIMES_INDEX = 0;
+  private static final int COMMAND_INDEX = 1;
+  private static final String VARIABLE_NAME = ":repcount";
 
   /**
    * Constructs an instance of RepeatCommand with the given model state and listener.
@@ -42,16 +45,14 @@ public class RepeatCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-
-    String variableName = ":repcount";
-    double end = arguments.get(0).evaluate();
-    Node commands = arguments.get(1);
+    double end = arguments.get(NUM_TIMES_INDEX).evaluate();
+    Node commands = arguments.get(COMMAND_INDEX);
     double res = 0.0;
-    for (double i = 1; i <= end; i += 1) {
-      modelState.getVariables().put(variableName, i);
+    for (double idx = 1; idx <= end; idx += 1) {
+      modelState.getVariables().put(VARIABLE_NAME, idx);
       res = commands.evaluate();
     }
-    modelState.getVariables().remove(variableName);
+    modelState.getVariables().remove(VARIABLE_NAME);
     return res;
   }
 }

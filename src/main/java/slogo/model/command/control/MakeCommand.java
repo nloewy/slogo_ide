@@ -18,9 +18,10 @@ public class MakeCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-
   private final ModelState modelState;
   private final SlogoListener listener;
+  private final int VARIABLE_NAME_INDEX = 0;
+  private final int VALUE_INDEX = 1;
 
   /**
    * Constructs an instance of MakeCommand with the given model state and listener.
@@ -43,8 +44,8 @@ public class MakeCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    String token = arguments.get(0).getToken();
-    double variableValue = arguments.get(1).evaluate();
+    String token = arguments.get(VARIABLE_NAME_INDEX).getToken();
+    double variableValue = arguments.get(VALUE_INDEX).evaluate();
     modelState.getVariables().put(token, variableValue);
     listener.onUpdateValue(token, variableValue);
     return variableValue;
