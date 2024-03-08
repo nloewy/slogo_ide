@@ -3,6 +3,7 @@ package slogo.model.command.multiple;
 import java.util.ArrayList;
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -21,6 +22,8 @@ public class AskWithCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
+  private static final int EXPR_INDEX = 0;
+  private static final int COMMANDS_INDEX = 1;
 
   private final SlogoListener myListener;
   private final ModelState modelState;
@@ -42,30 +45,31 @@ public class AskWithCommand implements Command {
    * needed, runs the given commands, and then goes back to previously active turtle.
    *
    * @param arguments a list of nodes representing the arguments passed to the command
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return result of last command run by the last turtle.
    */
 
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
+    List<Integer> askedTurtles = getAskedTurtles(arguments);
+    modelState.getActiveTurtles().add(askedTurtles);
+    double val = arguments.get(COMMANDS_INDEX).evaluate();
+    modelState.getActiveTurtles().pop();
+    myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
+    return val;
+
+  }
+
+  private List<Integer> getAskedTurtles(List<Node> arguments) {
     List<Integer> tempList = new ArrayList<>();
     for (int i : modelState.getTurtles().keySet()) {
       modelState.setCurrTurtle(i);
-
-      int id = (int) Math.round(arguments.get(0).evaluate());
+      int id = (int) Math.round(arguments.get(EXPR_INDEX).evaluate());
       if (id != 0) {
         tempList.add(i);
       }
     }
-    modelState.getActiveTurtles().add(tempList);
-
-    double val = arguments.get(1).evaluate();
-
-    modelState.getActiveTurtles().pop();
-    myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
-
-    return val;
-
+    return tempList;
   }
 }
 

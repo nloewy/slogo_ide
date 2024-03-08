@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.exceptions.UndefinedExponentException;
@@ -37,12 +38,12 @@ public class PowerCommand implements Command {
    * Executes the power mathematical operation.
    *
    * @param arguments a list containing two nodes which evaluate to the base and exponent
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the result of raising the base to the power of the exponent
    * @throws UndefinedExponentException if the result of the operation is undefined
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) throws UndefinedExponentException {
+  public double execute(List<Node> arguments, Turtle turtle) throws UndefinedExponentException {
 
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();

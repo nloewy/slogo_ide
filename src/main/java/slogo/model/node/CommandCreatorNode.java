@@ -93,7 +93,6 @@ public class CommandCreatorNode extends Node {
         sb.append("\t").append(getChildren().get(0).getChildren().get(i).getToken());
       }
       sb.append(toStringHelper(this, 0, true));
-
     }
     return sb.toString();
   }

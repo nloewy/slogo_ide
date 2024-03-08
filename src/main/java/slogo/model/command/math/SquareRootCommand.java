@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.exceptions.SquareRootOfNegativeException;
@@ -38,12 +39,12 @@ public class SquareRootCommand implements Command {
    *
    * @param arguments a list containing a single node representing the number to calculate the
    *                  square root of
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the square root of the input number
    * @throws SquareRootOfNegativeException if tries to take square root of negative number
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) throws SquareRootOfNegativeException {
+  public double execute(List<Node> arguments, Turtle turtle) throws SquareRootOfNegativeException {
 
     double arg1 = arguments.get(0).evaluate();
     if (arg1 < 0) {

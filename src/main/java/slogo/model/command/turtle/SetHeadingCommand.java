@@ -20,8 +20,7 @@ public class SetHeadingCommand implements Command {
    * The number of arguments this command expects.
    */
   public static final int NUM_ARGS = 1;
-
-  private final ModelState modelState;
+  private static final int HEADING_INDEX = 0;
   private final SlogoListener listener;
 
   /**
@@ -31,7 +30,6 @@ public class SetHeadingCommand implements Command {
    * @param listener   the listener for state change events
    */
   public SetHeadingCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
     this.listener = listener;
   }
 
@@ -40,14 +38,12 @@ public class SetHeadingCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (containing one
    *                  node with the angle to set)
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the minimum angle of rotation needed to reach the new heading
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
-    double newHeading = arguments.get(0).evaluate();
-    Turtle turtle = modelState.getTurtles().get(turtleId);
+  public double execute(List<Node> arguments, Turtle turtle) {
+    double newHeading = arguments.get(HEADING_INDEX).evaluate();
     double oldHeading = turtle.getHeading();
     turtle.setHeading(newHeading);
     double clockwiseTurn = (newHeading - oldHeading + 360) % 360;

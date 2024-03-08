@@ -2,6 +2,7 @@ package slogo.model.command.display;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.exceptions.InvalidRgbValueException;
@@ -20,7 +21,10 @@ public class SetPaletteCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 4;
-
+  private static final int PALETTE_INDEX = 0;
+  private static final int RED_INDEX = 1;
+  private static final int GREEN_INDEX = 2;
+  private static final int BLUE_INDEX = 3;
   private final ModelState modelState;
   private final SlogoListener myListener;
 
@@ -39,17 +43,16 @@ public class SetPaletteCommand implements Command {
    * Updates the Background color of the workspace.
    *
    * @param arguments a list of nodes representing arguments
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the background color of the workspace
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
 
-    int index = (int) Math.round(arguments.get(0).evaluate());
-    int red = validateRgb((int) Math.round(arguments.get(1).evaluate()));
-    int green = validateRgb((int) Math.round(arguments.get(2).evaluate()));
-    int blue = validateRgb((int) Math.round(arguments.get(3).evaluate()));
-
+    int index = (int) Math.round(arguments.get(PALETTE_INDEX).evaluate());
+    int red = validateRgb((int) Math.round(arguments.get(RED_INDEX).evaluate()));
+    int green = validateRgb((int) Math.round(arguments.get(GREEN_INDEX).evaluate()));
+    int blue = validateRgb((int) Math.round(arguments.get(BLUE_INDEX).evaluate()));
     modelState.getPalette().put(index, List.of(new Integer[]{red, green, blue}));
     myListener.onUpdatePalette(modelState.getPalette());
     return index;

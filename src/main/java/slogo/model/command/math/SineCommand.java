@@ -2,6 +2,7 @@ package slogo.model.command.math;
 
 import java.util.List;
 import slogo.model.ModelState;
+import slogo.model.Turtle;
 import slogo.model.api.SlogoListener;
 import slogo.model.command.Command;
 import slogo.model.node.Node;
@@ -35,11 +36,11 @@ public class SineCommand implements Command {
    * Executes the sine mathematical operation.
    *
    * @param arguments a list containing a single node representing the angle in degrees
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the sine of the input angle
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
+  public double execute(List<Node> arguments, Turtle turtle) {
     double arg1 = arguments.get(0).evaluate();
     return Math.sin(arg1 * Math.PI / 180);
   }

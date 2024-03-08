@@ -20,8 +20,6 @@ public class PenDownCommand implements Command {
    */
 
   public static final int NUM_ARGS = 0;
-
-  private final ModelState modelState;
   private final SlogoListener listener;
 
   /**
@@ -31,7 +29,6 @@ public class PenDownCommand implements Command {
    * @param listener   the listener for state change events
    */
   public PenDownCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
     this.listener = listener;
   }
 
@@ -40,13 +37,11 @@ public class PenDownCommand implements Command {
    *
    * @param arguments a list of nodes representing the arguments for this command (empty for this
    *                  command)
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return 1.0 to indicate that the pen is down and successful execution
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
-    Turtle turtle = modelState.getTurtles().get(turtleId);
+  public double execute(List<Node> arguments, Turtle turtle) {
     turtle.setPen(true);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return 1.0;

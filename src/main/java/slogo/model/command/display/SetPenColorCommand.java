@@ -21,6 +21,7 @@ public class SetPenColorCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
+  private static final int PEN_COLOR_INDEX = 0;
 
   private final ModelState modelState;
   private final SlogoListener myListener;
@@ -40,21 +41,19 @@ public class SetPenColorCommand implements Command {
    * Updates the Pen color of the workspace.
    *
    * @param arguments a list of nodes representing arguments
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return the heading of the active turtle
    * @throws IndexNotOnPaletteException if index not on color palette
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
-    Turtle turtle = modelState.getTurtles().get(turtleId);
-    double val = Math.round(arguments.get(0).evaluate());
+  public double execute(List<Node> arguments, Turtle turtle) {
+    double val = Math.round(arguments.get(PEN_COLOR_INDEX).evaluate());
     if (!modelState.getPalette().containsKey((int) val)) {
       throw new IndexNotOnPaletteException("", String.valueOf(val));
     }
     turtle.setPenColor((int) val);
     myListener.onUpdateTurtleState(turtle.getImmutableTurtle());
-    return modelState.getTurtles().get(turtleId).getPenColor();
+    return turtle.getPenColor();
   }
 }
 

@@ -20,28 +20,27 @@ public class IsPenDownCommand implements Command {
    */
   public static final int NUM_ARGS = 0;
 
-  private final ModelState modelState;
-
   /**
-   * Constructs an instance of IsPenDownCommand with the given model state and listener.
+   * Constructs an instance of IsPenDownCommand with the given model state and listener. This
+   * constructor does not actually do anything, and exists for the sake of consistency across
+   * commands.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
   public IsPenDownCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
+    //DO NOTHING
   }
 
   /**
    * Checks whether the pen of the requested turtle is down.
    *
    * @param arguments a list of nodes representing arguments (not used in this command)
-   * @param turtleId  the id of the turtle currently active
+   * @param turtle    the id of the turtle currently active
    * @return 1 if the pen of the requested turtle is down, 0 otherwise
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-    Turtle turtle = modelState.getTurtles().get(turtleId);
+  public double execute(List<Node> arguments, Turtle turtle) {
     if (turtle.getPen()) {
       return 1.0;
     }

@@ -20,8 +20,6 @@ public class HideTurtleCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 0;
-
-  private final ModelState modelState;
   private final SlogoListener listener;
 
   /**
@@ -31,7 +29,6 @@ public class HideTurtleCommand implements Command {
    * @param listener   the listener for state change events
    */
   public HideTurtleCommand(ModelState modelState, SlogoListener listener) {
-    this.modelState = modelState;
     this.listener = listener;
   }
 
@@ -39,13 +36,11 @@ public class HideTurtleCommand implements Command {
    * Executes the command to hide the turtle. Sets the visibility of the turtle to false.
    *
    * @param arguments a list containing nodes representing the arguments (none required)
-   * @param turtleId  the index of the turtle in the list at the top of getActiveTurtles() stack
+   * @param turtle    the index of the turtle in the list at the top of getActiveTurtles() stack
    * @return 0.0 indicating successful execution
    */
   @Override
-  public double execute(List<Node> arguments, int turtleId) {
-
-    Turtle turtle = modelState.getTurtles().get(turtleId);
+  public double execute(List<Node> arguments, Turtle turtle) {
     turtle.setVisible(false);
     listener.onUpdateTurtleState(turtle.getImmutableTurtle());
     return 0.0;
