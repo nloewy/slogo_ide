@@ -16,7 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import slogo.Controller;
+import slogo.view.Controller;
 import slogo.view.ComboChoice;
 
 public class StartScreen {

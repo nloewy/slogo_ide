@@ -37,7 +37,7 @@ public class RepeatCommand implements Command {
   }
 
   /**
-   * Executes the "repeat" control structure, then calling the loopHandler to execute the logic
+   * Executes the "repeat" control structure, then calling the loopHandler to execute the logic.
    *
    * @param arguments a list containing two nodes: the first node represents the number of times to
    *                  repeat, and the second node represents the commands to repeat.

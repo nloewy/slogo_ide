@@ -39,7 +39,7 @@ public class ForCommand implements Command {
   }
 
   /**
-   * Executes the "for" control structure, then calling the loopHandler to execute the logic
+   * Executes the "for" control structure, then calling the loopHandler to execute the logic.
    *
    * @param arguments a list containing two nodes: the first list node contains the variable name,
    *                  start value, end value, and increment value, and the second list node contains

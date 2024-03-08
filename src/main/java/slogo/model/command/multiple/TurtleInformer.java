@@ -9,6 +9,8 @@ import slogo.model.node.Node;
 
 /**
  * The TurtleInformer class provides utility methods for informing turtles.
+ *
+ * @author Noah Loewy
  */
 public class TurtleInformer {
 
