@@ -83,10 +83,8 @@ public class MainScreen implements SlogoListener {
   public static final Double[] ORIGIN = new Double[]{width / 2.0, height / 2.0};
   private static final double PIXELS_PER_SECOND = 25;
   private final Controller controller;
-  private Button reset;
   private final Timeline timeline = new Timeline();
   private final double speed = 1;
-  private Slider speedSlider;
   ComboBox<ComboChoice> colorDropDown;
   private Group root;
   private final Stage stage;
@@ -94,22 +92,10 @@ public class MainScreen implements SlogoListener {
   private final Text variablesBoxLabel = new Text();
   private Text commandHistoryLabel;
   private Text userDefinedCommandsLabel;
-  private Button submitField;
-  private Button play;
-  private Button pause;
-  private Button step;
-  private TextField distanceField;
-  private TextField rotateField;
   private String commandHistoryText;
-  private Button uploadTurtle;
-  private Button openNewWindow;
-  private Button help;
-  private Button save;
-  private Button upload;
   private final Pane centerPane = new Pane();
   private final Scene scene;
   private GridPane paletteGrid;
-  private boolean paused;
   private BorderPane layout;
   private ScrollPane variablesPane;
   private ScrollPane commandsHistory;
@@ -169,7 +155,6 @@ public class MainScreen implements SlogoListener {
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.getKeyFrames()
         .add(new KeyFrame(Duration.seconds(1.0 / (FRAME_RATE * speed)), e -> playAnimation()));
-    paused = false;
     initResources();
     timeline.play();
     setUp();
@@ -199,8 +184,7 @@ public class MainScreen implements SlogoListener {
   private void finishCurrAnimation() {
     if (currAnimation != null) {
       currAnimation.play();
-      paused = true;
-//      inputBox.setPaused(true);
+      inputBox.setPaused(true);
     }
   }
 
@@ -217,8 +201,7 @@ public class MainScreen implements SlogoListener {
   }
 
   private void playAnimation() {
-//    if (!animationPlaying && !myAnimation.isEmpty() && !inputBox.isPaused()) {
-    if (!animationPlaying && !myAnimation.isEmpty() && !paused) {
+    if (!animationPlaying && !myAnimation.isEmpty() && !inputBox.isPaused()) {
       currAnimation = myAnimation.poll();
       currAnimation.setOnFinished(event -> {
         animationPlaying = false;
@@ -227,8 +210,7 @@ public class MainScreen implements SlogoListener {
       });
       animationPlaying = true;
       currAnimation.play();
-//    } else if (animationPlaying && inputBox.isPaused()) {
-    } else if (animationPlaying && paused) {
+    } else if (animationPlaying && inputBox.isPaused()) {
       if (currAnimation != null) {
         pausedTime = currAnimation.getCurrentTime(); // Store the current time when animation is paused
         currAnimation.pause();
