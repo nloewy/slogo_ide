@@ -12,9 +12,49 @@
     </helpDocumentation>
     <numberOfExpectedParameters>1</numberOfExpectedParameters>
     <implementingClass>slogo.model.commands.ForwardCommand</implementingClass>
+    <ID>SLOGO-06</ID>
+    <Name>FORWARD pixels, FD pixels</Name>
+    <Priority>Core</Priority>
+    <Description>Moves turtle forward in its current heading by pixels distance. Returns distance turtle moved (the value of pixels).</Description>
   </command>
   <command>
-    <canonicalName>Right</canonicalName>
+    <canonicalName>back</canonicalName>
+    <description>Moves the turtle backward this many pixels.</description>
+    <example>bk 50</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="pixels" type="double">The number of pixels to move backward.</parameter>
+      </parameters>
+      <returnValue type="double">The distance moved.</returnValue>
+      <category>Movement</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.BackCommand</implementingClass>
+    <ID>SLOGO-07</ID>
+    <Name>BACK pixels, BK pixels</Name>
+    <Priority>Core</Priority>
+    <Description>Moves turtle backward in its current heading by pixels distance. Returns distance turtle moved (the value of pixels).</Description>
+  </command>
+  <command>
+    <canonicalName>left</canonicalName>
+    <description>Rotates the turtle counterclockwise by the specific degree.</description>
+    <example>lt 90</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="degrees" type="double">The number of degrees to turn left.</parameter>
+      </parameters>
+      <returnValue type="double">The new direction of the turtle in degrees.</returnValue>
+      <category>Rotation</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.LeftCommand</implementingClass>
+    <ID>SLOGO-08</ID>
+    <Name>LEFT degrees, LT degrees</Name>
+    <Priority>Core</Priority>
+    <Description>Turns turtle counterclockwise by degrees angle. Returns amount turtle turned (the value of degrees).</Description>
+  </command>
+  <command>
+    <canonicalName>right</canonicalName>
     <description>Rotates the turtle clockwise by the specific degree.</description>
     <example>rt 90</example>
     <helpDocumentation>
@@ -26,20 +66,830 @@
     </helpDocumentation>
     <numberOfExpectedParameters>1</numberOfExpectedParameters>
     <implementingClass>slogo.model.commands.RightCommand</implementingClass>
+    <ID>SLOGO-09</ID>
+    <Name>RIGHT degrees, RT degrees</Name>
+    <Priority>Core</Priority>
+    <Description>Turns turtle clockwise by degrees angle. Returns amount turtle turned (the value of degrees).</Description>
+  </command>
+  <command>
+    <canonicalName>setheading</canonicalName>
+    <description>Turns turtle to an absolute heading.</description>
+    <example>seth 90</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="degrees" type="double">The heading angle.</parameter>
+      </parameters>
+      <returnValue type="double">The number of degrees turned.</returnValue>
+      <category>Rotation</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.SetHeadingCommand</implementingClass>
+    <ID>SLOGO-10</ID>
+    <Name>SETHEADING degrees, SETH degrees</Name>
+    <Priority>Core</Priority>
+    <Description>Turns turtle to an absolute heading. Returns number of degrees turned.</Description>
+  </command>
+  <command>
+    <canonicalName>towards</canonicalName>
+    <description>Turns turtle to face the point (x, y), where (0, 0) is the center of the screen.</description>
+    <example>towards 50 50</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="x" type="double">The x coordinate to face towards.</parameter>
+        <parameter name="y" type="double">The y coordinate to face towards.</parameter>
+      </parameters>
+      <returnValue type="double">The number of degrees turtle turned.</returnValue>
+      <category>Rotation</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.TowardsCommand</implementingClass>
+    <ID>SLOGO-11</ID>
+    <Name>TOWARDS x y</Name>
+    <Priority>Core</Priority>
+    <Description>Turns turtle to face the point (x, y), where (0, 0) is the center of the screen. Returns the number of degrees turtle turned.</Description>
   </command>
   <command>
     <canonicalName>setposition</canonicalName>
-    <description>Moves turtle to an absolute screen position, where (0, 0) is the center of the screen</description>
+    <description>Moves turtle to an absolute screen position, where (0, 0) is the center of the screen.</description>
     <example>setxy 50 50</example>
     <helpDocumentation>
       <parameters>
-        <parameter name="double" type="double">The x coordinate to move to.</parameter>
-        <parameter name="double" type="double">The y coordinate to move to.</parameter>
+        <parameter name="x" type="double">The x coordinate to move to.</parameter>
+        <parameter name="y" type="double">The y coordinate to move to.</parameter>
       </parameters>
-      <returnValue type="double">The distance the turtle moved</returnValue>
+      <returnValue type="double">The distance the turtle moved.</returnValue>
       <category>Movement</category>
     </helpDocumentation>
     <numberOfExpectedParameters>2</numberOfExpectedParameters>
     <implementingClass>slogo.model.commands.SetPositionCommand</implementingClass>
+    <ID>SLOGO-12</ID>
+    <Name>SETXY x y, GOTO x y</Name>
+    <Priority>Core</Priority>
+    <Description>Moves turtle to an absolute screen position, where (0, 0) is the center of the screen. Returns distance turtle moved.</Description>
+  </command>
+  <command>
+    <canonicalName>pendown</canonicalName>
+    <description>Puts pen down such that when the turtle moves, it leaves a trail.</description>
+    <example>pd</example>
+    <helpDocumentation>
+      <returnValue type="double">1</returnValue>
+      <category>Movement</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.PenDownCommand</implementingClass>
+    <ID>SLOGO-13</ID>
+    <Name>PENDOWN, PD</Name>
+    <Priority>Core</Priority>
+    <Description>Puts pen down such that when the turtle moves, it leaves a trail. Returns 1.</Description>
+  </command>
+  <command>
+    <canonicalName>penup</canonicalName>
+    <description>Puts pen up such that when the turtle moves, it does not leave a trail.</description>
+    <example>pu</example>
+    <helpDocumentation>
+      <returnValue type="double">0</returnValue>
+      <category>Movement</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.PenUpCommand</implementingClass>
+    <ID>SLOGO-14</ID>
+    <Name>PENUP, PU</Name>
+    <Priority>Core</Priority>
+    <Description>Puts pen up such that when the turtle moves, it does not leave a trail. Returns 0.</Description>
+  </command>
+  <command>
+    <canonicalName>showturtle</canonicalName>
+    <description>Makes turtle visible.</description>
+    <example>st</example>
+    <helpDocumentation>
+      <returnValue type="double">1</returnValue>
+      <category>Display</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.ShowTurtleCommand</implementingClass>
+    <ID>SLOGO-15</ID>
+    <Name>SHOWTURTLE, ST</Name>
+    <Priority>Core</Priority>
+    <Description>Makes turtle visible. Returns 1.</Description>
+  </command>
+  <command>
+    <canonicalName>hideturtle</canonicalName>
+    <description>Makes turtle invisible.</description>
+    <example>ht</example>
+    <helpDocumentation>
+      <returnValue type="double">0</returnValue>
+      <category>Display</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.HideTurtleCommand</implementingClass>
+    <ID>SLOGO-16</ID>
+    <Name>HIDETURTLE, HT</Name>
+    <Priority>Core</Priority>
+    <Description>Makes turtle invisible. Returns 0.</Description>
+  </command>
+  <command>
+    <canonicalName>home</canonicalName>
+    <description>Moves turtle to the center of the screen (0, 0).</description>
+    <example>home</example>
+    <helpDocumentation>
+      <returnValue type="double">The distance turtle moved.</returnValue>
+      <category>Movement</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.HomeCommand</implementingClass>
+    <ID>SLOGO-17</ID>
+    <Name>HOME</Name>
+    <Priority>Core</Priority>
+    <Description>Moves turtle to the center of the screen (0, 0). Returns distance turtle moved.</Description>
+  </command>
+  <command>
+    <canonicalName>clearscreen</canonicalName>
+    <description>Erases turtle's trails and sends it to the home position.</description>
+    <example>cs</example>
+    <helpDocumentation>
+      <returnValue type="double">The distance turtle moved.</returnValue>
+      <category>Movement</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.ClearScreenCommand</implementingClass>
+    <ID>SLOGO-18</ID>
+    <Name>CLEARSCREEN, CS</Name>
+    <Priority>Core</Priority>
+    <Description>Erases turtle's trails and sends it to the home position. Returns distance turtle moved.</Description>
+  </command>
+  <!-- Turtle Queries -->
+  <command>
+    <canonicalName>xcord</canonicalName>
+    <description>Returns the turtle's X coordinate from the center of the screen.</description>
+    <helpDocumentation>
+      <returnValue type="double">The turtle's X coordinate.</returnValue>
+      <category>Queries</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.GetXCommand</implementingClass>
+    <ID>SLOGO-19</ID>
+    <Name>XCOR</Name>
+    <Priority>Core</Priority>
+    <Description>Returns the turtle's X coordinate from the center of the screen.</Description>
+  </command>
+  <command>
+    <canonicalName>ycord</canonicalName>
+    <description>Returns the turtle's Y coordinate from the center of the screen.</description>
+    <helpDocumentation>
+      <returnValue type="double">The turtle's Y coordinate.</returnValue>
+      <category>Queries</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.GetYCommand</implementingClass>
+    <ID>SLOGO-20</ID>
+    <Name>YCOR</Name>
+    <Priority>Core</Priority>
+    <Description>Returns the turtle's Y coordinate from the center of the screen.</Description>
+  </command>
+  <command>
+    <canonicalName>heading</canonicalName>
+    <description>Returns the turtle's heading in degrees.</description>
+    <helpDocumentation>
+      <returnValue type="double">The turtle's heading in degrees.</returnValue>
+      <category>Queries</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.GetHeadingCommand</implementingClass>
+    <ID>SLOGO-21</ID>
+    <Name>HEADING</Name>
+    <Priority>Core</Priority>
+    <Description>Returns the turtle's heading in degrees.</Description>
+  </command>
+  <command>
+    <canonicalName>pendown?</canonicalName>
+    <description>Returns 1 if turtle's pen is down, 0 if it is up.</description>
+    <helpDocumentation>
+      <returnValue type="double">1 if pen is down, otherwise 0.</returnValue>
+      <category>Queries</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.IsPenDownCommand</implementingClass>
+    <ID>SLOGO-22</ID>
+    <Name>PENDOWN?, PENDOWNP</Name>
+    <Priority>Core</Priority>
+    <Description>Returns 1 if turtle's pen is down, 0 if it is up.</Description>
+  </command>
+  <command>
+    <canonicalName>showing?</canonicalName>
+    <description>Returns 1 if turtle is showing, 0 if it is hiding.</description>
+    <helpDocumentation>
+      <returnValue type="double">1 if turtle is showing, otherwise 0.</returnValue>
+      <category>Queries</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.IsTurtleShowingCommand</implementingClass>
+    <ID>SLOGO-23</ID>
+    <Name>SHOWING?, SHOWINGP</Name>
+    <Priority>Core</Priority>
+    <Description>Returns 1 if turtle is showing, 0 if it is hiding.</Description>
+  </command>
+  <!-- Math Operations -->
+  <command>
+    <canonicalName>sum</canonicalName>
+    <description>Returns sum of the values of expr1 and expr2.</description>
+    <example>+ 5 10</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr1" type="double">The first expression.</parameter>
+        <parameter name="expr2" type="double">The second expression.</parameter>
+      </parameters>
+      <returnValue type="double">The sum of expr1 and expr2.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.SumCommand</implementingClass>
+    <ID>SLOGO-24</ID>
+    <Name>SUM expr1 expr2, + expr1 expr2</Name>
+    <Priority>Core</Priority>
+    <Description>Returns sum of the values of expr1 and expr2.</Description>
+  </command>
+  <command>
+    <canonicalName>difference</canonicalName>
+    <description>Returns difference of the values of expr1 and expr2.</description>
+    <example>- 10 5</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr1" type="double">The first expression.</parameter>
+        <parameter name="expr2" type="double">The second expression.</parameter>
+      </parameters>
+      <returnValue type="double">The difference between expr1 and expr2.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.DifferenceCommand</implementingClass>
+    <ID>SLOGO-25</ID>
+    <Name>DIFFERENCE expr1 expr2, - expr1 expr2</Name>
+    <Priority>Core</Priority>
+    <Description>Returns difference of the values of expr1 and expr2.</Description>
+  </command>
+  <command>
+    <canonicalName>product</canonicalName>
+    <description>Returns product of the values of expr1 and expr2.</description>
+    <example>* 5 10</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr1" type="double">The first expression.</parameter>
+        <parameter name="expr2" type="double">The second expression.</parameter>
+      </parameters>
+      <returnValue type="double">The product of expr1 and expr2.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.ProductCommand</implementingClass>
+    <ID>SLOGO-26</ID>
+    <Name>PRODUCT expr1 expr2, * expr1 expr2</Name>
+    <Priority>Core</Priority>
+    <Description>Returns product of the values of expr1 and expr2.</Description>
+  </command>
+  <command>
+    <canonicalName>quotient</canonicalName>
+    <description>Returns quotient of the values of expr1 and expr2.</description>
+    <example>/ 10 5</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr1" type="double">The numerator.</parameter>
+        <parameter name="expr2" type="double">The denominator.</parameter>
+      </parameters>
+      <returnValue type="double">The quotient of expr1 over expr2.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.QuotientCommand</implementingClass>
+    <ID>SLOGO-27</ID>
+    <Name>QUOTIENT expr1 expr2, / expr1 expr2</Name>
+    <Priority>Core</Priority>
+    <Description>Returns quotient of the values of expr1 and expr2.</Description>
+  </command>
+  <command>
+    <canonicalName>minus</canonicalName>
+    <description>Returns negative of the value of expr.</description>
+    <example>~ 5</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr" type="double">The expression to negate.</parameter>
+      </parameters>
+      <returnValue type="double">The negative of expr.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.MinusCommand</implementingClass>
+    <ID>SLOG O-28</ID>
+    <Name>MINUS expr, ~ expr</Name>
+    <Priority>Core</Priority>
+    <Description>Returns negative of the value of expr.</Description>
+  </command>
+  <command>
+    <canonicalName>random</canonicalName>
+    <description>Returns random non-negative number strictly less than max.</description>
+    <example>rand 100</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="max" type="double">The upper bound (exclusive).</parameter>
+      </parameters>
+      <returnValue type="double">A random number less than max.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.RandomCommand</implementingClass>
+    <ID>SLOGO-30</ID>
+    <Name>RANDOM max, RAND max</Name>
+    <Priority>Core</Priority>
+    <Description>Returns random non-negative number strictly less than max.</Description>
+  </command>
+  <command>
+    <canonicalName>remainder</canonicalName>
+    <description>Returns remainder on dividing the values of expr1 by expr2.</description>
+    <example>% 10 3</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr1" type="double">The dividend.</parameter>
+        <parameter name="expr2" type="double">The divisor.</parameter>
+      </parameters>
+      <returnValue type="double">The remainder of expr1 divided by expr2.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.RemainderCommand</implementingClass>
+    <ID>SLOGO-29</ID>
+    <Name>REMAINDER expr1 expr2, % expr1 expr2</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns remainder on dividing the values of expr1 by expr2.</Description>
+  </command>
+  <command>
+    <canonicalName>randomrange</canonicalName>
+    <description>Returns random number within the given range min to max, inclusive.</description>
+    <example>randr 1 100</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="min" type="double">The lower bound (inclusive).</parameter>
+        <parameter name="max" type="double">The upper bound (inclusive).</parameter>
+      </parameters>
+      <returnValue type="double">A random number between min and max, inclusive.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.RandomRangeCommand</implementingClass>
+    <ID>SLOGO-31</ID>
+    <Name>RANDOMRANGE min max, RANDR min max</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns random number within the given range min to max, inclusive.</Description>
+  </command>
+  <command>
+    <canonicalName>sine</canonicalName>
+    <description>Returns sine of degrees.</description>
+    <example>sin 90</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="degrees" type="double">The angle in degrees.</parameter>
+      </parameters>
+      <returnValue type="double">The sine of the angle.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.SineCommand</implementingClass>
+    <ID>SLOGO-32</ID>
+    <Name>SINE degrees, SIN degrees</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns sine of degrees.</Description>
+  </command>
+  <command>
+    <canonicalName>cosine</canonicalName>
+    <description>Returns cosine of degrees.</description>
+    <example>cos 0</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="degrees" type="double">The angle in degrees.</parameter>
+      </parameters>
+      <returnValue type="double">The cosine of the angle.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.CosineCommand</implementingClass>
+    <ID>SLOGO-33</ID>
+    <Name>COSINE degrees, COS degrees</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns cosine of degrees.</Description>
+  </command>
+  <command>
+    <canonicalName>tangent</canonicalName>
+    <description>Returns tangent of degrees.</description>
+    <example>tan 45</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="degrees" type="double">The angle in degrees.</parameter>
+      </parameters>
+      <returnValue type="double">The tangent of the angle.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.TangentCommand</implementingClass>
+    <ID>SLOGO-34</ID>
+    <Name>TANGENT degrees, TAN degrees</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns tangent of degrees.</Description>
+  </command>
+  <command>
+    <canonicalName>arctangent</canonicalName>
+    <description>Returns arctangent of degrees.</description>
+    <example>atan 1</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="degrees" type="double">The angle in degrees.</parameter>
+      </parameters>
+      <returnValue type="double">The arctangent of the angle.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.ArctangentCommand</implementingClass>
+    <ID>SLOGO-35</ID>
+    <Name>ARCTANGENT degrees, ATAN degrees</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns arctangent of degrees.</Description>
+  </command>
+  <command>
+    <canonicalName>squareroot</canonicalName>
+    <description>Returns square root of expr.</description>
+    <example>sqrt 16</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr" type="double">The expression.</parameter>
+      </parameters>
+      <returnValue type="double">The square root of expr.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.SquareRootCommand</implementingClass>
+    <ID>SLOGO-36</ID>
+    <Name>SQUAREROOT expr, SQRT expr</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns square root of expr.</Description>
+  </command>
+  <command>
+    <canonicalName>log</canonicalName>
+    <description>Returns natural log of expr.</description>
+    <example>log e</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr" type="double">The expression.</parameter>
+      </parameters>
+      <returnValue type="double">The natural log of expr.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.LogCommand</implementingClass>
+    <ID>SLOGO-37</ID>
+    <Name>LOG expr</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns natural log of expr.</Description>
+  </command>
+  <command>
+    <canonicalName>power</canonicalName>
+    <description>Returns base raised to the power of the exponent.</description>
+    <example>pow 2 3</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="base" type="double">The base.</parameter>
+        <parameter name="exponent" type="double">The exponent.</parameter>
+      </parameters>
+      <returnValue type="double">The result of base raised to exponent.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.PowerCommand</implementingClass>
+    <ID>SLOGO-38</ID>
+    <Name>POWER base exponent, POW base exponent</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns base raised to the power of the exponent.</Description>
+  </command>
+  <command>
+    <canonicalName>pi</canonicalName>
+    <description>Returns value of the number Pi (Math.PI).</description>
+    <helpDocumentation>
+      <returnValue type="double">The value of Pi.</returnValue>
+      <category>Math</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>0</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.PiCommand</implementingClass>
+    <ID>SLOGO-39</ID>
+    <Name>PI</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns value of the number Pi (Math.PI).</Description>
+  </command>
+  <!-- Boolean Operations -->
+  <command>
+    <canonicalName>equal?</canonicalName>
+    <description>Returns 1 if the value of expr1 and the value of expr2 are equal, otherwise 0 .</description>
+    <example>== 5 5</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr1" type="double">The first expression.</parameter>
+        <parameter name="expr2" type="double">The second expression.</parameter>
+      </parameters>
+      <returnValue type="double">1 if expr1 equals expr2, otherwise 0.</returnValue>
+      <category>Boolean</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.EqualCommand</implementingClass>
+    <ID>SLOGO-40</ID>
+    <Name>EQUAL? expr1 expr2, == expr1 expr2</Name>
+    <Priority>Core</Priority>
+    <Description>Returns 1 if the value of expr1 and the value of expr2 are equal, otherwise 0.</Description>
+  </command>
+  <!--  <command>-->
+  <!--    <canonicalName>less?</canonicalName>-->
+  <!--    <description>Returns 1 if the value of expr1 is strictly less than the value of expr2, otherwise 0.</description>-->
+  <!--    <example>< 5 10</example>-->
+  <!--    <helpDocumentation>-->
+  <!--      <parameters>-->
+  <!--        <parameter name="expr1" type="double">The first expression.</parameter>-->
+  <!--        <parameter name="expr2" type="double">The second expression.</parameter>-->
+  <!--      </parameters>-->
+  <!--      <returnValue type="double">1 if expr1 is less than expr2, otherwise 0.</returnValue>-->
+  <!--      <category>Boolean</category>-->
+  <!--    </helpDocumentation>-->
+  <!--    <numberOfExpectedParameters>2</numberOfExpectedParameters>-->
+  <!--    <implementingClass>slogo.model.commands.LessThanCommand</implementingClass>-->
+  <!--    <ID>SLOGO-41</ID>-->
+  <!--    <Name>LESS? expr1 expr2, < expr1 expr2</Name>-->
+  <!--    <Priority>Core</Priority>-->
+  <!--    <Description>Returns 1 if the value of expr1 is strictly less than the value of expr2, otherwise 0.</Description>-->
+  <!--  </command>-->
+  <command>
+    <canonicalName>greater?</canonicalName>
+    <description>Returns 1 if the value of expr1 is strictly greater than the value of expr2, otherwise 0.</description>
+    <example>> 10 5</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr1" type="double">The first expression.</parameter>
+        <parameter name="expr2" type="double">The second expression.</parameter>
+      </parameters>
+      <returnValue type="double">1 if expr1 is greater than expr2, otherwise 0.</returnValue>
+      <category>Boolean</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.GreaterThanCommand</implementingClass>
+    <ID>SLOGO-42</ID>
+    <Name>GREATER? expr1 expr2, > expr1 expr2</Name>
+    <Priority>Core</Priority>
+    <Description>Returns 1 if the value of expr1 is strictly greater than the value of expr2, otherwise 0.</Description>
+  </command>
+  <command>
+    <canonicalName>and</canonicalName>
+    <description>Returns 1 if both test1 and test2 are non-zero, otherwise 0.</description>
+    <example>and 1 0</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="test1" type="double">The first test expression.</parameter>
+        <parameter name="test2" type="double">The second test expression.</parameter>
+      </parameters>
+      <returnValue type="double">1 if both tests are non-zero, otherwise 0.</returnValue>
+      <category>Boolean</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.AndCommand</implementingClass>
+    <ID>SLOGO-43</ID>
+    <Name>AND test1 test2</Name>
+    <Priority>Core</Priority>
+    <Description>Returns 1 if both test1 and test2 are non-zero, otherwise 0.</Description>
+  </command>
+  <command>
+    <canonicalName>or</canonicalName>
+    <description>Returns 1 if either test1 or test2 are non-zero, otherwise 0.</description>
+    <example>or 0 1</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="test1" type="double">The first test expression.</parameter>
+        <parameter name="test2" type="double">The second test expression.</parameter>
+      </parameters>
+      <returnValue type="double">1 if either test is non-zero, otherwise 0.</returnValue>
+      <category>Boolean</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.OrCommand</implementingClass>
+    <ID>SLOGO-44</ID>
+    <Name>OR test1 test2</Name>
+    <Priority>Core</Priority>
+    <Description>Returns 1 if either test1 or test2 are non-zero, otherwise 0.</Description>
+  </command>
+  <command>
+    <canonicalName>not</canonicalName>
+    <description>Returns 1 if test is 0 and 0 if test is non-zero.</description>
+    <example>not 0</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="test" type="double">The test expression.</parameter>
+      </parameters>
+      <returnValue type="double">1 if test is 0, otherwise 0.</returnValue>
+      <category>Boolean</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>1</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.NotCommand</implementingClass>
+    <ID>SLOGO-45</ID>
+    <Name>NOT test</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns 1 if test is 0 and 0 if test is non-zero.</Description>
+  </command>
+  <command>
+    <canonicalName>notequal?</canonicalName>
+    <description>Returns 1 if the value of expr1 and the value of expr2 are not equal, otherwise 0.</description>
+    <example>!= 5 10</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr1" type="double">The first expression.</parameter>
+        <parameter name="expr2" type="double">The second expression.</parameter>
+      </parameters>
+      <returnValue type="double">1 if expr1 does not equal expr2, otherwise 0.</returnValue>
+      <category>Boolean</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.NotEqualCommand</implementingClass>
+    <ID>SLOGO-46</ID>
+    <Name>NOTEQUAL? expr1 expr2, != expr1 expr2</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns 1 if the value of expr1 and the value of expr2 are not equal, otherwise 0.</Description>
+  </command>
+  <!--  <command>-->
+  <!--    <canonicalName>lessequal?</canonicalName>-->
+  <!--    <description>Returns 1 if the value of expr1 is less than or equal to the value of expr2, otherwise 0.</description>-->
+  <!--    <example><= 5 5</example>-->
+  <!--    <helpDocumentation>-->
+  <!--      <parameters>-->
+  <!--        <parameter name="expr1" type="double">The first expression.</parameter>-->
+  <!--        <parameter name="expr2" type="double">The second expression.</parameter>-->
+  <!--      </parameters>-->
+  <!--      <returnValue type="double">1 if expr1 is less than or equal to expr2, otherwise 0.</returnValue>-->
+  <!--      <category>Boolean</category>-->
+  <!--    </helpDocumentation>-->
+  <!--    <numberOfExpectedParameters>2</numberOfExpectedParameters>-->
+  <!--    <implementingClass>slogo.model.commands.LessThanOrEqualCommand</implementingClass>-->
+  <!--    <ID>SLOGO-47</ID>-->
+  <!--    <Name>LESSEQUAL? expr1 expr2, <= expr1 expr2</Name>-->
+  <!--    <Priority>Extension</Priority>-->
+  <!--    <Description>Returns 1 if the value of expr1 is less than or equal to the value of expr2, otherwise 0.</Description>-->
+  <!--  </command>-->
+  <command>
+    <canonicalName>greaterequal?</canonicalName>
+    <description>Returns 1 if the value of expr1 is greater than or equal to the value of expr2, otherwise 0.</description>
+    <example>>= 10 5</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr1" type="double">The first expression.</parameter>
+        <parameter name="expr2" type="double">The second expression.</parameter>
+      </parameters>
+      <returnValue type="double">1 if expr1 is greater than or equal to expr2, otherwise 0.</returnValue>
+      <category>Boolean</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.GreaterThanOrEqualCommand</implementingClass>
+    <ID>SLOGO-48</ID>
+    <Name>GREATEREQUAL? expr1 expr2, >= expr1 expr2</Name>
+    <Priority>Extension</Priority>
+    <Description>Returns 1 if the value of expr1 is greater than or equal to the value of expr2, otherwise 0.</Description>
+  </command>
+  <!-- Variables, Control Structures, and User-Defined Commands -->
+  <command>
+    <canonicalName>make</canonicalName>
+    <description>Assigns the value of expr to variable, creating the variable if necessary.</description>
+    <example>set :x 10</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="variable" type="String">The variable name.</parameter>
+        <parameter name="expr" type="double">The value to assign.</parameter>
+      </parameters>
+      <returnValue type="double">The value assigned to the variable.</returnValue>
+      <category>Control</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.MakeVariableCommand</implementingClass>
+    <ID>SLOGO-49</ID>
+    <Name>MAKE variable expr, SET variable expr</Name>
+    <Priority>Core</Priority>
+    <Description>Assigns the value of expr to variable, creating the variable if necessary. Returns expr.</Description>
+  </command>
+  <command>
+    <canonicalName>repeat</canonicalName>
+    <description>Runs command(s) given in the list the value of expr number of times.</description>
+    <example>repeat 3 [ fd 50 ]</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr" type="double">The number of times to repeat.</parameter>
+        <parameter name="commands" type="List">The commands to execute.</parameter>
+      </parameters>
+      <returnValue type="double">The value of the final command executed (or 0 if no commands are executed).</returnValue>
+      <category>Control</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.RepeatCommand</implementingClass>
+    <ID>SLOGO-50</ID>
+    <Name>REPEAT expr [ command(s) ]</Name>
+    <Priority>Core</Priority>
+    <Description>Runs command(s) given in the list the value of expr number of times. Returns the value of the final command executed (or 0 if no commands are executed). NOTE, the value of the current iteration, starting at 1, is automatically assigned to the variable :repcount so that it can be accessed by the command(s).</Description>
+  </command>
+  <command>
+    <canonicalName>dotimes</canonicalName>
+    <description>Runs command(s) for each value specified in the range, i.e., from 1 to limit inclusive.</description>
+    <example>dotimes [ :i 10 ] [ fd :i ]</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="variable" type="String">The variable to assign each value.</parameter>
+        <parameter name="limit" type="double">The upper limit (inclusive).</parameter>
+        <parameter name="commands" type="List">The commands to execute.</parameter>
+      </parameters>
+      <returnValue type="double">The value of the final command executed (or 0 if no commands are executed).</returnValue>
+      <category>Control</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>3</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.DoTimesCommand</implementingClass>
+    <ID>SLOGO-51</ID>
+    <Name>DOTIMES [ variable limit ] [ command(s) ]</Name>
+    <Priority>Core</Priority>
+    <Description>Runs command(s) for each value specified in the range, i.e., from (1 - limit) inclusive. Returns the value of the final command executed (or 0 if no commands are executed). NOTE, variable is assigned to each succeeding value so that it can be accessed by the command(s).</Description>
+  </command>
+  <command>
+    <canonicalName>for</canonicalName>
+    <description>Runs command(s) for each value specified in the range, i.e., from start to end, going by increment.</description>
+    <example>for [ :i 1 10 1 ] [ fd :i ]</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="variable" type="String">The variable to assign each value.</parameter>
+        <parameter name="start" type="double">The start value.</parameter>
+        <parameter name="end" type="double">The end value.</parameter>
+        <parameter name="increment" type="double">The increment value.</parameter>
+        <parameter name="commands" type="List">The commands to execute.</parameter>
+      </parameters>
+      <returnValue type="double">The value of the final command executed (or 0 if no commands are executed).</returnValue>
+      <category>Control</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>4</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.ForCommand</implementingClass>
+    <ID>SLOGO-52</ID>
+    <Name>FOR [ variable start end increment ] [ command(s) ]</Name>
+    <Priority>Core</Priority>
+    <Description>Runs command(s) for each value specified in the range, i.e., from (start - end), going by increment. Returns the value of the final command executed (or 0 if no commands are executed). NOTE, variable is assigned to each succeeding value so that it can be accessed by the command(s).</Description>
+  </command>
+  <command>
+    <canonicalName>if</canonicalName>
+    <description>If expr is not 0, runs the command(s) given in the list.</description>
+    <example>if less? 5 10 [ fd 50 ]</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr" type="double">The expression to test.</parameter>
+        <parameter name="commands" type="List">The commands to execute if expr is not 0.</parameter>
+      </parameters>
+      <returnValue type="double">The value of the final command executed (or 0 if no commands are executed).</returnValue>
+      <category>Control</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>2</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.IfCommand</implementingClass>
+    <ID>SLOGO-53</ID>
+    <Name>IF expr [ command(s) ]</Name>
+    <Priority>Core</Priority>
+    <Description>If expr is not 0, runs the command(s) given in the list. Returns the value of the final command executed (or 0 if no commands are executed).</Description>
+  </command>
+  <command>
+    <canonicalName>ifelse</canonicalName>
+    <description>If expr is not 0, runs the trueCommand(s) given in the first list, otherwise runs the falseCommand(s) given in the second list.</description>
+    <example>ifelse less? 5 10 [ fd 50 ] [ bk 50 ]</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="expr" type="double">The expression to test.</parameter>
+        <parameter name="trueCommands" type="List">The commands to execute if expr is not 0.</parameter>
+        <parameter name="falseCommands" type="List">The commands to execute if expr is 0.</parameter>
+      </parameters>
+      <returnValue type="double">The value of the final command executed (or 0 if no commands are executed).</returnValue>
+      <category>Control</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>3</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.IfElseCommand</implementingClass>
+    <ID>SLOGO-54</ID>
+    <Name>IFELSE expr [ trueCommand(s) ] [ falseCommand(s) ]</Name>
+    <Priority>Core</Priority>
+    <Description>If expr is not 0, runs the trueCommand(s) given in the first list, otherwise runs the falseCommand(s) given in the second list. Returns the value of the final command executed (or 0 if no commands are executed).</Description>
+  </command>
+  <command>
+    <canonicalName>to</canonicalName>
+    <description>Assigns command(s) given in the second list to commandName using variable(s) given in the first list as parameters.</description>
+    <example>to square [ :length ] [ fd :length rt 90 ]</example>
+    <helpDocumentation>
+      <parameters>
+        <parameter name="commandName" type="String">The name of the command.</parameter>
+        <parameter name="variables" type="List">The list of variables.</parameter>
+        <parameter name="commands" type="List">The commands to associate with commandName.</parameter>
+      </parameters>
+      <returnValue type="double">1 if command is successfully defined, otherwise 0.</returnValue>
+      <category>Control</category>
+    </helpDocumentation>
+    <numberOfExpectedParameters>3</numberOfExpectedParameters>
+    <implementingClass>slogo.model.commands.MakeUserInstructionCommand</implementingClass>
+    <ID>SLOGO-55</ID>
+    <Name>TO commandName [ variable(s) ] [ command(s) ]</Name>
+    <Priority>Core</Priority>
+    <Description>Assigns command(s) given in the second list to commandName using variable(s) given in the first list as parameters. When commandName is used later in a program, any given values are assigned to variables that can be accessed when the command list is run and the value of the final command executed is returned
+      (or 0 if no commands are executed). Returns 1 if command is successfully defined, otherwise 0.</Description>
   </command>
 </commands>

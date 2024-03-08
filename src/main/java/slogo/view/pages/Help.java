@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -36,17 +38,18 @@ public class Help {
 
     Map<String, Map<String, String>> commandDetails = controller.getCommandDetailsFromXML(
         languagedCommands);
+//    int commandCounter = 0;
     for (String command : commandDetails.keySet()) {
+//      commandCounter++;
       Hyperlink commandLink = new Hyperlink(command);
       commandLink.setOnAction(e -> showCommandDetailsPopup(command, commandDetails.get(command), myResources, pushCommand, field));
       content.getChildren().add(commandLink);
+//      System.out.print(commandCounter);
     }
 
     content.getChildren().add(closeButton);
-    // popup.getContent().add(content);
-
     helpPopupModality(popup, content);
-    // popup.show(root.getScene().getWindow());
+
   }
 
   private static void showCommandDetailsPopup(String command, Map<String, String> details,
@@ -61,13 +64,24 @@ public class Help {
     Label commandLabel = new Label(myResources.getString("Command") + ": " + command);
     Label descriptionLabel = new Label(
         myResources.getString("Description") + ": " + details.get("description"));
-    Label exampleLabel = new Label(
-        myResources.getString("Example") + ": " + details.get("example"));
+
+    content.getChildren().addAll(commandLabel, descriptionLabel);
+
+    if (details.get("example") != null) {
+      Label exampleLabel = new Label(
+          myResources.getString("Example") + ": " + details.get("example"));
+      content.getChildren().add(exampleLabel);
+    }
+
     HBox parametersBox = new HBox(10);
-    Label parametersLabel = new Label(
-        myResources.getString("Parameters") + ": " + details.get("parameters"));
+    if (details.get("parameters") != null) {
+      Label parametersLabel = new Label(
+          myResources.getString("Parameters") + ": " + details.get("parameters"));
+      parametersBox.getChildren().addAll(parametersLabel);
+    }
+
     TextField parametersField = new TextField();
-    parametersBox.getChildren().addAll(parametersLabel, parametersField);
+    parametersBox.getChildren().addAll(parametersField);
     Label returnValueLabel = new Label(
         myResources.getString("ReturnValue") + ": " + details.get("returnValue"));
 
@@ -80,8 +94,8 @@ public class Help {
       field.clear();
     });
 
-    content.getChildren().addAll(commandLabel, descriptionLabel, exampleLabel, parametersBox,
-        returnValueLabel, closeButton);
+    content.getChildren().addAll(parametersBox,
+        returnValueLabel, closeButton, executeButton);
 //        returnValueLabel, closeButton, executeButton);
     // popup.getContent().add(content);
 
@@ -90,6 +104,14 @@ public class Help {
 
   private static void helpPopupModality(Stage popup, VBox content) {
     final Delta dragDelta = new Delta();
+
+    // Wrap content in a ScrollPane
+    ScrollPane scrollPane = new ScrollPane();
+    scrollPane.setContent(content);
+    scrollPane.setFitToWidth(true); // Make the scroll pane fit the width of the content
+    scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER); // Hide horizontal scroll bar
+    scrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED); // Show vertical scroll bar as needed
+
     content.setOnMousePressed(mouseEvent -> {
       dragDelta.x = popup.getX() - mouseEvent.getScreenX();
       dragDelta.y = popup.getY() - mouseEvent.getScreenY();
@@ -98,7 +120,8 @@ public class Help {
       popup.setX(mouseEvent.getScreenX() + dragDelta.x);
       popup.setY(mouseEvent.getScreenY() + dragDelta.y);
     });
-    Scene scene = new Scene(content);
+
+    Scene scene = new Scene(scrollPane); // Set the scene to use the scroll pane
     popup.setScene(scene);
     popup.show();
   }
