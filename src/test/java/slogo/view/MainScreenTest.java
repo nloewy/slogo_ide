@@ -67,5 +67,23 @@ public class MainScreenTest extends DukeApplicationTest {
     assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
   }
 
+  @Test
+  void testTurtleMoveButtons () {
+    Button forwardButton = lookup("#↑").query();
+    Button backwardButton = lookup("#↓").query();
+    clickOn(forwardButton);
+    sleep(600, TimeUnit.MILLISECONDS);
+    assertEquals(centerY - 50, myTurtleView.getLayoutY(), 0.01);
+    assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
+    clickOn(backwardButton);
+    sleep(600, TimeUnit.MILLISECONDS);
+    assertEquals(centerY, myTurtleView.getLayoutY(), 0.01);
+    assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
+    clickOn(backwardButton);
+    sleep(600, TimeUnit.MILLISECONDS);
+    assertEquals(centerY + 50, myTurtleView.getLayoutY(), 0.01);
+    assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
+  }
+
 
 }

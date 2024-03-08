@@ -58,6 +58,7 @@ public class InputBox {
 
     field = new TextField();
     field.setPromptText(myResources.getString("EnterCommand"));
+    field.setId("CommandField");
     field.setPrefSize(width - 1200, 300);
 
     paused = false;
