@@ -57,5 +57,6 @@ public class IfElseCommand implements Command {
     Node falseBranch = arguments.get(FALSE_BRANCH_INDEX);
     return (evaluatedCondition != 0.0) ? trueBranch.evaluate() : falseBranch.evaluate();
   }
+
 }
 

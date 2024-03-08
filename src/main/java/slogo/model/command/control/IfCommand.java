@@ -54,4 +54,6 @@ public class IfCommand implements Command {
     return 0.0;
   }
 
+
+
 }

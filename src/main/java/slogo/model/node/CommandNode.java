@@ -17,6 +17,7 @@ public class CommandNode extends Node {
 
   private final String myToken;
   private final ModelState myModelState;
+  private int numArgs;
 
   /**
    * Constructs a new CommandNode with the given token and model state.
@@ -43,7 +44,8 @@ public class CommandNode extends Node {
 
 
   @Override
-  public double evaluate() throws InsufficientArgumentsException {
+  public double evaluate()
+      throws InsufficientArgumentsException {
     Command command = CommandFactory.createCommand(myToken, myModelState, getListener());
     if (getNumArgs() != getChildren().size()) {
       throw new InsufficientArgumentsException("", getToken());

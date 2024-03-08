@@ -3,6 +3,7 @@ package slogo.model.command;
 import com.sun.jdi.ClassNotPreparedException;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
 import slogo.model.ModelState;
 import slogo.model.api.SlogoListener;
 import slogo.model.exceptions.InvalidCommandException;
@@ -22,34 +23,6 @@ import slogo.model.exceptions.InvalidCommandException;
  */
 
 public class CommandFactory {
-
-  /**
-   * Returns the fully qualified class name for a given command token.
-   *
-   * @param myToken the token representing the command
-   * @return the fully qualified class name for the command
-   * @throws ClassNotFoundException if class does not exist in command package
-   */
-
-  private static String getFullName(String myToken) throws ClassNotFoundException {
-    String currentPackage = CommandFactory.class.getPackage().getName();
-    String packagePath = currentPackage.replace('.', '/');
-    String basePath = CommandFactory.class.getClassLoader().getResource(packagePath).getFile();
-    File[] directories = new File(basePath).listFiles(File::isDirectory);
-
-    if (directories != null) {
-      for (File directory : directories) {
-        String fullName = currentPackage + "." + directory.getName() + "." + myToken + "Command";
-        try {
-          Class.forName(fullName);
-          return fullName;
-        } catch (ClassNotFoundException ignored) {
-          continue;
-        }
-      }
-    }
-    throw new ClassNotFoundException("Class Does not Exist");
-  }
 
   /**
    * Creates a Command object based on the given token, model state, and listener.
@@ -88,5 +61,29 @@ public class CommandFactory {
     }
   }
 
+  private static String getFullPackagePath(String myToken, File[] directories, String currentPackage)
+      throws ClassNotFoundException {
+    if (directories != null) {
+      for (File directory : directories) {
+        String fullName = currentPackage + "." + directory.getName() + "." + myToken + "Command";
+        try {
+          Class.forName(fullName);
+          return fullName;
+        } catch (ClassNotFoundException ignored) {
+          continue;
+        }
+      }
+    }
+    throw new ClassNotFoundException("Class Does not Exist");
+  }
+
+  private static String getFullName(String myToken) throws ClassNotFoundException {
+    String currentPackage = CommandFactory.class.getPackage().getName();
+    String packagePath = currentPackage.replace('.', '/');
+    String basePath = Objects.requireNonNull(
+        CommandFactory.class.getClassLoader().getResource(packagePath)).getFile();
+    File[] directories = new File(basePath).listFiles(File::isDirectory);
+    return getFullPackagePath(myToken, directories, currentPackage);
+  }
 }
 

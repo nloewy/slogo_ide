@@ -45,4 +45,6 @@ public class OrCommand implements Command {
     return (!(Math.abs(arguments.get(0).evaluate()) <= TOLERANCE) ||
         !(Math.abs(arguments.get(1).evaluate()) <= TOLERANCE)) ? 1.0 : 0.0;
   }
+
+
 }

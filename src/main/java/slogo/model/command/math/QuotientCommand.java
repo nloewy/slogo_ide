@@ -44,7 +44,6 @@ public class QuotientCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, Turtle turtle) throws DivideByZeroException {
-
     if (arguments.get(1).evaluate() == 0) {
       throw new DivideByZeroException("Divisor must be non-zero");
     }

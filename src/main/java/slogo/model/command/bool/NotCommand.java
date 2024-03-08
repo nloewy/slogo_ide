@@ -45,4 +45,5 @@ public class NotCommand implements Command {
   public double execute(List<Node> arguments, Turtle turtle) {
     return (arguments.get(0).evaluate() == 0) ? 1.0 : 0.0;
   }
+
 }

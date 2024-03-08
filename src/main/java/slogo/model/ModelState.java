@@ -128,6 +128,5 @@ public class ModelState {
     myPalette.put(5, Arrays.asList(255, 165, 0));
     myPalette.put(6, Arrays.asList(0, 0, 255));
     myPalette.put(7, Arrays.asList(0, 0, 0));
-
   }
 }

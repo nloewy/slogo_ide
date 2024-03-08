@@ -176,7 +176,4 @@ public class Turtle {
     bgColor = index;
   }
 
-  public double getId() {
-    return myId;
-  }
 }

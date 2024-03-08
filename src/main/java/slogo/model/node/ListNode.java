@@ -12,6 +12,7 @@ public class ListNode extends Node {
    * The token representing the list node.
    */
   private final String myToken;
+  private static final String CLOSED_BRACKET = "]";
 
   /**
    * Constructs a ListNode with the specified token and model state.
@@ -34,10 +35,9 @@ public class ListNode extends Node {
   public double evaluate() {
     double ret = 0.0;
     for (Node child : getChildren()) {
-      if (child.getToken().equals("]")) {
-        continue;
+      if (!child.getToken().equals(CLOSED_BRACKET)) {
+        ret = child.evaluate();
       }
-      ret = child.evaluate();
     }
     return ret;
   }

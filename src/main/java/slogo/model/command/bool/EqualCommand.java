@@ -46,5 +46,7 @@ public class EqualCommand implements Command {
     return (Math.abs(arguments.get(0).evaluate() - arguments.get(1).evaluate()) <= TOLERANCE) ? 1.0
         : 0.0;
   }
+
+
 }
 
