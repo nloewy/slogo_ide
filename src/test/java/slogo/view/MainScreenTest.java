@@ -51,7 +51,7 @@ public class MainScreenTest extends DukeApplicationTest {
   @Test
   void testDefaultStart() {
     assertEquals(centerX, myTurtleView.getLayoutX(), 0.01);
-    assertEquals(centerX, myTurtleView.getLayoutY(), 0.01);
+    assertEquals(centerY, myTurtleView.getLayoutY(), 0.01);
   }
 
   @Test
