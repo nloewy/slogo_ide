@@ -12,19 +12,17 @@ import slogo.model.node.Node;
  *
  * @author Noah Loewy
  */
-public class RepeatCommand implements Command  {
+public class RepeatCommand implements Command {
 
   /**
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-
-  private final ModelState modelState;
-  private final LoopCommandHandler loopHandler;
-
   private static final int NUM_TIMES_INDEX = 0;
   private static final int COMMAND_INDEX = 1;
   private static final String VARIABLE_NAME = ":repcount";
+  private final ModelState modelState;
+  private final LoopCommandHandler loopHandler;
 
   /**
    * Constructs an instance of RepeatCommand with the given model state and listener.

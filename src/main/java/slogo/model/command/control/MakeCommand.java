@@ -18,10 +18,10 @@ public class MakeCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-  private final ModelState modelState;
-  private final SlogoListener listener;
   private static final int VARIABLE_NAME_INDEX = 0;
   private static final int VALUE_INDEX = 1;
+  private final ModelState modelState;
+  private final SlogoListener listener;
 
   /**
    * Constructs an instance of MakeCommand with the given model state and listener.

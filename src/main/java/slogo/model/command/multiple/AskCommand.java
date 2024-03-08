@@ -1,6 +1,5 @@
 package slogo.model.command.multiple;
 
-import java.util.ArrayList;
 import java.util.List;
 import slogo.model.ModelState;
 import slogo.model.Turtle;
@@ -20,9 +19,12 @@ public class AskCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
+  private static final int ASK_IDS_INDEX = 0;
+  private static final int COMMANDS_INDEX = 1;
 
   private final SlogoListener myListener;
   private final ModelState modelState;
+  private final TurtleInformer turtleInformer;
 
   /**
    * Constructs an instance of AskCommand with the given model state and listener.
@@ -34,6 +36,7 @@ public class AskCommand implements Command {
   public AskCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
     myListener = listener;
+    turtleInformer = new TurtleInformer();
   }
 
   /**
@@ -47,31 +50,15 @@ public class AskCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    List<Integer> tempList = new ArrayList<>();
-    if (arguments.get(0).getChildren().isEmpty()) {
-      addIdToList(arguments.get(0), tempList);
-    } else {
-      for (Node node : arguments.get(0).getChildren()) {
-        if (!node.getToken().equals("]")) {
-          addIdToList(node, tempList);
-        }
-      }
-    }
-    modelState.getActiveTurtles().add(tempList);
-    double val = arguments.get(1).evaluate();
+    List<Integer> askedTurtles = turtleInformer.informTurtles(arguments.get(ASK_IDS_INDEX),
+        modelState, myListener);
+    modelState.getActiveTurtles().add(askedTurtles);
+    double val = arguments.get(COMMANDS_INDEX).evaluate();
     modelState.getActiveTurtles().pop();
     return val;
 
   }
 
-  private void addIdToList(Node node, List<Integer> tempList) {
-    int id = (int) Math.round(node.evaluate());
-    if (!modelState.getTurtles().containsKey(id)) {
-      modelState.getTurtles().put(id, new Turtle(id));
-      myListener.onUpdateTurtleState(modelState.getTurtles().get(id).getImmutableTurtle());
-    }
-    tempList.add(id);
-  }
 }
 
 

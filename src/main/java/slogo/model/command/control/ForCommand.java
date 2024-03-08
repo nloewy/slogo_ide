@@ -19,12 +19,12 @@ public class ForCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
-  private final ModelState modelState;
-  private final LoopCommandHandler loopHandler;
   private static final int VARIABLE_NAME_INDEX = 0;
   private static final int START_INDEX = 1;
   private static final int END_INDEX = 2;
   private static final int INCREMENT_INDEX = 3;
+  private final ModelState modelState;
+  private final LoopCommandHandler loopHandler;
 
   /**
    * Constructs an instance of ForCommand with the given model state and listener.

@@ -21,6 +21,8 @@ public class AskWithCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 2;
+  private static final int EXPR_INDEX = 0;
+  private static final int COMMANDS_INDEX = 1;
 
   private final SlogoListener myListener;
   private final ModelState modelState;
@@ -48,21 +50,25 @@ public class AskWithCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int turtleId) {
+    List<Integer> askedTurtles = getAskedTurtles(arguments);
+    modelState.getActiveTurtles().add(askedTurtles);
+    double val = arguments.get(COMMANDS_INDEX).evaluate();
+    modelState.getActiveTurtles().pop();
+    myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
+    return val;
+
+  }
+
+  private List<Integer> getAskedTurtles(List<Node> arguments) {
     List<Integer> tempList = new ArrayList<>();
     for (int i : modelState.getTurtles().keySet()) {
       modelState.setCurrTurtle(i);
-      int id = (int) Math.round(arguments.get(0).evaluate());
+      int id = (int) Math.round(arguments.get(EXPR_INDEX).evaluate());
       if (id != 0) {
         tempList.add(i);
       }
     }
-    modelState.getActiveTurtles().add(tempList);
-    double val = arguments.get(1).evaluate();
-    modelState.getActiveTurtles().pop();
-    myListener.onSetActiveTurtles(modelState.getActiveTurtles().peek());
-
-    return val;
-
+    return tempList;
   }
 }
 

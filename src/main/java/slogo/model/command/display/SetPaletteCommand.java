@@ -20,13 +20,12 @@ public class SetPaletteCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 4;
-
-  private final ModelState modelState;
-  private final SlogoListener myListener;
   private static final int PALETTE_INDEX = 0;
   private static final int RED_INDEX = 1;
   private static final int GREEN_INDEX = 2;
   private static final int BLUE_INDEX = 3;
+  private final ModelState modelState;
+  private final SlogoListener myListener;
 
   /**
    * Constructs an instance of SetPenCommand with the given model state and listener.
