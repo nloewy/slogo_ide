@@ -1,7 +1,6 @@
 package slogo.view.pages.components;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
@@ -43,7 +42,7 @@ public class HistoryBox {
       openCustomCommand.setId("customCommandPrompt");
       result.vbox().getChildren().addAll(result.titledPane(), result.openCustomCommand());
       commandHistoryBox.getChildren().add(result.vbox());
-      extracted(pushCommand, s, new ArrayList<>(), openCustomCommand);
+      handleButton(pushCommand, s, new ArrayList<>(), openCustomCommand);
     }
   }
 
@@ -88,13 +87,13 @@ public class HistoryBox {
       result.vbox().getChildren().addAll(result.titledPane(), openCustomCommand);
       commandHistoryBox.getChildren().add(result.vbox());
       String commandName = commandParts[1];
-      extracted(pushCommand, commandName, parameters, openCustomCommand);
+      handleButton(pushCommand, commandName, parameters, openCustomCommand);
 
     }
 
   }
 
-  private void extracted(Consumer<String> pushCommand, String commandName,
+  private void handleButton(Consumer<String> pushCommand, String commandName,
       List<String> parameters, Button openCustomCommand) {
 
     Boolean hasParameters = !parameters.isEmpty();

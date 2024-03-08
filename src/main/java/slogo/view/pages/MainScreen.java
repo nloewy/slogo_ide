@@ -123,7 +123,7 @@ public class MainScreen implements SlogoListener {
   private Image defaultImage;
   private final Queue<Animation> myAnimation;
   private String commandString;
-  private final String lang;
+  private String lang;
   private Consumer<String> parse;
   private final double centerX;
   private final double centerY;
@@ -336,6 +336,7 @@ public class MainScreen implements SlogoListener {
       commandHistoryLabel.setText(newLang.getString("histBox"));
       commandHistoryText = newLang.getString("histBox");
       userDefinedCommandsLabel.setText(newLang.getString("commandBox"));
+      lang = s;
     });
   }
 
@@ -364,10 +365,6 @@ public class MainScreen implements SlogoListener {
     setTurtleImage(dataFile);
   }
 
-  private String getPenColor() {
-    return "PEN COLOR";
-  }
-
   public void setPenColor(String color) {
     for (ComboChoice choice : colorDropDown.getItems()) {
       if ((String.valueOf(choice)).equals(color)) {
@@ -387,30 +384,17 @@ public class MainScreen implements SlogoListener {
 
     inputBox.setValues(controller, currAnimation, commandHistory, stage, centerPane);
     inputBox.setUpDropdowns(turtles);
-    inputBox.setUpButtons(this::sendCommandStringToView, this::handleLoadTurtleImage, this::playSingleAnimation, this::finishCurrAnimation, this::pushCommand);
+    inputBox.setUpButtons(this::sendCommandStringToView, this::handleLoadTurtleImage,
+        this::playSingleAnimation, this::finishCurrAnimation, this::pushCommand);
     inputBox.setUpTurtleMovement(this::pushCommand);
 
-<<<<<<< Updated upstream
     inputBox.addOtherComponentsToBox();
-    inputBox.addButtonsToBox();
-=======
-  private void createSpeedSlider() {
-    speedSlider.setMin(10);
-    speedSlider.setMax(500);
-    speedSlider.setValue(mySpeed);
-    speedSlider.setShowTickLabels(true);
-    speedSlider.setShowTickMarks(true);
-    speedSlider.setMajorTickUnit(10);
-    setSpeedSliderHandler((observable, oldValue, newValue) -> {
-      mySpeed = newValue.intValue();
-     // if (mySpeed == speedSlider.getMax()) {
-     //   mySpeed = 100000;
-    //  }
-    });
-  }
->>>>>>> Stashed changes
 
+    inputBox.addButtonsToBox();
   }
+
+
+
 
   private void createUserDefinedCommandBox() {
     definedCommandBox = new HistoryBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
