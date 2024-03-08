@@ -63,7 +63,7 @@ public class StartScreen {
       fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
       File selectedFile = fileChooser.showOpenDialog(stage);
       if (selectedFile != null) {
-        controller.loadSettings(selectedFile);
+        controller.loadSettings(selectedFile, scene);
       }
     });
 //    Button loadOld = generateButton("LoadOld", 100, 360, e -> controller.loadSession());

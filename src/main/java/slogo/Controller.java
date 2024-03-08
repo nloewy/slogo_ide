@@ -96,7 +96,12 @@ public class Controller {
 
   public void setCurrentTheme(String theme, Scene scene) {
     this.currentTheme = theme;
+    System.out.print("Current Theme: " + currentTheme);
     updateCurrentTheme(scene);
+  }
+
+  public String getCurrentTheme() {
+    return currentTheme;
   }
 
   public void openNewIDESession(String slogoContent) throws IOException {
@@ -219,7 +224,7 @@ public class Controller {
 
   }
 
-  public void loadSettings(File file) {
+  public void loadSettings(File file, Scene scene) {
     try {
       DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -235,7 +240,7 @@ public class Controller {
       for (MainScreen window : windows) {
         window.setPenColor(penColor);
       }
-//      updateCurrentTheme(theme, stage);
+      setCurrentTheme(theme,scene);
 //      setPenColor(penColor);
 
     } catch (Exception e) {

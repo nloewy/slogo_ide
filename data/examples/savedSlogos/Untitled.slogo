@@ -1,6 +1,7 @@
 
 Forward
  100
+<<<<<<< HEAD
 Right
  90
 Forward
@@ -55,3 +56,62 @@ Right
  90
 Forward
  100
+=======
+
+Forward
+ 100
+
+Backward
+ 100
+
+Backward
+ 100
+
+Backward
+ 100
+
+Forward
+ 100
+Forward
+ 100
+Backward
+ 100
+Backward
+ 100
+Backward
+ 100
+
+Right
+ 50
+
+to slice
+ [
+  ]
+ [
+  Right
+   30
+  Forward
+   50
+  Left
+   105
+  Forward
+   25
+  Backward
+   25
+  Right
+   105
+  Backward
+   50
+  ]
+to pizza
+ [
+  ]
+ [
+  Repeat
+   12
+   [
+    slice
+    ]
+  ]
+pizza
+>>>>>>> Preferences

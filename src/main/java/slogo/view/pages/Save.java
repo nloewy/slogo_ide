@@ -36,6 +36,8 @@ public class Save {
 
   public static void savePreferences(Stage stage, Controller controller) {
     FileChooser fileChooser = new FileChooser();
+    fileChooser.setInitialDirectory(
+        new File("data/preferencesXmls"));
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
     File file = fileChooser.showSaveDialog(stage);
     if (file != null) {
@@ -43,7 +45,7 @@ public class Save {
         writer.println("<preferences>");
         writer.println("  <language>" + controller.getCurrentLanguage() + "</language>");
 //        writer.println("  <theme>" + controller.getCurrentTheme() + "</theme>");
-        writer.println("  <theme>" + "IDK TRYING TO GET" + "</theme>");
+        writer.println("  <theme>" + controller.getCurrentTheme() + "</theme>");
         writer.println("  <penColor>" + "PEN COLOR" + "</penColor>");
         writer.println("</preferences>");
 
