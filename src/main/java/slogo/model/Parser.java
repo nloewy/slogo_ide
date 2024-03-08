@@ -44,7 +44,7 @@ public class Parser {
   private static final String OPEN_BRACKET = "[";
   private static final String CLOSED_BRACKET = "]";
   private static final String TO_COMMAND = "To";
-  private static final String RESOURCE_PATH = "src/main/resources/slogo/example/languages/";
+  private static final String RESOURCE_PATH = "src/main/resources/slogo/languages/";
 
   private final List<String> turtleCommands;
 

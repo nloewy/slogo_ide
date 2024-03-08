@@ -14,7 +14,7 @@ import slogo.model.node.Node;
  *
  * @author Noah Loewy
  */
-public class ForCommand implements Command {
+public class ForCommand extends LoopCommand {
 
   /**
    * The number of arguments this command requires.
@@ -25,7 +25,6 @@ public class ForCommand implements Command {
   private static final int END_INDEX = 2;
   private static final int INCREMENT_INDEX = 3;
   private final ModelState modelState;
-  private final LoopCommandHandler loopHandler;
 
   /**
    * Constructs an instance of ForCommand with the given model state and listener.
@@ -35,7 +34,6 @@ public class ForCommand implements Command {
    */
   public ForCommand(ModelState modelState, SlogoListener listener) {
     this.modelState = modelState;
-    loopHandler = new LoopCommandHandler();
   }
 
   /**
@@ -55,8 +53,7 @@ public class ForCommand implements Command {
     double start = loopData.getChildren().get(START_INDEX).evaluate();
     double end = loopData.getChildren().get(END_INDEX).evaluate();
     double increment = loopData.getChildren().get(INCREMENT_INDEX).evaluate();
-    loopHandler.setLoopParameters(start, end, increment);
-    return loopHandler.runLoop(commands, modelState, variableName);
+    return super.runLoop(start, end, increment, commands, modelState, variableName);
   }
 
 

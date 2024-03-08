@@ -24,11 +24,6 @@ import slogo.model.node.Node;
 public class ModelState {
 
   /**
-   * Stack of currently active turtles.
-   */
-  private static final String RESOURCE_PATH = "src/main/resources/slogo/example/languages/";
-  private static final String FILE_NAME = "initialpalette.properties";
-  /**
    * A map of Turtle ids to Turtle objects representing the turtles in the simulation.
    */
   private final Map<Integer, Turtle> myTurtles;
@@ -59,7 +54,7 @@ public class ModelState {
     myUserDefinedCommands = new HashMap<>();
     myUserDefinedCommandNodes = new HashMap<>();
     PaletteInitializer paletteInitializer = new PaletteInitializer();
-    myPalette = paletteInitializer.makePalette(RESOURCE_PATH + FILE_NAME);
+    myPalette = paletteInitializer.makePalette();
     activeTurtles = new Stack<>();
     currTurtle = 1;
     activateInitialTurtle();

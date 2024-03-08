@@ -14,6 +14,7 @@ import java.util.TreeMap;
  *
  * @author Noah Loewy
  */
+
 public class PaletteInitializer {
 
   /**
@@ -23,11 +24,15 @@ public class PaletteInitializer {
    * a list of RGB values.
    */
 
-  public Map<Integer, List<Integer>> makePalette(String filename) {
+  private static final String RESOURCE_PATH = "src/main/resources/slogo/palette/";
+  private static final String FILE_NAME = "initialpalette.properties";
+
+
+  public Map<Integer, List<Integer>> makePalette() {
     Map<Integer, List<Integer>> colors = new TreeMap<>();
     Properties properties = new Properties();
     try {
-      FileInputStream fis = new FileInputStream(filename);
+      FileInputStream fis = new FileInputStream(RESOURCE_PATH + FILE_NAME);
       properties.load(fis);
       int index = 1;
       String colorValue;
