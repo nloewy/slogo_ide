@@ -43,7 +43,7 @@ public class PowerCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws UndefinedExponentException {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
     double result = Math.pow(arg1, arg2);

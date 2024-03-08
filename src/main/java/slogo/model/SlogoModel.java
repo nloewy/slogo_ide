@@ -106,7 +106,7 @@ public class SlogoModel implements Model {
     dfsAddListener(root);
     double val = -1;
     for (Node node : root.getChildren()) {
-      modelState.setOuter(true);
+
       val = node.evaluate();
     }
     myCommands.push(input);

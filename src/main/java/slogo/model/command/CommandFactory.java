@@ -8,15 +8,15 @@ import slogo.model.api.SlogoListener;
 import slogo.model.exceptions.InvalidCommandException;
 
 /**
- * The CommandFactory class is responsible for creating instances of Command objects based on
- * input tokens. It also provides methods to retrieve the number of arguments expected by a
- * command. This class adheres to the Factory Pattern, as it dynamically creates instances of the
- * Command class based on the token stored in the CommandNode. It dynamically loads the Command
- * class using reflection and then instantiates it using the constructor that taken the ModelState
- * and SlogoListener as arguments, effectively creating a new Command instance. The factory
- * separates the external code from the actual creation of Command objects. The client doesn't need
- * to know the details of how each Command object is instantiated; it only needs to provide the
- * token and required parameters to the factory.
+ * The CommandFactory class is responsible for creating instances of Command objects based on input
+ * tokens. It also provides methods to retrieve the number of arguments expected by a command. This
+ * class adheres to the Factory Pattern, as it dynamically creates instances of the Command class
+ * based on the token stored in the CommandNode. It dynamically loads the Command class using
+ * reflection and then instantiates it using the constructor that taken the ModelState and
+ * SlogoListener as arguments, effectively creating a new Command instance. The factory separates
+ * the external code from the actual creation of Command objects. The client doesn't need to know
+ * the details of how each Command object is instantiated; it only needs to provide the token and
+ * required parameters to the factory.
  *
  * @author Noah Loewy
  */
@@ -54,9 +54,9 @@ public class CommandFactory {
   /**
    * Creates a Command object based on the given token, model state, and listener.
    *
-   * @param myToken     the token representing the command
+   * @param myToken      the token representing the command
    * @param myModelState the model state for the command
-   * @param listener    the listener for state change events
+   * @param listener     the listener for state change events
    * @return a Command object corresponding to the given token
    * @throws InvalidCommandException if the command represented by the token is invalid
    */

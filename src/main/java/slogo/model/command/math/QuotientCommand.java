@@ -43,7 +43,7 @@ public class QuotientCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws DivideByZeroException {
-    modelState.setOuter(false);
+
     if (arguments.get(1).evaluate() == 0) {
       throw new DivideByZeroException("Divisor must be non-zero");
     }

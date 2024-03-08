@@ -44,7 +44,7 @@ public class IfCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     Node toExecute = arguments.get(1);
     if (arg1 != 0) {

@@ -44,7 +44,7 @@ public class NotEqualCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     double arg2 = arguments.get(1).evaluate();
     return (Math.abs(arg1 - arg2) > TOLERANCE) ? 1.0 : 0.0;

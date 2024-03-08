@@ -42,7 +42,7 @@ public class AndCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     return (Math.abs(arguments.get(0).evaluate()) > TOLERANCE) &&
         (Math.abs(arguments.get(1).evaluate()) > TOLERANCE) ? 1.0 : 0.0;
   }

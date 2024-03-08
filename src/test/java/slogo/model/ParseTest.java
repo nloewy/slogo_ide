@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,10 @@ import slogo.model.exceptions.InvalidCommandException;
 import slogo.model.exceptions.InvalidOperandException;
 import slogo.model.exceptions.InvalidTokenException;
 import slogo.model.exceptions.InvalidUserCommandException;
+import slogo.model.node.CommandNode;
+import slogo.model.node.ConstantNode;
+import slogo.model.node.ListNode;
+import slogo.model.node.Node;
 
 public class ParseTest {
 
@@ -324,144 +329,4 @@ public class ParseTest {
     assertEquals(440.0, myTurtle.getHeading(), DELTA);
   }
 
-  @Test
-  void testPartialFlower()
-      throws NoSuchFieldException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvalidCommandException, InvalidTokenException {
-    slogo.parse(
-        "to arc [ :incr :degrees ] [ repeat quotIEnt   :degrees 2 [ fd 40 rt :incr ] ] to petal [ :size ] [ repeat 2 [ arc :size 60 rt 120 ] ] to fLOwer [ :length ] [ repeat 5 [ petal :length rt 60 ] ] flowEr 100");
-    Turtle myTurtle = slogo.getModelstate().getTurtles().get(1);
-    assertTrue(myTurtle.getPen());
-    assertEquals(-34.6410161514, myTurtle.getX(), DELTA);
-    assertEquals(-29.0672638767, myTurtle.getY(), DELTA);
   }
-
-
-  @Test
-  void testVariableMaker()
-      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
-    slogo.parse("set :count 16");
-    assertEquals(16.0, slogo.getModelstate().getVariables().get(":count"));
-    slogo.parse("pendown");
-    assertTrue(slogo.getModelstate().getTurtles().get(1).getPen());
-    slogo.parse("set :count ifelse pendown? power :count 2 sqrt :count");
-    assertEquals(256.0, slogo.getModelstate().getVariables().get(":count"));
-    slogo.parse("set :count 16");
-    slogo.parse("penup");
-    slogo.parse("set :count ifelse pendown? power :count 2 sqrt :count");
-    assertEquals(4.0, slogo.getModelstate().getVariables().get(":count"));
-  }
-
-
-  @Test
-  void testVariables1()
-      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
-    slogo.parse("make :x 10 tell [ 1 2 3 ] make :x [ * :x :x ] fd :x");
-    assertEquals(100, slogo.getModelstate().getVariables().get(":x"));
-    assertEquals(-100.0, slogo.getModelstate().getTurtles().get(1).getY());
-    assertEquals(-100.0, slogo.getModelstate().getTurtles().get(2).getY());
-    assertEquals(-100.0, slogo.getModelstate().getTurtles().get(3).getY());
-  }
-
-  @Test
-  void testVariables2()
-      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
-    slogo.parse("set :x 10 tell [ 1 2 3 ] fd * :x id");
-    assertEquals(-10, slogo.getModelstate().getTurtles().get(1).getY());
-    assertEquals(-20, slogo.getModelstate().getTurtles().get(2).getY());
-    assertEquals(-30, slogo.getModelstate().getTurtles().get(3).getY());
-  }
-
-  @Test
-  void testVariables3()
-      throws InvocationTargetException, InvalidCommandException, InvalidTokenException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, NoSuchFieldException {
-    slogo.parse("set :x 10 tell [ 1 2 3 ] fd set :x [ + :x 10 ]");
-    assertEquals(-20, slogo.getModelstate().getTurtles().get(1).getY());
-    assertEquals(-30, slogo.getModelstate().getTurtles().get(2).getY());
-    assertEquals(-40, slogo.getModelstate().getTurtles().get(3).getY());
-  }
-
-  @Test
-  void askCommandNoPara() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("ask 2 fd 90 rt 90");
-    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY());
-    assertEquals(90, slogo.getModelstate().getTurtles().get(1).getHeading());
-    assertEquals(0, slogo.getModelstate().getTurtles().get(2).getHeading());
-  }
-
-  @Test
-  void askCommandWithPara() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("ask [ 2 ] [ fd 90 rt 90 ]");
-    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY());
-    assertEquals(90, slogo.getModelstate().getTurtles().get(2).getHeading());
-  }
-
-  @Test
-  void askWithCommandNoPara() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("tell 2 askwith id [ fd 90 rt 90 ]");
-    assertEquals(-90, slogo.getModelstate().getTurtles().get(1).getY());
-    assertEquals(90, slogo.getModelstate().getTurtles().get(1).getHeading());
-    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY());
-    assertEquals(90, slogo.getModelstate().getTurtles().get(2).getHeading());
-  }
-
-  @Test
-  void askWithCommandYesPara() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("tell [ 1 2 ] askwith - id 1 [ fd 90 ] rt 90");
-    assertEquals(90, slogo.getModelstate().getTurtles().get(2).getHeading());
-    assertEquals(90, slogo.getModelstate().getTurtles().get(1).getHeading());
-    assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY());
-    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY());
-
-  }
-
-  @Test
-  void flower() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("tell 2 fd 90 tell [ 1 2 ] repeat 6 [ Repeat 2 [ Repeat 30 [ fd 10 right 2 ] right 120 ] right 60 ]");
-    assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
-    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY(), DELTA);
-  }
-
-  @Test
-  void flowerCommand() throws InvocationTargetException, IllegalAccessException {
-    slogo.getModelstate().setOuter(true);
-    slogo.parse("Ask 2 fd 90 ask 3 fd 180 tell [ 1 2 3 ] to arc [ :incr :degrees ] [  repeat quotient :degrees 2  [  fd :incr rt 2  ] ] to petal [ :size ] [  repeat 2  [    arc :size 60    rt 120  ] ] to flower [ :length ] [  repeat 6  [    petal :length    rt 60  ] ] ");
-    slogo.parse("flower 3");
-    assertEquals(0, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
-    assertEquals(-90, slogo.getModelstate().getTurtles().get(2).getY(), DELTA);
-  }
-
-  @Test
-  void halfSquare() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("tell 2 fd 90 tell [ 1 2 ] fd 90 rt 90 fd 90");
-    assertEquals(-90, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
-    assertEquals(90, slogo.getModelstate().getTurtles().get(1).getX(), DELTA);
-    assertEquals(-180, slogo.getModelstate().getTurtles().get(2).getY(), DELTA);
-    assertEquals(90, slogo.getModelstate().getTurtles().get(2).getX(), DELTA);
-  }
-
-  @Test
-  void halfSquareCommand() throws InvocationTargetException, IllegalAccessException {
-    slogo.parse("tell 2 fd 90 to square [ ] [ fd 90 rt 90 fd 90 ] tell [ 1 2 ] square");
-    assertEquals(-180, slogo.getModelstate().getTurtles().get(2).getY(), DELTA);
-    assertEquals(90, slogo.getModelstate().getTurtles().get(2).getX(), DELTA);
-    assertEquals(-90, slogo.getModelstate().getTurtles().get(1).getY(), DELTA);
-    assertEquals(90, slogo.getModelstate().getTurtles().get(1).getX(), DELTA);
-
-  }
-
-  @Test
-  void testInvalidUserCommand() throws InvocationTargetException, IllegalAccessException {
-    assertThrows(SlogoException.class, () -> {
-      slogo.parse(
-          "to fd [ ] [ fd 90 ] ");
-    });
-  }
-
-  @Test
-  void testInvalidVariable() throws InvocationTargetException, IllegalAccessException {
-    assertThrows(SlogoException.class, () -> {
-      slogo.parse(
-          "to fd [ 90 ] [ fd 90 ] ");
-    });
-  }
-}

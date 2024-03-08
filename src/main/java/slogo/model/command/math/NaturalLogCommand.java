@@ -44,7 +44,7 @@ public class NaturalLogCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws LogOfNegativeException {
-    modelState.setOuter(false);
+
     double arg1 = arguments.get(0).evaluate();
     if (arg1 <= 0) {
       throw new LogOfNegativeException("Input to log function must be non-negative");

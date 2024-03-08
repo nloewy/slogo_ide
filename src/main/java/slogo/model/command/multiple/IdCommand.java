@@ -40,7 +40,7 @@ public class IdCommand implements Command {
 
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     return turtleId;
   }
 }

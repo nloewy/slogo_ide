@@ -7,7 +7,8 @@ import slogo.model.command.Command;
 import slogo.model.exceptions.InvalidRgbValueException;
 import slogo.model.node.Node;
 
-/** The SetPaletteCommand represents a command that adds a new indexed color to the workspace.
+/**
+ * The SetPaletteCommand represents a command that adds a new indexed color to the workspace.
  *
  * @author Noah Loewy
  */
@@ -43,7 +44,7 @@ public class SetPaletteCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) {
-    modelState.setOuter(false);
+
     int index = (int) Math.round(arguments.get(0).evaluate());
     int red = validateRgb((int) Math.round(arguments.get(1).evaluate()));
     int green = validateRgb((int) Math.round(arguments.get(2).evaluate()));
