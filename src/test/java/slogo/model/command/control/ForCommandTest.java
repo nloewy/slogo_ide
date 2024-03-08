@@ -74,7 +74,7 @@ public class ForCommandTest extends CommandTest {
     node.addChild(listNode);
     node.addChild(commandListNode);
     dfsAddListener(node);
-    assertEquals(node.evaluate(), 10, DELTA);
-    assertEquals(myTurtle.getY(), -90, DELTA);
+    assertEquals( 10, node.evaluate(), DELTA);
+    assertEquals(-90, myTurtle.getY(), DELTA);
   }
 }

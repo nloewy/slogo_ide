@@ -12,7 +12,7 @@ import slogo.model.node.Node;
  *
  * @author Noah Loewy
  */
-public class RepeatCommand implements Command {
+public class RepeatCommand extends LoopCommand implements Command  {
 
   /**
    * The number of arguments this command requires.
@@ -47,13 +47,7 @@ public class RepeatCommand implements Command {
   public double execute(List<Node> arguments, int turtleId) {
     double end = arguments.get(NUM_TIMES_INDEX).evaluate();
     Node commands = arguments.get(COMMAND_INDEX);
-    double res = 0.0;
-    for (double idx = 1; idx <= end; idx += 1) {
-      modelState.getVariables().put(VARIABLE_NAME, idx);
-      res = commands.evaluate();
-    }
-    modelState.getVariables().remove(VARIABLE_NAME);
-    return res;
+    return super.runLoop(1, end, 1, commands, modelState, VARIABLE_NAME);
   }
 }
 

@@ -23,6 +23,10 @@ public class SetPaletteCommand implements Command {
 
   private final ModelState modelState;
   private final SlogoListener myListener;
+  private static final int PALETTE_INDEX = 0;
+  private static final int RED_INDEX = 1;
+  private static final int GREEN_INDEX = 2;
+  private static final int BLUE_INDEX = 3;
 
   /**
    * Constructs an instance of SetPenCommand with the given model state and listener.
@@ -45,11 +49,10 @@ public class SetPaletteCommand implements Command {
   @Override
   public double execute(List<Node> arguments, int turtleId) {
 
-    int index = (int) Math.round(arguments.get(0).evaluate());
-    int red = validateRgb((int) Math.round(arguments.get(1).evaluate()));
-    int green = validateRgb((int) Math.round(arguments.get(2).evaluate()));
-    int blue = validateRgb((int) Math.round(arguments.get(3).evaluate()));
-
+    int index = (int) Math.round(arguments.get(PALETTE_INDEX).evaluate());
+    int red = validateRgb((int) Math.round(arguments.get(RED_INDEX).evaluate()));
+    int green = validateRgb((int) Math.round(arguments.get(GREEN_INDEX).evaluate()));
+    int blue = validateRgb((int) Math.round(arguments.get(BLUE_INDEX).evaluate()));
     modelState.getPalette().put(index, List.of(new Integer[]{red, green, blue}));
     myListener.onUpdatePalette(modelState.getPalette());
     return index;

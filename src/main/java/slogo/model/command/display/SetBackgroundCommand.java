@@ -22,6 +22,7 @@ public class SetBackgroundCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
+  private static final int BACKGROUND_COLOR_INDEX = 0;
 
   private final ModelState modelState;
   private final SlogoListener myListener;
@@ -47,8 +48,7 @@ public class SetBackgroundCommand implements Command {
    */
   @Override
   public double execute(List<Node> arguments, int turtleId) throws IndexNotOnPaletteException {
-
-    double val = Math.round(arguments.get(0).evaluate());
+    double val = Math.round(arguments.get(BACKGROUND_COLOR_INDEX).evaluate());
     if (!modelState.getPalette().containsKey((int) val)) {
       throw new IndexNotOnPaletteException("", String.valueOf(val));
     }

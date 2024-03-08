@@ -21,6 +21,7 @@ public class SetPenColorCommand implements Command {
    * The number of arguments this command requires.
    */
   public static final int NUM_ARGS = 1;
+  private static final int PEN_COLOR_INDEX = 0;
 
   private final ModelState modelState;
   private final SlogoListener myListener;
@@ -48,7 +49,7 @@ public class SetPenColorCommand implements Command {
   public double execute(List<Node> arguments, int turtleId) {
 
     Turtle turtle = modelState.getTurtles().get(turtleId);
-    double val = Math.round(arguments.get(0).evaluate());
+    double val = Math.round(arguments.get(PEN_COLOR_INDEX).evaluate());
     if (!modelState.getPalette().containsKey((int) val)) {
       throw new IndexNotOnPaletteException("", String.valueOf(val));
     }

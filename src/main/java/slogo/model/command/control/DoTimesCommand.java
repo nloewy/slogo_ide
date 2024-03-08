@@ -14,7 +14,7 @@ import slogo.model.node.Node;
  *
  * @author Noah Loewy
  */
-public class DoTimesCommand implements Command {
+public class DoTimesCommand extends LoopCommand implements Command {
 
   /**
    * The number of arguments this command requires.
@@ -47,12 +47,8 @@ public class DoTimesCommand implements Command {
   public double execute(List<Node> arguments, int turtleId) {
     Node loopData = arguments.get(0);
     Node commands = arguments.get(1);
+    double end = loopData.getChildren().get(NUM_TIMES_INDEX).evaluate();
     String variableName = loopData.getChildren().get(VARIABLE_NAME_INDEX).getToken();
-    double val = 0.0;
-    for (double idx = 1; idx <= loopData.getChildren().get(NUM_TIMES_INDEX).evaluate(); idx += 1) {
-      modelState.getVariables().put(variableName, idx);
-      val = commands.evaluate();
-    }
-    return val;
+    return super.runLoop(1, end, 1, commands, modelState, variableName);
   }
 }
