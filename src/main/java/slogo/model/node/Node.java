@@ -64,10 +64,8 @@ public abstract class Node {
    */
 
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(toStringHelper(this, 0));
 
-    return sb.toString();
+    return toStringHelper(this, 0);
   }
 
   /**

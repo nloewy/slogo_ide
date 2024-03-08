@@ -8,11 +8,11 @@ import slogo.model.ModelState;
  */
 public class ListNode extends Node {
 
+  private static final String CLOSED_BRACKET = "]";
   /**
    * The token representing the list node.
    */
   private final String myToken;
-  private static final String CLOSED_BRACKET = "]";
 
   /**
    * Constructs a ListNode with the specified token and model state.
