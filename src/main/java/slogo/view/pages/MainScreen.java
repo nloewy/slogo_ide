@@ -390,8 +390,25 @@ public class MainScreen implements SlogoListener {
     inputBox.setUpButtons(this::sendCommandStringToView, this::handleLoadTurtleImage, this::playSingleAnimation, this::finishCurrAnimation, this::pushCommand);
     inputBox.setUpTurtleMovement(this::pushCommand);
 
+<<<<<<< Updated upstream
     inputBox.addOtherComponentsToBox();
     inputBox.addButtonsToBox();
+=======
+  private void createSpeedSlider() {
+    speedSlider.setMin(10);
+    speedSlider.setMax(500);
+    speedSlider.setValue(mySpeed);
+    speedSlider.setShowTickLabels(true);
+    speedSlider.setShowTickMarks(true);
+    speedSlider.setMajorTickUnit(10);
+    setSpeedSliderHandler((observable, oldValue, newValue) -> {
+      mySpeed = newValue.intValue();
+     // if (mySpeed == speedSlider.getMax()) {
+     //   mySpeed = 100000;
+    //  }
+    });
+  }
+>>>>>>> Stashed changes
 
   }
 
