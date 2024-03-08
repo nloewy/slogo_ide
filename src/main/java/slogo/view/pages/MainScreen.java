@@ -50,7 +50,7 @@ import slogo.view.pages.components.InputBox;
 
 public class MainScreen implements SlogoListener {
 
-  public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.example.languages.";
+  public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.languages.";
   private static final double WINDOW_WIDTH = Screen.getPrimary().getVisualBounds().getWidth();
   private static final double WINDOW_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight();
   private static final double FRAME_RATE = 4.0;
@@ -121,7 +121,7 @@ public class MainScreen implements SlogoListener {
     commandHistory = new Stack<String>();
     userDefinedCommandHistory = new Stack<String>();
     try {
-      defaultImage = new Image(new FileInputStream("src/main/resources/DefaultTurtle.png"));
+      defaultImage = new Image(new FileInputStream("src/main/resources/turtleimages/DefaultTurtle.png"));
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }
