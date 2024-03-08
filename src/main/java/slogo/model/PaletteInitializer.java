@@ -11,6 +11,8 @@ import java.util.TreeMap;
 
 /**
  * Utility class for initializing a color palette.
+ *
+ * @author Noah Loewy
  */
 public class PaletteInitializer {
 
@@ -30,7 +32,7 @@ public class PaletteInitializer {
       int index = 1;
       String colorValue;
       while ((colorValue = properties.getProperty("" + index)) != null) {
-        colors.put(index, parseRGB(colorValue));
+        colors.put(index, parseRgb(colorValue));
         index++;
       }
     } catch (IOException e) {
@@ -39,7 +41,7 @@ public class PaletteInitializer {
     return colors;
   }
 
-  private List<Integer> parseRGB(String colorValue) {
+  private List<Integer> parseRgb(String colorValue) {
     String[] parts = colorValue.split(",");
     if (parts.length != 3) {
       throw new IllegalArgumentException("Invalid RGB value: " + colorValue);

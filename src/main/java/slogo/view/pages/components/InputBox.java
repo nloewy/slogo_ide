@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import slogo.Controller;
+import slogo.view.Controller;
 import slogo.view.ComboChoice;
 import slogo.view.FrontEndTurtle;
 import slogo.view.UserInterfaceUtil;

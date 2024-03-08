@@ -1,13 +1,9 @@
 package slogo.view;
 
-import slogo.Controller;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javafx.application.Application;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 
 import static org.junit.jupiter.api.Assertions.*;
 

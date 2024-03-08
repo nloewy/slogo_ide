@@ -5,7 +5,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import slogo.Controller;
+import slogo.view.Controller;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
