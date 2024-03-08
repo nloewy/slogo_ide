@@ -21,13 +21,14 @@ public class HeadingCommand implements Command {
   public static final int NUM_ARGS = 0;
 
   /**
-   * Constructs an instance of HeadingCommand with the given model state and listener.
+   * Constructs an instance of HeadingCommand with the given model state and listener. This constructor
+   * does not actually do anything, and exists for the sake of consistency across commands.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
   public HeadingCommand(ModelState modelState, SlogoListener listener) {
-
+    //DO NOTHING
   }
 
   /**

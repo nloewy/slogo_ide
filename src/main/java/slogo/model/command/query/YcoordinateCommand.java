@@ -21,12 +21,15 @@ public class YcoordinateCommand implements Command {
   public static final int NUM_ARGS = 0;
 
   /**
-   * Constructs an instance of YcoordinateCommand with the given model state and listener.
+   * Constructs an instance of YCoordinateCommand with the given model state and listener. This
+   * constructor does not actually do anything, and exists for the sake of consistency across
+   * commands.
    *
    * @param modelState the model state
    * @param listener   the listener for state change events
    */
   public YcoordinateCommand(ModelState modelState, SlogoListener listener) {
+    //DO NOTHING
   }
 
   /**
