@@ -289,7 +289,7 @@ public class MainScreen implements SlogoListener {
   @Override
   public void onUserDefinedCommand(String string) {
     userDefinedCommandHistory.add(string);
-    definedCommandBox.updateCommandBox(userDefinedCommandHistory, this::pushCommand);
+    definedCommandBox.updateUserDefinedCommandBox(userDefinedCommandHistory, this::pushCommand);
   }
 
   @Override
