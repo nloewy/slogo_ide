@@ -71,6 +71,7 @@ import slogo.view.FrontEndTurtle;
 import slogo.view.UserInterfaceUtil;
 import slogo.view.pages.components.HistoryBox;
 import slogo.view.pages.Save;
+import slogo.view.pages.components.InputBox;
 
 public class MainScreen implements SlogoListener {
 
@@ -115,6 +116,7 @@ public class MainScreen implements SlogoListener {
   private ScrollPane commandsHistory;
   private HistoryBox historyBox;
   private HistoryBox definedCommandBox;
+  private InputBox inputBox;
   private ScrollPane userDefinedCommandsPane;
   private VBox variablesBox;
   private String recentlyUpdatedVariable;
@@ -199,6 +201,7 @@ public class MainScreen implements SlogoListener {
     if (currAnimation != null) {
       currAnimation.play();
       paused = true;
+//      inputBox.setPaused(true);
     }
   }
 
@@ -215,6 +218,7 @@ public class MainScreen implements SlogoListener {
   }
 
   private void playAnimation() {
+//    if (!animationPlaying && !myAnimation.isEmpty() && !inputBox.isPaused()) {
     if (!animationPlaying && !myAnimation.isEmpty() && !paused) {
       currAnimation = myAnimation.poll();
       currAnimation.setOnFinished(event -> {
@@ -224,12 +228,13 @@ public class MainScreen implements SlogoListener {
       });
       animationPlaying = true;
       currAnimation.play();
+//    } else if (animationPlaying && inputBox.isPaused()) {
     } else if (animationPlaying && paused) {
       if (currAnimation != null) {
         pausedTime = currAnimation.getCurrentTime(); // Store the current time when animation is paused
         currAnimation.pause();
       }
-    } else if (animationPlaying && !paused && pausedTime != null) {
+    } else if (animationPlaying && pausedTime != null) {
       // If animation was paused and now unpaused, resume from the paused time
       if (currAnimation != null) {
         currAnimation.playFrom(pausedTime);
@@ -320,40 +325,38 @@ public class MainScreen implements SlogoListener {
     createSpeedSlider();
     createTextInputBox();
 
-    field = new TextField();
-    field.setPromptText(myResources.getString("EnterCommand"));
-    field.setPrefSize(WINDOW_WIDTH - 1200, 300);
-
     field.setOnAction(event -> {
       if (!field.getText().isEmpty()) {
         sendCommandStringToView();
       }
     });
 
-    submitField = UserInterfaceUtil.generateButton("Submit", event -> {
-      sendCommandStringToView();
-      paused = false;
-    });
+    inputBox.setUpButtons(controller, this::sendCommandStringToView, this::handleLoadTurtleImage);
 
-    openNewWindow = UserInterfaceUtil.generateButton("Open New Window", event -> {
-      try {
-        controller.openNewIDESession(null);
-        paused = false;
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    });
-
-    uploadTurtle = generateButton("UploadTurtle", (event) -> {
-      handleLoadTurtleImage();
-    });
-
-    play = UserInterfaceUtil.generateButton("Play", event -> {
-      paused = false;
-    });
-    pause = UserInterfaceUtil.generateButton("Pause", event -> {
-      paused = true;
-    });
+//    submitField = UserInterfaceUtil.generateButton("Submit", event -> {
+//      sendCommandStringToView();
+//      paused = false;
+//    });
+//
+//    openNewWindow = UserInterfaceUtil.generateButton("Open New Window", event -> {
+//      try {
+//        controller.openNewIDESession(null);
+//        paused = false;
+//      } catch (IOException e) {
+//        e.printStackTrace();
+//      }
+//    });
+//
+//    uploadTurtle = generateButton("UploadTurtle", (event) -> {
+//      handleLoadTurtleImage();
+//    });
+//
+//    play = UserInterfaceUtil.generateButton("Play", event -> {
+//      paused = false;
+//    });
+//    pause = UserInterfaceUtil.generateButton("Pause", event -> {
+//      paused = true;
+//    });
 
     step = UserInterfaceUtil.generateButton("Step", event -> {
       if (currAnimation == null) {
@@ -545,9 +548,10 @@ public class MainScreen implements SlogoListener {
   }
 
   private void createTextInputBox() {
-    textInputBox = new HBox();
-    textInputBox.getStyleClass().add("input-box");
-    textInputBox.setMaxSize(WINDOW_WIDTH, 200);
+    inputBox = new InputBox(WINDOW_WIDTH, WINDOW_HEIGHT, myResources);
+    textInputBox = inputBox.getBox();
+    field = inputBox.getField();
+
   }
 
   private void createUserDefinedCommandBox() {
