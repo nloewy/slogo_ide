@@ -86,7 +86,6 @@ public class StartScreen {
       loadSlogo.setText(newLang.getString("LoadSlogo"));
       loadGen.setText(newLang.getString("LoadGen"));
       uploadPref.setText(newLang.getString("uploadPreferences"));
-//      loadOld.setText(newLang.getString("LoadOld"));
 
       String[] themes = newLang.getString("ColorThemes").split(",");
       ObservableList<ComboChoice> comboBoxItems = themeComboBox.getItems();
