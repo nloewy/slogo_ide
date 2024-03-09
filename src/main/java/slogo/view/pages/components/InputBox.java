@@ -39,6 +39,7 @@ public class InputBox {
   private final HBox textInputBox;
   private final ResourceBundle myResources;
   private final TextField field;
+  private final GridPane paletteGrid;
   private Controller controller;
   private Animation currAnimation;
   private Stack<String> commandHistory;
@@ -48,7 +49,6 @@ public class InputBox {
   private List<Region> mainButtons;
   private HBox turtleButtons;
   private HBox turtleMoveBox;
-  private final GridPane paletteGrid;
   private Slider speedSlider;
   private boolean paused;
 
@@ -231,7 +231,8 @@ public class InputBox {
     VBox uploadButtons = new VBox(upload, uploadTurtle, save);
     uploadButtons.getStyleClass().add("animate-buttons");
 
-    mainButtons = List.of(submitField, animateButtons, help, reset, uploadButtons, dropdowns, openNewWindow);
+    mainButtons = List.of(submitField, animateButtons, help, reset, uploadButtons, dropdowns,
+        openNewWindow);
 
     mainButtons.forEach(b -> b.getStyleClass().add("main-screen-button"));
 

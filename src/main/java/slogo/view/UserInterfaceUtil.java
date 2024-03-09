@@ -13,7 +13,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import slogo.model.api.SlogoException;
 
 public class UserInterfaceUtil {
 
@@ -64,7 +63,7 @@ public class UserInterfaceUtil {
     comboBox.setLayoutY(y);
     comboBox.setOnAction(e -> {
       String selectedOption = comboBox.getValue();
-        consumer.accept(fixString.apply(selectedOption));
+      consumer.accept(fixString.apply(selectedOption));
     });
 
     return comboBox;

@@ -11,10 +11,6 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import slogo.model.Turtle;
-import slogo.model.api.SlogoException;
-import slogo.model.api.SlogoListener;
-import slogo.model.api.SlogoModel;
-import slogo.model.api.TurtleRecord;
 import slogo.model.exceptions.InvalidCommandException;
 import slogo.model.exceptions.InvalidTokenException;
 

@@ -16,7 +16,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import slogo.model.api.SlogoException;
 import slogo.view.ComboChoice;
 import slogo.view.Controller;
 
@@ -79,7 +78,7 @@ public class StartScreen {
         (s) -> {
           return s.replace(" ", "") + ".css";
         }, (event) -> {
-            controller.updateCurrentTheme(scene);
+          controller.setCurrentTheme(event, scene);
         });
 
     controller.addLanguageObserver((s) -> {
