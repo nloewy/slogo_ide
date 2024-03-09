@@ -46,7 +46,7 @@ public class StartScreenTest extends DukeApplicationTest {
     clickOn(languageBox);
     clickOn("Français");
     assertEquals("Français", languageBox.getValue());
-    assertEquals("Nouvelle session generale", loadGen.getText());
+    assertEquals("Nouvelle Generale", loadGen.getText());
   }
 
   @Test
