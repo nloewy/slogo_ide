@@ -64,11 +64,7 @@ public class UserInterfaceUtil {
     comboBox.setLayoutY(y);
     comboBox.setOnAction(e -> {
       String selectedOption = comboBox.getValue();
-      try {
         consumer.accept(fixString.apply(selectedOption));
-      } catch (Exception ex) {
-        throw new SlogoException("Error in selection", "");
-      }
     });
 
     return comboBox;

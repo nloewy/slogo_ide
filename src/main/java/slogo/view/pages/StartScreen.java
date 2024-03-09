@@ -79,11 +79,7 @@ public class StartScreen {
         (s) -> {
           return s.replace(" ", "") + ".css";
         }, (event) -> {
-          try {
             controller.updateCurrentTheme(scene);
-          } catch (Exception e) {
-            throw new SlogoException("Error in updating theme", "");
-          }
         });
 
     controller.addLanguageObserver((s) -> {
