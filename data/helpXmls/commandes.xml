@@ -1,6 +1,6 @@
 <commands>
   <command>
-    <canonicalName>avanzar</canonicalName>
+    <canonicalName>avancer</canonicalName>
     <description>Moves the turtle forward this many pixels.</description>
     <example>fd 50</example>
     <helpDocumentation>
@@ -18,7 +18,7 @@
     <Description>Moves turtle forward in its current heading by pixels distance. Returns distance turtle moved (the value of pixels).</Description>
   </command>
   <command>
-    <canonicalName>volver</canonicalName>
+    <canonicalName>reculer</canonicalName>
     <description>Moves the turtle backward this many pixels.</description>
     <example>bk 50</example>
     <helpDocumentation>
@@ -36,7 +36,7 @@
     <Description>Moves turtle backward in its current heading by pixels distance. Returns distance turtle moved (the value of pixels).</Description>
   </command>
   <command>
-    <canonicalName>izquierda</canonicalName>
+    <canonicalName>gauche</canonicalName>
     <description>Rotates the turtle counterclockwise by the specific degree.</description>
     <example>lt 90</example>
     <helpDocumentation>
@@ -54,7 +54,7 @@
     <Description>Turns turtle counterclockwise by degrees angle. Returns amount turtle turned (the value of degrees).</Description>
   </command>
   <command>
-    <canonicalName>derecha</canonicalName>
+    <canonicalName>droite</canonicalName>
     <description>Rotates the turtle clockwise by the specific degree.</description>
     <example>rt 90</example>
     <helpDocumentation>
@@ -72,7 +72,7 @@
     <Description>Turns turtle clockwise by degrees angle. Returns amount turtle turned (the value of degrees).</Description>
   </command>
   <command>
-    <canonicalName>ponerrotacion</canonicalName>
+    <canonicalName>definirrotation</canonicalName>
     <description>Turns turtle to an absolute heading.</description>
     <example>seth 90</example>
     <helpDocumentation>
@@ -90,7 +90,7 @@
     <Description>Turns turtle to an absolute heading. Returns number of degrees turned.</Description>
   </command>
   <command>
-    <canonicalName>hacia</canonicalName>
+    <canonicalName>vers</canonicalName>
     <description>Turns turtle to face the point (x, y), where (0, 0) is the center of the screen.</description>
     <example>towards 50 50</example>
     <helpDocumentation>
@@ -109,7 +109,7 @@
     <Description>Turns turtle to face the point (x, y), where (0, 0) is the center of the screen. Returns the number of degrees turtle turned.</Description>
   </command>
   <command>
-    <canonicalName>ponerxy</canonicalName>
+    <canonicalName>definirxy</canonicalName>
     <description>Moves turtle to an absolute screen position, where (0, 0) is the center of the screen.</description>
     <example>setxy 50 50</example>
     <helpDocumentation>
@@ -128,7 +128,7 @@
     <Description>Moves turtle to an absolute screen position, where (0, 0) is the center of the screen. Returns distance turtle moved.</Description>
   </command>
   <command>
-    <canonicalName>plumaabajo</canonicalName>
+    <canonicalName>stylobas</canonicalName>
     <description>Puts pen down such that when the turtle moves, it leaves a trail.</description>
     <example>pd</example>
     <helpDocumentation>
@@ -143,7 +143,7 @@
     <Description>Puts pen down such that when the turtle moves, it leaves a trail. Returns 1.</Description>
   </command>
   <command>
-    <canonicalName>plumasubida</canonicalName>
+    <canonicalName>styloleve</canonicalName>
     <description>Puts pen up such that when the turtle moves, it does not leave a trail.</description>
     <example>pu</example>
     <helpDocumentation>
@@ -158,7 +158,7 @@
     <Description>Puts pen up such that when the turtle moves, it does not leave a trail. Returns 0.</Description>
   </command>
   <command>
-    <canonicalName>descubrirtortuga</canonicalName>
+    <canonicalName>montrertortue</canonicalName>
     <description>Makes turtle visible.</description>
     <example>st</example>
     <helpDocumentation>
@@ -173,7 +173,7 @@
     <Description>Makes turtle visible. Returns 1.</Description>
   </command>
   <command>
-    <canonicalName>encubrirtortuga</canonicalName>
+    <canonicalName>cachertortue</canonicalName>
     <description>Makes turtle invisible.</description>
     <example>ht</example>
     <helpDocumentation>
@@ -188,7 +188,7 @@
     <Description>Makes turtle invisible. Returns 0.</Description>
   </command>
   <command>
-    <canonicalName>casa</canonicalName>
+    <canonicalName>maison</canonicalName>
     <description>Moves turtle to the center of the screen (0, 0).</description>
     <example>home</example>
     <helpDocumentation>
@@ -203,7 +203,7 @@
     <Description>Moves turtle to the center of the screen (0, 0). Returns distance turtle moved.</Description>
   </command>
   <command>
-    <canonicalName>limpiarpantalla</canonicalName>
+    <canonicalName>nettoyerecran</canonicalName>
     <description>Erases turtle's trails and sends it to the home position.</description>
     <example>cs</example>
     <helpDocumentation>
@@ -219,7 +219,7 @@
   </command>
   <!-- Turtle Queries -->
   <command>
-    <canonicalName>xcor</canonicalName>
+    <canonicalName>abscisse</canonicalName>
     <description>Returns the turtle's X coordinate from the center of the screen.</description>
     <helpDocumentation>
       <returnValue type="double">The turtle's X coordinate.</returnValue>
@@ -233,7 +233,7 @@
     <Description>Returns the turtle's X coordinate from the center of the screen.</Description>
   </command>
   <command>
-    <canonicalName>ycor</canonicalName>
+    <canonicalName>ordonnee</canonicalName>
     <description>Returns the turtle's Y coordinate from the center of the screen.</description>
     <helpDocumentation>
       <returnValue type="double">The turtle's Y coordinate.</returnValue>
@@ -247,7 +247,7 @@
     <Description>Returns the turtle's Y coordinate from the center of the screen.</Description>
   </command>
   <command>
-    <canonicalName>rotacion</canonicalName>
+    <canonicalName>rotation</canonicalName>
     <description>Returns the turtle's heading in degrees.</description>
     <helpDocumentation>
       <returnValue type="double">The turtle's heading in degrees.</returnValue>
@@ -261,7 +261,7 @@
     <Description>Returns the turtle's heading in degrees.</Description>
   </command>
   <command>
-    <canonicalName>plumaabajo?</canonicalName>
+    <canonicalName>stylobas?</canonicalName>
     <description>Returns 1 if turtle's pen is down, 0 if it is up.</description>
     <helpDocumentation>
       <returnValue type="double">1 if pen is down, otherwise 0.</returnValue>
@@ -290,7 +290,7 @@
   </command>
   <!-- Math Operations -->
   <command>
-    <canonicalName>suma</canonicalName>
+    <canonicalName>somme</canonicalName>
     <description>Returns sum of the values of expr1 and expr2.</description>
     <example>+ 5 10</example>
     <helpDocumentation>
@@ -309,7 +309,7 @@
     <Description>Returns sum of the values of expr1 and expr2.</Description>
   </command>
   <command>
-    <canonicalName>diferencia</canonicalName>
+    <canonicalName>difference</canonicalName>
     <description>Returns difference of the values of expr1 and expr2.</description>
     <example>- 10 5</example>
     <helpDocumentation>
@@ -328,7 +328,7 @@
     <Description>Returns difference of the values of expr1 and expr2.</Description>
   </command>
   <command>
-    <canonicalName>producto</canonicalName>
+    <canonicalName>produit</canonicalName>
     <description>Returns product of the values of expr1 and expr2.</description>
     <example>* 5 10</example>
     <helpDocumentation>
@@ -347,7 +347,7 @@
     <Description>Returns product of the values of expr1 and expr2.</Description>
   </command>
   <command>
-    <canonicalName>cociente</canonicalName>
+    <canonicalName>quotient</canonicalName>
     <description>Returns quotient of the values of expr1 and expr2.</description>
     <example>/ 10 5</example>
     <helpDocumentation>
@@ -366,7 +366,7 @@
     <Description>Returns quotient of the values of expr1 and expr2.</Description>
   </command>
   <command>
-    <canonicalName>negativo</canonicalName>
+    <canonicalName>negatif</canonicalName>
     <description>Returns negative of the value of expr.</description>
     <example>~ 5</example>
     <helpDocumentation>
@@ -384,7 +384,7 @@
     <Description>Returns negative of the value of expr.</Description>
   </command>
   <command>
-    <canonicalName>random</canonicalName>
+    <canonicalName>aleatoire</canonicalName>
     <description>Returns random non-negative number strictly less than max.</description>
     <example>rand 100</example>
     <helpDocumentation>
@@ -402,7 +402,7 @@
     <Description>Returns random non-negative number strictly less than max.</Description>
   </command>
   <command>
-    <canonicalName>residuo</canonicalName>
+    <canonicalName>resete</canonicalName>
     <description>Returns remainder on dividing the values of expr1 by expr2.</description>
     <example>% 10 3</example>
     <helpDocumentation>
@@ -421,7 +421,7 @@
     <Description>Returns remainder on dividing the values of expr1 by expr2.</Description>
   </command>
   <command>
-    <canonicalName>randomrange</canonicalName>
+    <canonicalName>plagedaleatoire</canonicalName>
     <description>Returns random number within the given range min to max, inclusive.</description>
     <example>randr 1 100</example>
     <helpDocumentation>
@@ -440,7 +440,7 @@
     <Description>Returns random number within the given range min to max, inclusive.</Description>
   </command>
   <command>
-    <canonicalName>sine</canonicalName>
+    <canonicalName>sinus</canonicalName>
     <description>Returns sine of degrees.</description>
     <example>sin 90</example>
     <helpDocumentation>
@@ -458,7 +458,7 @@
     <Description>Returns sine of degrees.</Description>
   </command>
   <command>
-    <canonicalName>cosine</canonicalName>
+    <canonicalName>cosinus</canonicalName>
     <description>Returns cosine of degrees.</description>
     <example>cos 0</example>
     <helpDocumentation>
@@ -476,7 +476,7 @@
     <Description>Returns cosine of degrees.</Description>
   </command>
   <command>
-    <canonicalName>tangent</canonicalName>
+    <canonicalName>tangente</canonicalName>
     <description>Returns tangent of degrees.</description>
     <example>tan 45</example>
     <helpDocumentation>
@@ -494,7 +494,7 @@
     <Description>Returns tangent of degrees.</Description>
   </command>
   <command>
-    <canonicalName>ArcTangent</canonicalName>
+    <canonicalName>arctangente</canonicalName>
     <description>Returns arctangent of degrees.</description>
     <example>atan 1</example>
     <helpDocumentation>
@@ -512,7 +512,7 @@
     <Description>Returns arctangent of degrees.</Description>
   </command>
   <command>
-    <canonicalName>SquareRoot</canonicalName>
+    <canonicalName>racinecarree</canonicalName>
     <description>Returns square root of expr.</description>
     <example>sqrt 16</example>
     <helpDocumentation>
@@ -530,7 +530,7 @@
     <Description>Returns square root of expr.</Description>
   </command>
   <command>
-    <canonicalName>log</canonicalName>
+    <canonicalName>lognat</canonicalName>
     <description>Returns natural log of expr.</description>
     <example>log e</example>
     <helpDocumentation>
@@ -548,7 +548,7 @@
     <Description>Returns natural log of expr.</Description>
   </command>
   <command>
-    <canonicalName>exponente</canonicalName>
+    <canonicalName>puissance</canonicalName>
     <description>Returns base raised to the power of the exponent.</description>
     <example>pow 2 3</example>
     <helpDocumentation>
@@ -582,7 +582,7 @@
   </command>
   <!-- Boolean Operations -->
   <command>
-    <canonicalName>igual?</canonicalName>
+    <canonicalName>egal?</canonicalName>
     <description>Returns 1 if the value of expr1 and the value of expr2 are equal, otherwise 0 .</description>
     <example>== 5 5</example>
     <helpDocumentation>
@@ -600,27 +600,27 @@
     <Priority>Core</Priority>
     <Description>Returns 1 if the value of expr1 and the value of expr2 are equal, otherwise 0.</Description>
   </command>
-  <!--  <command>-->
-  <!--    <canonicalName>less?</canonicalName>-->
-  <!--    <description>Returns 1 if the value of expr1 is strictly less than the value of expr2, otherwise 0.</description>-->
-  <!--    <example>< 5 10</example>-->
-  <!--    <helpDocumentation>-->
-  <!--      <parameters>-->
-  <!--        <parameter name="expr1" type="double">The first expression.</parameter>-->
-  <!--        <parameter name="expr2" type="double">The second expression.</parameter>-->
-  <!--      </parameters>-->
-  <!--      <returnValue type="double">1 if expr1 is less than expr2, otherwise 0.</returnValue>-->
-  <!--      <category>Boolean</category>-->
-  <!--    </helpDocumentation>-->
-  <!--    <numberOfExpectedParameters>2</numberOfExpectedParameters>-->
-  <!--    <implementingClass>slogo.model.commands.LessThanCommand</implementingClass>-->
-  <!--    <ID>SLOGO-41</ID>-->
-  <!--    <Name>LESS? expr1 expr2, < expr1 expr2</Name>-->
-  <!--    <Priority>Core</Priority>-->
-  <!--    <Description>Returns 1 if the value of expr1 is strictly less than the value of expr2, otherwise 0.</Description>-->
-  <!--  </command>-->
+    <command>
+      <canonicalName>moins?</canonicalName>
+      <description>Returns 1 if the value of expr1 is strictly less than the value of expr2, otherwise 0.</description>
+      <example> 5 10</example>
+      <helpDocumentation>
+        <parameters>
+          <parameter name="expr1" type="double">The first expression.</parameter>
+          <parameter name="expr2" type="double">The second expression.</parameter>
+        </parameters>
+        <returnValue type="double">1 if expr1 is less than expr2, otherwise 0.</returnValue>
+        <category>Boolean</category>
+      </helpDocumentation>
+      <numberOfExpectedParameters>2</numberOfExpectedParameters>
+      <implementingClass>slogo.model.commands.LessThanCommand</implementingClass>
+      <ID>SLOGO-41</ID>
+      <Name>LESS? expr1 expr2, == expr1 expr2</Name>
+      <Priority>Core</Priority>
+      <Description>Returns 1 if the value of expr1 is strictly less than the value of expr2, otherwise 0.</Description>
+    </command>
   <command>
-    <canonicalName>mas?</canonicalName>
+    <canonicalName>plus?</canonicalName>
     <description>Returns 1 if the value of expr1 is strictly greater than the value of expr2, otherwise 0.</description>
     <example>> 10 5</example>
     <helpDocumentation>
@@ -639,7 +639,7 @@
     <Description>Returns 1 if the value of expr1 is strictly greater than the value of expr2, otherwise 0.</Description>
   </command>
   <command>
-    <canonicalName>y</canonicalName>
+    <canonicalName>et</canonicalName>
     <description>Returns 1 if both test1 and test2 are non-zero, otherwise 0.</description>
     <example>and 1 0</example>
     <helpDocumentation>
@@ -658,7 +658,7 @@
     <Description>Returns 1 if both test1 and test2 are non-zero, otherwise 0.</Description>
   </command>
   <command>
-    <canonicalName>o</canonicalName>
+    <canonicalName>ou</canonicalName>
     <description>Returns 1 if either test1 or test2 are non-zero, otherwise 0.</description>
     <example>or 0 1</example>
     <helpDocumentation>
@@ -677,7 +677,7 @@
     <Description>Returns 1 if either test1 or test2 are non-zero, otherwise 0.</Description>
   </command>
   <command>
-    <canonicalName>no</canonicalName>
+    <canonicalName>non</canonicalName>
     <description>Returns 1 if test is 0 and 0 if test is non-zero.</description>
     <example>not 0</example>
     <helpDocumentation>
@@ -695,7 +695,7 @@
     <Description>Returns 1 if test is 0 and 0 if test is non-zero.</Description>
   </command>
   <command>
-    <canonicalName>noigual?</canonicalName>
+    <canonicalName>different?</canonicalName>
     <description>Returns 1 if the value of expr1 and the value of expr2 are not equal, otherwise 0.</description>
     <example>!= 5 10</example>
     <helpDocumentation>
@@ -714,7 +714,7 @@
     <Description>Returns 1 if the value of expr1 and the value of expr2 are not equal, otherwise 0.</Description>
   </command>
   <!--  <command>-->
-  <!--    <canonicalName>lessequal?</canonicalName>-->
+  <!--    <canonicalName>inferieuregale?</canonicalName>-->
   <!--    <description>Returns 1 if the value of expr1 is less than or equal to the value of expr2, otherwise 0.</description>-->
   <!--    <example><= 5 5</example>-->
   <!--    <helpDocumentation>-->
@@ -733,7 +733,7 @@
   <!--    <Description>Returns 1 if the value of expr1 is less than or equal to the value of expr2, otherwise 0.</Description>-->
   <!--  </command>-->
   <command>
-    <canonicalName>greaterigual?</canonicalName>
+    <canonicalName>superieuregale?</canonicalName>
     <description>Returns 1 if the value of expr1 is greater than or equal to the value of expr2, otherwise 0.</description>
     <example>>= 10 5</example>
     <helpDocumentation>
@@ -753,7 +753,7 @@
   </command>
   <!-- Variables, Control Structures, and User-Defined Commands -->
   <command>
-    <canonicalName>crear</canonicalName>
+    <canonicalName>creer</canonicalName>
     <description>Assigns the value of expr to variable, creating the variable if necessary.</description>
     <example>set :x 10</example>
     <helpDocumentation>
@@ -772,7 +772,7 @@
     <Description>Assigns the value of expr to variable, creating the variable if necessary. Returns expr.</Description>
   </command>
   <command>
-    <canonicalName>repetir</canonicalName>
+    <canonicalName>repeter</canonicalName>
     <description>Runs command(s) given in the list the value of expr number of times.</description>
     <example>repeat 3 [ fd 50 ]</example>
     <helpDocumentation>
@@ -791,7 +791,7 @@
     <Description>Runs command(s) given in the list the value of expr number of times. Returns the value of the final command executed (or 0 if no commands are executed). NOTE, the value of the current iteration, starting at 1, is automatically assigned to the variable :repcount so that it can be accessed by the command(s).</Description>
   </command>
   <command>
-    <canonicalName>hacerveces</canonicalName>
+    <canonicalName>fairefois</canonicalName>
     <description>Runs command(s) for each value specified in the range, i.e., from 1 to limit inclusive.</description>
     <example>dotimes [ :i 10 ] [ fd :i ]</example>
     <helpDocumentation>
@@ -811,7 +811,7 @@
     <Description>Runs command(s) for each value specified in the range, i.e., from (1 - limit) inclusive. Returns the value of the final command executed (or 0 if no commands are executed). NOTE, variable is assigned to each succeeding value so that it can be accessed by the command(s).</Description>
   </command>
   <command>
-    <canonicalName>para</canonicalName>
+    <canonicalName>pour</canonicalName>
     <description>Runs command(s) for each value specified in the range, i.e., from start to end, going by increment.</description>
     <example>for [ :i 1 10 1 ] [ fd :i ]</example>
     <helpDocumentation>
@@ -852,7 +852,7 @@
     <Description>If expr is not 0, runs the command(s) given in the list. Returns the value of the final command executed (or 0 if no commands are executed).</Description>
   </command>
   <command>
-    <canonicalName>siotro</canonicalName>
+    <canonicalName>sisinon</canonicalName>
     <description>If expr is not 0, runs the trueCommand(s) given in the first list, otherwise runs the falseCommand(s) given in the second list.</description>
     <example>ifelse less? 5 10 [ fd 50 ] [ bk 50 ]</example>
     <helpDocumentation>

@@ -13,6 +13,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import slogo.view.Controller;
 
+/**
+ * The Save class is a class that represents the save options for the application. It is responsible
+ * for saving the preferences and the commands to respective files.
+ */
 public class Save {
 
   public static void saveToFile(Stage stage, Controller controller, Stack<String> commandHistory) {

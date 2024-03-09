@@ -9,6 +9,10 @@ import slogo.view.Controller;
 
 public class Main extends Application {
 
+  /**
+   * Start of the program.
+   */
+
   public static void main(String[] args) {
     launch(args);
   }

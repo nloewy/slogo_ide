@@ -12,6 +12,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import slogo.view.UserInterfaceUtil;
 
+/**
+ * The HistoryBox class is a class that represents the history box in the view side of the
+ * application. It's responsible for all the information of the history box and the display of the
+ * history box.
+ */
 public class HistoryBox {
 
   private final VBox commandHistoryBox;

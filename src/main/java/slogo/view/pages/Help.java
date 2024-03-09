@@ -18,6 +18,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import slogo.view.Controller;
 
+/**
+ * The Help class is a page that is displayed when the user clicks the help button. It provides
+ * information about the commands that the user can use in the Slogo environment.
+ */
+
 public class Help {
 
   public static void showHelpPopup(ResourceBundle myResources, Controller controller,

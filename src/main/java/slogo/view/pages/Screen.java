@@ -21,6 +21,5 @@ public abstract class Screen {
 
   public abstract void setUp();
 
-  public abstract Group getGroup();
 }
 

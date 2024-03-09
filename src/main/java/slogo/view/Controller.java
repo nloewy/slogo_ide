@@ -30,8 +30,12 @@ import slogo.model.api.SlogoModel;
 import slogo.view.pages.MainScreen;
 import slogo.view.pages.StartScreen;
 
-//TODO add method to add user
-//defined commands call it in parse try catch
+/**
+ * The Controller class is the main controller for the SLogo application. It is responsible for
+ * bridging the Model and the View. It is also responsible for initializing the StartScreen and
+ * then managing the state of the application and the windows that are open.
+ */
+
 public class Controller {
 
   private final Stage stage;
@@ -129,9 +133,6 @@ public class Controller {
   }
 
   public void loadSession(String type) {
-    // This method may need to use the Model api -- loadXML and others
-    // This opens a file chooser. Once the file is chosen, it opens a new session
-    // The file is not currently used for anything
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open SLogo File");
     fileChooser.setInitialDirectory(new File("data/examples/"));
@@ -191,7 +192,8 @@ public class Controller {
               .getTextContent();
 
           NodeList exampleList = eElement.getElementsByTagName("example");
-          String example = exampleList.getLength() > 0 ? exampleList.item(0).getTextContent() : "";
+          String example = exampleList.getLength() > 0 ? exampleList
+              .item(0).getTextContent() : "";
           Element helpDocumentation = (Element) eElement.getElementsByTagName("helpDocumentation")
               .item(0);
           NodeList parametersList = helpDocumentation.getElementsByTagName("parameters");

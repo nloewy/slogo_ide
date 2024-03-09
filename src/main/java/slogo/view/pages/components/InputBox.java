@@ -34,6 +34,10 @@ import slogo.view.UserInterfaceUtil;
 import slogo.view.pages.Help;
 import slogo.view.pages.Save;
 
+/**
+ * The InputBox class is a class that represents the input box in the view side of the application.
+ * It is referenced and used in the MainScreen class.
+ */
 public class InputBox {
 
   private final HBox textInputBox;
@@ -111,22 +115,22 @@ public class InputBox {
     turtleMoveBox = new HBox(distanceField, rotateField);
     turtleMoveBox.setTranslateY(50);
     turtleMoveBox.setPadding(new javafx.geometry.Insets(0, 0, 0, -100));
-
+    String splitString = "\\|";
     Button leftButton = UserInterfaceUtil.generateButton("←", event -> {
       pushCommand.accept(
-          myResources.getString("Left").split("\\|")[0] + " " + rotateField.getText());
+          myResources.getString("Left").split(splitString)[0] + " " + rotateField.getText());
     });
     Button rightButton = UserInterfaceUtil.generateButton("→", event -> {
       pushCommand.accept(
-          myResources.getString("Right").split("\\|")[0] + " " + rotateField.getText());
+          myResources.getString("Right").split(splitString)[0] + " " + rotateField.getText());
     });
     Button forwardButton = UserInterfaceUtil.generateButton("↑", event -> {
       pushCommand.accept(
-          myResources.getString("Forward").split("\\|")[0] + " " + distanceField.getText());
+          myResources.getString("Forward").split(splitString)[0] + " " + distanceField.getText());
     });
     Button backwardButton = UserInterfaceUtil.generateButton("↓", event -> {
       pushCommand.accept(
-          myResources.getString("Backward").split("\\|")[0] + " " + distanceField.getText());
+          myResources.getString("Backward").split(splitString)[0] + " " + distanceField.getText());
     });
 
     VBox upDownButtons = new VBox(forwardButton, backwardButton);

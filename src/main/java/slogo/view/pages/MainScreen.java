@@ -46,6 +46,14 @@ import slogo.view.UserInterfaceUtil;
 import slogo.view.pages.components.HistoryBox;
 import slogo.view.pages.components.InputBox;
 
+/**
+ * The MainScreen class is responsible for setting up and displaying the main user interface
+ * of the SLogo application. It initializes the application window, sets up the user interface
+ * components such as the command input box, variable display, and turtle graphics pane, and
+ * manages the application's animation timeline. The class implements the SlogoListener interface
+ * to respond to updates from the SLogo model, such as turtle movements, variable changes, and
+ * user-defined commands.
+ */
 public class MainScreen implements SlogoListener {
 
   public static final String DEFAULT_RESOURCE_PACKAGE = "slogo.languages.";
@@ -101,8 +109,14 @@ public class MainScreen implements SlogoListener {
   private Consumer<String> parse;
   private Map<Integer, List<Integer>> palette;
 
-  // Add an XMLFile object to this when Model adds one
-  // Controller calls this with an XML File
+  /**
+   * Constructs a MainScreen object with the specified stage and controller. Initializes the
+   * user interface components, sets up the application scene, and starts the animation timeline.
+   *
+   * @param stage The primary stage of the application.
+   * @param controller The controller managing interactions between the model and view.
+   * @throws FileNotFoundException If the default turtle image file is not found.
+   */
   public MainScreen(Stage stage, Controller controller) throws FileNotFoundException {
     this.stage = stage;
     this.controller = controller;
@@ -136,10 +150,19 @@ public class MainScreen implements SlogoListener {
     centerX = centerPane.getBoundsInParent().getWidth() / 2;
     centerY = centerPane.getBoundsInParent().getHeight() / 2;
     centerPane.setId("CenterPane");
-    turtles.add(new FrontEndTurtle(1, centerX, centerY, Color.BLUE, true, 0, defaultImage, this));
+    turtles.add(new FrontEndTurtle(1, centerX, centerY, Color.BLUE, true, 0,
+        defaultImage, this));
     initializeTurtleDisplays();
   }
 
+  /**
+   * Adds a parser method and processes initial SLogo content, if provided. This method
+   * allows for the dynamic parsing of SLogo commands.
+   *
+   * @param parseMethod The parsing method to be used for interpreting SLogo commands.
+   * @param slogoContent Initial content in SLogo language to be parsed, can be null.
+   * @throws FileNotFoundException If there is an issue accessing any required files during parsing.
+   */
   public void addParser(Consumer<String> parseMethod, String slogoContent)
       throws FileNotFoundException {
     parse = parseMethod;
@@ -150,6 +173,10 @@ public class MainScreen implements SlogoListener {
 
   }
 
+  /**
+   * Updates the display of variables in the variable box. This method refreshes the list
+   * of variables and their values, allowing for interactive updates and modifications by the user.
+   */
   public void updateVariables() {
     variablesBox.getChildren().clear();
     variablesBox.getChildren().add(variablesBoxLabel);
@@ -166,16 +193,16 @@ public class MainScreen implements SlogoListener {
           }
         }
 
-        UserInterfaceUtil.makeInputDialog(variableValues.get(key).toString(), "Enter New Value",
-            "Enter a new value for " + key, "New value:\n\nRELATED COMMANDS\n" + commands,
-            true,
+        UserInterfaceUtil.makeInputDialog(variableValues.get(key).toString(),"Enter New Value",
+            "Enter a new value for " + key,
+            "New value:\n\nRELATED COMMANDS\n" + commands, true,
             newValue -> {
               try {
                 variableValues.put(key, Double.valueOf(newValue));
                 pushCommand("MAKE " + key + " " + newValue);
 
-                new Alert(AlertType.INFORMATION, "New value for " + key + " saved: " + newValue)
-                    .showAndWait();
+                new Alert(AlertType.INFORMATION,
+                    "New value for " + key + " saved: " + newValue).showAndWait();
 
               } catch (Exception e) {
                 new Alert(AlertType.INFORMATION, "Value Must be a Number");
@@ -187,15 +214,16 @@ public class MainScreen implements SlogoListener {
 
   }
 
+  /**
+   * Processes and executes a given SLogo command. This method facilitates the execution of
+   * commands input by the user or triggered through other interactions within the application
+   * and starts the parsing process.
+   *
+   * @param s The SLogo command string to be executed.
+   */
   public void pushCommand(String s) {
     commandString = s;
     parse.accept(commandString);
-  }
-
-  @Override
-  public void onUpdateValue(String variableName, Number newValue) {
-    variableValues.put(variableName, newValue);
-    updateVariables();
   }
 
   public void setTurtleImage(File f) {
@@ -211,6 +239,12 @@ public class MainScreen implements SlogoListener {
   }
 
   @Override
+  public void onUpdateValue(String variableName, Number newValue) {
+    variableValues.put(variableName, newValue);
+    updateVariables();
+  }
+
+  @Override
   public void onUpdateTurtleState(TurtleRecord turtleState) {
     for (FrontEndTurtle turtle : turtles) {
 
@@ -220,7 +254,8 @@ public class MainScreen implements SlogoListener {
             turtleState.heading(), turtleState.visible());
         List<Integer> newPenColor = palette.get(turtleState.penColorIndex());
         if (newPenColor != null) {
-          turtle.setPenColor(new Color(newPenColor.get(0) / 255, newPenColor.get(1) / 255,
+          turtle.setPenColor(new Color(
+              newPenColor.get(0) / 255, newPenColor.get(1) / 255,
               newPenColor.get(2) / 255, 1));
         }
 
@@ -285,6 +320,9 @@ public class MainScreen implements SlogoListener {
     inputBox.updatePalettePane(palette);
   }
 
+  /**
+   * Sets up the layout of the main screen, and adds all features to the root.
+   */
   private void setUp() {
     layout = new BorderPane();
     layout.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -421,14 +459,14 @@ public class MainScreen implements SlogoListener {
       currAnimation.play();
     } else if (animationPlaying && inputBox.isPaused()) {
       if (currAnimation != null) {
-        pausedTime = currAnimation.getCurrentTime(); // Store the current time when animation is paused
+        pausedTime = currAnimation.getCurrentTime();
         currAnimation.pause();
       }
     } else if (animationPlaying && pausedTime != null) {
       // If animation was paused and now unpaused, resume from the paused time
       if (currAnimation != null) {
         currAnimation.playFrom(pausedTime);
-        pausedTime = null; // Reset paused time
+        pausedTime = null;
       }
     }
   }

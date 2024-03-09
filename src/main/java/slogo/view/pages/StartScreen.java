@@ -19,6 +19,12 @@ import javafx.stage.Stage;
 import slogo.view.ComboChoice;
 import slogo.view.Controller;
 
+/**
+ * The StartScreen class is a page that is displayed when the application is first opened. It
+ * provides options for the user to load a new Slogo session, load a new general session, upload
+ * preferences, and change the language and theme of the application.
+ */
+
 public class StartScreen {
 
   private static final String DEFAULT_RESOURCE_PACKAGE = "slogo.languages.";
@@ -60,7 +66,8 @@ public class StartScreen {
 
     Button uploadPref = generateButton("uploadPreferences", 100, 360, e -> {
       FileChooser fileChooser = new FileChooser();
-      fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+      fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files",
+          "*.xml"));
       File selectedFile = fileChooser.showOpenDialog(stage);
       if (selectedFile != null) {
         controller.loadSettings(selectedFile, scene);
@@ -74,7 +81,8 @@ public class StartScreen {
     for (String theme : defaultResources.getString("ColorThemes").split(",")) {
       supportedThemes.add(new ComboChoice(theme, theme));
     }
-    ComboBox<ComboChoice> themeComboBox = generateComboBox(supportedThemes, "themeBox", 400, 330,
+    ComboBox<ComboChoice> themeComboBox = generateComboBox(supportedThemes, "themeBox",
+        400, 330,
         (s) -> {
           return s.replace(" ", "") + ".css";
         }, (event) -> {

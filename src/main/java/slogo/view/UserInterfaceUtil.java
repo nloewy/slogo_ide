@@ -14,6 +14,10 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Provides static utility methods for creating and configuring JavaFX UI components like buttons,
+ * sliders, combo boxes, and image views. Simplifies UI element creation for JavaFX applications.
+ */
 public class UserInterfaceUtil {
 
   public static void makeInputDialog(String value, String title, String header, String content,

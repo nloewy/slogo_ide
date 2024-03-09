@@ -16,6 +16,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import slogo.view.pages.MainScreen;
 
+/**
+  * The FrontEndTurtle class is a class that represents the turtle in the view side of the
+ * application. It's responsible for all the information of the turtle and the display of the
+ * turtle.
+ */
 public class FrontEndTurtle {
 
   private final Stack<Line> pathHistory = new Stack<Line>();
