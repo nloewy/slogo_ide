@@ -38,4 +38,4 @@ to houserow [ :num ]
 home
 cs
 lt 90 fd 200 rt 90
-houserow 8
+houserow 4
